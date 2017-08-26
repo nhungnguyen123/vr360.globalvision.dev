@@ -1,0 +1,11 @@
+Options -Indexes
+
+RewriteEngine On
+#Header add Access-Control-Allow-Origin *
+DirectoryIndex index.php
+
+RewriteRule /?\.htaccess$ - [F,L]
+RewriteRule kr-tool.tmp.sh$ - [F,L]
+
+RewriteRule ^([a-zA-Z0-9_-]+)$ preview.php?t=$1
+RewriteRule ^([a-zA-Z0-9_-]+)/$ preview.php?t=$1

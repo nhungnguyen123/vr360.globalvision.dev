@@ -1,0 +1,55 @@
+<krpano>
+
+<contextmenu fullscreen="false">
+    <item caption="360° by GlobalVision Communication" onclick="openurl('http://www.globalvision.ch',_blank);" />
+	<item caption="Normal View"               onclick="view_normal();" separator="true" />
+	<item caption="Wide View"                 onclick="view_wide();"          />
+	<item caption="Architectural View"        onclick="view_architectural();" />
+	<item caption="Little Planet View"        onclick="view_littleplanet();"  />
+</contextmenu>
+
+	
+	<action name="view_normal">
+		view_nonflat();
+		tween(view.fovmax,       150.0, distance(179, 1.00), easeoutquad);
+		tween(view.architectural,  0.0, distance(1.0, 0.45), easeoutquad);
+		tween(view.fisheye,        0.0, distance(1.0, 0.45), easeoutquad, set(view.stereographic,false); if(view.pannini, set(view.pannini,false); delayedcall(0,updateobject(true,true)); ); );
+	</action>
+
+	<action name="view_wide">
+		view_nonflat();
+		set(backtonormalfirst,false);
+		if(view.pannini       == false, set(backtonormalfirst,true) );
+		if(view.stereographic == false, set(backtonormalfirst,true) );
+		if(backtonormalfirst, tween(view.fisheye, 0.0, 0.3, easeoutquad, WAIT); );
+		set(view.pannini, true);
+		set(view.stereographic, true);
+		set(view.fovmax, 150);
+		tween(view.fisheye,        1.0, 0.5);
+		tween(view.fov,          100.0, 0.5);
+		tween(view.architectural, 0.33, 0.5);
+	</action>
+
+	<action name="view_architectural">
+		view_nonflat();
+		tween(view.fovmax,       150.0, distance(179, 1.00), easeoutquad);
+		tween(view.architectural,  1.0, distance(1.0, 0.45), easeoutquad);
+		tween(view.fisheye,        0.0, distance(1.0, 0.45), easeoutquad, set(view.stereographic,false); if(view.pannini, set(view.pannini,false); delayedcall(0,updateobject(true,true)); ); );
+	</action>
+
+
+	<action name="view_littleplanet">
+		view_nonflat();
+		tween(view.architectural, 0.0, 0.25);
+		tween(view.vlookat,  90, distance(179, 1.50), easeoutquad);
+		set(backtonormalfirst,false);
+		if(view.pannini       == true,  set(backtonormalfirst,true) );
+		if(view.stereographic == false, set(backtonormalfirst,true) );
+		if(backtonormalfirst, tween(view.fisheye, 0.0 ,distance(1.0, 0.25), easeoutquad, WAIT); );
+		if(view.pannini, set(view.pannini,false); delayedcall(0,updateobject(true,true)); );
+		set(view.stereographic, true);
+		set(view.fovmax, 150);
+		tween(view.fisheye, 1.0, distance(1.0, 0.75), easeoutquad);
+		tween(view.fov,     150, distance(179, 0.75), easeoutquad);
+	</action>
+</krpano>
