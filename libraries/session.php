@@ -4,20 +4,14 @@ class Vr360Session
 {
 	protected $status;
 	protected $id;
-	protected $namespace = 'GLOBALVISION';
+	protected $namespace = '\GLOBALVISION\VR360';
 
 	protected $config = array(
-		'lifetime' => 60 * 60 * 24
+		'gc_maxlifetime' => 60 * 60 * 24
 	);
 
 	public function __construct()
 	{
-		// Reset sessions
-		if (session_id())
-		{
-			$this->reset();
-		}
-
 		$this->start();
 	}
 
@@ -33,18 +27,16 @@ class Vr360Session
 		return $instance;
 	}
 
-	protected function start()
+	public function start()
 	{
-		if (empty(session_id()) || session_status() == PHP_SESSION_NONE)
+		if (empty(session_id()))
 		{
-			session_start();
-			session_set_cookie_params($this->config['lifetime']);
-
-			$_SESSION[$this->namespace] = array();
+			session_start($this->config);
 		}
 
 		$this->status = session_status();
-		$this->id     = session_id();
+		$this->id = session_id();
+
 	}
 
 	protected function isValid()

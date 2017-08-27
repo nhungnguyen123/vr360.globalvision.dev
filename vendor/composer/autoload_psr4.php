@@ -7,6 +7,4 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Medoo\\' => array($vendorDir . '/catfan/medoo/src'),
-    'Aura\\Session\\_Config\\' => array($vendorDir . '/aura/session/config'),
-    'Aura\\Session\\' => array($vendorDir . '/aura/session/src'),
 );

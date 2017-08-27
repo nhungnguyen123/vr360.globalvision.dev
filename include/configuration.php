@@ -6,6 +6,7 @@ class Vr360Configuration
 	public $dbUser = 'root';
 	public $dbPassword = 'root';
 	public $dbServer = 'localhost';
+	public $siteName = 'Vr360 - Globalvision';
 
 	public static function getInstance()
 	{

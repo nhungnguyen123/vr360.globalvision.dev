@@ -54,7 +54,7 @@ class Vr360Database
 				'OR' =>
 					[
 						'username' => $userName,
-						'email' => $userName
+						'email'    => $userName
 					]
 			]);
 
@@ -124,8 +124,16 @@ class Vr360Database
 		);
 	}
 
-	public function getTours($userId, $offset =0, $limit = 20) //this list all tour. not load data of 1 tour! BAD function name!
+	public function getTours($userId = null)
 	{
+		if ($userId === null)
+		{
+			$userId = Vr360Authorise::getInstance()->getUser()->id;
+		}
+
+		$offset = isset($_REQUEST['page']) ? $_REQUEST['page'] * 20 : 0;
+		$limit  = 20;
+
 		$rows = $this->medoo->select(
 			'tbl_vtour',
 			[
@@ -141,9 +149,9 @@ class Vr360Database
 				'tbl_friendly_url.alias'
 			],
 			[
-				'tbl_vtour.created_by'   => (int) $userId,
-				'tbl_vtour.status[!]' => VR360_TOUR_STATUS_UNPUBLISHED,
-				'ORDER'               => [
+				'tbl_vtour.created_by' => (int) $userId,
+				'tbl_vtour.status[!]'  => VR360_TOUR_STATUS_UNPUBLISHED,
+				'ORDER'                => [
 					'tbl_vtour.id' => 'DESC'
 				],
 
@@ -160,7 +168,7 @@ class Vr360Database
 			$data = array();
 			foreach ($rows as $row)
 			{
-				$data[$row['dir']] = $row;
+				$data[] = new Vr360Tour($row);
 			}
 
 			return $data;
@@ -168,6 +176,48 @@ class Vr360Database
 
 		return $rows;
 	}
+
+	public function getToursPagination($userId = null)
+	{
+		if ($userId === null)
+		{
+			$userId = Vr360Authorise::getInstance()->getUser()->id;
+		}
+
+		$limit = 20;
+
+		$rows = $this->medoo->select(
+			'tbl_vtour',
+			[
+				'[><]tbl_friendly_url' => ['id' => 'vtour_id']
+			],
+			[
+				'tbl_vtour.id',
+				'tbl_vtour.name',
+				'tbl_vtour.dir',
+				'tbl_vtour.created',
+				'tbl_vtour.created_by',
+				'tbl_vtour.status',
+				'tbl_friendly_url.alias'
+			],
+			[
+				'tbl_vtour.created_by' => (int) $userId,
+				'tbl_vtour.status[!]'  => VR360_TOUR_STATUS_UNPUBLISHED,
+				'ORDER'                => [
+					'tbl_vtour.id' => 'DESC'
+				],
+			]
+		);
+
+		if (!empty($rows))
+		{
+			return array(
+				'current' => isset($_REQUEST['page']) ? $_REQUEST['page'] : 1,
+				'total'   => round(count($rows) / $limit)
+			);
+		}
+	}
+
 
 	public function get_row_data($userId, $uid)
 	{
@@ -235,6 +285,30 @@ class Vr360Database
 		$row  = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		return $row;
+	}
+
+	public function updateUser($data)
+	{
+
+		return $this->medoo->update(
+			'users',
+			$data,
+			[
+				'id' => $data['id']
+			]
+		);
+	}
+
+	public function updateTour($data)
+	{
+
+		return $this->medoo->update(
+			'tbl_vtour',
+			$data,
+			[
+				'id' => $data['id']
+			]
+		);
 	}
 }
 

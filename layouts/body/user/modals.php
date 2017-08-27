@@ -1,3 +1,4 @@
+<?php defined('_VR360') or die; ?>
 
 <!-- Embed Modal -->
 <div class="modal fade" id="embedModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

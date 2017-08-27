@@ -27,9 +27,9 @@ class Vr360Authorise
 			{
 				return true;
 			}
-
-			return false;
 		}
+
+		return false;
 	}
 
 	/**
@@ -40,15 +40,19 @@ class Vr360Authorise
 	 */
 	public function authorise($userName, $password)
 	{
-		$this->user = Vr360Database::getInstance()->getUserData($userName);
+		$user = Vr360Database::getInstance()->getUserData($userName);
+		$this->user = new Vr360User($user);
 
-		if (md5($password) !== $this->user['password'])
+		if (md5($password) !== $this->user->password)
 		{
 			return false;
 		}
 
 		Vr360Session::getInstance()->set('logged', true);
 		Vr360Session::getInstance()->set('user', $this->user);
+
+		$this->user->last_login = date('Y-m-d H:i:s');
+		$this->user->save();
 
 		return true;
 	}
@@ -75,21 +79,8 @@ class Vr360Authorise
 		return Vr360Session::getInstance()->get('logged', false);
 	}
 
-	/**
-	 * @return mixed
-	 */
-	public function getUserId()
+	public function getUser()
 	{
-		return (int) $_SESSION['user']['userId'];
-	}
-
-	public function getUserEmail()
-	{
-		return $_SESSION['user']['userEmail'];
-	}
-
-	public function getUserFullName()
-	{
-		return Vr360Session::getInstance()->get('user')['name'];
+		return Vr360Session::getInstance()->get('user');
 	}
 }

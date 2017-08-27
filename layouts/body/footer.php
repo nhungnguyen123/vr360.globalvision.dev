@@ -1,3 +1,5 @@
+<?php defined('_VR360') or die; ?>
+
 <hr />
 <div id="footer" class="footer">
 	<p class="bg-warning">

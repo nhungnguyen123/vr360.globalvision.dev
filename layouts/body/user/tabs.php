@@ -1,3 +1,5 @@
+<?php defined('_VR360') or die; ?>
+
 <div>
 	<!-- Nav tabs -->
 	<ul class="nav nav-tabs" role="tablist">

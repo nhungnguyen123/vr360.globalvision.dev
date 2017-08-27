@@ -305,3 +305,7 @@ html, body {
     margin-bottom: 15px;
     background-color: #fcf8e3
 }
+
+.vtour_name{
+    cursor: pointer;
+}

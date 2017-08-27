@@ -59,12 +59,15 @@ class Vr360Task
 
 	public static function createTour()
 	{
-		$auth = Vr360Authorise::getInstance();
-		if (!$auth->isAuth())
+
+		if (!Vr360Authorise::isLogged())
 		{
 			echo '{"error": "notAuth"}';
 			die();
 		}
+
+		var_dump($_REQUEST);
+		exit();
 
 		$uId = uniqid('__', false);
 		$uId .= '_' . md5(uniqid('', true));

@@ -1,3 +1,5 @@
+<?php defined('_VR360') or die; ?>
+
 <!-- jQuery -->
 <script type="text/javascript" src="./assets/jquery-2.2.4.min.js"></script>
 
@@ -14,3 +16,4 @@
 
 <!-- Globalvision -->
 <link rel="stylesheet" type="text/css" href="./assets/globalvision.css">
+
