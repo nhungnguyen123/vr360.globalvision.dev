@@ -1,6 +1,6 @@
 <?php defined('_VR360') or die; ?>
 
-<form method="post">
+<form method="post" id="createTour">
 	<div style="margin-top: 15px">
 		<div class="col-md-12">
 			<div class="col-md-6">
@@ -29,7 +29,7 @@
 						<button type="submit" id="submitButton" class="btn btn-primary">
 							<i class="fa fa-window-restore" aria-hidden="true"></i> Create new vTour
 						</button>
-						<button type="button" id="addButton" class="btn btn-info" onclick="vrAdmin.addNew();">
+						<button type="button" id="addButton" class="btn btn-info" onclick="vrAdmin.addPano();">
 							<i class="fa fa-plus-square" aria-hidden="true"></i> Add more panoramas
 						</button>
 					</div>
@@ -91,6 +91,6 @@
 	</div>
 
 	<fieldset>
-		<input type="hidden" name="task" value="createTour" />
+
 	</fieldset>
 </form>

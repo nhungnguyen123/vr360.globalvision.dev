@@ -1,41 +1,48 @@
 (function (w, $) {
 
     var vrAdmin = {
-
-        $this: this,
-        formTemplate: $('#divMain').html(),
-
-        addNew: function () {
-            var index = $('#divMain .pano').length;
-            var template = vrAdmin.formTemplate.replace(new RegExp('{{imgId}}', 'g'), index++)
-            $('#divMain').append(template);
+        /**
+         *
+         */
+        addPano: function () {
+            $('#divMain').append($('#divMain .pano').html());
         },
-        removePano: function(el)
-        {
-            if ($('#divMain .pano').length == 1)
-            {
+
+        removePano: function (el) {
+            if ($('#divMain .pano').length == 1) {
 
             }
-            else
-            {
+            else {
                 $(el).parent().remove();
             }
 
         },
-        createTour: function()
-        {
-            vrLog.reset();
-            vrLog.append('Collecting data ..')
-        },
-        init: function () {
-            // Reset
-            $('#divMain').html('');
-            vrAdmin.addNew();
+
+        hookFormCreateTour: function () {
+            $('#createTour').on('submit', function (e) {
+                var formData = new FormData(this);
+                formData.append('task', 'createTour');
+                formData.append('step', 'upload');
+                $.ajax({
+                    url: 'index.php',
+                    type: 'POST',
+                    data: formData,
+                    async: false,
+
+                    cache: false,
+                    contentType: false,
+                    processData: false
+                })
+                    .done(function (data, textStatus, jqXHR) {
+
+                    })
+
+                e.preventDefault();
+                return false;
+            })
         }
+
     }
 
-    $(document).ready(function () {
-        vrAdmin.init();
-    })
     w.vrAdmin = vrAdmin;
 })(window, jQuery);

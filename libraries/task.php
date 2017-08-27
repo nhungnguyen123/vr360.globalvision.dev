@@ -66,8 +66,20 @@ class Vr360Task
 			die();
 		}
 
-		var_dump($_REQUEST);
-		exit();
+		$step = $_POST['step'];
+
+		switch ($step)
+		{
+			case 'upload':
+				// File upload and validate
+				break;
+			case 'create':
+				// Save to database
+				break;
+			case 'generate':
+				// Generate tour via exec
+				break;
+		}
 
 		$uId = uniqid('__', false);
 		$uId .= '_' . md5(uniqid('', true));
