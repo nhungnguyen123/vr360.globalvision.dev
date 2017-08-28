@@ -7,21 +7,25 @@
 				<!-- Name -->
 				<div class="form-group">
 					<label for="tour_des">Name of vTour</label>
-					<input type="text" class="form-control" id="name" name="name" placeholder="Name of this tour" required>
+					<input type="text" class="form-control" id="name" name="name" placeholder="Name of this tour"
+					       required>
 				</div>
 				<!-- Alias -->
 				<div class="form-group">
 					<label for="tour_url">URL friendly</label>
-					<input type="text" class="form-control" id="alias" name="alias" placeholder="URL friendly of this tour" required>
+					<input type="text" class="form-control" id="alias" name="alias"
+					       placeholder="URL friendly of this tour" required>
 				</div>
 
 				<!-- Options -->
 				<span class="label label-primary"><i class="fa fa-cogs" aria-hidden="true"></i> Options</span>
 				<div class="checkbox">
-					<label><input type="checkbox" id="tour_rotation" name="tourRotation" size="80"/>Check for auto rotation.</label>
+					<label><input type="checkbox" id="tour_rotation" name="tourRotation" size="80"/>Check for auto
+						rotation.</label>
 				</div>
 				<div class="checkbox">
-					<label><input type="checkbox" id="tour_social" name="tourSocials" size="80"/>Check for show media social button.</label>
+					<label><input type="checkbox" id="tour_social" name="tourSocials" size="80"/>Check for show media
+						social button.</label>
 				</div>
 
 				<div class="col-md-12">
@@ -29,7 +33,7 @@
 						<button type="submit" id="submitButton" class="btn btn-primary">
 							<i class="fa fa-window-restore" aria-hidden="true"></i> Create new vTour
 						</button>
-						<button type="button" id="addButton" class="btn btn-info" onclick="vrAdmin.addPano();">
+						<button type="button" id="addButton" class="btn btn-info">
 							<i class="fa fa-plus-square" aria-hidden="true"></i> Add more panoramas
 						</button>
 					</div>
@@ -76,12 +80,14 @@
 
 								<div class="form-group">
 									<label>Title</label>
-									<input name ="panoTitle[]" type="text" class="form-control" placeholder="Pano title"/>
+									<input name="panoTitle[]" type="text" class="form-control"
+									       placeholder="Pano title"/>
 								</div>
 
 								<div class="form-group">
 									<label>Description</label>
-									<input name ="panoDescription[]" type="text" class="form-control" size="80" placeholder="Pano sub title"/>
+									<input name="panoDescription[]" type="text" class="form-control" size="80"
+									       placeholder="Pano sub title"/>
 								</div>
 							</div>
 						</div>

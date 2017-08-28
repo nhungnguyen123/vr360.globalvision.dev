@@ -18,7 +18,10 @@
 
         },
 
-        hookFormCreateTour: function () {
+        /**
+         *
+         */
+        hookButtonCreateTour: function () {
             $('#createTour').on('submit', function (e) {
                 var formData = new FormData(this);
                 formData.append('task', 'createTour');
@@ -27,13 +30,13 @@
                     url: 'index.php',
                     type: 'POST',
                     data: formData,
-                    async: false,
-
+                    async: true,
                     cache: false,
                     contentType: false,
                     processData: false
                 })
                     .done(function (data, textStatus, jqXHR) {
+                        // Upload file success
                         if (data.status == true)
                         {
                             formData.step = 'create';
@@ -67,9 +70,19 @@
                         }
                         else
                         {
+                            // Error if files are not valid
                             vrLog.append(data.message);
                         }
                     })
+
+                e.preventDefault();
+            })
+        },
+
+        hookButtonAddPano: function()
+        {
+            $('#addButton').on('click', function (e) {
+                vrAdmin.addPano();
 
                 e.preventDefault();
             })
@@ -80,6 +93,7 @@
     w.vrAdmin = vrAdmin;
 
     $(document).ready(function(){
-        w.vrAdmin.hookFormCreateTour();
+        w.vrAdmin.hookButtonCreateTour();
+        w.vrAdmin.hookButtonAddPano();
     })
 })(window, jQuery);
