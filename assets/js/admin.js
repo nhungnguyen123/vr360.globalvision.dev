@@ -34,7 +34,7 @@
                     processData: false
                 })
                     .done(function (data, textStatus, jqXHR) {
-                        if (data.status == 1)
+                        if (data.status == true)
                         {
                             formData.step = 'create';
                             $.ajax({
@@ -65,7 +65,10 @@
                                         })
                                 })
                         }
-
+                        else
+                        {
+                            vrLog.append(data.message);
+                        }
                     })
 
                 e.preventDefault();
