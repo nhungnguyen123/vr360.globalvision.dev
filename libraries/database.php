@@ -292,11 +292,16 @@ class Vr360Database
 		return $row;
 	}
 
-	public function updateUser($data)
+	public function create($table, $data)
+	{
+
+	}
+
+	public function update($table, $data)
 	{
 
 		return $this->medoo->update(
-			'users',
+			$table,
 			$data,
 			[
 				'id' => $data['id']

@@ -22,7 +22,7 @@
 </div>
 
 <div class="modals">
-	<?php //Vr360Layout::load('body.user.modals');?>
+	<?php Vr360Layout::load('body.user.modals');?>
 </div>
 
 <script type="text/javascript" src='./assets/globalvision.js'></script>

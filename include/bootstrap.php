@@ -14,4 +14,5 @@ if (Vr360Authorise::isLogged())
 {
 	$user = Vr360Authorise::getInstance()->getUser();
 	$user->last_visit = date('Y-m-d H:i:s');
+	$user->save();
 }

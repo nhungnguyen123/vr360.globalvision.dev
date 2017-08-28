@@ -5,7 +5,7 @@
          *
          */
         addPano: function () {
-            $('#divMain').append($('#divMain .pano').html());
+            $('#divMain').append($('#divMain #rootPano').html());
         },
 
         removePano: function (el) {

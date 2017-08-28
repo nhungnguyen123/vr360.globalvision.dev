@@ -15,10 +15,10 @@
 	<!-- Tab panes -->
 	<div class="tab-content">
 		<div role="tabpanel" class="tab-pane active" id="tours">
-			<?php require_once __DIR__ . '/tours.php'; ?>
+			<?php Vr360Layout::load('body.user.tabs.tours'); ?>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="create">
-			<?php require_once __DIR__ . '/create.php'; ?>
+			<?php Vr360Layout::load('body.user.tabs.create'); ?>
 		</div>
 	</div>
 </div>

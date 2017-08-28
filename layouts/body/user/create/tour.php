@@ -56,35 +56,37 @@
 		</div>
 		<div class="col-md-6">
 			<div class="dd123" id="divMain">
-				<div class="well well-sm pano">
+				<div id="rootPano">
+					<div class="well well-sm pano">
 
-					<label>Panorama</label>
-					<button
-							type="button" class="btn btn-danger"
-							onclick="vrAdmin.removePano(this); return false;">
-						Remove this pano
-					</button>
-					<hr/>
-					<div class="container-fluid">
-						<div id="panoWrap">
-							<div class="form-group">
-								<label>File input</label>
-								<input type="file" name="file[]" required/>
-								<p class="help-block">Select pano file</p>
-							</div>
+						<label>Panorama</label>
+						<button
+								type="button" class="btn btn-danger"
+								onclick="vrAdmin.removePano(this); return false;">
+							Remove this pano
+						</button>
+						<hr/>
+						<div class="container-fluid">
+							<div id="panoWrap">
+								<div class="form-group">
+									<label>File input</label>
+									<input type="file" name="file[]" required/>
+									<p class="help-block">Select pano file</p>
+								</div>
 
-							<div class="form-group">
-								<label>Title</label>
-								<input name ="panoTitle[]" type="text" class="form-control" placeholder="Pano title"/>
-							</div>
+								<div class="form-group">
+									<label>Title</label>
+									<input name ="panoTitle[]" type="text" class="form-control" placeholder="Pano title"/>
+								</div>
 
-							<div class="form-group">
-								<label>Description</label>
-								<input name ="panoDescription[]" type="text" class="form-control" size="80" placeholder="Pano sub title"/>
+								<div class="form-group">
+									<label>Description</label>
+									<input name ="panoDescription[]" type="text" class="form-control" size="80" placeholder="Pano sub title"/>
+								</div>
 							</div>
 						</div>
-					</div>
 
+					</div>
 				</div>
 			</div>
 		</div>
