@@ -1,6 +1,9 @@
 <?php
-class Vr360Tour extends Vr360Object
+
+class Vr360Tour extends Vr360DatabaseTable
 {
+
+	protected $_table = 'tbl_vtour';
 
 	public function render()
 	{
