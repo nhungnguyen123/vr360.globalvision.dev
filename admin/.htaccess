@@ -1,5 +1,0 @@
-RewriteEngine On
-Header add Access-Control-Allow-Origin *
-
-RewriteRule ^admin.ajax.php/([a-zA-Z]+)/([a-zA-Z0-9]+) admin.ajax.php?mode=$1&data=$2 [L]
-RewriteRule ^admin.ajax.php/([a-zA-Z]+) admin.ajax.php?mode=$1 [L]

@@ -3,7 +3,8 @@
 use Medoo\Medoo;
 
 /**
- * Class dbObj
+ * Class Vr360Database
+ *
  * Model class. Used to work with database
  */
 class Vr360Database
@@ -124,6 +125,11 @@ class Vr360Database
 		);
 	}
 
+	/**
+	 * @param null $userId
+	 *
+	 * @return array|bool
+	 */
 	public function getTours($userId = null)
 	{
 		if ($userId === null)
@@ -217,7 +223,6 @@ class Vr360Database
 			);
 		}
 	}
-
 
 	public function get_row_data($userId, $uid)
 	{

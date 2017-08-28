@@ -1,5 +1,0 @@
-[06-Sep-2016 21:23:28 America/Chicago] PHP Notice:  Undefined index: isAdminLogin in /home/gvch/subdomains/vr360.globalvision.ch/admin/class.admin.php on line 15
-[06-Sep-2016 21:23:34 America/Chicago] PHP Notice:  Undefined index: isAdminLogin in /home/gvch/subdomains/vr360.globalvision.ch/admin/class.admin.php on line 15
-[06-Sep-2016 21:26:16 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/gvch/subdomains/vr360.globalvision.ch/admin/class.admin.php:24) in /home/gvch/subdomains/vr360.globalvision.ch/admin/class.admin.php on line 35
-[06-Sep-2016 21:29:02 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/gvch/subdomains/vr360.globalvision.ch/admin/class.admin.php:24) in /home/gvch/subdomains/vr360.globalvision.ch/admin/class.admin.php on line 35
-[06-Sep-2016 21:29:14 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/gvch/subdomains/vr360.globalvision.ch/admin/class.admin.php:24) in /home/gvch/subdomains/vr360.globalvision.ch/admin/class.admin.php on line 35

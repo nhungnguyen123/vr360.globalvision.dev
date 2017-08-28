@@ -75,9 +75,11 @@ class Vr360Task
 				break;
 			case 'create':
 				// Save to database
+
 				break;
 			case 'generate':
 				// Generate tour via exec
+				exec('');
 				break;
 		}
 
