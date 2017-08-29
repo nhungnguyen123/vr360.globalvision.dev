@@ -9,13 +9,12 @@ use Medoo\Medoo;
 $db = new Medoo(
 	array(
 		'database_type' => 'mysql',
-		'database_name' => 'vr360_dev',
+		'database_name' => 'globalvision_vr360',
 		'server'        => 'localhost',
 		'username'      => 'root',
 		'password'      => 'root'
 	)
 );
-
 
 $aliasList = $db->select(
 	'tbl_friendly_url',
@@ -26,8 +25,8 @@ $aliasList = $db->select(
 foreach ($aliasList as $alias)
 {
 	$tour = $db->select(
-		'tbl_vtour',
-		array('id', 'created_by', 'name', 'alias', 'dir', 'created', 'status'),
+		'tours',
+		array('id', 'name', 'description', 'alias', 'created', '_created', 'created_by', 'dir', 'status'),
 		array('id' => $alias['vtour_id'])
 	);
 
@@ -52,10 +51,55 @@ foreach ($aliasList as $alias)
 	);
 }
 
+/*// Copy tours from another table to this one
+$vTourFull = $db->select(
+	'tbl_vtour_full',
+	array('id', 'user_id', 'u_id', 'date', 'status', 'alias')
+);
+
+foreach ($vTourFull as $tour)
+{
+	$db->insert
+	(
+		'tours',
+		array
+		(
+			'name'       => $tour['alias'],
+			'alias'      => $tour['alias'],
+			'created'    => date("Y-m-d H:i:s", strtotime($tour['date'])),
+			'created_by' => $tour['user_id'],
+			'dir'        => $tour['u_id'],
+			'status'     => $tour['status']
+		)
+	);
+}*/
+
+/*$vTourMeg = $db->select(
+	'tour_meg',
+	array('id', 'user_id', 'tour_des', 'alias', 'u_id', 'date', 'status')
+);
+
+foreach ($vTourMeg as $tour)
+{
+	$db->insert
+	(
+		'tours',
+		array
+		(
+			'name'       => $tour['tour_des'],
+			'alias'      => $tour['alias'],
+			'created'    => date("Y-m-d H:i:s", strtotime($tour['date'])),
+			'created_by' => $tour['user_id'],
+			'dir'        => $tour['u_id'],
+			'status'     => $tour['status']
+		)
+	);
+}*/
+
 // Rename created field to _created and create new created field as DATETIME
 $tours = $db->select(
-	'tbl_vtour',
-	array('id', 'created_by', 'name', 'alias', 'dir', 'created', '_created', 'status')
+	'tours',
+	array('id', 'name', 'description', 'alias', 'created', '_created', 'created_by', 'dir', 'status')
 );
 
 foreach ($tours as $tour)
@@ -92,7 +136,7 @@ foreach ($tours as $tour)
 	}
 
 	$db->update(
-		'tbl_vtour',
+		'tours',
 		$tour,
 		array('id' => $tour['id'])
 	);
