@@ -99,6 +99,6 @@
 	</div>
 
 	<fieldset>
-
+		<input type="hidden" name="<?php echo Vr360Session::getInstance()->get('token'); ?>" value="1" />
 	</fieldset>
 </form>

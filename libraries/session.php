@@ -35,7 +35,7 @@ class Vr360Session
 		}
 
 		$this->status = session_status();
-		$this->id = session_id();
+		$this->id     = session_id();
 
 	}
 
@@ -54,6 +54,13 @@ class Vr360Session
 
 	public function get($property, $default = null)
 	{
+		if ($property == 'token')
+		{
+			if (!isset($_SESSION[$this->namespace][$property]))
+			{
+				$default = $this->generateToken();
+			}
+		}
 		if ($this->isValid())
 		{
 			if (isset($_SESSION[$this->namespace][$property]))
@@ -63,6 +70,11 @@ class Vr360Session
 		}
 
 		return $default;
+	}
+
+	public function generateToken()
+	{
+		return md5(Vr360Configuration::getInstance()->salt . serialize($this->get('user')));
 	}
 
 	public function reset()

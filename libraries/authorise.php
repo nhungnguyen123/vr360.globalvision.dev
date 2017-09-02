@@ -40,7 +40,7 @@ class Vr360Authorise
 	 */
 	public function authorise($userName, $password)
 	{
-		$user = Vr360Database::getInstance()->getUserData($userName);
+		$user       = Vr360Database::getInstance()->getUserData($userName);
 		$this->user = new Vr360User($user);
 
 		if (md5($password) !== $this->user->password)
@@ -48,8 +48,10 @@ class Vr360Authorise
 			return false;
 		}
 
-		Vr360Session::getInstance()->set('logged', true);
-		Vr360Session::getInstance()->set('user', $this->user);
+		$session = Vr360Session::getInstance();
+		$session->set('logged', true);
+		$session->set('user', $this->user);
+		$session->set('token', Vr360Session::getInstance()->generateToken());
 
 		$this->user->last_login = Vr360HelperDatetime::getMySqlFormat();
 		$this->user->save();
@@ -61,8 +63,8 @@ class Vr360Authorise
 	{
 		if (isset($_GET ['signOut']))
 		{
-			$_SESSION ['auth']      = false;
-			$_SESSION ['user']    = null;
+			$_SESSION ['auth'] = false;
+			$_SESSION ['user'] = null;
 
 			session_unset();
 			session_destroy();

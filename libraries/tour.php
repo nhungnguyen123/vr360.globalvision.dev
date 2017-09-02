@@ -25,6 +25,6 @@ class Vr360Tour extends Vr360DatabaseTable
 			$this->created = Vr360HelperDatetime::getMySqlFormat();
 		}
 
-		parent::check();
+		return parent::check();
 	}
 }

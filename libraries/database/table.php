@@ -10,19 +10,21 @@ class Vr360DatabaseTable extends Vr360Object
 
 	public function save()
 	{
-		$this->check();
-
-		if ($this->id === null)
+		if ($this->check())
 		{
-			$properties = $this->getProperties();
-			unset($properties['id']);
-			return Vr360Database::getInstance()->create($this->_table, $properties);
-		}
-		else
-		{
-			return Vr360Database::getInstance()->update($this->_table, $this->getProperties());
+			if ($this->id === null)
+			{
+				$properties = $this->getProperties();
+				unset($properties['id']);
+				return Vr360Database::getInstance()->create($this->_table, $properties);
+			}
+			else
+			{
+				return Vr360Database::getInstance()->update($this->_table, $this->getProperties());
+			}
 		}
 
+		return false;
 	}
 
 	protected function check()
@@ -31,5 +33,7 @@ class Vr360DatabaseTable extends Vr360Object
 		{
 			$this->params = json_encode($this->params);
 		}
+
+		return true;
 	}
 }

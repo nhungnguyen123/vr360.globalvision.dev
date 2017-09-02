@@ -176,24 +176,22 @@ class Vr360Database
 		$limit = 20;
 
 		$rows = $this->medoo->select(
-			'tbl_vtour',
+			'tours',
 			[
-				'[><]tbl_friendly_url' => ['id' => 'vtour_id']
+				'tours.id',
+				'tours.name',
+				'tours.description',
+				'tours.alias',
+				'tours.created',
+				'tours.created_by',
+				'tours.dir',
+				'tours.status'
 			],
 			[
-				'tbl_vtour.id',
-				'tbl_vtour.name',
-				'tbl_vtour.dir',
-				'tbl_vtour.created',
-				'tbl_vtour.created_by',
-				'tbl_vtour.status',
-				'tbl_friendly_url.alias'
-			],
-			[
-				'tbl_vtour.created_by' => (int) $userId,
-				'tbl_vtour.status[!]'  => VR360_TOUR_STATUS_UNPUBLISHED,
+				'tours.created_by' => (int) $userId,
+				'tours.status[!]'  => VR360_TOUR_STATUS_UNPUBLISHED,
 				'ORDER'                => [
-					'tbl_vtour.id' => 'DESC'
+					'tours.id' => 'DESC'
 				],
 			]
 		);
@@ -288,18 +286,6 @@ class Vr360Database
 
 		return $this->medoo->update(
 			$table,
-			$data,
-			[
-				'id' => $data['id']
-			]
-		);
-	}
-
-	public function updateTour($data)
-	{
-
-		return $this->medoo->update(
-			'tbl_vtour',
 			$data,
 			[
 				'id' => $data['id']
