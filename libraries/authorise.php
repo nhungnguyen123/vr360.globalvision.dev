@@ -51,7 +51,7 @@ class Vr360Authorise
 		Vr360Session::getInstance()->set('logged', true);
 		Vr360Session::getInstance()->set('user', $this->user);
 
-		$this->user->last_login = date('Y-m-d H:i:s');
+		$this->user->last_login = Vr360HelperDatetime::getMySqlFormat();
 		$this->user->save();
 
 		return true;

@@ -14,7 +14,9 @@ class Vr360DatabaseTable extends Vr360Object
 
 		if ($this->id === null)
 		{
-			return Vr360Database::getInstance()->create($this->_table, $this->getProperties());
+			$properties = $this->getProperties();
+			unset($properties['id']);
+			return Vr360Database::getInstance()->create($this->_table, $properties);
 		}
 		else
 		{
