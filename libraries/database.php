@@ -73,25 +73,25 @@ class Vr360Database
 	//     $re =  $this->db->query($sql);
 	//     echo $re->errorInfo();
 	// }
-	public function insert_vtour_1($data)
+	public function insert_vtour($data)
 	{
 		// $sql = "INSERT INTO `tbl_vtour` (`id`, `user_id`, `tour_des`, `u_id`, `date`, `status`) VALUES (NULL, ".$data['userId'].", '".$data['tour_des']."', '".$data['UID']."', '".gmdate("M d Y H:i:s")."', '0')";
-		$sql    = "INSERT INTO `tbl_vtour` (`id`, `user_id`, `tour_des`, `u_id`, `date`, `status`) VALUES (NULL, :userId, :tour_des, :UID, :gmdate, '0');";
-		$stmt   = $this->db->prepare($sql);
-		$gmdate = gmdate("M d Y H:i:s");
-		$re     = $stmt->execute([':userId' => $data['userId'], ':tour_des' => $data['tour_des'], ':UID' => $data['UID'], ':gmdate' => $gmdate]);
+		// $sql    = "INSERT INTO `vtour` (`id`, `user_id`, `tour_des`, `u_id`, `date`, `status`, `alias`) VALUES (NULL, :userId, :tour_des, :UID, :gmdate, '0', :alias);";
+		// $stmt   = $this->db->prepare($sql);
+		// $gmdate = date('Y-m-d H:i:s');
+		// $re     = $stmt->execute([':userId' => $data['userId'], ':tour_des' => $data['tour_des'], ':UID' => $data['UID'], ':gmdate' => $gmdate, ':alias' => $data['alias']]);
 
-
-		// $this->db->lastInsertId();
-		$sql1         = "SELECT id FROM `tbl_vtour` ORDER BY `id` DESC LIMIT 1;";
-		$resultHander = $this->db->query($sql1);
-		$row          = $resultHander->fetch(PDO::FETCH_ASSOC);
-		$vtour_id     = $row['id'];
-		//$sql2 = "INSERT INTO `tbl_friendly_url` (`id`, `alias`, `vtour_id`) VALUES (NULL,'".$data['tour_url']."', $vtour_id)";
-		$sql2          = "INSERT INTO `tbl_friendly_url` (`id`, `alias`, `vtour_id`) VALUES (NULL, :tour_url, :vtour_id);";
-		$stmt2         = $this->db->prepare($sql2);
-		$resultHander1 = $stmt2->execute([':tour_url' => $data['tour_url'], ':vtour_id' => $vtour_id]);
-		//echo $re->errorInfo();
+		$result = $this->medoo->insert('tours', $data);
+		// // $this->db->lastInsertId();
+		// $sql1         = "SELECT id FROM `tbl_vtour` ORDER BY `id` DESC LIMIT 1;";
+		// $resultHander = $this->db->query($sql1);
+		// $row          = $resultHander->fetch(PDO::FETCH_ASSOC);
+		// $vtour_id     = $row['id'];
+		// //$sql2 = "INSERT INTO `tbl_friendly_url` (`id`, `alias`, `vtour_id`) VALUES (NULL,'".$data['tour_url']."', $vtour_id)";
+		// $sql2          = "INSERT INTO `tbl_friendly_url` (`id`, `alias`, `vtour_id`) VALUES (NULL, :tour_url, :vtour_id);";
+		// $stmt2         = $this->db->prepare($sql2);
+		// $resultHander1 = $stmt2->execute([':tour_url' => $data['tour_url'], ':vtour_id' => $vtour_id]);
+		// //echo $re->errorInfo();
 	}
 
 	public function update_vtour($data)

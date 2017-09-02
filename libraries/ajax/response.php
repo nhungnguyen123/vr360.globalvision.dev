@@ -10,6 +10,13 @@ class Vr360AjaxResponse extends Vr360Object
 		return $this;
 	}
 
+	public function setData($key, $key_value)
+	{
+		$this->data[$key] = $key_value;
+
+		return $this;
+	}
+
 	public function success()
 	{
 		$this->status = true;

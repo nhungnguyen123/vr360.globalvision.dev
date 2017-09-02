@@ -27,53 +27,40 @@
                 formData.append('task', 'createTour');
                 formData.append('step', 'upload');
                 $.ajax({
-                    url: 'index.php',
-                    type: 'POST',
-                    data: formData,
-                    async: true,
-                    cache: false,
-                    contentType: false,
-                    processData: false
+                  url: 'index.php',
+                  type: 'POST',
+                  data: formData,
+                  async: true,
+                  cache: false,
+                  contentType: false,
+                  processData: false
+                }).done(function (data, textStatus, jqXHR) {
+                  // Upload file success
+                  if (data.status == true)
+                  {
+                    reqData = new FormData();
+                    reqData.append('task', 'createTour');
+                    reqData.append('step', 'generate');
+                    reqData.append('uId', data.data.uId);
+                    $.ajax({
+                        url: 'index.php',
+                        type: 'POST',
+                        data: reqData,
+                        async: false,
+
+                        cache: false,
+                        contentType: false,
+                        processData: false
+                    }).done(function (data, textStatus, jqXHR){
+
+                        })
+                  }
+                  else
+                  {
+                      // Error if files are not valid
+                      vrLog.append(data.message);
+                  }
                 })
-                    .done(function (data, textStatus, jqXHR) {
-                        // Upload file success
-                        if (data.status == true)
-                        {
-                            formData.step = 'create';
-                            $.ajax({
-                                url: 'index.php',
-                                type: 'POST',
-                                data: formData,
-                                async: false,
-
-                                cache: false,
-                                contentType: false,
-                                processData: false
-                            })
-                                .done(function (data, textStatus, jqXHR){
-                                    // Last step
-                                    formData.step = 'generate';
-                                    $.ajax({
-                                        url: 'index.php',
-                                        type: 'POST',
-                                        data: formData,
-                                        async: false,
-
-                                        cache: false,
-                                        contentType: false,
-                                        processData: false
-                                    })
-                                        .done(function (data, textStatus, jqXHR){
-                                            // Reload
-                                        })
-                                })
-                        }
-                        else
-                        {
-                            // Error if files are not valid
-                            vrLog.append(data.message);
-                        }
-                    })
 
                 e.preventDefault();
             })

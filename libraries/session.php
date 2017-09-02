@@ -7,7 +7,7 @@ class Vr360Session
 	protected $namespace = '\GLOBALVISION\VR360';
 
 	protected $config = array(
-		'gc_maxlifetime' => 60 * 60 * 24
+		'gc_maxlifetime' => 86400 //f** my code not work with 60 * 60 * 24
 	);
 
 	public function __construct()
