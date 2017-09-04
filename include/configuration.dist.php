@@ -11,7 +11,7 @@ class Vr360Configuration
 	public $dbServer = 'localhost';
 	public $siteName = 'Vr360 - Globalvision';
 
-	public $allowMimeTypes = array ('image/png', 'image/jpeg', 'image/gif');
+	public $allowMimeTypes = array ('image/png', 'image/jpeg');
 
 	public $salt = '?xlE7%:EmC$u yt;l;wBw&dyt^@/E+*`>bO&oGS&jZn|!AIQ/%XY/23nK/{h2.AJ\')';
 	public $cookie_time = 86400;
