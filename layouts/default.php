@@ -10,9 +10,9 @@
 	<div class="row" style="margin-top: 15px">
 		<div class="col-md-12">
 			<?php if (!Vr360Authorise::isLogged()): ?>
-				<?php Vr360Layout::load('body.guest.guest'); ?>
+				<?php Vr360Layout::load('body.guest.default'); ?>
 			<?php else: ?>
-				<?php Vr360Layout::load('body.user.user'); ?>
+				<?php Vr360Layout::load('body.user.default'); ?>
 			<?php endif; ?>
 		</div>
 		<div class="col-md-12">

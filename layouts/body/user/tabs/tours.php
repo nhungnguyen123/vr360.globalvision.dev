@@ -1,6 +1,10 @@
 <?php defined('_VR360') or die; ?>
 
-<?php $tours = Vr360Database::getInstance()->getTours(); ?>
+<?php
+$modelTours = Vr360ModelTours::getInstance();
+$tours      = $modelTours->getList();
+$pagination = $modelTours->getPagination();
+?>
 
 <?php if (!empty($tours)): ?>
 	<table id='vTours' class="table table-condensed table-bordered table-responsive table-hover"
@@ -22,7 +26,5 @@
 		</tbody>
 	</table>
 
-	<?php Vr360Layout::load('body.user.tours.pagination'); ?>
+	<?php Vr360Layout::load('body.user.tours.pagination', array('pagination' => $pagination)); ?>
 <?php endif; ?>
-
-<?php Vr360Layout::load('body.user.modals.embed'); ?>

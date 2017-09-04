@@ -8,11 +8,11 @@
 	<td class="status"><?php echo ($tour->status == 1) ? '<i class="fa fa-check" aria-hidden="true"></i>' : '' ; ?></td>
 	<td class="controls">
 		<!-- Embed -->
-		<button type="button" class="btn btn-default" onclick="vrAdmin.vrTours.getEmbed(<?php echo $tour->id; ?>)">
+		<button type="button" class="btn btn-default embedCode" data-id="<?php echo $tour->id; ?>">
 			<i class="fa fa-code" aria-hidden="true"></i> Get EmbedCode
 		</button>
 		<!-- Edit -->
-		<button type="button" class="btn btn-primary" onclick="vrAdmin.vrTours.edit(<?php echo $tour->id; ?>)">
+		<button type="button" class="btn btn-primary editTour" data-id="<?php echo $tour->id; ?>">
 			<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
 		</button>
 		<!-- Preview -->

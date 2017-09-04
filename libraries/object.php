@@ -1,5 +1,7 @@
 <?php
 
+defined('_VR360') or die;
+
 class Vr360Object
 {
 

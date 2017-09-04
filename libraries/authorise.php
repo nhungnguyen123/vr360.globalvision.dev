@@ -1,7 +1,15 @@
 <?php
 
+/**
+ * Class Vr360Authorise
+ */
 class Vr360Authorise
 {
+	/**
+	 * @var  Vr360TableUser
+	 */
+	public $user;
+
 	public static function getInstance()
 	{
 		static $instance;
@@ -19,7 +27,7 @@ class Vr360Authorise
 	 *
 	 * @return bool
 	 */
-	public function signIn()
+	public function login()
 	{
 		if (isset($_POST ['username']) && isset($_POST ['password']) && !self::isLogged())
 		{
@@ -41,36 +49,32 @@ class Vr360Authorise
 	public function authorise($userName, $password)
 	{
 		$user       = Vr360Database::getInstance()->getUserData($userName);
-		$this->user = new Vr360User($user);
+		$this->user = new Vr360TableUser($user);
 
+		// Password verify
 		if (md5($password) !== $this->user->password)
 		{
 			return false;
 		}
 
+		// Save session
 		$session = Vr360Session::getInstance();
 		$session->set('logged', true);
 		$session->set('user', $this->user);
 		$session->set('token', Vr360Session::getInstance()->generateToken());
 
-		$this->user->last_login = Vr360HelperDatetime::getMySqlFormat();
-		$this->user->save();
+		// Update last login
+		$this->user->updateLastLogin();
 
 		return true;
 	}
 
-	public function signOut()
+	public function logout()
 	{
-		if (isset($_GET ['signOut']))
-		{
-			$_SESSION ['auth'] = false;
-			$_SESSION ['user'] = null;
-
-			session_unset();
-			session_destroy();
-
-			return true;
-		}
+		$session = Vr360Session::getInstance();
+		$session->reset();
+		$session->set('logged', false);
+		$session->set('token', Vr360Session::getInstance()->generateToken());
 	}
 
 	/**

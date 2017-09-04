@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class Vr360Configuration
+ */
 class Vr360Configuration
 {
 	public $dbName = 'globalvision_vr360';
@@ -9,7 +12,9 @@ class Vr360Configuration
 	public $siteName = 'Vr360 - Globalvision';
 
 	public $allowMimeTypes = array ('image/png', 'image/jpeg', 'image/gif');
+
 	public $salt = '?xlE7%:EmC$u yt;l;wBw&dyt^@/E+*`>bO&oGS&jZn|!AIQ/%XY/23nK/{h2.AJ\')';
+	public $cookie_time = 86400;
 
 	public static function getInstance()
 	{

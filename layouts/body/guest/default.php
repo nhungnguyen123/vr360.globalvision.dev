@@ -1,8 +1,8 @@
 <?php defined('_VR360') or die; ?>
 
-<?php Vr360Layout::load('body.logo');?>
+<?php Vr360Layout::load('body.logo'); ?>
 <div class="col-md-12">
-	<form action="./index.php" method="post" style="">
+	<form action="index.php" method="post" style="">
 
 		<div class="input-group">
 			<span class="input-group-addon" id="basic-addon1">Username</span>

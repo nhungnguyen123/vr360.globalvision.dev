@@ -14,11 +14,16 @@
 	</ul>
 	<!-- Tab panes -->
 	<div class="tab-content">
+		<!-- Tours -->
 		<div role="tabpanel" class="tab-pane active" id="tours">
 			<?php Vr360Layout::load('body.user.tabs.tours'); ?>
 		</div>
+		<!-- Create -->
 		<div role="tabpanel" class="tab-pane" id="create">
 			<?php Vr360Layout::load('body.user.tabs.create'); ?>
 		</div>
 	</div>
 </div>
+
+<?php Vr360Layout::load('body.user.modals.embed'); ?>
+<?php Vr360Layout::load('body.user.modals.edit'); ?>

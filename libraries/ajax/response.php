@@ -1,5 +1,10 @@
 <?php
 
+defined('_VR360') or die;
+
+/**
+ * Class Vr360AjaxResponse
+ */
 class Vr360AjaxResponse extends Vr360Object
 {
 
@@ -24,14 +29,14 @@ class Vr360AjaxResponse extends Vr360Object
 		return $this;
 	}
 
-	public function fail ()
+	public function fail()
 	{
 		$this->status = false;
 
 		return $this;
 	}
 
-	public function respond ()
+	public function respond()
 	{
 		header('Content-Type: application/json');
 		echo $this->toJson();

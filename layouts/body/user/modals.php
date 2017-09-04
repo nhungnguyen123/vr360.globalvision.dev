@@ -13,7 +13,6 @@
 				<h4 class="modal-title" id="myModalLabel">Create new vTour</h4>
 			</div>
 			<div class="modal-body">
-
 			</div>
 		</div>
 	</div>

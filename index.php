@@ -4,8 +4,6 @@ require_once __DIR__ .'/include/bootstrap.php';
 
 $task = isset($_REQUEST['task']) ? $_REQUEST['task'] : '';
 
-// var_dump($_POST); die();
-
 if (!empty($task))
 {
 	if (method_exists('Vr360Task', $task) && is_callable('Vr360Task', $task))
@@ -14,4 +12,4 @@ if (!empty($task))
 	}
 }
 
-Vr360Layout::load('default');
+Vr360Layout::load(isset($_REQUEST['layout']) ? $_REQUEST['layout'] : 'default');

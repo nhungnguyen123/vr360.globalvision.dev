@@ -1,17 +1,18 @@
 <?php
 
+defined('_VR360') or die;
+
 class Vr360Session
 {
 	protected $status;
 	protected $id;
 	protected $namespace = '\GLOBALVISION\VR360';
 
-	protected $config = array(
-		'gc_maxlifetime' => 86400 //f** my code not work with 60 * 60 * 24
-	);
+	protected $config = array();
 
 	public function __construct()
 	{
+		$this->config['gc_maxlifetime'] = Vr360Configuration::getInstance()->cookie_time;
 		$this->start();
 	}
 

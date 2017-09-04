@@ -1,7 +1,9 @@
 <?php
 
+defined('_VR360') or die;
+
 /**
- * Class Vr360Task
+ * Class Vr360HelperDatetime
  */
 class Vr360HelperDatetime
 {

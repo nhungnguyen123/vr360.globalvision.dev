@@ -1,5 +1,10 @@
 <?php
 
+defined('_VR360') or die;
+
+/**
+ * Class Vr360HelperTour
+ */
 class Vr360HelperTour
 {
 	/**
@@ -30,6 +35,11 @@ class Vr360HelperTour
 		return true;
 	}
 
+	/**
+	 * @param $fileName
+	 *
+	 * @return string
+	 */
 	public static function generateFilename($fileName)
 	{
 		$fileName = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $fileName);
@@ -39,7 +49,13 @@ class Vr360HelperTour
 		return md5(uniqid('sth', true)) . '_' . $fileName;
 	}
 
-	public static function tourCreate($uId, $jsonData)
+	/**
+	 * @param $uId
+	 * @param $jsonData
+	 *
+	 * @return string
+	 */
+	public static function generateTour($uId, $jsonData)
 	{
 		$pre_img_dir = "./_/$uId/";
 
@@ -51,7 +67,13 @@ class Vr360HelperTour
 		return exec($krPanoPATH . $krPanoCongig . $krPanoListImage);
 	}
 
-	public static function xmlCreate($uId, $jsonData)
+	/**
+	 * @param $uId
+	 * @param $jsonData
+	 *
+	 * @return bool|int
+	 */
+	public static function generateXml($uId, $jsonData)
 	{
 		$tagetXmlFile = "./_/$uId/vtour/tour.xml";
 
@@ -120,6 +142,12 @@ class Vr360HelperTour
 
 	public static function createDataDir()
 	{
+		// Create data directory first
+		if (!file_exists(VR360_PATH_DATA))
+		{
+			mkdir(VR360_PATH_DATA);
+		}
+
 		// @TODO Do not create directory if we are not sure about this submit yet
 		$uId = Vr360HelperTour::generateUId();
 

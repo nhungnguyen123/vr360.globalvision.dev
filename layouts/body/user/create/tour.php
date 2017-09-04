@@ -30,10 +30,10 @@
 
 				<div class="col-md-12">
 					<div class="dd123" id="GUIControl">
-						<button type="submit" id="submitButton" class="btn btn-primary">
+						<button type="submit" id="createTour" class="btn btn-primary">
 							<i class="fa fa-window-restore" aria-hidden="true"></i> Create new vTour
 						</button>
-						<button type="button" id="addButton" class="btn btn-info">
+						<button type="button" id="addPano" class="btn btn-info addPano">
 							<i class="fa fa-plus-square" aria-hidden="true"></i> Add more panoramas
 						</button>
 					</div>
@@ -99,6 +99,6 @@
 	</div>
 
 	<fieldset>
-		<input type="hidden" name="<?php echo Vr360Session::getInstance()->get('token'); ?>" value="1" />
+		<input type="hidden" name="<?php echo Vr360Session::getInstance()->get('token'); ?>" value="1"/>
 	</fieldset>
 </form>
