@@ -113,7 +113,7 @@ class Vr360ModelTour extends Vr360Database
 				Vr360HelperFolder::delete($destDir);
 			}
 
-
+			$ajax->setData('token', Vr360Session::getInstance()->get('token'));
 			$ajax->setData('id', $tour->id)->setMessage('Tour created success. Please wait for generate');
 			$ajax->success()->respond();
 		}

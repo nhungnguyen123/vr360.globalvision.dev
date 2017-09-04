@@ -84,6 +84,7 @@
 							reqData = new FormData();
 
 							// Prepare data for next ajax
+							reqData.append(data.data.token, 1);
 							reqData.append('task', 'createTour');
 							reqData.append('step', 'generate');
 							reqData.append('id', data.data.id);

@@ -16,6 +16,13 @@ class Vr360Configuration
 	public $salt = '?xlE7%:EmC$u yt;l;wBw&dyt^@/E+*`>bO&oGS&jZn|!AIQ/%XY/23nK/{h2.AJ\')';
 	public $cookie_time = 86400;
 
+	public $mailHost = '';
+	public $mailUsername = '';
+	public $mailPassword = '';
+	public $mailSecure = '';
+	public $mailPort = '';
+	public $mailer = 'sendmail';
+
 	public static function getInstance()
 	{
 		static $instance;
