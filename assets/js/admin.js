@@ -57,6 +57,37 @@
 			})
 		},
 
+		hookButtonRemoveTour: function()
+		{
+			$(document).on('click', '.removeTour', function (e) {
+
+				if ( confirm("Are you sure") )
+				{
+					var elId = parseInt($(this).attr('data-id'));
+
+					// Ajax to get edit tour HTML form
+					$.ajax({
+						url: 'index.php',
+						type: 'POST',
+						data: {
+							'task': 'removeTour',
+							'id': elId
+						},
+						async: true,
+						cache: false
+					})
+						.done(function (data, textStatus, jqXHR) {
+							if (data.status === true)
+							{
+								$('#vtour-' + elId).fadeOut(300, function(){ $(this).remove();});
+							}
+						})
+				}
+
+				e.preventDefault();
+			})
+		},
+
 		/**
 		 * Create new tour
 		 */
@@ -127,8 +158,9 @@
 	w.vrAdmin = vrAdmin;
 
 	$(document).ready(function () {
-		vrAdmin.hookButtonEditTour();
 		vrAdmin.hookButtonGetEmbed();
+		vrAdmin.hookButtonEditTour();
+		vrAdmin.hookButtonRemoveTour();
 
 		vrAdmin.hookButtonAddPano();
 		vrAdmin.hookButtonCreateTour();

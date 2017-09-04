@@ -171,4 +171,22 @@ class Vr360ModelTour extends Vr360Database
 			$ajax->success()->respond();
 		}
 	}
+
+	public function ajaxRemoveTour()
+	{
+		$ajax = new Vr360AjaxResponse();
+
+		if ($this->medoo->delete('tours',
+			array(
+				'id'         => (int) $_POST['id'],
+				'created_by' => Vr360Authorise::getInstance()->getUser()->id
+			)
+		))
+		{
+			$ajax->success()->respond();
+		}
+
+		$ajax->fail()->success();
+
+	}
 }

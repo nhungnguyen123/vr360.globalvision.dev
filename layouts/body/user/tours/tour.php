@@ -18,7 +18,7 @@
 		<!-- Preview -->
 		<button type="button" class="btn btn-info" onclick="vrAdmin.vrTours.preview(<?php echo $tour->id; ?>)">
 			<i class="fa fa-external-link" aria-hidden="true"></i> Preview</button>
-		<button type="button" class="btn btn-danger" onclick="vrAdmin.vrTours.removeTour(<?php echo $tour->id; ?>)">
+		<button type="button" class="btn btn-danger removeTour" data-id="<?php echo $tour->id; ?>">
 			<i class="fa fa-eraser" aria-hidden="true"></i> Remove
 		</button>
 	</td>
