@@ -4,8 +4,9 @@
 		/**
 		 *
 		 */
-		addPano: function () {
-			$('#divMain').append($('#divMain #rootPano').html());
+		addPano: function (el) {
+			var target =$(el).parent().parent().parent().parent()
+			$(target).find('#divMain').append($('#divMain #rootPano').html());
 		},
 
 		removePano: function (el) {
@@ -22,7 +23,7 @@
 		 * Show modal with embed code
 		 */
 		hookButtonGetEmbed: function () {
-			$(document).on('click', '.embedCode',  function (e) {
+			$(document).on('click', '.embedCode', function (e) {
 				var elId = $(this).attr('data-id');
 				vrAdmin.vrTours.getEmbed(elId);
 				e.preventDefault();
@@ -33,7 +34,7 @@
 		 * Show model with edit form
 		 */
 		hookButtonEditTour: function () {
-			$(document).on('click', '.editTour',  function (e) {
+			$(document).on('click', '.editTour', function (e) {
 				var elId = $(this).attr('data-id');
 
 				// Ajax to get edit tour HTML form
@@ -41,13 +42,14 @@
 					url: 'index.php',
 					type: 'POST',
 					data: {
-						'task': 'getEditTourHtml'
+						'task': 'getEditTourHtml',
+						'id': parseInt(elId)
 					},
 					async: true,
 					cache: false
 				})
 					.done(function (data, textStatus, jqXHR) {
-						$('#editTour.modal .modal-body').html(data.html);
+						$('#editTour.modal .modal-body .container-fluid').html(data.data.html);
 						$('#editTour').modal('show');
 					})
 
@@ -116,7 +118,7 @@
 		 */
 		hookButtonAddPano: function () {
 			$(document).on('click', 'button#addPano', function (e) {
-				vrAdmin.addPano();
+				vrAdmin.addPano(this);
 				e.preventDefault();
 			})
 		},

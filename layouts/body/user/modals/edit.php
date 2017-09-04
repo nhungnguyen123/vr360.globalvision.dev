@@ -11,7 +11,9 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-				<?php Vr360Layout::load('body.user.create.tour'); ?>
+	<div class="container-fluid">
+
+	</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
