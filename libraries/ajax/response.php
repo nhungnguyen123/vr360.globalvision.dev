@@ -24,6 +24,7 @@ class Vr360AjaxResponse extends Vr360Object
 
 	public function success()
 	{
+		$this->message = '<span class="label label-success">' . $this->message. '</span>';
 		$this->status = true;
 
 		return $this;
@@ -31,6 +32,7 @@ class Vr360AjaxResponse extends Vr360Object
 
 	public function fail()
 	{
+		$this->message = '<span class="label label-danger">' . $this->message. '</span>';
 		$this->status = false;
 
 		return $this;

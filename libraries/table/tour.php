@@ -17,6 +17,7 @@ class Vr360TableTour extends Vr360TableBase
 	public $status = null;
 
 	protected $_table = 'tours';
+	protected $_errors;
 
 	/**
 	 * Render a tour
@@ -33,9 +34,10 @@ class Vr360TableTour extends Vr360TableBase
 		$tableTour->load(array('alias' => $this->alias));
 
 		// This alias already exists
-		if ($tableTour->id === null)
+		if ($tableTour->id !== null)
 		{
-			return false;
+			// Append ID
+			$this->alias = $this->alias . '-' . $this->id;
 		}
 
 		if (
@@ -44,8 +46,24 @@ class Vr360TableTour extends Vr360TableBase
 			|| empty($this->dir)
 		)
 		{
+
 			return false;
 		}
+
+		// Replace double byte whitespaces by single byte (East Asian languages)
+		$str = preg_replace('/\xE3\x80\x80/', ' ', $this->alias);
+		// Remove any '-' from the string as they will be used as concatenator.
+		// Would be great to let the spaces in but only Firefox is friendly with this
+		$str = str_replace('-', ' ', $str);
+		// Replace forbidden characters by whitespaces
+		$str = preg_replace('#[:\#\*"@+=;!><&\.%()\]\/\'\\\\|\[]#', "\x20", $str);
+		// Delete all '?'
+		$str = str_replace('?', '', $str);
+		// Trim white spaces at beginning and end of alias and make lowercase
+		$str = trim(strtolower($str));
+		// Remove any duplicate whitespace and replace whitespaces by hyphens
+		$str = preg_replace('#\x20+#', '-', $str);
+		$this->alias = $str;
 
 		if ($this->created === null)
 		{
@@ -73,5 +91,10 @@ class Vr360TableTour extends Vr360TableBase
 		}
 
 		return file_get_contents($jsonFile);
+	}
+
+	public function getErrors()
+	{
+		return $this->_errors;
 	}
 }

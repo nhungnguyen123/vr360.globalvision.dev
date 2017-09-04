@@ -111,6 +111,7 @@ class Vr360ModelTour extends Vr360Database
 			{
 				// Delete directory was created
 				Vr360HelperFolder::delete($destDir);
+				$ajax->setMessage('Can not create tour')->setMessage($tour->getErrors())->fail()->respond();
 			}
 
 			$ajax->setData('token', Vr360Session::getInstance()->get('token'));

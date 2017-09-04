@@ -23,7 +23,10 @@ class Vr360HelperFolder
 				self::delete($file);
 			}
 
-			rmdir($dirPath);
+			if (file_exists($dirPath))
+			{
+				rmdir($dirPath);
+			}
 		}
 		elseif (is_file($dirPath))
 		{

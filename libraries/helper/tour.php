@@ -140,6 +140,9 @@ class Vr360HelperTour
 		return $uId . '_' . md5(uniqid('', true));
 	}
 
+	/**
+	 * @return bool|string
+	 */
 	public static function createDataDir()
 	{
 		// Create data directory first
@@ -148,17 +151,7 @@ class Vr360HelperTour
 			mkdir(VR360_PATH_DATA);
 		}
 
-		// @TODO Do not create directory if we are not sure about this submit yet
 		$uId = Vr360HelperTour::generateUId();
-
-		// Create data directory first
-		if (!file_exists(VR360_PATH_DATA))
-		{
-			if (mkdir(VR360_PATH_DATA))
-			{
-				return false;
-			}
-		}
 
 		if (!mkdir(VR360_PATH_DATA . '/' . $uId))
 		{
