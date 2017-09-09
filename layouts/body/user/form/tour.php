@@ -8,13 +8,13 @@
 				<div class="form-group">
 					<label for="tour_des">Name of vTour</label>
 					<input type="text" class="form-control" id="name" name="name" placeholder="Name of this tour"
-					       required>
+					      value="<?php if (isset($vTourName)) echo $vTourName; ?>" required>
 				</div>
 				<!-- Alias -->
 				<div class="form-group">
 					<label for="tour_url">URL friendly</label>
 					<input type="text" class="form-control" id="alias" name="alias"
-					       placeholder="URL friendly of this tour" required>
+					       placeholder="URL friendly of this tour" value="<?php if (isset($vTourAlias)) echo $vTourAlias; ?>" required>
 				</div>
 
 				<!-- Options -->
