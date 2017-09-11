@@ -79,17 +79,21 @@ class Vr360Task
 	{
 		$ajax = new Vr360AjaxResponse;
 
-    $data = file_get_contents("./_/".$_POST['uId']."/data.json");  //uhm, maybe need to load uid from db..//
+    $dataJson = file_get_contents("./_/".$_POST['uId']."/data.json");  //uhm, maybe need to load uid from db..//
 
-    $data = $data ? json_decode($data, true) : $ajax->setMessage('Cant read: data JSON')->fail()->respond();
+    $data = $dataJson ? json_decode($dataJson, true) : $ajax->setMessage('Cant read: data JSON')->fail()->respond();
 
     $layoutData = [];
     $layoutData['vTourName']  = $data['name'];
     $layoutData['vTourAlias'] = $data['alias'];
+    $layoutData['dataJson'] = $dataJson;
+    $layoutData['Id'] = $_POST['id'];
+    $layoutData['uId'] = $_POST['uId'];
+    $layoutData['edit'] = true;
 
 		$html = Vr360Layout::fetch('body.user.form.tour', $layoutData);
 
-		$ajax->setData('html', $html)->setData('jsonData', $data)->success()->respond();
+		$ajax->setMessage('')->setData('html', $html)->setData('jsonData', $data)->success()->respond();
 	}
 
 	public static function resetPassword()

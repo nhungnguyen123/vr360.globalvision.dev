@@ -75,7 +75,7 @@
 								<div class="form-group">
 									<label>File input</label>
 									<input type="file" name="file[]" required/>
-									<p class="help-block">Select pano file</p>
+									<p class="help-block hb-select-pano-file">Select pano file</p>
 								</div>
 
 								<div class="form-group">
@@ -100,5 +100,10 @@
 
 	<fieldset>
 		<input type="hidden" name="<?php echo Vr360Session::getInstance()->get('token'); ?>" value="1"/>
+		<?php if (isset($edit)): ?>
+			<input type="hidden" name="edit" value="1"/>
+			<input type="hidden" name="uId" value="<?php echo $uId; ?>"/>
+			<input type="hidden" name="Id" value="<?php echo $Id; ?>"/>
+		<?php endif; ?>
 	</fieldset>
 </form>

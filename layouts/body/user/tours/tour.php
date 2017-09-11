@@ -12,7 +12,7 @@
 			<i class="fa fa-code" aria-hidden="true"></i> Get EmbedCode
 		</button>
 		<!-- Edit -->
-		<button type="button" class="btn btn-primary editTour" data-id="<?php echo $tour->id; ?>">
+		<button type="button" class="btn btn-primary editTour" data-id="<?php echo $tour->id; ?>" data-uid="<?php echo $tour->dir; ?>">
 			<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
 		</button>
 		<!-- Preview -->

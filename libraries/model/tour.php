@@ -34,20 +34,45 @@ class Vr360ModelTour extends Vr360Database
 		if (
 			empty($_POST['name'])
 			|| empty($_POST['alias'])
-			|| empty($_FILES)
+			// || empty($_FILES) // this is disable due to editmode being code
 		)
 		{
 			$ajax->setMessage('Missed fields')->fail()->respond();
 		}
 
-		$numberOfFiles = count($_FILES['file']['name']);
 
+		$jsonData          = json_decode(json_encode($_POST), true);
+		$jsonData['files'] = [];
+
+		// ----------------------------------------------------------------------
+
+		if(isset($_POST['edit'])) // move to sth->filesWhenEdit(); ?
+		{
+			$destDir = VR360_PATH_DATA . '/' . $_POST['uId'];
+			$jsonDataSaved = json_decode(file_get_contents("$destDir/data.json"), true);
+			// !isset($_POST['editFiles']) do what ever?
+
+			// --------------
+			foreach ($_POST['editFiles'] as $key => $file)
+			{
+				$jsonData['files'][] = $file;
+			}
+			// compare this to $jsonData['files'] and remove files
+			//we will remove file when update okie
+			$listFileToRemove = array_diff($jsonData['files'], $jsonDataSaved['files']);
+		}
+
+		// ----------------------------------------------------------------------
+
+
+		$numberOfFiles = isset($_FILES['file']['name']) ? count($_FILES['file']['name']) : 0;
 		if ($numberOfFiles > 0)
 		{
+			die('....');
 			// @TODO We need to get things we need and validate it before use!
-			$jsonData          = json_decode(json_encode($_POST), true);
-			$jsonData['files'] = [];
 
+
+		//--------------------------------------------------------------------------
 			$validFiles = array();
 
 			// Files validate
@@ -64,9 +89,11 @@ class Vr360ModelTour extends Vr360Database
 				$newFileName    = Vr360HelperTour::generateFilename($_FILES['file']['name'][$i]);
 				$validFiles[$i] = $newFileName;
 			}
+		//--------------------------------------------------------------------------
 
 			// All files are validated than loop again to make json data
-			$uId = Vr360HelperTour::createDataDir();
+
+			$uId = isset($_POST['edit']) ? $_POST['uId'] : Vr360HelperTour::createDataDir(); //actualy, I thinks we shoud get uID from db or json file. More securyties.
 
 			if ($uId === false)
 			{
@@ -75,6 +102,8 @@ class Vr360ModelTour extends Vr360Database
 			}
 
 			$destDir = VR360_PATH_DATA . '/' . $uId;
+
+		//--------------------------------------------------------------------------
 
 			foreach ($validFiles as $index => $fileName)
 			{
@@ -89,24 +118,30 @@ class Vr360ModelTour extends Vr360Database
 				$jsonData['files'][] = $fileName;
 			}
 
+		}
+		//--------------------------------------------------------------------------
+
 			// Create json file
 			$jsonFile = $destDir . "/data.json";
+			echo $jsonFile, "\n";
+			die(json_encode($jsonData));
 			if (!file_put_contents($jsonFile, json_encode($jsonData)))
 			{
 				$ajax->setMessage("Cant create JSON file")->fail()->respond();
 			}
 
 			$tour = new Vr360TableTour();
-			$tour->setProperties(
-				array(
-					'name'   => $_POST['name'],
-					'dir'    => $uId,
-					'alias'  => $_POST['alias'], //alias must be unique
-					'status' => VR360_TOUR_STATUS_PENDING
-				)
+			$tourProperties = array(
+				'name'   => $_POST['name'],
+				'dir'    => $uId,
+				'alias'  => $_POST['alias'], //alias must be unique
+				'status' => VR360_TOUR_STATUS_PENDING,
+				'description' => ''
 			);
+			if (isset($_POST['edit'])) $tourProperties['id'] = $_POST['Id'];
 
-			// Create tour record
+			$tour->setProperties($tourProperties);
+
 			if ($tour->save() === false)
 			{
 				// Delete directory was created
@@ -114,10 +149,15 @@ class Vr360ModelTour extends Vr360Database
 				$ajax->setMessage('Can not create tour')->setMessage($tour->getErrors())->fail()->respond();
 			}
 
-			$ajax->setData('token', Vr360Session::getInstance()->get('token'));
-			$ajax->setData('id', $tour->id)->setMessage('Tour created success. Please wait for generate');
-			$ajax->success()->respond();
-		}
+			$ajax
+					->setData('token', Vr360Session::getInstance()
+					->get('token'))
+					->setData('id', $tour->id)
+					->setData('uId', $tour->dir)
+					->setMessage('Tour created success. Please wait for generate')
+					->success()
+					->respond();
+
 	}
 
 	public function ajaxGenerateTour()
