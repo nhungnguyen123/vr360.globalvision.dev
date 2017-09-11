@@ -40,6 +40,7 @@ class Vr360ModelTour extends Vr360Database
 			$ajax->setMessage('Missed fields')->fail()->respond();
 		}
 
+		$uId = isset($_POST['edit']) ? $_POST['uId'] : NULL;
 
 		$jsonData          = json_decode(json_encode($_POST), true);
 		$jsonData['files'] = [];

@@ -59,6 +59,8 @@ class Vr360HelperTour
 	{
 		$pre_img_dir = "./_/$uId/";
 
+		if(is_file("$pre_img_dir/vtour/tour.xml")) unlink("$pre_img_dir/vtour/tour.xml");
+
 		$krPanoPATH      = './assets/krpano/krpanotools ';
 		$krPanoCongig    = 'makepano -config=./assets/krpano/templates/vtour-normal.config ';
 		$krPanoListImage = $pre_img_dir . implode(" $pre_img_dir", $jsonData['files']);
