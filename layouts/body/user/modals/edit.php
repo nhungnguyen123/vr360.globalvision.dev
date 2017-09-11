@@ -1,7 +1,7 @@
 <?php defined('_VR360') or die; ?>
 
 <!-- Edit tour modal -->
-<div class="modal fade" id="editTour" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal" id="editTour" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -21,4 +21,3 @@
 		</div>
 	</div>
 </div>
-

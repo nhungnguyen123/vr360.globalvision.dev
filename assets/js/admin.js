@@ -1,12 +1,46 @@
+
 (function (w, $) {
 
 	var vrAdmin = {
 		/**
 		 *
 		 */
-		addPano: function (el) {
-			var target =$(el).parent().parent().parent().parent()
-			$(target).find('#divMain').append($('#divMain #rootPano').html());
+		addPano: function (el, toursData) {
+			var target = $(el).parent().parent().parent().parent();
+			var tourHtml = $('#divMain #rootPano').html();
+			console.info(toursData);
+
+			if (typeof toursData == 'undefined')
+			{
+				$(target).find('#divMain').append(tourHtml);
+				console.log('pano added');
+			}
+			else
+			{
+				$('input[name^="panoTitle"]').last().val(toursData.panoTitle[0]);
+				$('input[name^="panoDescription"]').last().val(toursData.panoDescription[0]);
+				$('input[name^="file"]').last().after(': ' + toursData.files[0]);
+				$('input[name^="file"]').last().after('<input type="hidden" name="editFiles[]" value="'+ toursData.files[0] +'" />');
+				$('input[name^="file"]').last().remove();
+				$('p.hb-select-pano-file').last().remove();
+
+				for (var pano in toursData.panoTitle)
+				{
+					console.info(pano);
+					if (pano > 0)
+					{
+						console.info(pano);
+						$(target).find('#divMain').append(tourHtml);
+
+						$('input[name^="panoTitle"]').last().val(toursData.panoTitle[pano]);
+						$('input[name^="panoDescription"]').last().val(toursData.panoDescription[pano]);
+						$('input[name^="file"]').last().after(': ' + toursData.files[pano]);
+						$('input[name^="file"]').last().after('<input type="hidden" name="editFiles[]" value="'+ toursData.files[pano] +'" />');
+						$('input[name^="file"]').last().remove();
+						$('p.hb-select-pano-file').last().remove();
+					}
+				}
+			}
 		},
 
 		removePano: function (el) {
@@ -35,7 +69,8 @@
 		 */
 		hookButtonEditTour: function () {
 			$(document).on('click', '.editTour', function (e) {
-				var elId = $(this).attr('data-id');
+				var elId  = $(this).attr('data-id');
+				var eluId = $(this).attr('data-uid');
 
 				// Ajax to get edit tour HTML form
 				$.ajax({
@@ -43,14 +78,20 @@
 					type: 'POST',
 					data: {
 						'task': 'getEditTourHtml',
-						'id': parseInt(elId)
+						'id' : parseInt(elId),
+						'uId': eluId
 					},
 					async: true,
 					cache: false
 				})
 					.done(function (data, textStatus, jqXHR) {
+						//?? this must be handle error response before render!
 						$('#editTour.modal .modal-body .container-fluid').html(data.data.html);
 						$('#editTour').modal('show');
+						if (typeof data.data.jsonData != 'undefined')
+						{
+							w.vrAdmin.addPano($('#editTour #addPano'), data.data.jsonData);
+						}
 					})
 
 				e.preventDefault();
@@ -121,6 +162,7 @@
 							reqData.append('task', 'createTour');
 							reqData.append('step', 'generate');
 							reqData.append('id', data.data.id);
+							reqData.append('uId', data.data.uId);
 							$.ajax({
 								url: 'index.php',
 								type: 'POST',
@@ -152,7 +194,7 @@
 				vrAdmin.addPano(this);
 				e.preventDefault();
 			})
-		},
+		}
 	}
 
 	w.vrAdmin = vrAdmin;
