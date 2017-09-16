@@ -1,6 +1,6 @@
 <?php
 
-defined('_VR360') or die;
+defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360HelperFolder
@@ -32,5 +32,10 @@ class Vr360HelperFolder
 		{
 			unlink($dirPath);
 		}
+	}
+
+	public static function exists($path)
+	{
+		return (boolean) file_exists($path) && is_dir($path);
 	}
 }

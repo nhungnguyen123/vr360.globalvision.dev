@@ -22,6 +22,7 @@
 		<tbody>
 		<!-- Show tours -->
 		<?php foreach ($this->tours as $tour): ?>
+			<?php $tourDir = VR360_PATH_DATA . '/' . $tour->dir; ?>
 			<tr id='vtour-<?php echo $tour->id; ?>' data-tour='<?php echo $tour->toJson(); ?>' class="">
 				<td class="vtour-id"><?php echo $tour->id; ?></td>
 				<td class="vtour-name"><?php echo $tour->name; ?></td>
@@ -33,14 +34,18 @@
 					<button type="button" class="btn btn-default embedCode">
 						<i class="fa fa-code" aria-hidden="true"></i> Embed
 					</button>
+					<?php if (Vr360HelperFolder::exists($tourDir)): ?>
 					<!-- Edit -->
 					<button type="button" class="btn btn-primary editTour">
 						<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
 					</button>
-					<!-- Preview -->
-					<button type="button" class="btn btn-info previewTour">
-						<i class="fa fa-external-link" aria-hidden="true"></i> Preview
-					</button>
+					<?php endif; ?>
+					<?php if ($tour->status == VR360_TOUR_STATUS_PUBLISHED_READY && Vr360HelperFolder::exists($tourDir)): ?>
+						<!-- Preview -->
+						<button type="button" class="btn btn-info previewTour">
+							<i class="fa fa-external-link" aria-hidden="true"></i> Preview
+						</button>
+					<?php endif; ?>
 					<button type="button" class="btn btn-danger removeTour">
 						<i class="fa fa-eraser" aria-hidden="true"></i> Remove
 					</button>

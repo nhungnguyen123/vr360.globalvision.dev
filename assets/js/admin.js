@@ -88,8 +88,7 @@
 			})
 		},
 
-		showPreview: function(el)
-		{
+		showPreview: function (el) {
 			var data = $(el).data();
 
 			$(el).find('.previewTour').on('click', function (event) {
@@ -144,10 +143,13 @@
 		disableForm: function () {
 			$('form input').prop("disabled", true);
 			$('form button').prop("disabled", true);
+			$('body').addClass('loading');
 		},
 		enableForm: function () {
 			$('form input').prop("disabled", false);
 			$('form button').prop("disabled", false);
+
+			$('body').removeClass('loading');
 		},
 
 		/**
@@ -192,12 +194,8 @@
 			$('body').on('submit', '#createTour', function (event) {
 				vrAdmin.Log.reset();
 
-				// @TODO Blocking elements
-				//vrAdmin.Tour.disableForm();
-
-
 				// @TODO JS Filter
-				//validate = vrAdmin.Tour.validate();
+				validate = vrAdmin.Tour.validate();
 
 				var formData = new FormData(this);
 
@@ -210,7 +208,11 @@
 					async: true,
 					cache: false,
 					contentType: false,
-					processData: false
+					processData: false,
+					beforeSend: function (xhr) {
+						// @TODO Blocking elements
+						vrAdmin.Tour.disableForm();
+					}
 				})
 				/**
 				 * Ajax to create tour database
@@ -269,12 +271,20 @@
 														vrAdmin.Log.append('Page reloading ...');
 
 														// Reload page
-														setTimeout(location.reload(), 2000);
+														//setTimeout(location.reload(), 2000);
 													}
 													else {
 														// Append messages
 														vrAdmin.Log.appendArray(data.messages);
 													}
+												})
+												.always(function (data, textStatus, jqXHR) {
+													if (textStatus == 'timeout') {
+														vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
+													}
+
+													// Release form
+													vrAdmin.Tour.enableForm();
 												})
 										}
 										else {
@@ -289,14 +299,7 @@
 							}
 						}
 					)
-					.always(function (data, textStatus, jqXHR) {
-						if (textStatus == 'timeout') {
-							vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
-						}
 
-						// Release form
-						vrAdmin.Tour.enableForm();
-					})
 
 				event.preventDefault();
 			})

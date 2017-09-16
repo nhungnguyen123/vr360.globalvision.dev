@@ -7,6 +7,11 @@ defined('_VR360_EXEC') or die;
 <head>
 	<link rel="shortcut icon" type="image/x-icon" href="./assets/images/globalvision.webp">
 	<title><?php echo Vr360Configuration::getConfig('siteName'); ?></title>
+	<meta name="description" content="<?php echo Vr360Configuration::getConfig('siteDescription'); ?>"/>
+
+	<meta property="og:title" content="<?php echo Vr360Configuration::getConfig('siteName'); ?>" />
+	<meta property="og:description" content="<?php echo Vr360Configuration::getConfig('siteDescription'); ?>" />
+	<meta property="og:type" content="website" />
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,6 +36,7 @@ defined('_VR360_EXEC') or die;
 <body>
 <div class="container-fluid">
 	<div class="row" style="margin-top: 15px">
+		<div class="waiting"></div>
 		<div class="col-md-12">
 			<div class="header">
 				<a href="http://globalvision.ch" target="_blank" class="logo">
@@ -42,10 +48,11 @@ defined('_VR360_EXEC') or die;
 			{content}
 		</div>
 		<div class="col-md-12">
-			<hr />
+			<hr/>
 			<div id="footer" class="footer">
 				<p class="bg-warning">
-					To use this platform it is recommended to use <br>Google Chrome internet browser version 59.0.0 ( or higher)
+					To use this platform it is recommended to use <br>Google Chrome internet browser version 59.0.0 ( or
+					higher)
 				</p>
 			</div>
 		</div>
