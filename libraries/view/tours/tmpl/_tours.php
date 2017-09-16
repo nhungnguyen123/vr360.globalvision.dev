@@ -38,7 +38,7 @@
 						<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
 					</button>
 					<!-- Preview -->
-					<button type="button" class="btn btn-info">
+					<button type="button" class="btn btn-info previewTour">
 						<i class="fa fa-external-link" aria-hidden="true"></i> Preview
 					</button>
 					<button type="button" class="btn btn-danger removeTour">

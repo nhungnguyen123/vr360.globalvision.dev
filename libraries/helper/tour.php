@@ -43,10 +43,11 @@ class Vr360HelperTour
 	 */
 	public static function generateFilename($fileName)
 	{
-		$fileName = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $fileName);
-		$fileName = mb_ereg_replace("([\.]{2,})", '', $fileName);
-
-		return md5(uniqid('sth', true)) . '_' . $fileName;
+		//$fileName = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $fileName);
+		//$fileName = mb_ereg_replace("([\.]{2,})", '', $fileName);
+		$md5 = md5(uniqid('sth', true));
+		$md5 = substr($md5, 0, 12);
+		return $md5 . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
 	}
 
 	/**

@@ -88,10 +88,23 @@
 			})
 		},
 
+		showPreview: function(el)
+		{
+			var data = $(el).data();
+
+			$(el).find('.previewTour').on('click', function (event) {
+				var newTab = window.open('./' + data.tour.alias, '_blank');
+
+				//newTab.focus();
+			})
+
+		},
+
 		hooks: function () {
 			$('#vTours tbody tr').each(function () {
 				vrAdmin.Tours.showEmbed(this);
 				vrAdmin.Tours.showEdit(this);
+				vrAdmin.Tours.showPreview(this);
 			});
 		}
 	}
@@ -180,12 +193,14 @@
 				vrAdmin.Log.reset();
 
 				// @TODO Blocking elements
-				vrAdmin.Tour.disableForm();
+				//vrAdmin.Tour.disableForm();
+
 
 				// @TODO JS Filter
-				validate = vrAdmin.Tour.validate();
+				//validate = vrAdmin.Tour.validate();
 
 				var formData = new FormData(this);
+
 
 				// First ajax used for file uploading
 				$.ajax({
