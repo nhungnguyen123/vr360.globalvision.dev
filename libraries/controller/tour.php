@@ -235,7 +235,6 @@ class Vr360ControllerTour extends Vr360Controller
 
 		if ($id)
 		{
-
 			if (isset($_POST['id']))
 			{
 				$ajax->addSuccess('Tour updated success')->success()->respond();
