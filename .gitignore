@@ -69,7 +69,7 @@ fabric.properties
 # End of https://www.gitignore.io/api/phpstorm
 
 # Configuration
-configuration.php
+# configuration.php
 
 # Composer
 composer.phar
