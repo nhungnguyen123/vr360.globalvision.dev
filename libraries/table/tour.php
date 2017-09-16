@@ -1,11 +1,11 @@
 <?php
 
-defined('_VR360') or die;
+defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360TableTour
  */
-class Vr360TableTour extends Vr360TableBase
+class Vr360TableTour extends Vr360Table
 {
 	public $id = null;
 	public $name = null;
@@ -20,24 +20,43 @@ class Vr360TableTour extends Vr360TableBase
 	protected $_errors;
 
 	/**
-	 * Render a tour
+	 * @return bool|string
 	 */
-	public function render()
+	public function getJsonContent()
 	{
-		Vr360Layout::load('body.user.tours.tour', array('tour' => $this));
+		$jsonFile = VR360_PATH_DATA . '/' . $this->dir . '/data.json';
+
+		if (!file_exists($jsonFile) || !is_file($jsonFile))
+		{
+			return false;
+		}
+
+		return file_get_contents($jsonFile);
+	}
+
+	public function getErrors()
+	{
+		return $this->_errors;
 	}
 
 	protected function check()
 	{
-		// Make sure unique alias
-		$tableTour = new Vr360TableTour();
-		$tableTour->load(array('alias' => $this->alias));
-
-		// This alias already exists
-		if ($tableTour->id !== null)
+		$db = Vr360Database::getInstance();
+		$tours = $db->select(
+			$this->_table,
+			'*',
+			array
+			(
+				'id[!]' => $this->id,
+				'alias' => $this->alias
+			)
+		);
+		if ($tours !== false && count ($tours) > 0)
 		{
 			// Append ID
 			$this->alias = $this->alias . '-' . $this->id;
+
+			Vr360AjaxResponse::getInstance()->addWarning('Duplicated alias');
 		}
 
 		if (
@@ -62,7 +81,7 @@ class Vr360TableTour extends Vr360TableBase
 		// Trim white spaces at beginning and end of alias and make lowercase
 		$str = trim(strtolower($str));
 		// Remove any duplicate whitespace and replace whitespaces by hyphens
-		$str = preg_replace('#\x20+#', '-', $str);
+		$str         = preg_replace('#\x20+#', '-', $str);
 		$this->alias = $str;
 
 		if ($this->created === null)
@@ -72,29 +91,9 @@ class Vr360TableTour extends Vr360TableBase
 
 		if ($this->created_by === null)
 		{
-			$this->created_by = Vr360Authorise::getInstance()->getUser()->id;
+			$this->created_by = Vr360Factory::getUser()->id;
 		}
 
 		return parent::check();
-	}
-
-	/**
-	 * @return bool|string
-	 */
-	public function getJsonContent()
-	{
-		$jsonFile = VR360_PATH_DATA . '/' . $this->dir . '/data.json';
-
-		if (!file_exists($jsonFile) || !is_file($jsonFile))
-		{
-			return false;
-		}
-
-		return file_get_contents($jsonFile);
-	}
-
-	public function getErrors()
-	{
-		return $this->_errors;
 	}
 }

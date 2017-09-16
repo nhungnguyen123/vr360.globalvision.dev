@@ -1,23 +1,19 @@
 <?php
 
-defined('_VR360') or die;
+defined('_VR360_EXEC') or die;
 
-/**
- * Class Vr360ModelTours
- */
-class Vr360ModelTours extends Vr360Database
+class Vr360ModelTours extends Vr360Model
 {
-	/**
-	 * @return static
-	 */
 	public static function getInstance()
 	{
 		static $instance;
 
-		if (!isset($instance))
+		if (isset($instance))
 		{
-			$instance = new static();
+			return $instance;
 		}
+
+		$instance = new static();
 
 		return $instance;
 	}
@@ -26,13 +22,16 @@ class Vr360ModelTours extends Vr360Database
 	{
 		if ($userId === null)
 		{
-			$userId = Vr360Authorise::getInstance()->getUser()->id;
+			$userId = Vr360Factory::getUser()->id;
 		}
 
-		$offset = isset($_REQUEST['page']) ? $_REQUEST['page'] * 20 : 0;
+		$input = Vr360Factory::getInput();
+
+		$offset = $input->getInt('page', 0) * 20;
 		$limit  = 20;
 
-		$rows = $this->medoo->select(
+		$db   = Vr360Database::getInstance();
+		$rows = $db->select(
 			'tours',
 			[
 				'tours.id',
@@ -64,7 +63,9 @@ class Vr360ModelTours extends Vr360Database
 			$data = array();
 			foreach ($rows as $row)
 			{
-				$data[] = new Vr360TableTour($row);
+				$tour = new Vr360TableTour();
+				$tour->bind($row);
+				$data[] = $tour;
 			}
 
 			return $data;
@@ -77,12 +78,13 @@ class Vr360ModelTours extends Vr360Database
 	{
 		if ($userId === null)
 		{
-			$userId = Vr360Authorise::getInstance()->getUser()->id;
+			$userId = Vr360Factory::getUser()->id;
 		}
 
 		$limit = 20;
 
-		$rows = $this->medoo->select(
+		$db   = Vr360Database::getInstance();
+		$rows = $db->select(
 			'tours',
 			[
 				'tours.id',
@@ -97,16 +99,17 @@ class Vr360ModelTours extends Vr360Database
 			[
 				'tours.created_by' => (int) $userId,
 				'tours.status[!]'  => VR360_TOUR_STATUS_UNPUBLISHED,
-				'ORDER'                => [
+				'ORDER'            => [
 					'tours.id' => 'DESC'
 				],
 			]
 		);
 
+		$input = Vr360Factory::getInput();
 		if (!empty($rows))
 		{
 			return array(
-				'current' => isset($_REQUEST['page']) ? $_REQUEST['page'] : 1,
+				'current' => $input->getInt('page', 1),
 				'total'   => round(count($rows) / $limit)
 			);
 		}

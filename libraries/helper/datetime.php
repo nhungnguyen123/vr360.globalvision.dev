@@ -1,6 +1,6 @@
 <?php
 
-defined('_VR360') or die;
+defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360HelperDatetime

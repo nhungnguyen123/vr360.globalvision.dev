@@ -1,6 +1,6 @@
 <?php
 
-defined('_VR360') or die;
+defined('_VR360_EXEC') or die;
 
 class Vr360Object
 {
@@ -11,59 +11,6 @@ class Vr360Object
 		{
 			$this->setProperties($properties);
 		}
-	}
-
-
-	public function __toString()
-	{
-		return get_class($this);
-	}
-
-
-	public function def($property, $default = null)
-	{
-		$value = $this->get($property, $default);
-
-		return $this->set($property, $value);
-	}
-
-
-	public function get($property, $default = null)
-	{
-		if (isset($this->$property))
-		{
-			return $this->$property;
-		}
-
-		return $default;
-	}
-
-
-	public function getProperties($public = true)
-	{
-		$vars = get_object_vars($this);
-
-		if ($public)
-		{
-			foreach ($vars as $key => $value)
-			{
-				if ('_' == substr($key, 0, 1))
-				{
-					unset($vars[$key]);
-				}
-			}
-		}
-
-		return $vars;
-	}
-
-
-	public function set($property, $value = null)
-	{
-		$previous = isset($this->$property) ? $this->$property : null;
-		$this->$property = $value;
-
-		return $previous;
 	}
 
 	public function setProperties($properties)
@@ -82,9 +29,57 @@ class Vr360Object
 		return false;
 	}
 
+	public function set($property, $value)
+	{
+		$previous        = isset($this->$property) ? $this->$property : null;
+		$this->$property = $value;
+
+		return $previous;
+	}
+
+	public function __toString()
+	{
+		return get_class($this);
+	}
+
+	public function def($property, $default = null)
+	{
+		$value = $this->get($property, $default);
+
+		return $this->set($property, $value);
+	}
+
+	public function get($property, $default = null)
+	{
+		if (isset($this->$property))
+		{
+			return $this->$property;
+		}
+
+		return $default;
+	}
+
 	public function toJson()
 	{
 		return json_encode($this->getProperties());
+	}
+
+	public function getProperties($public = true)
+	{
+		$vars = get_object_vars($this);
+
+		if ($public)
+		{
+			foreach ($vars as $key => $value)
+			{
+				if ('_' == substr($key, 0, 1))
+				{
+					unset($vars[$key]);
+				}
+			}
+		}
+
+		return $vars;
 	}
 
 }

@@ -1,34 +1,28 @@
 <?php
-// Using Medoo namespace
-use Medoo\Medoo;
 
-/**
- * Class Vr360Database
- *
- * Model class. Used to work with database
- */
-class Vr360Database
+defined('_VR360_EXEC') or die;
+
+class Vr360Database extends \Medoo\Medoo
 {
-	protected $medoo;
-
 	/**
 	 * Vr360Database constructor.
 	 */
-	public function __construct()
+	public function __construct($options = null)
 	{
-		$config   = Vr360Configuration::getInstance();
-		$this->db = new PDO('mysql:host=' . $config->dbServer
-			. ';dbname=' . $config->dbName . ';charset=utf8', $config->dbUser, $config->dbPassword);
-		$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+		$dbServer   = Vr360Configuration::getConfig('dbServer', 'localhost');
+		$dbName     = Vr360Configuration::getConfig('dbName');
+		$dbUsername = Vr360Configuration::getConfig('dbUser');
+		$dbPassword = Vr360Configuration::getConfig('dbPassword');
 
-		$this->medoo = new Medoo([
+		parent::__construct(array
+		(
 			'database_type' => 'mysql',
-			'database_name' => $config->dbName,
-			'server'        => $config->dbServer,
-			'username'      => $config->dbUser,
-			'password'      => $config->dbPassword,
+			'server'        => $dbServer,
+			'username'      => $dbUsername,
+			'password'      => $dbPassword,
+			'database_name' => $dbName,
 			'charset'       => 'utf8'
-		]);
+		));
 	}
 
 	/**
@@ -47,32 +41,6 @@ class Vr360Database
 	}
 
 	/**
-	 * @param $userName
-	 *
-	 * @return  array
-	 */
-	public function getUserData($userName)
-	{
-		$result = $this->medoo->select(
-			'users',
-			'*',
-			[
-				'OR' =>
-					[
-						'username' => $userName,
-						'email'    => $userName
-					]
-			]);
-
-		if ($result === false)
-		{
-			return false;
-		}
-
-		return array_shift($result);
-	}
-
-	/**
 	 * Load a record
 	 *
 	 * @param $table
@@ -82,7 +50,7 @@ class Vr360Database
 	 */
 	public function load($table, $condition)
 	{
-		return $this->medoo->get(
+		return $this->get(
 			$table, '*', $condition
 		);
 	}
@@ -97,9 +65,9 @@ class Vr360Database
 	 */
 	public function create($table, $data)
 	{
-		if ($this->medoo->insert($table, $data) !== false)
+		if ($this->insert($table, $data) !== false)
 		{
-			return $this->medoo->id();
+			return $this->id();
 		}
 
 		return false;
@@ -110,18 +78,15 @@ class Vr360Database
 	 *
 	 * @param $table
 	 * @param $data
+	 * @param $where
 	 *
 	 * @return bool|PDOStatement
 	 */
-	public function update($table, $data)
+	public function update($table, $data, $where = null)
 	{
-
-		return $this->medoo->update(
-			$table,
-			$data,
-			[
-				'id' => $data['id']
-			]
-		);
+		if (parent::update($table, $data, array('id' => $data['id'])) !== false)
+		{
+			return $data['id'];
+		}
 	}
 }

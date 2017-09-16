@@ -1,6 +1,9 @@
 {
     "require": {
         "catfan/Medoo": "^1.4",
-        "phpmailer/phpmailer": "^6.0"
+        "phpmailer/phpmailer": "^6.0",
+        "aura/session": "^2.1",
+        "joomla/input": "^1.2",
+        "joomla/session": "^1.3"
     }
 }

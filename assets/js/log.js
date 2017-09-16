@@ -1,14 +1,18 @@
 (function (w, $) {
-
-	var vrLog = {
-		$this: this,
+	vrAdmin.Log = {
 		reset: function () {
 			$('#vrLogging').html('');
 		},
+
 		append: function (message) {
-			$('#vrLogging').append('<p>' + message + '</p>');
+			$('#vrLogging').append('<div class="message">' + message + '</div>');
+		},
+
+		appendArray: function (messages)
+		{
+			$.each(messages, function (index, value){
+				vrAdmin.Log.append(value);
+			})
 		}
 	}
-
-	w.vrLog = vrLog;
 })(window, jQuery);

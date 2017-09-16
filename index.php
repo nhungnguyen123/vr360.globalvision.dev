@@ -1,15 +1,5 @@
 <?php
 
-require_once __DIR__ .'/include/bootstrap.php';
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
-$task = isset($_REQUEST['task']) ? $_REQUEST['task'] : '';
-
-if (!empty($task))
-{
-	if (method_exists('Vr360Task', $task) && is_callable('Vr360Task', $task))
-	{
-		call_user_func(array('Vr360Task', $task));
-	}
-}
-
-Vr360Layout::load(isset($_REQUEST['layout']) ? $_REQUEST['layout'] : 'default');
+Vr360Controller::getInstance()->execute();

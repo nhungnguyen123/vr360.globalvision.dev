@@ -1,6 +1,6 @@
 <?php
 
-defined('_VR360') or die;
+defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360Email
@@ -13,9 +13,9 @@ class Vr360Email extends PHPMailer\PHPMailer\PHPMailer
 	{
 		parent::__construct($exceptions);
 
-		$configuration   = Vr360Configuration::getInstance();
-		$this->SMTPDebug = 2;
-		$this->Mailer    = $configuration->mailer;                                  // Set mailer to use SMTP
+		$configuration    = Vr360Configuration::getInstance();
+		$this->SMTPDebug  = 2;
+		$this->Mailer     = $configuration->mailer;                                  // Set mailer to use SMTP
 		$this->Host       = $configuration->mailHost;  // Specify main and backup SMTP servers
 		$this->SMTPAuth   = true;                               // Enable SMTP authentication
 		$this->Username   = $configuration->mailUsername;                 // SMTP username

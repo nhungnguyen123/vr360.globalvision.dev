@@ -1,6 +1,6 @@
 <?php
 
-defined('_VR360') or die;
+defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360HelperTour
@@ -20,16 +20,17 @@ class Vr360HelperTour
 			return false;
 		}
 
-		if (!in_array(mime_content_type($filePath), Vr360Configuration::getInstance()->allowMimeTypes))
+		if (!in_array(mime_content_type($filePath), Vr360Configuration::getConfig('allowMimeTypes')))
 		{
 			return false;
 		}
 
 		//!!check image size  x*2x size
 		$imgSize = getimagesize($filePath);
+
 		if (!($imgSize[0] == 2 * $imgSize[1]))
 		{
-			//return false;
+			return false;
 		}
 
 		return true;
@@ -43,10 +44,37 @@ class Vr360HelperTour
 	public static function generateFilename($fileName)
 	{
 		$fileName = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $fileName);
-		// Remove any runs of periods (thanks falstro!)
 		$fileName = mb_ereg_replace("([\.]{2,})", '', $fileName);
 
 		return md5(uniqid('sth', true)) . '_' . $fileName;
+	}
+
+	/**
+	 * @return bool|string
+	 */
+	public static function createDataDir()
+	{
+		// Create data directory first
+		if (!file_exists(VR360_PATH_DATA))
+		{
+			mkdir(VR360_PATH_DATA);
+		}
+
+		$uId = Vr360HelperTour::generateUId();
+
+		if (!mkdir(VR360_PATH_DATA . '/' . $uId))
+		{
+			return false;
+		}
+
+		return $uId;
+	}
+
+	public static function generateUId()
+	{
+		$uId = uniqid('__', false);
+
+		return $uId . '_' . md5(uniqid('', true));
 	}
 
 	/**
@@ -59,7 +87,7 @@ class Vr360HelperTour
 	{
 		$pre_img_dir = "./_/$uId/";
 
-		if(is_file("$pre_img_dir/vtour/tour.xml")) unlink("$pre_img_dir/vtour/tour.xml");
+		if (is_file("$pre_img_dir/vtour/tour.xml")) unlink("$pre_img_dir/vtour/tour.xml");
 
 		$krPanoPATH      = './assets/krpano/krpanotools ';
 		$krPanoCongig    = 'makepano -config=./assets/krpano/templates/vtour-normal.config ';
@@ -133,33 +161,5 @@ class Vr360HelperTour
 		}
 
 		return file_put_contents($tagetXmlFile, $tagetXmlFileContents); // need to check if cant overwrite
-	}
-
-	public static function generateUId()
-	{
-		$uId = uniqid('__', false);
-
-		return $uId . '_' . md5(uniqid('', true));
-	}
-
-	/**
-	 * @return bool|string
-	 */
-	public static function createDataDir()
-	{
-		// Create data directory first
-		if (!file_exists(VR360_PATH_DATA))
-		{
-			mkdir(VR360_PATH_DATA);
-		}
-
-		$uId = Vr360HelperTour::generateUId();
-
-		if (!mkdir(VR360_PATH_DATA . '/' . $uId))
-		{
-			return false;
-		}
-
-		return $uId;
 	}
 }

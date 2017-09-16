@@ -1,33 +1,40 @@
 <?php
 
-defined('_VR360') or die;
+defined('_VR360_EXEC') or die;
 
-class Vr360Session
+class Vr360Session extends Vr360Object
 {
-	protected $status;
-	protected $id;
-	protected $namespace = '\GLOBALVISION\VR360';
 
+	/**
+	 * @var  int
+	 */
+	protected $status;
+
+	/**
+	 * @var  string
+	 */
+	protected $id;
+
+	/**
+	 * @var array
+	 */
 	protected $config = array();
 
-	public function __construct()
+	protected $namespace = null;
+
+	public function __construct($properties = null)
 	{
-		$this->config['gc_maxlifetime'] = Vr360Configuration::getInstance()->cookie_time;
+		parent::__construct($properties);
+
+		$this->namespace = Vr360Configuration::getConfig('sessionNamespace', 'VR360');
+
+		$this->config['gc_maxlifetime'] = Vr360Configuration::getConfig('cookieTime');
 		$this->start();
 	}
 
-	public static function getInstance()
-	{
-		static $instance;
-
-		if (!isset($instance))
-		{
-			$instance = new static();
-		}
-
-		return $instance;
-	}
-
+	/**
+	 *
+	 */
 	public function start()
 	{
 		if (empty(session_id()))
@@ -40,9 +47,18 @@ class Vr360Session
 
 	}
 
-	protected function isValid()
+	public static function getInstance()
 	{
-		return $this->status == PHP_SESSION_ACTIVE;
+		static $instance;
+
+		if (isset($instance))
+		{
+			return $instance;
+		}
+
+		$instance = new static();
+
+		return $instance;
 	}
 
 	public function set($property, $value)
@@ -53,15 +69,16 @@ class Vr360Session
 		}
 	}
 
+	/**
+	 * @return bool
+	 */
+	protected function isValid()
+	{
+		return $this->status == PHP_SESSION_ACTIVE;
+	}
+
 	public function get($property, $default = null)
 	{
-		if ($property == 'token')
-		{
-			if (!isset($_SESSION[$this->namespace][$property]))
-			{
-				$default = $this->generateToken();
-			}
-		}
 		if ($this->isValid())
 		{
 			if (isset($_SESSION[$this->namespace][$property]))
@@ -71,11 +88,6 @@ class Vr360Session
 		}
 
 		return $default;
-	}
-
-	public function generateToken()
-	{
-		return md5(Vr360Configuration::getInstance()->salt . serialize($this->get('user')));
 	}
 
 	public function reset()

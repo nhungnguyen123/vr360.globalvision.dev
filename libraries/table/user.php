@@ -1,10 +1,13 @@
 <?php
 
-defined('_VR360') or die;
+defined('_VR360_EXEC') or die;
 
-class Vr360TableUser extends Vr360TableBase
+class Vr360TableUser extends Vr360Table
 {
 
+	/**
+	 * @var null
+	 */
 	public $id = null;
 	public $username = null;
 	public $name = null;
