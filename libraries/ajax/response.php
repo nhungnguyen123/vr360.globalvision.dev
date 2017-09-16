@@ -18,10 +18,13 @@ class Vr360AjaxResponse extends Vr360Object
 	protected $messages = null;
 
 	/**
-	 * @var bool
+	 * @var boolean
 	 */
 	protected $status = false;
 
+	/**
+	 * @return static
+	 */
 	public static function getInstance()
 	{
 		static $instance;
@@ -31,14 +34,9 @@ class Vr360AjaxResponse extends Vr360Object
 			return $instance;
 		}
 
-		$instance = new static();
+		$instance = new static;
 
 		return $instance;
-	}
-
-	public function addDefault($message)
-	{
-		return $this->addMessage($message, 'default');
 	}
 
 	/**
@@ -57,6 +55,16 @@ class Vr360AjaxResponse extends Vr360Object
 		$this->messages[] = $message;
 
 		return $this;
+	}
+
+	/**
+	 * @param   string  $message
+	 *
+	 * @return Vr360AjaxResponse
+	 */
+	public function addDefault($message)
+	{
+		return $this->addMessage($message, 'default');
 	}
 
 	public function addPrimary($message)
@@ -112,11 +120,6 @@ class Vr360AjaxResponse extends Vr360Object
 	 */
 	public function fail()
 	{
-		if (isset($this->message))
-		{
-			$this->message = '<span class="label label-danger">' . $this->message . '</span>';
-		}
-
 		$this->status = false;
 
 		return $this;

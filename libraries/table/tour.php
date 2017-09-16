@@ -41,7 +41,7 @@ class Vr360TableTour extends Vr360Table
 
 	protected function check()
 	{
-		$db = Vr360Database::getInstance();
+		$db    = Vr360Database::getInstance();
 		$tours = $db->select(
 			$this->_table,
 			'*',
@@ -51,7 +51,7 @@ class Vr360TableTour extends Vr360Table
 				'alias' => $this->alias
 			)
 		);
-		if ($tours !== false && count ($tours) > 0)
+		if ($tours !== false && count($tours) > 0)
 		{
 			// Append ID
 			$this->alias = $this->alias . '-' . $this->id;

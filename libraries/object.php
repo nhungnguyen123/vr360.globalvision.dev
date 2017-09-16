@@ -2,9 +2,19 @@
 
 defined('_VR360_EXEC') or die;
 
+/**
+ * Class Vr360Object
+ *
+ * @since 1.0.0
+ */
 class Vr360Object
 {
 
+	/**
+	 * Vr360Object constructor.
+	 *
+	 * @param   array $properties Properties
+	 */
 	public function __construct($properties = null)
 	{
 		if ($properties !== null)

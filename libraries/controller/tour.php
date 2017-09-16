@@ -39,96 +39,6 @@ class Vr360ControllerTour extends Vr360Controller
 	}
 
 	/**
-	 * Generate tour
-	 *
-	 * @return bool
-	 */
-	public function ajaxGenerateTour()
-	{
-		$ajax = Vr360AjaxResponse::getInstance();
-
-		// Permission verify
-		if (!Vr360HelperAuthorize::isAuthorized())
-		{
-			$ajax->addWarning('User is not authorized')->fail()->respond();
-		}
-
-		$tour = new Vr360TableTour();
-		$tour->load(array(
-			'id'         => (int) $_POST['id'],
-			'created_by' => Vr360Factory::getUser()->id
-		));
-
-		// Found tour
-		if ($tour->id !== null)
-		{
-			$uId      = $tour->dir;
-			$jsonFile = VR360_PATH_DATA . '/' . $tour->dir . '/data.json';
-
-			if (!file_exists($jsonFile) || !is_file($jsonFile))
-			{
-				$ajax->addWarning('File not found')->fail()->respond();
-			}
-
-			$jsonContent = file_get_contents($jsonFile);
-			$jsonData    = json_decode($jsonContent, true);
-
-			if (!isset($jsonData['panoTitle']))
-			{
-				$ajax->addWarning('No panos')->fail()->respond();
-			}
-
-			//Using krpano tool to cut images
-			if (Vr360HelperTour::generateTour($uId, $jsonData) === false)
-			{
-				$ajax->addWarning('Can not generate vTour')->fail()->respond();
-			}
-
-			//Create xml for tour
-			if (Vr360HelperTour::generateXml($uId, $jsonData) === false)
-			{
-				$ajax->addWarning('Can not generate xml for vTour')->fail()->respond();
-			}
-
-			// Have done
-			$tour->status = VR360_TOUR_STATUS_PUBLISHED_READY;
-			$tour->save();
-
-			// Send mail
-			$mailer = new Vr360Email();
-			$mailer->isHTML(true);
-			$mailer->Subject = 'Your tour was created and generated success';
-			$mailer->Body    = '';
-			$mailer->send();
-
-			$ajax->addSuccess('Tour generated success')->success()->respond();
-		}
-
-	}
-
-	public function ajaxRemoveTour()
-	{
-		$ajax = Vr360AjaxResponse::getInstance();
-
-		$input  = Vr360Factory::getInput();
-		$tour   = new Vr360TableTour();
-		$tour->load(array(
-			'id'         => (int) $input->getInt('id'),
-			'created_by' => Vr360Factory::getUser()->id
-		));
-
-		$tour->status = VR360_TOUR_STATUS_UNPUBLISHED;
-
-		if ($tour->save() !== false)
-		{
-			$ajax->addData('id', $tour->id);
-			$ajax->addSuccess('Tour unpublished')->success()->respond();
-		}
-
-		$ajax->addWarning('Something wrong')->fail()->respond();
-	}
-
-	/**
 	 *
 	 */
 	protected function uploadFile()
@@ -337,6 +247,96 @@ class Vr360ControllerTour extends Vr360Controller
 		}
 
 		$ajax->addWarning('Tour created fail')->fail()->respond();
+	}
+
+	/**
+	 * Generate tour
+	 *
+	 * @return bool
+	 */
+	public function ajaxGenerateTour()
+	{
+		$ajax = Vr360AjaxResponse::getInstance();
+
+		// Permission verify
+		if (!Vr360HelperAuthorize::isAuthorized())
+		{
+			$ajax->addWarning('User is not authorized')->fail()->respond();
+		}
+
+		$tour = new Vr360TableTour();
+		$tour->load(array(
+			'id'         => (int) $_POST['id'],
+			'created_by' => Vr360Factory::getUser()->id
+		));
+
+		// Found tour
+		if ($tour->id !== null)
+		{
+			$uId      = $tour->dir;
+			$jsonFile = VR360_PATH_DATA . '/' . $tour->dir . '/data.json';
+
+			if (!file_exists($jsonFile) || !is_file($jsonFile))
+			{
+				$ajax->addWarning('File not found')->fail()->respond();
+			}
+
+			$jsonContent = file_get_contents($jsonFile);
+			$jsonData    = json_decode($jsonContent, true);
+
+			if (!isset($jsonData['panoTitle']))
+			{
+				$ajax->addWarning('No panos')->fail()->respond();
+			}
+
+			//Using krpano tool to cut images
+			if (Vr360HelperTour::generateTour($uId, $jsonData) === false)
+			{
+				$ajax->addWarning('Can not generate vTour')->fail()->respond();
+			}
+
+			//Create xml for tour
+			if (Vr360HelperTour::generateXml($uId, $jsonData) === false)
+			{
+				$ajax->addWarning('Can not generate xml for vTour')->fail()->respond();
+			}
+
+			// Have done
+			$tour->status = VR360_TOUR_STATUS_PUBLISHED_READY;
+			$tour->save();
+
+			// Send mail
+			$mailer = new Vr360Email();
+			$mailer->isHTML(true);
+			$mailer->Subject = 'Your tour was created and generated success';
+			$mailer->Body    = '';
+			$mailer->send();
+
+			$ajax->addSuccess('Tour generated success')->success()->respond();
+		}
+
+	}
+
+	public function ajaxRemoveTour()
+	{
+		$ajax = Vr360AjaxResponse::getInstance();
+
+		$input = Vr360Factory::getInput();
+		$tour  = new Vr360TableTour();
+		$tour->load(array(
+			'id'         => (int) $input->getInt('id'),
+			'created_by' => Vr360Factory::getUser()->id
+		));
+
+		$tour->status = VR360_TOUR_STATUS_UNPUBLISHED;
+
+		if ($tour->save() !== false)
+		{
+			$ajax->addData('id', $tour->id);
+			$ajax->addSuccess('Tour unpublished')->success()->respond();
+		}
+
+		$ajax->addWarning('Something wrong')->fail()->respond();
 	}
 
 	public function ajaxEditTour()

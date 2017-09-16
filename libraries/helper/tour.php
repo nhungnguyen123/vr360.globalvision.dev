@@ -89,12 +89,12 @@ class Vr360HelperTour
 
 		if (is_file("$pre_img_dir/vtour/tour.xml")) unlink("$pre_img_dir/vtour/tour.xml");
 
-		$krPanoPATH      = './assets/krpano/krpanotools ';
+		$krPanoPath      = './assets/krpano/krpanotools ';
 		$krPanoCongig    = 'makepano -config=./assets/krpano/templates/vtour-normal.config ';
 		$krPanoListImage = $pre_img_dir . implode(" $pre_img_dir", $jsonData['files']);
 
 		// Generate tour via exec
-		return exec($krPanoPATH . $krPanoCongig . $krPanoListImage);
+		return exec($krPanoPath . $krPanoCongig . $krPanoListImage);
 	}
 
 	/**

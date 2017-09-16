@@ -23,6 +23,7 @@ class Vr360Email extends PHPMailer\PHPMailer\PHPMailer
 		$this->SMTPSecure = $configuration->mailSecure;                            // Enable TLS encryption, `ssl` also accepted
 		$this->Port       = $configuration->mailPort;
 
+		// Send mail from
 		$this->setFrom('no-reply@globalvision.ch', $configuration->siteName);
 	}
 }

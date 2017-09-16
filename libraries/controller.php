@@ -49,7 +49,7 @@ class Vr360Controller
 
 		if (!Vr360HelperAuthorize::isAuthorized())
 		{
-			$view = 'login';
+			$view = 'user';
 		}
 
 		$viewClassname = 'Vr360View' . ucfirst($view);

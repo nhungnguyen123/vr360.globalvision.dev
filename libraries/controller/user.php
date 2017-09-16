@@ -2,8 +2,11 @@
 
 defined('_VR360_EXEC') or die;
 
-class Vr360ControllerLogin extends Vr360Controller
+class Vr360ControllerUser extends Vr360Controller
 {
+	/**
+	 * Login
+	 */
 	public function login()
 	{
 		$input = Vr360Factory::getInput();
@@ -13,5 +16,17 @@ class Vr360ControllerLogin extends Vr360Controller
 			$input->set('view', 'tours');
 			$this->display();
 		}
+	}
+
+	/**
+	 * Logout by clear session
+	 *
+	 * @since  1.0.0
+	 */
+	public function logout()
+	{
+		Vr360Session::getInstance()->reset();
+
+		header("Location: " . 'index.php');
 	}
 }

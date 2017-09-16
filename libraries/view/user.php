@@ -2,11 +2,10 @@
 
 defined('_VR360_EXEC') or die;
 
-class Vr360ViewLogin extends Vr360View
+class Vr360ViewUser extends Vr360View
 {
-	protected $name = 'login';
+	protected $name = 'user';
 
 	protected $layoutBase = '';
-
 
 }

@@ -27,7 +27,7 @@
 	<input class='btn btn-primary' type="submit">
 
 	<fieldset>
-		<input type="hidden" name="view" value="login"/>
+		<input type="hidden" name="view" value="user"/>
 		<input type="hidden" name="task" value="login"/>
 	</fieldset>
 </form>

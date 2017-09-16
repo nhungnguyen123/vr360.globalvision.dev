@@ -8,7 +8,7 @@
 		<input type="text" class="form-control" id="task-table-filter" data-action="filter"
 		       data-filters="#task-table" placeholder="Filter Tasks"/>
 	</div>
-	<table id='vTours' class="table table-condensed table-bordered table-responsive table-hover">
+	<table id="vTours" class="table table-condensed table-bordered table-responsive table-hover">
 		<thead>
 		<tr>
 			<th>#</th>
@@ -20,6 +20,7 @@
 		</tr>
 		</thead>
 		<tbody>
+		<!-- Show tours -->
 		<?php foreach ($this->tours as $tour): ?>
 			<tr id='vtour-<?php echo $tour->id; ?>' data-tour='<?php echo $tour->toJson(); ?>' class="">
 				<td class="vtour-id"><?php echo $tour->id; ?></td>

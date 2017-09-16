@@ -18,6 +18,7 @@
 						Add new</a></button>
 				</div>
 				<form action="index.php" class="navbar-form navbar-right">
+					<input type="hidden" name="view" value="user"/>
 					<input type="hidden" name="task" value="logout"/>
 					<button type="submit" class="btn btn-danger">Logout</button>
 				</form>
@@ -75,6 +76,5 @@
 	</div>
 </div>
 
-
-<script type="text/javascript" src="./assets/js/admin.js"></script>
-<script type="text/javascript" src="./assets/js/log.js"></script>
+<script type="text/javascript" src="./assets/js/admin.min.js"></script>
+<script type="text/javascript" src="./assets/js/log.min.js"></script>

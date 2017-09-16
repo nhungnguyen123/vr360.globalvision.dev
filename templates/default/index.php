@@ -26,7 +26,7 @@ defined('_VR360_EXEC') or die;
 	<link rel="stylesheet" href="./assets/font-awesome/css/font-awesome.css">
 
 	<!-- Globalvision -->
-	<link rel="stylesheet" type="text/css" href="./assets/globalvision.css">
+	<link rel="stylesheet" type="text/css" href="./assets/globalvision.min.css">
 </head>
 <body>
 <div class="container-fluid">

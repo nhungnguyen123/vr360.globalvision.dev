@@ -7,13 +7,68 @@
 	 * @type {{hooks: hooks}}
 	 */
 	vrAdmin.Controls = {
+		addNew: function () {
+			$.ajax({
+				url: 'index.php',
+				type: 'POST',
+				data: {
+					view: 'tour',
+					task: 'ajaxGetTourHtml',
+				},
+				async: true,
+				cache: false,
+			})
+				.done(function (data, textStatus, jqXHR) {
+					if (data.status) {
+						// Update title
+
+						// Update body
+						$('#vrTour .modal-body .container-fluid').html(data.data.html);
+						$('#vrTour').modal('show');
+					}
+				});
+
+			$('#vrTour').modal('show');
+		},
+		/**
+		 * General hooks
+		 */
 		hooks: function () {
 			$('.addNew').on('click', function () {
 
+				vrAdmin.Controls.addNew()
+			})
+		}
+	};
+
+	/**
+	 * Handle tours
+	 * @type {{hooks: hooks}}
+	 */
+	vrAdmin.Tours = {
+		/**
+		 * Show embed code modal
+		 * @param el
+		 */
+		showEmbed: function (el) {
+			$(el).find('.embedCode').on('click', function (event) {
+				$('#vrModal .modal-body').text(template);
+				$('#vrModal').modal('show');
+			})
+		},
+
+		/**
+		 * Show edit tour modal
+		 * @param el
+		 */
+		showEdit: function (el) {
+			var data = $(el).data();
+			$(el).find('.editTour').on('click', function (event) {
 				$.ajax({
 					url: 'index.php',
 					type: 'POST',
 					data: {
+						id: data.tour.id,
 						view: 'tour',
 						task: 'ajaxGetTourHtml',
 					},
@@ -28,50 +83,15 @@
 							$('#vrTour .modal-body .container-fluid').html(data.data.html);
 							$('#vrTour').modal('show');
 						}
-					});
+					})
 
-				$('#vrTour').modal('show');
 			})
-		}
-	};
+		},
 
-	/**
-	 * Handle tours
-	 * @type {{hooks: hooks}}
-	 */
-	vrAdmin.Tours = {
 		hooks: function () {
 			$('#vTours tbody tr').each(function () {
-				var data = $(this).data();
-
-				$(this).find('.embedCode').on('click', function (event) {
-					$('#vrModal .modal-body').text(template);
-					$('#vrModal').modal('show');
-				})
-
-				$(this).find('.editTour').on('click', function (event) {
-					$.ajax({
-						url: 'index.php',
-						type: 'POST',
-						data: {
-							id: data.tour.id,
-							view: 'tour',
-							task: 'ajaxGetTourHtml',
-						},
-						async: true,
-						cache: false,
-					})
-						.done(function (data, textStatus, jqXHR) {
-							if (data.status) {
-								// Update title
-
-								// Update body
-								$('#vrTour .modal-body .container-fluid').html(data.data.html);
-								$('#vrTour').modal('show');
-							}
-						})
-
-				})
+				vrAdmin.Tours.showEmbed(this);
+				vrAdmin.Tours.showEdit(this);
 			});
 		}
 	}
@@ -117,9 +137,20 @@
 			$('form button').prop("disabled", false);
 		},
 
+		/**
+		 * Alert when ajax failed
+		 * @param data
+		 * @param textStatus
+		 * @param jqXHR
+		 */
 		throwFail: function (data, textStatus, jqXHR) {
 			alert(textStatus);
 		},
+
+		/**
+		 *
+		 * @param data
+		 */
 		removeTour: function (data) {
 			$.ajax({
 				url: 'index.php',
@@ -131,8 +162,12 @@
 				}
 			})
 				.done(function (data, textStatus, jqXHR) {
+
 					if (data.status == true) {
 						$('#vtour-' + data.data.id).fadeOut("slow");
+					}
+					else {
+						alert('Something wrong');
 					}
 				})
 		},
@@ -270,7 +305,9 @@
 	 * @type {{hooks: hooks}}
 	 */
 	vrAdmin.Pano = {
-
+		/**
+		 * Pano hooking
+		 */
 		hooks: function () {
 			// Add more pano
 			$('body').on('click', '#addPano', function () {

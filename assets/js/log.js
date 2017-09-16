@@ -8,9 +8,8 @@
 			$('#vrLogging').append('<div class="message">' + message + '</div>');
 		},
 
-		appendArray: function (messages)
-		{
-			$.each(messages, function (index, value){
+		appendArray: function (messages) {
+			$.each(messages, function (index, value) {
 				vrAdmin.Log.append(value);
 			})
 		}
