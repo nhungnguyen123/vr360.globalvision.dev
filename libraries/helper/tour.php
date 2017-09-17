@@ -99,7 +99,7 @@ class Vr360HelperTour
 
 		$krPanoPath      = './assets/krpano/krpanotools ';
 		$krPanoCongig    = 'makepano -config=./assets/krpano/templates/vtour-normal.config ';
-		$krPanoListImage = $preImageDir . implode(" $preImageDir", $jsonData['files']);
+		$krPanoListImage = $preImageDir . implode($preImageDir, $jsonData['files']);
 
 		// Generate tour via exec
 		return exec($krPanoPath . $krPanoCongig . $krPanoListImage);
@@ -129,16 +129,11 @@ class Vr360HelperTour
 		foreach ($jsonData['files'] as $scene => $fileName)
 		{
 			$xmlData['scenes'][$scene] = array();
-			$currentScene              = $xmlData['scenes'][$scene];
 
-			$curentScene['xmlFileName'] = explode('.', $fileName)[0];
-			$curentScene['xmlTitle']    = $jsonData['panoTitle'][$scene];
-			$curentScene['xmlHotspots'] = self::xmlHotspots($jsonData, $curentScene['xmlFileName']); //we will make hotspots later
+			$xmlData['scenes'][$scene]['xmlFileName'] = explode('.', $fileName)[0];
+			$xmlData['scenes'][$scene]['xmlTitle']    = $jsonData['panoTitle'][$scene];
+			$xmlData['scenes'][$scene]['xmlHotspots'] = self::xmlHotspots($jsonData, $xmlData['scenes'][$scene]['xmlFileName']); //we will make hotspots later
 		}
-
-		// We will make hotspots later
-		$currentScene['xmlHotspots'] = '';
-
 
 		// Write xmlData to xml Template
 		$tagetXmlFileContents = '';
@@ -212,7 +207,7 @@ class Vr360HelperTour
 		{
 			return $returnValue;
 		}
-
+    
 		foreach ($jsonData['hotspotList'] as $scene => $value)
 		{
 			$file = str_replace('scene_', '', $scene);
@@ -229,9 +224,9 @@ class Vr360HelperTour
 
 					if ($hotspot['hotspot_type'] == 'normal')
 					{
-						$hotspotObj->style        = 'tooltip';
+						$hotspotObj->style = 'tooltip';
 						$hotspotObj->hotspot_type = 'normal';
-						$hotspotObj->data         = 'linkedscene="' . $hotspot['linkedscene'] . '"';
+						$hotspotObj->data  = 'linkedscene="scene_' . explode('.', $jsonData['files'][$hotspot['linkedscene']])[0] . '"';
 					}
 					elseif ($hotspot['hotspot_type'] == 'text')
 					{
@@ -242,8 +237,6 @@ class Vr360HelperTour
 
 					$returnValue .= self::xmlHotspot($hotspotObj);
 				}
-
-				break;
 			}
 		}
 
