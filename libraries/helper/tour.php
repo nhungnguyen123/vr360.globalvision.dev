@@ -131,10 +131,10 @@ class Vr360HelperTour
 			$xmlData['scenes'][$scene] = array();
 			$currentScene              = $xmlData['scenes'][$scene];
 
-			$currentScene['xmlFileName'] = $fileName;
-			$currentScene['xmlTitle']    = $jsonData['panoTitle'][$scene];
-
-			// @TODO xmlDescription ?
+			$curentScene['xmlFileName'] = explode('.', $fileName)[0];
+			$curentScene['xmlTitle']    = $jsonData['panoTitle'][$scene];
+			$curentScene['xmlHotspots'] = self::xmlHotspots($jsonData, $curentScene['xmlFileName']); //we will make hotspots later
+		}
 
 			// We will make hotspots later
 			$currentScene['xmlHotspots'] = '';
@@ -179,5 +179,48 @@ class Vr360HelperTour
 		}
 
 		return file_put_contents($tagetXmlFile, $tagetXmlFileContents);
+	}
+
+	private static function xmlHotspot ($hotspotObj)
+	{
+		$h = $hotspotObj;
+		return "<hotspot name='spot_$h->hotspotID' dataId='$h->hotspotID' style='skin_hotspotstyle|$h->style' ath='$h->ath' atv='$h->atv' hotspot_type='$h->hotspot_type' $h->data /> \n";
+	}
+
+	private static function xmlHotspots($jsonData, $xmlFileName)
+	{
+		$returnValue = '';
+		if(sizeof($jsonData['hotspotList']) < 1) return $returnValue;
+		foreach ($jsonData['hotspotList'] as $scene => $value)
+		{
+			$file = str_replace('scene_', '', $scene);
+			if($file == $xmlFileName)
+			{
+				$hotspotObj = new stdClass();
+				foreach ($jsonData['hotspotList'][$scene] as $hotspotID => $hotspot)
+				{
+					@$hotspotObj->hotspotID   = $hotspotID;
+					@$hotspotObj->ath         = $hotspot['ath'];
+					@$hotspotObj->atv         = $hotspot['atv'];
+
+					if ($hotspot['hotspot_type'] == 'normal')
+					{
+						@$hotspotObj->style = 'tooltip';
+						@$hotspotObj->hotspot_type = 'normal';
+						@$hotspotObj->data  = 'linkedscene="' . $hotspot['linkedscene'] . '"';
+					}
+					elseif ($hotspot['hotspot_type'] == 'text')
+					{
+						@$hotspotObj->style = 'textpopup';
+						@$hotspotObj->hotspot_type = 'text';
+						@$hotspotObj->data  = 'hotspot_text="' . $hotspot['hotspot_text'] . '"';
+					}
+					$returnValue .= self::xmlHotspot($hotspotObj);
+				}
+				break;
+				// break;
+			}
+		}
+		return $returnValue; // if no hotspot found.
 	}
 }

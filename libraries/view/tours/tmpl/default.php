@@ -76,5 +76,5 @@
 	</div>
 </div>
 
-<script type="text/javascript" src="./assets/js/admin.min.js"></script>
+<script type="text/javascript" src="./assets/js/admin.js"></script>
 <script type="text/javascript" src="./assets/js/log.min.js"></script>
