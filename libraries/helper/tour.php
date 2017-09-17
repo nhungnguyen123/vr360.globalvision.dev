@@ -201,7 +201,7 @@ class Vr360HelperTour
 					{
 						@$hotspotObj->style = 'tooltip';
 						@$hotspotObj->hotspot_type = 'normal';
-						@$hotspotObj->data  = 'linkedscene="' . $hotspot['linkedscene'] . '"';
+						@$hotspotObj->data  = 'linkedscene="scene_' . explode('.', $jsonData['files'][$hotspot['linkedscene']])[0] . '"';
 					}
 					elseif ($hotspot['hotspot_type'] == 'text')
 					{
