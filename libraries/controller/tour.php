@@ -395,4 +395,72 @@ class Vr360ControllerTour extends Vr360Controller
 	}
 
 
+	public function ajaxGetHotspotEditorHtml()
+	{
+		$input = Vr360Factory::getInput();
+		$tour  = new Vr360TableTour();
+		$tour->load(array(
+			'id'         => (int) $input->getInt('id'),
+			'created_by' => Vr360Factory::getUser()->id
+		));
+
+		if ($tour !== false)
+		{
+			$html = Vr360Layout::getInstance()->fetch('form.hotspots', array('tour' => $tour));
+		}
+
+		else
+		{
+			$html = Vr360Layout::getInstance()->fetch('form.hotspotsiframe');
+		}
+
+
+		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
+	}
+
+	public function getEditTourHtmlHotspotEditorIFrame()
+	{
+		// I cant make this!
+		$html = Vr360Layout::getInstance()->fetch('form.hotspotsiframe', '');
+		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
+	}
+
+	public function ajaxSaveHotspot()
+	{
+		$ajax = Vr360AjaxResponse::getInstance();
+
+		$input = Vr360Factory::getInput();
+		$tour  = new Vr360TableTour();
+		$tour->load(array(
+			'id'         => (int) $input->getInt('id'),
+			'created_by' => Vr360Factory::getUser()->id
+		));
+		//rebuild json
+		// var_dump($input->getString('hotspotList')); die();
+		// var_dump(json_decode($input->getString('hotspotList'), true)); die();
+		$hotSpotList = json_decode($input->getString('hotspotList'), true);
+		$uId         = $tour->dir;
+		$jsonData    = json_decode(file_get_contents(VR360_PATH_DATA ."/$uId/data.json"), true);
+
+		$jsonData['hotspotList'] = $hotSpotList;
+		//Create xml for tour
+		if (Vr360HelperTour::generateXml($uId, $jsonData) === false)
+		{
+			$ajax->addWarning('Can not generate xml for vTour')->fail()->respond();
+		}
+
+		// Have done
+		$tour->status = VR360_TOUR_STATUS_PUBLISHED_READY;
+		$tour->save();
+
+		// Send mail
+		$mailer = new Vr360Email();
+		$mailer->isHTML(true);
+		$mailer->Subject = 'Your tour was created and generated success';
+		$mailer->Body    = '';
+		$mailer->send();
+
+		$ajax->addSuccess('Tour generated success')->success()->respond();
+	}
+
 }

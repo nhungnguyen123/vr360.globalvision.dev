@@ -87,6 +87,32 @@
 
 			})
 		},
+		showEditHotspot: function (el) {
+			var data = $(el).data();
+			$(el).find('.editTourHotspot').on('click', function (event) {
+				$.ajax({
+					url: 'index.php',
+					type: 'POST',
+					data: {
+						id: data.tour.id,
+						view: 'tour',
+						task: 'ajaxGetHotspotEditorHtml',
+					},
+					async: true,
+					cache: false,
+				})
+					.done(function (data, textStatus, jqXHR) {
+						if (data.status) {
+							// Update title
+
+							// Update body
+							$('#vrTour .modal-body .container-fluid').html(data.data.html);
+							$('#vrTour').modal('show');
+						}
+					})
+
+			})
+		},
 
 		showPreview: function (el) {
 			var data = $(el).data();
@@ -103,6 +129,7 @@
 			$('#vTours tbody tr').each(function () {
 				vrAdmin.Tours.showEmbed(this);
 				vrAdmin.Tours.showEdit(this);
+				vrAdmin.Tours.showEditHotspot(this);
 				vrAdmin.Tours.showPreview(this);
 			});
 		}
@@ -349,3 +376,49 @@
 		vrAdmin.Pano.hooks();
 	})
 })(window, jQuery);
+
+
+function getHotspotData()
+{
+	var ifHotspotObj = document.getElementById('editTourHotspots').contentWindow;
+	if(!ifHotspotObj.rdy4save())
+	{
+		alert('Please finish to add hotspot before saving or click cancel');
+		return false;
+	}
+	else
+	{
+		return ifHotspotObj.superHotspot.getData().hotspotList;
+	}
+}
+
+function submitHotspotData(id)
+{
+	if(!getHotspotData) return 0;
+	$.ajax({
+		url: 'index.php',
+		type: 'POST',
+		data: {
+			view: 'tour',
+			task: 'ajaxSaveHotspot',
+			id: id,
+			hotspotList: JSON.stringify(getHotspotData())
+		},
+		async: true,
+		cache: false,
+	})
+		.done(function (data, textStatus, jqXHR) {
+			if (data.status === true) {
+
+				vrAdmin.Log.appendArray(data.messages);
+				vrAdmin.Log.append('Page reloading ...');
+
+				// Reload page
+				//setTimeout(location.reload(), 2000);
+			}
+			else {
+				// Append messages
+				vrAdmin.Log.appendArray(data.messages);
+			}
+		})
+}
