@@ -1,6 +1,7 @@
 _/*
 _backup/*
 .idea/*
+assets/krpano/*
 
 # Created by https://www.gitignore.io/api/phpstorm
 
@@ -78,7 +79,3 @@ composer.phar
 # Commit your application's lock file http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file
 # You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
 composer.
-
-/assets/krpano/*
-/assets/bootstrap/*
-/assets/font*/*
