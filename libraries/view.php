@@ -2,6 +2,11 @@
 
 defined('_VR360_EXEC') or die;
 
+/**
+ * Class Vr360View
+ *
+ * @since  2.0.0
+ */
 class Vr360View extends Vr360Layout
 {
 	protected $name = '';

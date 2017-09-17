@@ -4,11 +4,16 @@ defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360Email
+ *
+ * @since  2.0.0
  */
 class Vr360Email extends PHPMailer\PHPMailer\PHPMailer
 {
-	protected $mail;
-
+	/**
+	 * Vr360Email constructor.
+	 *
+	 * @param   null  $exceptions
+	 */
 	public function __construct($exceptions = null)
 	{
 		parent::__construct($exceptions);

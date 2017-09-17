@@ -23,6 +23,11 @@ class Vr360Object
 		}
 	}
 
+	/**
+	 * @param   array  $properties  Properties
+	 *
+	 * @return  boolean
+	 */
 	public function setProperties($properties)
 	{
 		if (is_array($properties) || is_object($properties))
@@ -39,6 +44,12 @@ class Vr360Object
 		return false;
 	}
 
+	/**
+	 * @param   string  $property   Property
+	 * @param   mixed   $value      Value
+	 *
+	 * @return null
+	 */
 	public function set($property, $value)
 	{
 		$previous        = isset($this->$property) ? $this->$property : null;
@@ -47,11 +58,20 @@ class Vr360Object
 		return $previous;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function __toString()
 	{
 		return get_class($this);
 	}
 
+	/**
+	 * @param   string  $property   Property
+	 * @param   mixed   $default    Default value
+	 *
+	 * @return  mixed
+	 */
 	public function def($property, $default = null)
 	{
 		$value = $this->get($property, $default);
@@ -69,6 +89,9 @@ class Vr360Object
 		return $default;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function toJson()
 	{
 		return json_encode($this->getProperties());
@@ -91,5 +114,4 @@ class Vr360Object
 
 		return $vars;
 	}
-
 }

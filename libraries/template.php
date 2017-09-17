@@ -2,6 +2,11 @@
 
 defined('_VR360_EXEC') or die;
 
+/**
+ * Class Vr360Template
+ *
+ * @since  2.0.0
+ */
 class Vr360Template
 {
 	public static function getInstance()
@@ -13,7 +18,7 @@ class Vr360Template
 			return $instance;
 		}
 
-		$instance = new static();
+		$instance = new static;
 
 		return $instance;
 	}
