@@ -5,7 +5,7 @@ defined('_VR360_EXEC') or die;
 /**
  * Class Vr360Object
  *
- * @since 1.0.0
+ * @since 2.0.0
  */
 class Vr360Object
 {

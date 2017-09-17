@@ -47,6 +47,7 @@ class Vr360HelperTour
 		//$fileName = mb_ereg_replace("([\.]{2,})", '', $fileName);
 		$md5 = md5(uniqid('sth', true));
 		$md5 = substr($md5, 0, 12);
+
 		return $md5 . '.' . pathinfo($fileName, PATHINFO_EXTENSION);
 	}
 
@@ -71,6 +72,9 @@ class Vr360HelperTour
 		return $uId;
 	}
 
+	/**
+	 * @return string
+	 */
 	public static function generateUId()
 	{
 		$uId = uniqid('__', false);
@@ -79,88 +83,101 @@ class Vr360HelperTour
 	}
 
 	/**
-	 * @param $uId
-	 * @param $jsonData
+	 * @param   string  $uId        Directory
+	 * @param   array   $jsonData   Json data
 	 *
 	 * @return string
 	 */
 	public static function generateTour($uId, $jsonData)
 	{
-		$pre_img_dir = "./_/$uId/";
+		$preImageDir = VR360_PATH_DATA . '/ ' . $uId . '/';
 
-		if (is_file("$pre_img_dir/vtour/tour.xml")) unlink("$pre_img_dir/vtour/tour.xml");
+		if (is_file("$preImageDir/vtour/tour.xml"))
+		{
+			unlink("$preImageDir/vtour/tour.xml");
+		}
 
 		$krPanoPath      = './assets/krpano/krpanotools ';
 		$krPanoCongig    = 'makepano -config=./assets/krpano/templates/vtour-normal.config ';
-		$krPanoListImage = $pre_img_dir . implode(" $pre_img_dir", $jsonData['files']);
+		$krPanoListImage = $preImageDir . implode(" $preImageDir", $jsonData['files']);
 
 		// Generate tour via exec
 		return exec($krPanoPath . $krPanoCongig . $krPanoListImage);
 	}
 
 	/**
-	 * @param $uId
-	 * @param $jsonData
+	 * @param   string  $uId        Directory
+	 * @param   array   $jsonData   Json data
 	 *
-	 * @return bool|int
+	 * @return  boolean|integer
 	 */
 	public static function generateXml($uId, $jsonData)
 	{
 		$tagetXmlFile = "./_/$uId/vtour/tour.xml";
 
-		$xmlData = [];
+		$xmlData = array();
 
-		// dont change the order of this array.
-		// if you change the order, maybe you will have foot on your head
-		$xmlData['header'] = [];
-		$xmlData['scenes'] = [];
-		$xmlData['footer'] = [];
+		/**
+		 * Prepare xmlData
+		 * Dont change the order of this array or you will have foot on your head
+		 */
+		$xmlData['header'] = array();
+		$xmlData['scenes'] = array();
+		$xmlData['footer'] = array();
 
-		//assign xmlData to array
-
+		// Assign xmlData to array
 		foreach ($jsonData['files'] as $scene => $fileName)
 		{
-			$xmlData['scenes'][$scene] = [];
-			$curentScene               = &$xmlData['scenes'][$scene];
+			$xmlData['scenes'][$scene] = array();
+			$currentScene              = $xmlData['scenes'][$scene];
 
-			$curentScene['xmlFileName'] = $fileName;
-			$curentScene['xmlTitle']    = $jsonData['panoTitle'][$scene];
-			$curentScene['xmlHotspots'] = ''; //we will make hotspots later
+			$currentScene['xmlFileName'] = $fileName;
+			$currentScene['xmlTitle']    = $jsonData['panoTitle'][$scene];
+
+			// @TODO xmlDescription ?
+
+			// We will make hotspots later
+			$currentScene['xmlHotspots'] = '';
 		}
 
-		//write xmlData to xml Template
-
+		// Write xmlData to xml Template
 		$tagetXmlFileContents = '';
 
-		foreach ($xmlData as $template => $data) //thought file
+		// Process xmlData
+		foreach ($xmlData as $templateKey => $data)
 		{
-			$tmpStr = file_get_contents("./assets/krpano-$template.xml");
+			$xmlTemplateFile = VR360_PATH_ASSETS . '/krpano-' . $templateKey . '.xml';
+			$xmlContent      = Vr360HelperFile::read($xmlTemplateFile);
 
-			foreach ($data as $key => $keyData) //thought key
+			foreach ($data as $key => $keyData)
 			{
 				if (gettype($keyData) == 'string')
 				{
-					$tmpStr = preg_replace("/\{\{$key\}\}/", $keyData, $tmpStr);
+					$xmlContent = preg_replace("/\{\{$key\}\}/", $keyData, $xmlContent);
 				}
-				elseif (gettype($keyData) == 'array') //okie array will be like scenes, loop thought all template, I know this not perfect but this is the best I can do at this times.
+				// Okie array will be like scenes, loop thought all template, I know this not perfect but this is the best I can do at this times.
+				elseif (gettype($keyData) == 'array')
 				{
-					$tmpStr = file_get_contents("./assets/krpano-$template.xml");
-					foreach ($keyData as $subKey => $subKeyData) //thought key
+					// @TODO We don't need read file again. Cache it somewhere
+					$xmlContent      = Vr360HelperFile::read($xmlTemplateFile);
+
+					foreach ($keyData as $subKey => $subKeyData)
 					{
-						$tmpStr = preg_replace("/\{\{$subKey\}\}/", $subKeyData, $tmpStr);
+						$xmlContent = preg_replace("/\{\{$subKey\}\}/", $subKeyData, $xmlContent);
 					}
-					$tagetXmlFileContents .= $tmpStr;
-					$tmpStr               = '';
+
+					$tagetXmlFileContents .= $xmlContent;
+					$xmlContent           = '';
 				}
 				else
 				{
-					//500 error, wrong data format or empty
+					// 500 error, wrong data format or empty
 				}
-
 			}
-			$tagetXmlFileContents .= $tmpStr;
+
+			$tagetXmlFileContents .= $xmlContent;
 		}
 
-		return file_put_contents($tagetXmlFile, $tagetXmlFileContents); // need to check if cant overwrite
+		return file_put_contents($tagetXmlFile, $tagetXmlFileContents);
 	}
 }

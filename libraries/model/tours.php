@@ -2,6 +2,9 @@
 
 defined('_VR360_EXEC') or die;
 
+/**
+ * Class Vr360ModelTours
+ */
 class Vr360ModelTours extends Vr360Model
 {
 	public static function getInstance()
