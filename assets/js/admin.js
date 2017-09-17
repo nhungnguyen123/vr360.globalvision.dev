@@ -381,7 +381,7 @@
 function getHotspotData()
 {
 	var ifHotspotObj = document.getElementById('editTourHotspots').contentWindow;
-	if(ifHotspotObj.rdy4save())
+	if(!ifHotspotObj.rdy4save())
 	{
 		alert('Please finish to add hotspot before saving or click cancel');
 		return false;
@@ -394,7 +394,7 @@ function getHotspotData()
 
 function submitHotspotData(id)
 {
-	if(!getHotspotData) return;
+	if(!getHotspotData) return 0;
 	$.ajax({
 		url: 'index.php',
 		type: 'POST',

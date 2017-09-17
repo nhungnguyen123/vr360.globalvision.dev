@@ -167,19 +167,20 @@ class Vr360HelperTour
 	private static function xmlHotspot ($hotspotObj)
 	{
 		$h = $hotspotObj;
-		return "<hotspot name='spot_$h->hotspotID' dataId='{{dataId}}' style='skin_hotspotstyle|$h->style' ath='$h->ath' atv='$h->atv' hotspot_type='$h->hotspot_type' $h->data /> \n";
+		return "<hotspot name='spot_$h->hotspotID' dataId='$h->hotspotID' style='skin_hotspotstyle|$h->style' ath='$h->ath' atv='$h->atv' hotspot_type='$h->hotspot_type' $h->data /> \n";
 	}
 
 	private static function xmlHotspots($jsonData, $xmlFileName)
 	{
 		$returnValue = '';
-		@foreach ($jsonData['hotspotList'] as $scene => $value)
+		if(sizeof($jsonData['hotspotList']) < 1) return $returnValue;
+		foreach ($jsonData['hotspotList'] as $scene => $value)
 		{
 			$file = str_replace('scene_', '', $scene);
 			if($file == $xmlFileName)
 			{
 				$hotspotObj = new stdClass();
-				foreach ($scene as $hotspotID => $hotspot)
+				foreach ($jsonData['hotspotList'][$scene] as $hotspotID => $hotspot)
 				{
 					@$hotspotObj->hotspotID   = $hotspotID;
 					@$hotspotObj->ath         = $hotspot['ath'];
@@ -188,19 +189,21 @@ class Vr360HelperTour
 					if ($hotspot['hotspot_type'] == 'normal')
 					{
 						@$hotspotObj->style = 'tooltip';
+						@$hotspotObj->hotspot_type = 'normal';
 						@$hotspotObj->data  = 'linkedscene="' . $hotspot['linkedscene'] . '"';
 					}
 					elseif ($hotspot['hotspot_type'] == 'text')
 					{
 						@$hotspotObj->style = 'textpopup';
+						@$hotspotObj->hotspot_type = 'text';
 						@$hotspotObj->data  = 'hotspot_text="' . $hotspot['hotspot_text'] . '"';
 					}
-					$returnValue .= xmlHotspot($hotspotObj);
+					$returnValue .= self::xmlHotspot($hotspotObj);
 				}
-				return $returnValue;
+				break;
 				// break;
 			}
 		}
-		return ''; // if no hotspot found.
+		return $returnValue; // if no hotspot found.
 	}
 }
