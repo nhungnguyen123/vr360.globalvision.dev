@@ -187,6 +187,9 @@
 		 */
 		throwFail: function (data, textStatus, jqXHR) {
 			alert(textStatus);
+
+			// Release form
+			vrAdmin.Tour.enableForm();
 		},
 
 		/**
@@ -225,7 +228,6 @@
 				validate = vrAdmin.Tour.validate();
 
 				var formData = new FormData(this);
-
 
 				// First ajax used for file uploading
 				$.ajax({
@@ -298,7 +300,7 @@
 														vrAdmin.Log.append('Page reloading ...');
 
 														// Reload page
-														//setTimeout(location.reload(), 2000);
+														setTimeout(location.reload(), 2000);
 													}
 													else {
 														// Append messages
@@ -313,24 +315,42 @@
 													// Release form
 													vrAdmin.Tour.enableForm();
 												})
+												// Fail case always release form and alert
+												.fail(function (data, textStatus, jqXHR) {
+													vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
+												});
 										}
 										else {
 											// Append messages
 											vrAdmin.Log.appendArray(data.messages);
+
+											// Release form
+											vrAdmin.Tour.enableForm();
 										}
+									})
+									// Fail case always release form and alert
+									.fail(function (data, textStatus, jqXHR) {
+										vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
 									});
 							}
 							else {
 								// Append messages
 								vrAdmin.Log.appendArray(data.messages);
+
+								// Release form
+								vrAdmin.Tour.enableForm();
 							}
 						}
 					)
-
+					// Fail case always release form and alert
+					.fail(function (data, textStatus, jqXHR) {
+						vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
+					});
 
 				event.preventDefault();
 			})
 
+			// Hook on remove tour
 			$('body').on('click', '.removeTour', function (event) {
 				if (confirm("Confirm delete a tour")) {
 					var data = $(this).parent().parent().data();
@@ -378,23 +398,19 @@
 })(window, jQuery);
 
 
-function getHotspotData()
-{
+function getHotspotData() {
 	var ifHotspotObj = document.getElementById('editTourHotspots').contentWindow;
-	if(!ifHotspotObj.rdy4save())
-	{
+	if (!ifHotspotObj.rdy4save()) {
 		alert('Please finish to add hotspot before saving or click cancel');
 		return false;
 	}
-	else
-	{
+	else {
 		return ifHotspotObj.superHotspot.getData().hotspotList;
 	}
 }
 
-function submitHotspotData(id)
-{
-	if(!getHotspotData) return 0;
+function submitHotspotData(id) {
+	if (!getHotspotData) return 0;
 	$.ajax({
 		url: 'index.php',
 		type: 'POST',

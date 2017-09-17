@@ -81,17 +81,24 @@ function migrateUsers($source, $dest)
 		$dest->insert(
 			'users',
 			array(
-				'id'          => $user['userId'],
-				'username'        => $user['loginName'],
-				'name'        => $user['userFullName'],
-				'password'        => $user['userPass'],
-				'email'        => $user['userEmail'],
+				'id'       => $user['userId'],
+				'username' => $user['loginName'],
+				'name'     => $user['userFullName'],
+				'password' => $user['userPass'],
+				'email'    => $user['userEmail'],
 			)
 		);
 	}
 }
 
-
+function cleanTours($dest)
+{
+	$dest->delete("tours", array(
+		'created_by' => 1
+	));
+}
 //migrateAlias($source, $dest);
-migrateUsers($source, $dest);
+//migrateUsers($source, $dest);
+
+cleanTours($dest);
 
