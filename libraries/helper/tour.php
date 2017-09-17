@@ -90,7 +90,7 @@ class Vr360HelperTour
 	 */
 	public static function generateTour($uId, $jsonData)
 	{
-		$preImageDir = VR360_PATH_DATA . '/ ' . $uId . '/';
+		$preImageDir = VR360_PATH_DATA . '/' . $uId . '/';
 
 		if (is_file("$preImageDir/vtour/tour.xml"))
 		{
@@ -134,10 +134,6 @@ class Vr360HelperTour
 			$curentScene['xmlFileName'] = explode('.', $fileName)[0];
 			$curentScene['xmlTitle']    = $jsonData['panoTitle'][$scene];
 			$curentScene['xmlHotspots'] = self::xmlHotspots($jsonData, $curentScene['xmlFileName']); //we will make hotspots later
-		}
-
-			// We will make hotspots later
-			$currentScene['xmlHotspots'] = '';
 		}
 
 		// Write xmlData to xml Template
@@ -190,7 +186,7 @@ class Vr360HelperTour
 	private static function xmlHotspots($jsonData, $xmlFileName)
 	{
 		$returnValue = '';
-		if(sizeof($jsonData['hotspotList']) < 1) return $returnValue;
+		if(!isset($jsonData['hotspotList']) || sizeof($jsonData['hotspotList']) < 1) return $returnValue;
 		foreach ($jsonData['hotspotList'] as $scene => $value)
 		{
 			$file = str_replace('scene_', '', $scene);
