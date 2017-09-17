@@ -83,14 +83,14 @@ class Vr360HelperTour
 	}
 
 	/**
-	 * @param   string  $uId        Directory
-	 * @param   array   $jsonData   Json data
+	 * @param   string $uId      Directory
+	 * @param   array  $jsonData Json data
 	 *
 	 * @return string
 	 */
 	public static function generateTour($uId, $jsonData)
 	{
-		$preImageDir = VR360_PATH_DATA . '/ ' . $uId . '/';
+		$preImageDir = VR360_PATH_DATA . '/' . $uId . '/';
 
 		if (is_file("$preImageDir/vtour/tour.xml"))
 		{
@@ -106,8 +106,8 @@ class Vr360HelperTour
 	}
 
 	/**
-	 * @param   string  $uId        Directory
-	 * @param   array   $jsonData   Json data
+	 * @param   string $uId      Directory
+	 * @param   array  $jsonData Json data
 	 *
 	 * @return  boolean|integer
 	 */
@@ -136,9 +136,9 @@ class Vr360HelperTour
 			$curentScene['xmlHotspots'] = self::xmlHotspots($jsonData, $curentScene['xmlFileName']); //we will make hotspots later
 		}
 
-			// We will make hotspots later
-			$currentScene['xmlHotspots'] = '';
-		}
+		// We will make hotspots later
+		$currentScene['xmlHotspots'] = '';
+
 
 		// Write xmlData to xml Template
 		$tagetXmlFileContents = '';
@@ -159,7 +159,7 @@ class Vr360HelperTour
 				elseif (gettype($keyData) == 'array')
 				{
 					// @TODO We don't need read file again. Cache it somewhere
-					$xmlContent      = Vr360HelperFile::read($xmlTemplateFile);
+					$xmlContent = Vr360HelperFile::read($xmlTemplateFile);
 
 					foreach ($keyData as $subKey => $subKeyData)
 					{
@@ -181,46 +181,72 @@ class Vr360HelperTour
 		return file_put_contents($tagetXmlFile, $tagetXmlFileContents);
 	}
 
-	private static function xmlHotspot ($hotspotObj)
+	/**
+	 * @param   object  $hotspotObj
+	 *
+	 * @return string
+	 */
+	protected static function xmlHotspot($hotspotObj)
 	{
 		$h = $hotspotObj;
+
 		return "<hotspot name='spot_$h->hotspotID' dataId='$h->hotspotID' style='skin_hotspotstyle|$h->style' ath='$h->ath' atv='$h->atv' hotspot_type='$h->hotspot_type' $h->data /> \n";
 	}
 
-	private static function xmlHotspots($jsonData, $xmlFileName)
+	/**
+	 * @param $jsonData
+	 * @param $xmlFileName
+	 *
+	 * @return string
+	 */
+	protected static function xmlHotspots($jsonData, $xmlFileName)
 	{
 		$returnValue = '';
-		if(sizeof($jsonData['hotspotList']) < 1) return $returnValue;
+
+		if (!isset($jsonData['hotspotList']))
+		{
+			return $returnValue;
+		}
+
+		if (count($jsonData['hotspotList']) < 1)
+		{
+			return $returnValue;
+		}
+
 		foreach ($jsonData['hotspotList'] as $scene => $value)
 		{
 			$file = str_replace('scene_', '', $scene);
-			if($file == $xmlFileName)
+
+			if ($file == $xmlFileName)
 			{
-				$hotspotObj = new stdClass();
+				$hotspotObj = new stdClass;
+
 				foreach ($jsonData['hotspotList'][$scene] as $hotspotID => $hotspot)
 				{
-					@$hotspotObj->hotspotID   = $hotspotID;
-					@$hotspotObj->ath         = $hotspot['ath'];
-					@$hotspotObj->atv         = $hotspot['atv'];
+					$hotspotObj->hotspotID = $hotspotID;
+					$hotspotObj->ath       = $hotspot['ath'];
+					$hotspotObj->atv       = $hotspot['atv'];
 
 					if ($hotspot['hotspot_type'] == 'normal')
 					{
-						@$hotspotObj->style = 'tooltip';
-						@$hotspotObj->hotspot_type = 'normal';
-						@$hotspotObj->data  = 'linkedscene="' . $hotspot['linkedscene'] . '"';
+						$hotspotObj->style        = 'tooltip';
+						$hotspotObj->hotspot_type = 'normal';
+						$hotspotObj->data         = 'linkedscene="' . $hotspot['linkedscene'] . '"';
 					}
 					elseif ($hotspot['hotspot_type'] == 'text')
 					{
-						@$hotspotObj->style = 'textpopup';
-						@$hotspotObj->hotspot_type = 'text';
-						@$hotspotObj->data  = 'hotspot_text="' . $hotspot['hotspot_text'] . '"';
+						$hotspotObj->style        = 'textpopup';
+						$hotspotObj->hotspot_type = 'text';
+						$hotspotObj->data         = 'hotspot_text="' . $hotspot['hotspot_text'] . '"';
 					}
+
 					$returnValue .= self::xmlHotspot($hotspotObj);
 				}
+
 				break;
-				// break;
 			}
 		}
-		return $returnValue; // if no hotspot found.
+
+		return $returnValue;
 	}
 }
