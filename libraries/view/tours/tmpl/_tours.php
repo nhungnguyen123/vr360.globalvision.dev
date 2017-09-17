@@ -46,6 +46,9 @@
 					<button type="button" class="btn btn-primary editTour">
 						<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
 					</button>
+					<button type="button" class="btn btn-primary editTourHotspot">
+						<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hotspot
+					</button>
 					<?php endif; ?>
 					<?php if ($tour->status == VR360_TOUR_STATUS_PUBLISHED_READY && Vr360HelperFolder::exists($tourDir)): ?>
 						<!-- Preview -->
