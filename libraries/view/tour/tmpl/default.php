@@ -1,48 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>VR360 Globalvision - 7ddd22776e48</title>
+	<title>VR360 Globalvision - <?php echo $this->tour->name; ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<!-- Charset -->
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 	<meta http-equiv="x-ua-compatible" content="IE=edge"/>
 
-	<meta name="description" content="Creation of high-resolution 360° images in immersive and panoramic format. Photographic services related to immersive 360° vision. Our panoramas display on all internet browsers, mobile devices and smartphones, i.e. iOS and Android.">
-	<meta name="keywords" content="360°, 360 degrés, photo, photographie, photographe, panographe, prise de vue, reportage, technique, technologie, immersive, immersion, panorama, omnidirectionnel, regarder alentour, environnement, création de visite virtuelle, tour virtuel">
+	<meta name="description" content="<?php echo Vr360Configuration::getConfig('siteDescription'); ?>">
+	<meta name="keywords" content="<?php echo Vr360Configuration::getConfig('siteKeyword'); ?>">
 
 	<meta itemprop="image" content="[thumbnail]">
 
-	<style>
-		@-ms-viewport {
-			width: device-width;
-		}
+	<!-- Globalvision -->
+	<link rel="stylesheet" type="text/css" href="./assets/tour.min.css">
+	<script src="assets/js/tour.js"></script>
 
-		@media only screen and (min-device-width: 800px) {
-			html {
-				overflow: hidden;
-			}
-		}
+	<!-- SEO Metadata -->
+	<meta name="robots" content="index, follow" />
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="@GlobalVision360" />
+	<meta name="twitter:creator" content="@GlobalVision360" />
+	<meta name="twitter:description" content="<?php echo Vr360Configuration::getConfig('siteDescription'); ?>">
+	<!-- Twitter summary card with large image must be at least 280x150px -->
+	<!-- <meta name="twitter:image:src" content="http://www.example.com/image.jpg"> -->
 
-		html {
-			height: 100%;
-		}
-
-		body {
-			height: 100%;
-			overflow: hidden;
-			margin: 0;
-			padding: 0;
-			font-family: Arial, Helvetica, sans-serif;
-			font-size: 16px;
-			color: #FFFFFF;
-			background-color: #000000;
-		}
-	</style>
+	<!-- Opengraph -->
+	<meta property="og:url" content="<?php echo $_SERVER['REQUEST_URI']; ?>" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="VR360 Globalvision - <?php echo $this->tour->name; ?>" />
+	<meta property="og:description" content="<?php echo Vr360Configuration::getConfig('siteDescription'); ?>"/>
+	<!-- <meta property="og:image" content="http://graphics8.nytimes.com/images/2011/12/08/technology/bits-newtwitter/bits-newtwitter-tmagArticle.jpg" /> -->
 </head>
 <body>
-
-<script src="assets/js/tour.js"></script>
 
 <div id="pano" style="width:100%;height:100%;">
 	<noscript>
@@ -57,7 +50,7 @@
 	<script>
 		embedpano({
 			swf: "tour.swf",
-			xml:  "_/<?php echo $data->tour->dir; ?>/vtour/tour.xml",
+			xml: "_/<?php echo $data->tour->dir; ?>/vtour/tour.xml",
 			target: "pano",
 			html5: "auto",
 			mobilescale: 1.0,

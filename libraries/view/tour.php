@@ -12,7 +12,6 @@ class Vr360ViewTour extends Vr360View
 
 		$this->tour = $model->getItem();
 
-
 		return parent::display($layout);
 	}
 }
