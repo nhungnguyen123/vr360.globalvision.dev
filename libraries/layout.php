@@ -4,11 +4,21 @@ defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360Layout
+ *
+ * @since  2.0.0
  */
 class Vr360Layout
 {
+	/**
+	 * @var null|string
+	 */
 	protected $layoutBase;
 
+	/**
+	 * Vr360Layout constructor.
+	 *
+	 * @param   string  $baseDir  Base directory path
+	 */
 	public function __construct($baseDir = null)
 	{
 		if ($baseDir === null)
@@ -19,6 +29,9 @@ class Vr360Layout
 		$this->layoutBase = $baseDir;
 	}
 
+	/**
+	 * @return static
+	 */
 	public static function getInstance()
 	{
 		static $instance;
@@ -28,7 +41,7 @@ class Vr360Layout
 			return $instance;
 		}
 
-		$instance = new static();
+		$instance = new static;
 
 		return $instance;
 	}

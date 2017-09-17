@@ -4,6 +4,8 @@ defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360AjaxResponse
+ *
+ * @since 2.0.0
  */
 class Vr360AjaxResponse extends Vr360Object
 {
@@ -40,8 +42,8 @@ class Vr360AjaxResponse extends Vr360Object
 	}
 
 	/**
-	 * @param        $message
-	 * @param string $type
+	 * @param   string  $message    Message
+	 * @param   string  $type       Type
 	 *
 	 * @return $this
 	 */
@@ -58,7 +60,7 @@ class Vr360AjaxResponse extends Vr360Object
 	}
 
 	/**
-	 * @param   string  $message
+	 * @param   string  $message  Message
 	 *
 	 * @return Vr360AjaxResponse
 	 */
@@ -67,40 +69,65 @@ class Vr360AjaxResponse extends Vr360Object
 		return $this->addMessage($message, 'default');
 	}
 
+	/**
+	 * @param   string  $message  Message
+	 *
+	 * @return Vr360AjaxResponse
+	 */
 	public function addPrimary($message)
 	{
 		return $this->addMessage($message, 'primary');
 	}
 
+	/**
+	 * @param   string  $message  Message
+	 *
+	 * @return Vr360AjaxResponse
+	 */
 	public function addSuccess($message)
 	{
 		return $this->addMessage($message, 'success');
 	}
 
+	/**
+	 * @param   string  $message  Message
+	 *
+	 * @return Vr360AjaxResponse
+	 */
 	public function addInfo($message)
 	{
 		return $this->addMessage($message, 'info');
 	}
 
+	/**
+	 * @param   string  $message  Message
+	 *
+	 * @return Vr360AjaxResponse
+	 */
 	public function addWarning($message)
 	{
 		return $this->addMessage($message, 'warning');
 	}
 
+	/**
+	 * @param   string  $message  Message
+	 *
+	 * @return Vr360AjaxResponse
+	 */
 	public function addDanger($message)
 	{
 		return $this->addMessage($message, 'danger');
 	}
 
 	/**
-	 * @param $key
-	 * @param $key_value
+	 * @param   string  $key     Key
+	 * @param   mixed   $value   Value
 	 *
 	 * @return $this
 	 */
-	public function addData($key, $key_value)
+	public function addData($key, $value)
 	{
-		$this->data[$key] = $key_value;
+		$this->data[$key] = $value;
 
 		return $this;
 	}
@@ -126,7 +153,7 @@ class Vr360AjaxResponse extends Vr360Object
 	}
 
 	/**
-	 *
+	 * @return  void
 	 */
 	public function respond()
 	{

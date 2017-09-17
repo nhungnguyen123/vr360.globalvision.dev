@@ -21,7 +21,7 @@ class Vr360ControllerUser extends Vr360Controller
 	/**
 	 * Logout by clear session
 	 *
-	 * @since  1.0.0
+	 * @since  2.0.0
 	 */
 	public function logout()
 	{

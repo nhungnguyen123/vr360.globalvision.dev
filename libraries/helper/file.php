@@ -19,12 +19,27 @@ class Vr360HelperFile
 	}
 
 	/**
-	 * @param $filePath
+	 * @param   string  $filePath  File path
 	 *
-	 * @return bool
+	 * @return  boolean
 	 */
 	public static function exists($filePath)
 	{
 		return (file_exists($filePath) && is_file($filePath));
+	}
+
+	/**
+	 * @param $filePath
+	 *
+	 * @return bool|string
+	 */
+	public static function read($filePath)
+	{
+		if (self::exists($filePath))
+		{
+			return file_get_contents($filePath);
+		}
+
+		return false;
 	}
 }

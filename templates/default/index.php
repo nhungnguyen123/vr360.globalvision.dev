@@ -9,9 +9,9 @@ defined('_VR360_EXEC') or die;
 	<title><?php echo Vr360Configuration::getConfig('siteName'); ?></title>
 	<meta name="description" content="<?php echo Vr360Configuration::getConfig('siteDescription'); ?>"/>
 
-	<meta property="og:title" content="<?php echo Vr360Configuration::getConfig('siteName'); ?>" />
-	<meta property="og:description" content="<?php echo Vr360Configuration::getConfig('siteDescription'); ?>" />
-	<meta property="og:type" content="website" />
+	<meta property="og:title" content="<?php echo Vr360Configuration::getConfig('siteName'); ?>"/>
+	<meta property="og:description" content="<?php echo Vr360Configuration::getConfig('siteDescription'); ?>"/>
+	<meta property="og:type" content="website"/>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,23 +38,36 @@ defined('_VR360_EXEC') or die;
 	<div class="row" style="margin-top: 15px">
 		<div class="waiting"></div>
 		<div class="col-md-12">
-			<div class="header">
-				<a href="http://globalvision.ch" target="_blank" class="logo">
-					<img id="logo" src="./assets/images/gv_logo.png"/>
-				</a>
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="header">
+							<a href="http://globalvision.ch" target="_blank" class="logo">
+								<img id="logo" src="./assets/images/gv_logo.png"/>
+							</a>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="text-center center-block">
+							<a href="//www.facebook.com/globalvision360/" target="_blank">
+								<i id="social-fb" class="fa fa-facebook-square fa-3x social"></i>
+							</a>
+							<a href="//twitter.com/GlobalVision360" target="_blank">
+								<i id="social-tw" class="fa fa-twitter-square fa-3x social"></i>
+							</a>
+							<a href="//plus.google.com/+GlobalVisionSwitzerland" target="_blank">
+								<i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
+							<a href="mailto:info@globalvision.ch" target="_blank">
+								<i id="social-em" class="fa fa-envelope-square fa-3x social"></i>
+							</a>
+						</div>
+					</div>
+				</div>
 			</div>
+
 		</div>
 		<div class="col-md-12">
 			{content}
-		</div>
-		<div class="col-md-12">
-			<hr/>
-			<div id="footer" class="footer">
-				<p class="bg-warning">
-					To use this platform it is recommended to use <br>Google Chrome internet browser version 59.0.0 ( or
-					higher)
-				</p>
-			</div>
 		</div>
 	</div>
 </div>

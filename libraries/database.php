@@ -14,15 +14,17 @@ class Vr360Database extends \Medoo\Medoo
 		$dbUsername = Vr360Configuration::getConfig('dbUser');
 		$dbPassword = Vr360Configuration::getConfig('dbPassword');
 
-		parent::__construct(array
-		(
-			'database_type' => 'mysql',
-			'server'        => $dbServer,
-			'username'      => $dbUsername,
-			'password'      => $dbPassword,
-			'database_name' => $dbName,
-			'charset'       => 'utf8'
-		));
+		parent::__construct(
+			array
+			(
+				'database_type' => 'mysql',
+				'server'        => $dbServer,
+				'username'      => $dbUsername,
+				'password'      => $dbPassword,
+				'database_name' => $dbName,
+				'charset'       => 'utf8'
+			)
+		);
 	}
 
 	/**
@@ -34,7 +36,7 @@ class Vr360Database extends \Medoo\Medoo
 
 		if (!isset($instance))
 		{
-			$instance = new static();
+			$instance = new static;
 		}
 
 		return $instance;

@@ -2,6 +2,11 @@
 
 defined('_VR360_EXEC') or die;
 
+/**
+ * Class Vr360Session
+ *
+ * @since  2.0.0
+ */
 class Vr360Session extends Vr360Object
 {
 
@@ -44,7 +49,6 @@ class Vr360Session extends Vr360Object
 
 		$this->status = session_status();
 		$this->id     = session_id();
-
 	}
 
 	public static function getInstance()

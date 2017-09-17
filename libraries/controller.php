@@ -2,6 +2,11 @@
 
 defined('_VR360_EXEC') or die;
 
+/**
+ * Class Vr360Controller
+ *
+ * @since  2.0.0
+ */
 class Vr360Controller
 {
 	protected $defaultView = 'tours';
@@ -31,7 +36,7 @@ class Vr360Controller
 
 		if (class_exists($controllerClassname))
 		{
-			$controllerClass = new $controllerClassname();
+			$controllerClass = new $controllerClassname;
 
 			return $controllerClass->$task();
 		}
@@ -43,20 +48,26 @@ class Vr360Controller
 		return false;
 	}
 
+	/**
+	 * @return  void
+	 */
 	public function display()
 	{
 		$view = Vr360Factory::getInput()->getString('view', $this->defaultView);
 
-		if (!Vr360HelperAuthorize::isAuthorized())
+		if ($view != 'tour')
 		{
-			$view = 'user';
+			if (!Vr360HelperAuthorize::isAuthorized())
+			{
+				$view = 'user';
+			}
 		}
 
 		$viewClassname = 'Vr360View' . ucfirst($view);
 
 		if (class_exists($viewClassname))
 		{
-			$viewClass = new $viewClassname();
+			$viewClass = new $viewClassname;
 
 			$viewHtml = $viewClass->display();
 		}
@@ -65,12 +76,24 @@ class Vr360Controller
 			$viewHtml = '';
 		}
 
-		$template = Vr360Template::getInstance()->fetch();
-		$template = str_replace('{content}', $viewHtml, $template);
+		if ($view == 'tour')
+		{
+			echo $viewHtml;
+		}
+		else
+		{
+			$template = Vr360Template::getInstance()->fetch();
+			$template = str_replace('{content}', $viewHtml, $template);
 
-		echo $template;
+			echo $template;
+		}
 	}
 
+	/**
+	 * @param   string $url Redirect URL
+	 *
+	 * @return  void
+	 */
 	public function redirect($url)
 	{
 		header("Location: " . $url);

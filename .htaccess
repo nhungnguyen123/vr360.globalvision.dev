@@ -1,0 +1,7 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteRule ^([a-zA-Z0-9_-]+)$ index.php?view=tour&alias=$1
+    RewriteRule ^([a-zA-Z0-9_-]+)/$ index.php?view=tour&alias=$1
+    RewriteRule ^plugins/([a-zA-Z0-9_-]+)\.([a-z]+)$ /assets/krpano/plugins/$1.$2
+</IfModule>

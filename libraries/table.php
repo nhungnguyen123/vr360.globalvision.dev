@@ -75,7 +75,7 @@ class Vr360Table extends Vr360Object
 	/**
 	 * Basic checking
 	 *
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function check()
 	{
