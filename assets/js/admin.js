@@ -376,3 +376,49 @@
 		vrAdmin.Pano.hooks();
 	})
 })(window, jQuery);
+
+
+function getHotspotData()
+{
+	var ifHotspotObj = document.getElementById('editTourHotspots').contentWindow;
+	if(ifHotspotObj.rdy4save())
+	{
+		alert('Please finish to add hotspot before saving or click cancel');
+		return false;
+	}
+	else
+	{
+		return ifHotspotObj.superHotspot.getData().hotspotList;
+	}
+}
+
+function submitHotspotData(id)
+{
+	if(!getHotspotData) return;
+	$.ajax({
+		url: 'index.php',
+		type: 'POST',
+		data: {
+			view: 'tour',
+			task: 'ajaxSaveHotspot',
+			id: id,
+			hotspotList: JSON.stringify(getHotspotData())
+		},
+		async: true,
+		cache: false,
+	})
+		.done(function (data, textStatus, jqXHR) {
+			if (data.status === true) {
+
+				vrAdmin.Log.appendArray(data.messages);
+				vrAdmin.Log.append('Page reloading ...');
+
+				// Reload page
+				//setTimeout(location.reload(), 2000);
+			}
+			else {
+				// Append messages
+				vrAdmin.Log.appendArray(data.messages);
+			}
+		})
+}

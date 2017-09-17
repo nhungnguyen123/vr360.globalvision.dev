@@ -125,7 +125,7 @@ class Vr360HelperTour
 
 			$curentScene['xmlFileName'] = explode('.', $fileName)[0];
 			$curentScene['xmlTitle']    = $jsonData['panoTitle'][$scene];
-			$curentScene['xmlHotspots'] = ''; //we will make hotspots later
+			$curentScene['xmlHotspots'] = self::xmlHotspots($jsonData, $curentScene['xmlFileName']); //we will make hotspots later
 		}
 
 		//write xmlData to xml Template
@@ -162,5 +162,45 @@ class Vr360HelperTour
 		}
 
 		return file_put_contents($tagetXmlFile, $tagetXmlFileContents); // need to check if cant overwrite
+	}
+
+	private static function xmlHotspot ($hotspotObj)
+	{
+		$h = $hotspotObj;
+		return "<hotspot name='spot_$h->hotspotID' dataId='{{dataId}}' style='skin_hotspotstyle|$h->style' ath='$h->ath' atv='$h->atv' hotspot_type='$h->hotspot_type' $h->data /> \n";
+	}
+
+	private static function xmlHotspots($jsonData, $xmlFileName)
+	{
+		$returnValue = '';
+		@foreach ($jsonData['hotspotList'] as $scene => $value)
+		{
+			$file = str_replace('scene_', '', $scene);
+			if($file == $xmlFileName)
+			{
+				$hotspotObj = new stdClass();
+				foreach ($scene as $hotspotID => $hotspot)
+				{
+					@$hotspotObj->hotspotID   = $hotspotID;
+					@$hotspotObj->ath         = $hotspot['ath'];
+					@$hotspotObj->atv         = $hotspot['atv'];
+
+					if ($hotspot['hotspot_type'] == 'normal')
+					{
+						@$hotspotObj->style = 'tooltip';
+						@$hotspotObj->data  = 'linkedscene="' . $hotspot['linkedscene'] . '"';
+					}
+					elseif ($hotspot['hotspot_type'] == 'text')
+					{
+						@$hotspotObj->style = 'textpopup';
+						@$hotspotObj->data  = 'hotspot_text="' . $hotspot['hotspot_text'] . '"';
+					}
+					$returnValue .= xmlHotspot($hotspotObj);
+				}
+				return $returnValue;
+				// break;
+			}
+		}
+		return ''; // if no hotspot found.
 	}
 }
