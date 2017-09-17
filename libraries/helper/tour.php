@@ -99,7 +99,7 @@ class Vr360HelperTour
 
 		$krPanoPath      = './assets/krpano/krpanotools ';
 		$krPanoCongig    = 'makepano -config=./assets/krpano/templates/vtour-normal.config ';
-		$krPanoListImage = $preImageDir . implode(" $preImageDir", $jsonData['files']);
+		$krPanoListImage = $preImageDir . implode($preImageDir, $jsonData['files']);
 
 		// Generate tour via exec
 		return exec($krPanoPath . $krPanoCongig . $krPanoListImage);
@@ -129,11 +129,9 @@ class Vr360HelperTour
 		foreach ($jsonData['files'] as $scene => $fileName)
 		{
 			$xmlData['scenes'][$scene] = array();
-			$currentScene              = $xmlData['scenes'][$scene];
-
-			$curentScene['xmlFileName'] = explode('.', $fileName)[0];
-			$curentScene['xmlTitle']    = $jsonData['panoTitle'][$scene];
-			$curentScene['xmlHotspots'] = self::xmlHotspots($jsonData, $curentScene['xmlFileName']); //we will make hotspots later
+			$xmlData['scenes'][$scene]['xmlFileName'] = explode('.', $fileName)[0];
+			$xmlData['scenes'][$scene]['xmlTitle']    = $jsonData['panoTitle'][$scene];
+			$xmlData['scenes'][$scene]['xmlHotspots'] = self::xmlHotspots($jsonData, $xmlData['scenes'][$scene]['xmlFileName']); //we will make hotspots later
 		}
 
 		// Write xmlData to xml Template
@@ -213,8 +211,6 @@ class Vr360HelperTour
 					}
 					$returnValue .= self::xmlHotspot($hotspotObj);
 				}
-				break;
-				// break;
 			}
 		}
 		return $returnValue; // if no hotspot found.
