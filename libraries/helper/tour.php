@@ -123,7 +123,7 @@ class Vr360HelperTour
 			$xmlData['scenes'][$scene] = [];
 			$curentScene               = &$xmlData['scenes'][$scene];
 
-			$curentScene['xmlFileName'] = $fileName;
+			$curentScene['xmlFileName'] = explode('.', $fileName)[0];
 			$curentScene['xmlTitle']    = $jsonData['panoTitle'][$scene];
 			$curentScene['xmlHotspots'] = ''; //we will make hotspots later
 		}

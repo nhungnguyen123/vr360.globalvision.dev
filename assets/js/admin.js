@@ -87,6 +87,32 @@
 
 			})
 		},
+		showEditHotspot: function (el) {
+			var data = $(el).data();
+			$(el).find('.editTourHotspot').on('click', function (event) {
+				$.ajax({
+					url: 'index.php',
+					type: 'POST',
+					data: {
+						id: data.tour.id,
+						view: 'tour',
+						task: 'ajaxGetHotspotEditorHtml',
+					},
+					async: true,
+					cache: false,
+				})
+					.done(function (data, textStatus, jqXHR) {
+						if (data.status) {
+							// Update title
+
+							// Update body
+							$('#vrTour .modal-body .container-fluid').html(data.data.html);
+							$('#vrTour').modal('show');
+						}
+					})
+
+			})
+		},
 
 		showPreview: function (el) {
 			var data = $(el).data();
@@ -103,6 +129,7 @@
 			$('#vTours tbody tr').each(function () {
 				vrAdmin.Tours.showEmbed(this);
 				vrAdmin.Tours.showEdit(this);
+				vrAdmin.Tours.showEditHotspot(this);
 				vrAdmin.Tours.showPreview(this);
 			});
 		}

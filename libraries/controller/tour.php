@@ -395,4 +395,34 @@ class Vr360ControllerTour extends Vr360Controller
 	}
 
 
+	public function ajaxGetHotspotEditorHtml()
+	{
+		$input = Vr360Factory::getInput();
+		$tour  = new Vr360TableTour();
+		$tour->load(array(
+			'id'         => (int) $input->getInt('id'),
+			'created_by' => Vr360Factory::getUser()->id
+		));
+
+		if ($tour !== false)
+		{
+			$html = Vr360Layout::getInstance()->fetch('form.hotspots', array('tour' => $tour));
+		}
+
+		else
+		{
+			$html = Vr360Layout::getInstance()->fetch('form.hotspotsiframe');
+		}
+
+
+		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
+	}
+
+	public function getEditTourHtmlHotspotEditorIFrame()
+	{
+		// I cant make this!
+		$html = Vr360Layout::getInstance()->fetch('form.hotspotsiframe', '');
+		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
+	}
+
 }
