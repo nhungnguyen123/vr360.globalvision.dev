@@ -132,6 +132,7 @@ class Vr360HelperTour
 
 			$xmlData['scenes'][$scene]['xmlFileName'] = explode('.', $fileName)[0];
 			$xmlData['scenes'][$scene]['xmlTitle']    = $jsonData['panoTitle'][$scene];
+			$xmlData['scenes'][$scene]['xmlSubTitle'] = $jsonData['panoDescription'][$scene];
 			$xmlData['scenes'][$scene]['xmlHotspots'] = self::xmlHotspots($jsonData, $xmlData['scenes'][$scene]['xmlFileName']); //we will make hotspots later
 		}
 
@@ -207,7 +208,7 @@ class Vr360HelperTour
 		{
 			return $returnValue;
 		}
-    
+
 		foreach ($jsonData['hotspotList'] as $scene => $value)
 		{
 			$file = str_replace('scene_', '', $scene);
