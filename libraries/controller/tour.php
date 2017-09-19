@@ -256,6 +256,7 @@ class Vr360ControllerTour extends Vr360Controller
 	public function ajaxGenerateTour()
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
+		$input = Vr360Factory::getInput();
 
 		// Permission verify
 		if (!Vr360HelperAuthorize::isAuthorized())
@@ -263,11 +264,14 @@ class Vr360ControllerTour extends Vr360Controller
 			$ajax->addWarning('User is not authorized')->fail()->respond();
 		}
 
-		$tour = new Vr360TableTour();
-		$tour->load(array(
-			'id'         => (int) $_POST['id'],
-			'created_by' => Vr360Factory::getUser()->id
-		));
+		$tour = new Vr360TableTour;
+		$tour->load(
+			array
+			(
+				'id'         => (int) $input->getInt('id'),
+				'created_by' => Vr360Factory::getUser()->id
+			)
+		);
 
 		// Found tour
 		if ($tour->id !== null)
@@ -288,13 +292,13 @@ class Vr360ControllerTour extends Vr360Controller
 				$ajax->addWarning('No panos')->fail()->respond();
 			}
 
-			//Using krpano tool to cut images
+			// Using krpano tool to cut images
 			if (Vr360HelperTour::generateTour($uId, $jsonData) === false)
 			{
 				$ajax->addWarning('Can not generate vTour')->fail()->respond();
 			}
 
-			//Create xml for tour
+			// Create xml for tour
 			if (Vr360HelperTour::generateXml($uId, $jsonData) === false)
 			{
 				$ajax->addWarning('Can not generate xml for vTour')->fail()->respond();
@@ -305,7 +309,7 @@ class Vr360ControllerTour extends Vr360Controller
 			$tour->save();
 
 			// Send mail
-			$mailer = new Vr360Email();
+			$mailer = new Vr360Email;
 			$mailer->isHTML(true);
 			$mailer->Subject = 'Your tour was created and generated success';
 			$mailer->Body    = '';
@@ -313,19 +317,21 @@ class Vr360ControllerTour extends Vr360Controller
 
 			$ajax->addSuccess('Tour generated success')->success()->respond();
 		}
-
 	}
 
 	public function ajaxRemoveTour()
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
-
 		$input = Vr360Factory::getInput();
-		$tour  = new Vr360TableTour();
-		$tour->load(array(
-			'id'         => (int) $input->getInt('id'),
-			'created_by' => Vr360Factory::getUser()->id
-		));
+
+		$tour = new Vr360TableTour;
+		$tour->load(
+			array
+			(
+				'id'         => (int) $input->getInt('id'),
+				'created_by' => Vr360Factory::getUser()->id
+			)
+		);
 
 		$tour->status = VR360_TOUR_STATUS_UNPUBLISHED;
 
@@ -374,11 +380,15 @@ class Vr360ControllerTour extends Vr360Controller
 	public function ajaxGetTourHtml()
 	{
 		$input = Vr360Factory::getInput();
-		$tour  = new Vr360TableTour();
-		$tour->load(array(
-			'id'         => (int) $input->getInt('id'),
-			'created_by' => Vr360Factory::getUser()->id
-		));
+
+		$tour = new Vr360TableTour;
+		$tour->load(
+			array
+			(
+				'id'         => (int) $input->getInt('id'),
+				'created_by' => Vr360Factory::getUser()->id
+			)
+		);
 
 		if ($tour !== false)
 		{
@@ -398,11 +408,15 @@ class Vr360ControllerTour extends Vr360Controller
 	public function ajaxGetHotspotEditorHtml()
 	{
 		$input = Vr360Factory::getInput();
-		$tour  = new Vr360TableTour();
-		$tour->load(array(
-			'id'         => (int) $input->getInt('id'),
-			'created_by' => Vr360Factory::getUser()->id
-		));
+
+		$tour = new Vr360TableTour;
+		$tour->load(
+			array
+			(
+				'id'         => (int) $input->getInt('id'),
+				'created_by' => Vr360Factory::getUser()->id
+			)
+		);
 
 		if ($tour !== false)
 		{
@@ -430,20 +444,26 @@ class Vr360ControllerTour extends Vr360Controller
 		$ajax = Vr360AjaxResponse::getInstance();
 
 		$input = Vr360Factory::getInput();
-		$tour  = new Vr360TableTour();
-		$tour->load(array(
-			'id'         => (int) $input->getInt('id'),
-			'created_by' => Vr360Factory::getUser()->id
-		));
-		//rebuild json
+
+		$tour = new Vr360TableTour;
+		$tour->load(
+			array
+			(
+				'id'         => (int) $input->getInt('id'),
+				'created_by' => Vr360Factory::getUser()->id
+			)
+		);
+
+		// Rebuild json
 		// var_dump($input->getString('hotspotList')); die();
 		// var_dump(json_decode($input->getString('hotspotList'), true)); die();
 		$hotSpotList = json_decode($input->getString('hotspotList'), true);
 		$uId         = $tour->dir;
-		$jsonData    = json_decode(file_get_contents(VR360_PATH_DATA ."/$uId/data.json"), true);
+		$jsonData    = json_decode(file_get_contents(VR360_PATH_DATA . "/$uId/data.json"), true);
 
 		$jsonData['hotspotList'] = $hotSpotList;
-		//Create xml for tour
+
+		// Create xml for tour
 		if (Vr360HelperTour::generateXml($uId, $jsonData) === false)
 		{
 			$ajax->addWarning('Can not generate xml for vTour')->fail()->respond();
@@ -454,7 +474,7 @@ class Vr360ControllerTour extends Vr360Controller
 		$tour->save();
 
 		// Send mail
-		$mailer = new Vr360Email();
+		$mailer = new Vr360Email;
 		$mailer->isHTML(true);
 		$mailer->Subject = 'Your tour was created and generated success';
 		$mailer->Body    = '';
@@ -462,5 +482,4 @@ class Vr360ControllerTour extends Vr360Controller
 
 		$ajax->addSuccess('Tour generated success')->success()->respond();
 	}
-
 }

@@ -3,5 +3,10 @@
 
     RewriteRule ^([a-zA-Z0-9_-]+)$ index.php?view=tour&alias=$1
     RewriteRule ^([a-zA-Z0-9_-]+)/$ index.php?view=tour&alias=$1
-    RewriteRule ^plugins/([a-zA-Z0-9_-]+)\.([a-z]+)$ /assets/krpano/plugins/$1.$2
+
+    RewriteRule ^plugins/([a-zA-Z0-9_-]+)\.([a-z]+)$ /assets/krpano/1.19/plugins/$1.$2
+    RewriteRule ^assets/krpano/plugins/webvr.xml$ /assets/krpano/1.19/plugins/webvr.xml
+    RewriteRule ^assets/krpano/plugins/webvr.js$ /assets/krpano/1.19/plugins/webvr.js
+    RewriteRule ^assets/krpano/plugins/scrollarea.js$ /assets/krpano/1.19/plugins/scrollarea.js
+    RewriteRule ^assets/krpano/plugins/webvr_cursor_80x80_17f.png$ /assets/krpano/1.19/plugins/webvr_cursor_80x80_17f.png
 </IfModule>

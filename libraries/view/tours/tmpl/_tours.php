@@ -37,20 +37,20 @@
 				<td class="vtour-date"><?php echo $tour->created; ?></td>
 				<td class="status"><?php echo ($tour->status == 1) ? '<i class="fa fa-check" aria-hidden="true"></i>' : ''; ?></td>
 				<td class="controls">
-					<!-- Embed -->
-					<button type="button" class="btn btn-default embedCode">
-						<i class="fa fa-code" aria-hidden="true"></i> Embed
-					</button>
-					<?php if (Vr360HelperFolder::exists($tourDir)): ?>
-					<!-- Edit -->
-					<button type="button" class="btn btn-primary editTour">
-						<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-					</button>
-					<button type="button" class="btn btn-primary editTourHotspot">
-						<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hotspot
-					</button>
-					<?php endif; ?>
 					<?php if ($tour->status == VR360_TOUR_STATUS_PUBLISHED_READY && Vr360HelperFolder::exists($tourDir)): ?>
+						<!-- Embed -->
+						<button type="button" class="btn btn-default embedCode">
+							<i class="fa fa-code" aria-hidden="true"></i> Embed
+						</button>
+						<!-- Edit -->
+						<button type="button" class="btn btn-primary editTour">
+							<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+						</button>
+						<!-- Hotspot -->
+						<button type="button" class="btn btn-primary editTourHotspot">
+							<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hotspot
+						</button>
+
 						<!-- Preview -->
 						<button type="button" class="btn btn-info previewTour">
 							<i class="fa fa-external-link" aria-hidden="true"></i> Preview

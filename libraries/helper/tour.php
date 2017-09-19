@@ -97,9 +97,31 @@ class Vr360HelperTour
 			unlink("$preImageDir/vtour/tour.xml");
 		}
 
+		if (empty($jsonData['files']))
+		{
+			return false;
+		}
+
+		$files = array();
+
+		foreach ($jsonData['files'] as $file)
+		{
+			$file = $preImageDir . $file;
+
+			if (Vr360HelperFile::exists($file))
+			{
+				$files[] = $file;
+			}
+		}
+
+		if (empty($files))
+		{
+			return false;
+		}
+
 		$krPanoPath      = './assets/krpano/krpanotools ';
 		$krPanoCongig    = 'makepano -config=./assets/krpano/templates/vtour-normal.config ';
-		$krPanoListImage = $preImageDir . implode($preImageDir, $jsonData['files']);
+		$krPanoListImage = $preImageDir . implode(' ', $files);
 
 		// Generate tour via exec
 		return exec($krPanoPath . $krPanoCongig . $krPanoListImage);
@@ -178,7 +200,7 @@ class Vr360HelperTour
 	}
 
 	/**
-	 * @param   object  $hotspotObj
+	 * @param   object $hotspotObj
 	 *
 	 * @return string
 	 */
@@ -225,9 +247,9 @@ class Vr360HelperTour
 
 					if ($hotspot['hotspot_type'] == 'normal')
 					{
-						$hotspotObj->style = 'tooltip';
+						$hotspotObj->style        = 'tooltip';
 						$hotspotObj->hotspot_type = 'normal';
-						$hotspotObj->data  = 'linkedscene="scene_' . explode('.', $jsonData['files'][$hotspot['linkedscene']])[0] . '"';
+						$hotspotObj->data         = 'linkedscene="scene_' . explode('.', $jsonData['files'][$hotspot['linkedscene']])[0] . '"';
 					}
 					elseif ($hotspot['hotspot_type'] == 'text')
 					{
