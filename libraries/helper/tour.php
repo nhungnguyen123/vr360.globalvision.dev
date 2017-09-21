@@ -121,7 +121,7 @@ class Vr360HelperTour
 
 		$krPanoPath      = './assets/krpano/krpanotools ';
 		$krPanoCongig    = 'makepano -config=./assets/krpano/templates/vtour-normal.config ';
-		$krPanoListImage = $preImageDir . implode(' ', $files);
+		$krPanoListImage = implode(' ', $files);
 
 		// Generate tour via exec
 		return exec($krPanoPath . $krPanoCongig . $krPanoListImage);
