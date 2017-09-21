@@ -127,7 +127,7 @@
 
 		hooks: function () {
 			$('body').on('click', '.addNew', function () {
-				vrAdmin.Controls.addNew()
+				vrAdmin.Tours.addNew()
 			})
 			$('#vTours tbody tr').each(function () {
 				vrAdmin.Tours.showEmbed(this);
