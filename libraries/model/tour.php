@@ -50,12 +50,16 @@ class Vr360ModelTour extends Vr360Model
 		return $table;
 	}
 
+	/**
+	 * File upload process only
+	 */
 	public function ajaxUploadFile()
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
 
 		$numberOfFiles = isset($_FILES['panoFile']['name']) ? count($_FILES['panoFile']['name']) : 0;
 
+		// This json included all form post
 		$jsonData = json_decode(json_encode($_POST), true);
 
 		$input  = Vr360Factory::getInput();
@@ -65,12 +69,13 @@ class Vr360ModelTour extends Vr360Model
 		if ($tourId)
 		{
 			$tour = $this->getItem();
-
-			$uId = $tour->dir;
+			$uId  = $tour->dir;
 		}
 
 		if ($numberOfFiles > 0)
 		{
+			$ajax->addInfo($numberOfFiles . ' uploaded');
+
 			// @TODO We need to get things we need and validate it before use!
 			$validFiles = array();
 
@@ -96,6 +101,8 @@ class Vr360ModelTour extends Vr360Model
 			{
 				// All files are validated than loop again to make json data
 				$uId = Vr360HelperTour::createDataDir();
+
+				$ajax->addInfo('Created data directory');
 			}
 
 			if ($uId === false)
@@ -105,9 +112,9 @@ class Vr360ModelTour extends Vr360Model
 
 			$destDir = VR360_PATH_DATA . '/' . $uId;
 
-			$jsonData ['uId']     = $uId;
-			$jsonData ['destDir'] = $destDir;
+			$jsonData ['uId'] = $uId;
 
+			// Prepare list of files
 			$jsonFiles = array();
 
 			// Move uploaded files
@@ -129,20 +136,23 @@ class Vr360ModelTour extends Vr360Model
 
 			if (Vr360HelperFile::exists($jsonFile))
 			{
+				$ajax->addInfo('JSON File already exists');
+
 				$jsonData = json_decode(Vr360HelperFile::read($jsonFile), true);
 
 				// Merge with new uploaded files
 				$jsonData['files'] = array_merge($_POST['panoFile'], $jsonFiles);
 
 				unset($jsonData['panoFile']);
+
+				// Update
+				$jsonData['name']  = $input->getString('name');
+				$jsonData['alias'] = $input->getString('alias');
 			}
 			else
 			{
 				$jsonData['files'] = $jsonFiles;
 			}
-
-			$jsonData['name']  = $input->getString('name');
-			$jsonData['alias'] = $input->getString('alias');
 
 			if ($input->getString('panoTitle'))
 			{
@@ -154,12 +164,14 @@ class Vr360ModelTour extends Vr360Model
 				$jsonData['panoDescription'] = $input->getString('panoDescription');
 			}
 
+			// Save json
 			if (!file_put_contents($jsonFile, json_encode($jsonData)))
 			{
 				$ajax->addWarning('Can not create JSON file')->fail()->respond();
 			}
 
-			$ajax->addData('tour', $jsonData)->addData('uId', $uId)->addData('dir', $destDir);
+			$ajax->addInfo('JSON File saved success');
+			$ajax->addData('tour', $jsonData);
 			$ajax->addSuccess('File uploaded success')->success()->respond();
 		}
 
@@ -169,12 +181,12 @@ class Vr360ModelTour extends Vr360Model
 			// Update old tour
 			if ($tour->id)
 			{
-				$uId      = $tour->dir;
-				$destDir  = $tour->getDataDirPath();
 				$jsonFile = $tour->getDataFilePath();
 
 				if (Vr360HelperFile::exists($jsonFile))
 				{
+					$ajax->addInfo('JSON File already exists');
+
 					$jsonData = $tour->getData();
 
 					$jsonData['name']  = $input->getString('name');
@@ -198,15 +210,18 @@ class Vr360ModelTour extends Vr360Model
 						unset($jsonData['panoDescription']);
 					}
 
+					$jsonData['params'] = isset($_REQUEST['params']) ? $_REQUEST['params'] : array();
+
+					// Save json
 					if (!file_put_contents($jsonFile, json_encode($jsonData)))
 					{
 						$ajax->addWarning('Can not create JSON file')->fail()->respond();
 					}
 
+					$ajax->addInfo('JSON File saved success');
 					$ajax->addData('tour', $jsonData);
 					$ajax->addData('id', $tourId);
-					$ajax->addData('uId', $uId);
-					$ajax->addData('dir', $destDir)->addSuccess('File uploaded success')->success()->respond();
+					$ajax->addSuccess('Panos updated success')->success()->respond();
 				}
 				else
 				{
@@ -218,13 +233,16 @@ class Vr360ModelTour extends Vr360Model
 		$ajax->addWarning('No pano')->fail()->respond();
 	}
 
+	/**
+	 *
+	 */
 	public function ajaxCreateTour()
 	{
-		$ajax = Vr360AjaxResponse::getInstance();
+		$ajax  = Vr360AjaxResponse::getInstance();
 		$input = Vr360Factory::getInput();
 
 		$table = new Vr360TableTour;
-		$table->bind($_POST);
+		$table->bind($_REQUEST);
 
 		$params = $table->params;
 
@@ -242,7 +260,7 @@ class Vr360ModelTour extends Vr360Model
 		}
 
 		$table->params = $params;
-		$table->dir    = $_POST['uId'];
+		$table->dir    = $input->get('uId');
 		$table->status = VR360_TOUR_STATUS_PENDING;
 
 		if ($id = $table->save())

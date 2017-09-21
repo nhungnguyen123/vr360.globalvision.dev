@@ -5,13 +5,13 @@ $tour   = isset($tour) ? $tour : new Vr360TableTour();
 $params = $tour->params;
 
 $rotation = '';
-if (isset($params->rotation) && $params->rotation == 'on')
+if (isset($params->rotation) && $params->rotation == '1')
 {
 	$rotation = 'checked';
 }
 
 $socials = '';
-if (isset($params->socials) && $params->socials == 'on')
+if (isset($params->socials) && $params->socials == '1')
 {
 	$socials = 'checked';
 }
@@ -98,14 +98,14 @@ if (isset($params->socials) && $params->socials == 'on')
                                 <span class="label label-primary"><i class="fa fa-cogs" aria-hidden="true"></i> Options</span>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="tour_rotation" name="params[rotation]" size="80" <?php echo $rotation; ?>/>Check
+                                        <input type="checkbox" id="tour_rotation" name="params[rotation]" value="1" size="80" <?php echo $rotation; ?>/>Check
                                         for auto
                                         rotation.
                                     </label>
                                 </div>
                                 <div class="checkbox">
                                     <label>
-                                        <input type="checkbox" id="tour_social" name="params[socials]" size="80" <?php echo $socials; ?>/>Check
+                                        <input type="checkbox" id="tour_social" name="params[socials]" value="1" size="80" <?php echo $socials; ?>/>Check
                                         for
                                         show media
                                         social button.

@@ -101,6 +101,14 @@ class Vr360ControllerTour extends Vr360Controller
 		}
 	}
 
+	/**
+	 * Edit tour use same flow of create tour
+	 */
+	public function ajaxEditTour()
+	{
+		$this->ajaxCreateTour();
+	}
+
 	public function ajaxRemoveTour()
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
@@ -124,37 +132,6 @@ class Vr360ControllerTour extends Vr360Controller
 		}
 
 		$ajax->addWarning('Something wrong')->fail()->respond();
-	}
-
-	public function ajaxEditTour()
-	{
-		$ajax = Vr360AjaxResponse::getInstance();
-
-		// Permission verify
-		if (!Vr360HelperAuthorize::isAuthorized())
-		{
-			$ajax->addWarning('User is not authorized')->fail()->respond();
-		}
-
-		$input = Vr360Factory::getInput();
-
-		$tourName  = $input->getString('name');
-		$tourAlias = $input->getString('alias');
-
-		if (empty($tourName) || empty($tourAlias))
-		{
-			$ajax->addWarning('Missed fields')->fail()->respond();
-		}
-
-		switch ($input->getString('step'))
-		{
-			case 'uploadFile':
-				Vr360ModelTour::getInstance()->ajaxUploadFile();
-				break;
-			case 'createTour':
-				Vr360ModelTour::getInstance()->ajaxCreateTour();
-				break;
-		}
 	}
 
 	public function ajaxGetTourHtml()
