@@ -3,10 +3,23 @@
 	var vrAdmin = {};
 
 	/**
-	 * Handle general control buttons
+	 * Handle tours
 	 * @type {{hooks: hooks}}
 	 */
-	vrAdmin.Controls = {
+	vrAdmin.Tours = {
+
+		Controls: {
+			getProperty: function (el, property)
+			{
+				var data = $(el).parent().parent().data();
+
+				return data.tour[property];
+			}
+		},
+
+		/**
+		 * Show add new modal with right content
+		 */
 		addNew: function () {
 			$.ajax({
 				url: 'index.php',
@@ -30,28 +43,15 @@
 
 			$('#vrTour').modal('show');
 		},
-		/**
-		 * General hooks
-		 */
-		hooks: function () {
-			$('.addNew').on('click', function () {
 
-				vrAdmin.Controls.addNew()
-			})
-		}
-	};
-
-	/**
-	 * Handle tours
-	 * @type {{hooks: hooks}}
-	 */
-	vrAdmin.Tours = {
 		/**
 		 * Show embed code modal
 		 * @param el
 		 */
 		showEmbed: function (el) {
 			$(el).find('.embedCode').on('click', function (event) {
+				var alias = vrAdmin.Tours.Controls.getProperty(this, 'alias');
+				var template = '<iframe width="800px" height="400px" src="http://vr360.globalvision.ch/' + alias + '" ></iframe>';
 				$('#vrModal .modal-body').text(template);
 				$('#vrModal').modal('show');
 			})
@@ -126,6 +126,9 @@
 		},
 
 		hooks: function () {
+			$('body').on('click', '.addNew', function () {
+				vrAdmin.Controls.addNew()
+			})
 			$('#vTours tbody tr').each(function () {
 				vrAdmin.Tours.showEmbed(this);
 				vrAdmin.Tours.showEdit(this);
@@ -428,7 +431,7 @@
 	w.vrAdmin = vrAdmin;
 
 	$(document).ready(function () {
-		vrAdmin.Controls.hooks();
+
 		vrAdmin.Tours.hooks();
 		vrAdmin.Tour.hooks();
 		vrAdmin.Pano.hooks();
