@@ -95,14 +95,14 @@
 		},
 		showEditHotspot: function (el)
 		{
-			var data = $(el).data();
+			var tourData = $(el).data();
 			$(el).find('.editTourHotspot').on('click', function (event)
 			{
 				$.ajax({
 					url: 'index.php',
 					type: 'POST',
 					data: {
-						id: data.tour.id,
+						id: tourData.tour.id,
 						view: 'tour',
 						task: 'ajaxGetHotspotEditorHtml',
 					},
@@ -114,6 +114,7 @@
 						if (data.status)
 						{
 							// Update title
+							$('#vrTour .modal-title').html('<i class="fa fa-plus-square" aria-hidden="true"></i> Add hotspot <br/><small>' + tourData.tour.name + '</small>');
 
 							// Update body
 							$('#vrTour .modal-body .container-fluid').html(data.data.html);
