@@ -230,7 +230,7 @@ class Vr360ModelTour extends Vr360Model
 			}
 		}
 
-		$ajax->addWarning('No pano')->fail()->respond();
+		$ajax->addWarning('No pano. Please add at least 1 pano to create a vTour')->fail()->respond();
 	}
 
 	/**
