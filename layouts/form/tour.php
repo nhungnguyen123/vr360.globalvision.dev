@@ -42,7 +42,7 @@ if (isset($params->socials) && $params->socials == '1')
                             <div class="form-group">
                                 <label>Title</label>
                                 <input name="panoTitle[]" type="text" class="form-control"
-                                       placeholder="Pano title"/>
+                                       placeholder="Pano title" required/>
                             </div>
 
                             <div class="form-group">
