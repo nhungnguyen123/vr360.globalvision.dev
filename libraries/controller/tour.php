@@ -10,14 +10,13 @@ class Vr360ControllerTour extends Vr360Controller
 	public function ajaxCreateTour()
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
+		$input = Vr360Factory::getInput();
 
 		// Permission verify
 		if (!Vr360HelperAuthorize::isAuthorized())
 		{
 			$ajax->addWarning('User is not authorized')->fail()->respond();
 		}
-
-		$input = Vr360Factory::getInput();
 
 		$tourName  = $input->getString('name');
 		$tourAlias = $input->getString('alias');
@@ -30,222 +29,12 @@ class Vr360ControllerTour extends Vr360Controller
 		switch ($input->getString('step'))
 		{
 			case 'uploadFile':
-				$this->uploadFile();
+				Vr360ModelTour::getInstance()->ajaxUploadFile();
 				break;
 			case 'createTour':
-				$this->createTour();
+				Vr360ModelTour::getInstance()->ajaxCreateTour();
 				break;
 		}
-	}
-
-	/**
-	 *
-	 */
-	protected function uploadFile()
-	{
-		$ajax = Vr360AjaxResponse::getInstance();
-
-		$numberOfFiles = isset($_FILES['panoFile']['name']) ? count($_FILES['panoFile']['name']) : 0;
-
-		$jsonData = json_decode(json_encode($_POST), true);
-
-		$input  = Vr360Factory::getInput();
-		$tourId = $input->getInt('id');
-
-		if ($tourId)
-		{
-			$tour = new Vr360TableTour();
-			$tour->load(array(
-				'id'         => (int) $tourId,
-				'created_by' => Vr360Factory::getUser()->id
-			));
-
-			$uId = $tour->dir;
-		}
-
-		if ($numberOfFiles > 0)
-		{
-			// @TODO We need to get things we need and validate it before use!
-			$validFiles = array();
-
-			// Files validate
-			for ($i = 0; $i < $numberOfFiles; $i++)
-			{
-				// File upload and validate
-				//!!!!! need to check file size!! if not krpano will hang 4ever!
-				if (!Vr360HelperTour::fileValidate($_FILES['panoFile']['tmp_name'][$i]))
-				{
-					$ajax->addWarning('Invalid file: ' . $_FILES['panoFile']['name'][$i])->fail()->respond();
-				}
-
-				$newFileName    = Vr360HelperTour::generateFilename($_FILES['panoFile']['name'][$i]);
-				$validFiles[$i] = $newFileName;
-			}
-
-			if (!$tourId)
-			{
-				// All files are validated than loop again to make json data
-				$uId = Vr360HelperTour::createDataDir();
-			}
-
-			if ($uId === false)
-			{
-				$ajax->addWarning('Can not create data directory')->fail()->respond();
-			}
-
-			$destDir = VR360_PATH_DATA . '/' . $uId;
-
-			$jsonData ['uId']     = $uId;
-			$jsonData ['destDir'] = $destDir;
-
-			$jsonFiles = array();
-			// Move uploaded files
-			foreach ($validFiles as $index => $fileName)
-			{
-				// Move uploaded file to right data directory
-				if (!move_uploaded_file($_FILES['panoFile']['tmp_name'][$index], $destDir . '/' . $fileName))
-				{
-					$ajax->addWarning("Cant move upload file: " . $_FILES['panoFile']['name'][$index]);
-					$ajax->fail()->respond();
-				}
-
-				// Save generated filename
-				$jsonFiles[] = $fileName;
-			}
-
-			// Create json file
-			$jsonFile = $destDir . "/data.json";
-
-			if (Vr360HelperFile::exists($jsonFile))
-			{
-				$jsonData = json_decode(file_get_contents($jsonFile), true);
-
-				// Merge with new uploaded files
-				$jsonData['files'] = array_merge($_POST['panoFile'], $jsonFiles);
-
-				unset($jsonData['panoFile']);
-			}
-			else
-			{
-				$jsonData['files'] = $jsonFiles;
-			}
-
-			$jsonData['name']            = $_POST['name'];
-			$jsonData['alias']           = $_POST['alias'];
-			$jsonData['panoTitle']       = $_POST['panoTitle'];
-			$jsonData['panoDescription'] = $_POST['panoDescription'];
-
-			if (!file_put_contents($jsonFile, json_encode($jsonData)))
-			{
-				$ajax->addWarning('Can not create JSON file')->fail()->respond();
-			}
-
-			$ajax->addData('tour', $jsonData);
-			$ajax->addData('uId', $uId);
-			$ajax->addData('dir', $destDir)->addSuccess('File uploaded success')->success()->respond();
-		}
-
-		// No new upload file
-		if ($tourId)
-		{
-			if ($tour->id)
-			{
-				$uId      = $tour->dir;
-				$destDir  = VR360_PATH_DATA . '/' . $uId;
-				$jsonFile = $destDir . "/data.json";
-
-				if (Vr360HelperFile::exists($jsonFile))
-				{
-					$jsonData = json_decode(file_get_contents($jsonFile), true);
-
-					$jsonData['name']  = $_POST['name'];
-					$jsonData['alias'] = $_POST['alias'];
-
-					if ($input->get('panoTitle'))
-					{
-						$jsonData['panoTitle'] = $input->get('panoTitle');
-					}
-					else
-					{
-						unset($jsonData['panoTitle']);
-					}
-
-					if ($input->get('panoDescription'))
-					{
-						$jsonData['panoDescription'] = $input->get('panoDescription');
-					}
-					else
-					{
-						unset($jsonData['panoDescription']);
-					}
-
-					if (!file_put_contents($jsonFile, json_encode($jsonData)))
-					{
-						$ajax->addWarning('Can not create JSON file')->fail()->respond();
-					}
-
-					$ajax->addData('tour', $jsonData);
-					$ajax->addData('id', $tourId);
-					$ajax->addData('uId', $uId);
-					$ajax->addData('dir', $destDir)->addSuccess('File uploaded success')->success()->respond();
-				}
-				else
-				{
-					$ajax->addWarning('File not found')->fail()->respond();
-				}
-			}
-		}
-
-		$ajax->addWarning('No pano')->fail()->respond();
-	}
-
-	/**
-	 * Create tour record
-	 */
-	protected function createTour()
-	{
-		$ajax = Vr360AjaxResponse::getInstance();
-
-		$table = new Vr360TableTour();
-		$table->bind($_POST);
-
-		$input = Vr360Factory::getInput();
-
-		if ($input->get('panoTitle') && $input->get('panoDescription'))
-		{
-			$params['panos'] = array(
-				'title'       => $_POST['panoTitle'],
-				'description' => $_POST['panoDescription'],
-				'files'       => $_POST['files']
-			);
-		}
-		else
-		{
-			$params['panos'] = null;
-		}
-
-		$table->params = $params;
-		$table->dir    = $_POST['uId'];
-		$table->status = VR360_TOUR_STATUS_PENDING;
-
-		if ($id = $table->save())
-		{
-			$ajax->addData('id', $id);
-		}
-
-		if ($id)
-		{
-			if (isset($_POST['id']))
-			{
-				$ajax->addSuccess('Tour updated success')->success()->respond();
-			}
-			else
-			{
-				$ajax->addSuccess('Tour created success')->success()->respond();
-			}
-		}
-
-		$ajax->addWarning('Tour created fail')->fail()->respond();
 	}
 
 	/**
@@ -256,7 +45,6 @@ class Vr360ControllerTour extends Vr360Controller
 	public function ajaxGenerateTour()
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
-		$input = Vr360Factory::getInput();
 
 		// Permission verify
 		if (!Vr360HelperAuthorize::isAuthorized())
@@ -264,29 +52,23 @@ class Vr360ControllerTour extends Vr360Controller
 			$ajax->addWarning('User is not authorized')->fail()->respond();
 		}
 
-		$tour = new Vr360TableTour;
-		$tour->load(
-			array
-			(
-				'id'         => (int) $input->getInt('id'),
-				'created_by' => Vr360Factory::getUser()->id
-			)
-		);
+		$tour = Vr360ModelTour::getInstance()->getItem();
 
 		// Found tour
 		if ($tour->id !== null)
 		{
 			$uId      = $tour->dir;
-			$jsonFile = VR360_PATH_DATA . '/' . $tour->dir . '/data.json';
+			$jsonFile = $tour->getDataFilePath();
 
 			if (!file_exists($jsonFile) || !is_file($jsonFile))
 			{
 				$ajax->addWarning('File not found')->fail()->respond();
 			}
 
-			$jsonContent = file_get_contents($jsonFile);
+			$jsonContent = Vr360HelperFile::read($jsonFile);
 			$jsonData    = json_decode($jsonContent, true);
 
+			// There is no panos then we'll not execute generate
 			if (!isset($jsonData['panoTitle']))
 			{
 				$ajax->addWarning('No panos')->fail()->respond();
@@ -367,12 +149,10 @@ class Vr360ControllerTour extends Vr360Controller
 		switch ($input->getString('step'))
 		{
 			case 'uploadFile':
-				// Handle new file uploaded
-				$this->uploadFile();
-
+				Vr360ModelTour::getInstance()->ajaxUploadFile();
 				break;
 			case 'createTour':
-				$this->createTour();
+				Vr360ModelTour::getInstance()->ajaxCreateTour();
 				break;
 		}
 	}
