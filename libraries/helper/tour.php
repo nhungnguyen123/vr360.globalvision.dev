@@ -155,16 +155,22 @@ class Vr360HelperTour
 		foreach ($jsonData['files'] as $scene => $fileName)
 		{
 			$xmlData['scenes'][$scene] = array();
+			$xmlFileName = explode('.', $fileName)[0];
 
-			$xmlData['scenes'][$scene]['xmlFileName'] = explode('.', $fileName)[0];
+			$xmlData['scenes'][$scene]['xmlFileName'] = $xmlFileName;
 			$xmlData['scenes'][$scene]['xmlTitle']    = $jsonData['panoTitle'][$scene];
 			$xmlData['scenes'][$scene]['xmlSubTitle'] = $jsonData['panoDescription'][$scene];
-			$xmlData['scenes'][$scene]['fov']         = $jsonData['defaultViewList'][$scene]['fov'];
-			$xmlData['scenes'][$scene]['hlookat']     = $jsonData['defaultViewList'][$scene]['hlookat'];
-			$xmlData['scenes'][$scene]['vlookat']     = $jsonData['defaultViewList'][$scene]['vlookat'];
+			$xmlData['scenes'][$scene]['fov']         = $jsonData['defaultViewList']["scene_$xmlFileName"]['fov'];
+			$xmlData['scenes'][$scene]['hlookat']     = $jsonData['defaultViewList']["scene_$xmlFileName"]['hlookat'];
+			$xmlData['scenes'][$scene]['vlookat']     = $jsonData['defaultViewList']["scene_$xmlFileName"]['vlookat'];
 			$xmlData['scenes'][$scene]['xmlHotspots'] = self::xmlHotspots($jsonData, $xmlData['scenes'][$scene]['xmlFileName']);
-		}
 
+			// echo "scene_$xmlFileName";
+			// var_dump($jsonData['defaultViewList']);
+		}
+ // 	var_dump($xmlData['scenes']);
+ //
+ // die();
 		// Write xmlData to xml Template
 		$targetXmlFileContents = '';
 
