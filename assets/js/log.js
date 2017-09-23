@@ -1,4 +1,5 @@
 (function (w, $) {
+
 	vrAdmin.Log = {
 		reset: function () {
 			$('#vrLogging').html('');
