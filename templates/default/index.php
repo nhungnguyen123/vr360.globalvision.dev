@@ -64,7 +64,7 @@ defined('_VR360_EXEC') or die;
 							</a>
 							<a href="//plus.google.com/+GlobalVisionSwitzerland" target="_blank">
 								<i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
-							<a href="mailto:info@globalvision.ch" target="_blank">
+							<a href="mailto:info@globalvision.ch">
 								<i id="social-em" class="fa fa-envelope-square fa-3x social"></i>
 							</a>
 						</div>
