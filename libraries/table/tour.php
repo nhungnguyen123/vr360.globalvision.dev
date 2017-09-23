@@ -51,6 +51,7 @@ class Vr360TableTour extends Vr360Table
 				'alias' => $this->alias
 			)
 		);
+
 		if ($tours !== false && count($tours) > 0)
 		{
 			// Append ID
@@ -59,13 +60,8 @@ class Vr360TableTour extends Vr360Table
 			Vr360AjaxResponse::getInstance()->addWarning('Duplicated alias');
 		}
 
-		if (
-			empty($this->name)
-			|| empty($this->alias)
-			|| empty($this->dir)
-		)
+		if (empty($this->name) || empty($this->alias) || empty($this->dir))
 		{
-
 			return false;
 		}
 
@@ -95,5 +91,33 @@ class Vr360TableTour extends Vr360Table
 		}
 
 		return parent::check();
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDataFilePath()
+	{
+		return $this->getDataDirPath() . 'data.json';
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getDataDirPath()
+	{
+		return VR360_PATH_DATA . '/' . $this->dir . '/';
+	}
+
+	public function getData()
+	{
+		$jsonFile = $this->getDataFilePath();
+
+		if (Vr360HelperFile::exists($jsonFile))
+		{
+			return json_decode(file_get_contents($jsonFile), true);
+		}
+
+		return array();
 	}
 }

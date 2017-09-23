@@ -14,23 +14,22 @@ class Vr360HelperTour
 	 */
 	public static function fileValidate($filePath)
 	{
-
 		if (!file_exists($filePath))
 		{
-			return false;
+			return 'File not found: ' . $filePath;
 		}
 
 		if (!in_array(mime_content_type($filePath), Vr360Configuration::getConfig('allowMimeTypes')))
 		{
-			return false;
+			return 'Invalid file mime';
 		}
 
-		//!!check image size  x*2x size
+		// Check image size  x*2x size
 		$imgSize = getimagesize($filePath);
 
 		if (!($imgSize[0] == 2 * $imgSize[1]))
 		{
-			return false;
+			return 'Invalid file dimension';
 		}
 
 		return true;
@@ -90,13 +89,16 @@ class Vr360HelperTour
 	 */
 	public static function generateTour($uId, $jsonData)
 	{
-		$preImageDir = VR360_PATH_DATA . '/' . $uId . '/';
+		$preImageDir      = VR360_PATH_DATA . '/' . $uId . '/';
+		$vTourXmlFilePath = $preImageDir . '/vtour/tour.xml';
 
-		if (is_file("$preImageDir/vtour/tour.xml"))
+		// Delete old tour.xml if exists
+		if (Vr360HelperFile::exists($vTourXmlFilePath))
 		{
-			unlink("$preImageDir/vtour/tour.xml");
+			unlink($vTourXmlFilePath);
 		}
 
+		// There is no panos
 		if (empty($jsonData['files']))
 		{
 			return false;
@@ -108,6 +110,7 @@ class Vr360HelperTour
 		{
 			$file = $preImageDir . $file;
 
+			// Make sure file exists
 			if (Vr360HelperFile::exists($file))
 			{
 				$files[] = $file;
@@ -121,7 +124,7 @@ class Vr360HelperTour
 
 		$krPanoPath      = './assets/krpano/krpanotools ';
 		$krPanoCongig    = 'makepano -config=./assets/krpano/templates/vtour-normal.config ';
-		$krPanoListImage = $preImageDir . implode(' ', $files);
+		$krPanoListImage = implode(' ', $files);
 
 		// Generate tour via exec
 		return exec($krPanoPath . $krPanoCongig . $krPanoListImage);
@@ -135,13 +138,14 @@ class Vr360HelperTour
 	 */
 	public static function generateXml($uId, $jsonData)
 	{
-		$tagetXmlFile = "./_/$uId/vtour/tour.xml";
+		$tourDataDirPath = VR360_PATH_DATA . '/' . $uId . '/vtour/';
+		$tagetXmlFile    = $tourDataDirPath . "/tour.xml";
 
 		$xmlData = array();
 
 		/**
 		 * Prepare xmlData
-		 * Dont change the order of this array or you will have foot on your head
+		 * Don't change the order of this array or you will have foot on your head
 		 */
 		$xmlData['header'] = array();
 		$xmlData['scenes'] = array();
@@ -151,15 +155,18 @@ class Vr360HelperTour
 		foreach ($jsonData['files'] as $scene => $fileName)
 		{
 			$xmlData['scenes'][$scene] = array();
+			$xmlFileName = explode('.', $fileName)[0];
 
-			$xmlData['scenes'][$scene]['xmlFileName'] = explode('.', $fileName)[0];
+			$xmlData['scenes'][$scene]['xmlFileName'] = $xmlFileName;
 			$xmlData['scenes'][$scene]['xmlTitle']    = $jsonData['panoTitle'][$scene];
 			$xmlData['scenes'][$scene]['xmlSubTitle'] = $jsonData['panoDescription'][$scene];
-			$xmlData['scenes'][$scene]['xmlHotspots'] = self::xmlHotspots($jsonData, $xmlData['scenes'][$scene]['xmlFileName']); //we will make hotspots later
+			$xmlData['scenes'][$scene]['fov']         = $jsonData['defaultViewList']["scene_$xmlFileName"]['fov'];
+			$xmlData['scenes'][$scene]['hlookat']     = $jsonData['defaultViewList']["scene_$xmlFileName"]['hlookat'];
+			$xmlData['scenes'][$scene]['vlookat']     = $jsonData['defaultViewList']["scene_$xmlFileName"]['vlookat'];
+			$xmlData['scenes'][$scene]['xmlHotspots'] = self::xmlHotspots($jsonData, $xmlData['scenes'][$scene]['xmlFileName']);
 		}
-
 		// Write xmlData to xml Template
-		$tagetXmlFileContents = '';
+		$targetXmlFileContents = '';
 
 		// Process xmlData
 		foreach ($xmlData as $templateKey => $data)
@@ -184,8 +191,8 @@ class Vr360HelperTour
 						$xmlContent = preg_replace("/\{\{$subKey\}\}/", $subKeyData, $xmlContent);
 					}
 
-					$tagetXmlFileContents .= $xmlContent;
-					$xmlContent           = '';
+					$targetXmlFileContents .= $xmlContent;
+					$xmlContent            = '';
 				}
 				else
 				{
@@ -193,10 +200,10 @@ class Vr360HelperTour
 				}
 			}
 
-			$tagetXmlFileContents .= $xmlContent;
+			$targetXmlFileContents .= $xmlContent;
 		}
 
-		return file_put_contents($tagetXmlFile, $tagetXmlFileContents);
+		return file_put_contents($tagetXmlFile, $targetXmlFileContents);
 	}
 
 	/**
