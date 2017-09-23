@@ -64,7 +64,19 @@ class Vr360Tour extends Vr360TableTour
 
 		$fileInfo = pathinfo($defaultPano);
 
-		return '/_/' . $this->dir . '/vtour/panos/' . $fileInfo['filename'] . '.tiles/thumb.jpg';
+		$thumbnail = array();
+		$thumbnail['file']=  '/_/' . $this->dir . '/vtour/panos/' . $fileInfo['filename'] . '.tiles/thumb.jpg';
+		$thumbnail['alt'] = $this->getDescription(150);
+
+		if ( Vr360Configuration::getConfig('user_thumb_dimension', true))
+		{
+			$imageSize = getimagesize($this->getDir() . '/vtour/panos/' . $fileInfo['filename'] . '.tiles/thumb.jpg');
+			$thumbnail['width'] = $imageSize[0];
+			$thumbnail['height'] = $imageSize[1];
+			$thumbnail['mime'] = $imageSize['mime'];
+		}
+
+		return $thumbnail;
 	}
 
 	/**

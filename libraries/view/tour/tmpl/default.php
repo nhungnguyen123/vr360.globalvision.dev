@@ -2,9 +2,11 @@
 <html>
 <head>
 	<?php
-	$url                 = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-	$fullUrl             = $url . $_SERVER['REQUEST_URI'];
-	$defaultThumbnailUrl = $url . $this->tour->getDefaultThumbnail();
+	$url                   = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
+	$fullUrl               = $url . $_SERVER['REQUEST_URI'];
+	$defaultThumbnail      = $this->tour->getDefaultThumbnail();
+	$defaultThumbnailImage = $url . $defaultThumbnail['file'];
+	$defaultThumbnailAlt   = $defaultThumbnail['alt'];
 	?>
 	<title>VR360 Globalvision - <?php echo $this->tour->getName(); ?></title>
 	<link rel="shortcut icon" type="image/x-icon" href="./assets/images/globalvision.webp">
@@ -19,7 +21,7 @@
 	<meta name="description" content="<?php echo $this->tour->getDescription(); ?>">
 	<meta name="keywords" content="<?php echo Vr360Configuration::getConfig('siteKeyword'); ?>">
 
-	<meta itemprop="image" content="<?php echo $defaultThumbnailUrl; ?>">
+	<meta itemprop="image" content="<?php echo $defaultThumbnailImage; ?>">
 
 	<!-- Globalvision -->
 	<link rel="stylesheet" type="text/css" href="./assets/tour.min.css">
@@ -34,15 +36,20 @@
 	<meta name="twitter:creator" content="@GlobalVision360"/>
 	<meta name="twitter:description" content="<?php echo Vr360Configuration::getConfig('siteDescription'); ?>">
 	<!-- Twitter summary card with large image must be at least 280x150px -->
-	<meta name="twitter:image:src" content="<?php echo $defaultThumbnailUrl; ?>">
+	<meta name="twitter:image:src" content="<?php echo $defaultThumbnailImage; ?>">
 
 	<!-- Opengraph -->
 	<meta property="og:url" content="<?php echo $fullUrl; ?>"/>
 	<meta property="og:type" content="website"/>
 	<meta property="og:title" content="VR360 Globalvision - <?php echo $this->tour->getName(); ?>"/>
 	<meta property="og:description" content="<?php echo $this->tour->getDescription(); ?>"/>
-	<meta property="og:image" content="<?php echo $defaultThumbnailUrl; ?>"/>
-
+	<meta property="og:image" content="<?php echo $defaultThumbnailImage; ?>"/>
+	<meta property="og:image:alt" content="<?php echo $defaultThumbnailAlt; ?>"/>
+	<?php if (isset($defaultThumbnail['width']) && isset($defaultThumbnail['width'])): ?>
+		<meta property="og:image:width" content="<?php echo $defaultThumbnail['width']; ?>"/>
+		<meta property="og:image:height" content="<?php echo $defaultThumbnail['height']; ?>"/>
+		<meta property="og:image:type" content="<?php echo $defaultThumbnail['mime']; ?>"/>
+	<?php endif; ?>
 	<!-- jQuery -->
 	<script type="text/javascript" src="./assets/jquery-2.2.4.min.js"></script>
 </head>
