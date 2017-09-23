@@ -34,6 +34,8 @@ class Vr360ControllerTour extends Vr360Controller
 
 			$jsonContent = Vr360HelperFile::read($jsonFile);
 			$jsonData    = json_decode($jsonContent, true);
+			$jsonData['rotation'] = $tour->params->rotation;
+			$jsonData['socials']  = $tour->params->socials;
 
 			// There is no panos then we'll not execute generate
 			if (!isset($jsonData['panoTitle']))
@@ -218,6 +220,8 @@ class Vr360ControllerTour extends Vr360Controller
 
 		$jsonData['hotspotList']     = $hotSpotList;
 		$jsonData['defaultViewList'] = $defaultViewList;
+		$jsonData['rotation']        = $tour->params->rotation;
+		$jsonData['socials']         = $tour->params->socials;
 
 		// Create xml for tour
 		if (Vr360HelperTour::generateXml($uId, $jsonData) === false)
