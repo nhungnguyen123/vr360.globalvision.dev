@@ -150,8 +150,32 @@ class Vr360HelperTour
 		$xmlData['header'] = array();
 		$xmlData['scenes'] = array();
 		$xmlData['footer'] = array();
-
+		
 		// Assign xmlData to array
+		if(isset($jsonData['rotation']) && $jsonData['rotation'] == "1")
+		{
+			$xmlData['header']['openRotationTag'] = '';
+			$xmlData['header']['closeRotationTag'] = '';
+		}
+		else
+		{
+			$xmlData['header']['openRotationTag'] = '<!--';
+			$xmlData['header']['closeRotationTag'] = '-->';
+		}
+
+		if(isset($jsonData['socials']) && $jsonData['socials'] == "1")
+		{
+			$xmlData['header']['openSocialTag'] = '';
+			$xmlData['header']['closeSocialTag'] = '';
+		}
+		else
+		{
+			$xmlData['header']['openSocialTag'] = '<!--';
+			$xmlData['header']['closeSocialTag'] = '-->';
+		}
+
+		var_dump($xmlData);
+
 		foreach ($jsonData['files'] as $scene => $fileName)
 		{
 			$xmlData['scenes'][$scene] = array();

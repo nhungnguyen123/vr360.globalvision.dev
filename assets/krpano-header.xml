@@ -4,7 +4,7 @@
     <include url="/assets/krpano/1.19/skin/tour-vtskin.xml"/>
     <include url="/assets/krpano/1.19/skin/social-skin.xml"/>
 
-    <autorotate enabled="true" waittime="2.0" speed="2.0" horizon="0.0"/>
+    {{openRotationTag}} <autorotate enabled="true" waittime="2.0" speed="2.0" horizon="0.0"/> {{closeRotationTag}}
 
     <!-- customize skin settings: maps, gyro, webvr, thumbnails, tooltips, layout, design, ... -->
     <skin_settings maps="false"
@@ -65,9 +65,11 @@
         if(startactions !== null, startactions() );
     </action>
 
+    {{openSocialTag}}
     <layer name="social_share" type="container" keep="true" align="left" width="50" height="200" x="20" y="0" bgcolor="0xffffff" bgalpha="0.0">
       <layer name="face" align="righttop" x="0" y="0" url="/assets/krpano/1.19/skin/images/f.jpg" zorder="90" onclick="js(shareFacebook(););"/>
       <layer name="twit" align="righttop" x="0" y="50" url="/assets/krpano/1.19/skin/images/t.jpg" zorder="90" onclick="js(shareTwitter(););"/>
       <layer name="goog" align="righttop" x="0" y="100" url="/assets/krpano/1.19/skin/images/g.jpg" zorder="90" onclick="js(shareGooglePlus(););"/>
       <layer name="embed" type="image" url="/assets/krpano/1.19/skin/images/embed.png" keep="true" align="lefttop" width="50" height="50" crop="0|0|50|50" onovercrop="50|0|50|50" onclick="js(toggleEmbedcode(););" />
     </layer>
+    {{closeSocialTag}}
