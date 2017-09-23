@@ -53,6 +53,7 @@ if (isset($params->socials) && $params->socials == '1')
 										class="form-control"
 										size="80"
 										placeholder="Pano sub title"
+										required
 								/>
 							</div>
 						</div>
@@ -168,6 +169,7 @@ if (isset($params->socials) && $params->socials == '1')
 															<label>Title</label>
 															<input name="panoTitle[]" type="text" class="form-control"
 															       placeholder="Pano title"
+															       required
 															       value="<?php echo $panos->title[$index]; ?>"/>
 														</div>
 
@@ -179,6 +181,7 @@ if (isset($params->socials) && $params->socials == '1')
 																	class="form-control"
 																	size="80"
 																	placeholder="Pano sub title"
+																	required
 																	value="<?php echo $panos->description[$index]; ?>"
 															/>
 														</div>
