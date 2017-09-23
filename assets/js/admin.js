@@ -93,7 +93,8 @@
 					view: 'tour',
 					task: 'ajaxSaveHotspot',
 					id: data.sceneId,
-					hotspotList: JSON.stringify(ifHotspotObj.superHotspot.getData().hotspotList)
+					hotspotList: JSON.stringify(ifHotspotObj.superHotspot.getData().hotspotList),
+					defaultViewList:  JSON.stringify(ifHotspotObj.defaultViewList)
 				},
 				async: true,
 				cache: false,
