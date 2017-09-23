@@ -42,8 +42,18 @@ class Vr360AjaxResponse extends Vr360Object
 	}
 
 	/**
-	 * @param   string  $message    Message
-	 * @param   string  $type       Type
+	 * @param   string $message Message
+	 *
+	 * @return Vr360AjaxResponse
+	 */
+	public function addDefault($message)
+	{
+		return $this->addMessage($message, 'default');
+	}
+
+	/**
+	 * @param   string $message Message
+	 * @param   string $type    Type
 	 *
 	 * @return $this
 	 */
@@ -60,17 +70,7 @@ class Vr360AjaxResponse extends Vr360Object
 	}
 
 	/**
-	 * @param   string  $message  Message
-	 *
-	 * @return Vr360AjaxResponse
-	 */
-	public function addDefault($message)
-	{
-		return $this->addMessage($message, 'default');
-	}
-
-	/**
-	 * @param   string  $message  Message
+	 * @param   string $message Message
 	 *
 	 * @return Vr360AjaxResponse
 	 */
@@ -80,7 +80,7 @@ class Vr360AjaxResponse extends Vr360Object
 	}
 
 	/**
-	 * @param   string  $message  Message
+	 * @param   string $message Message
 	 *
 	 * @return Vr360AjaxResponse
 	 */
@@ -90,7 +90,7 @@ class Vr360AjaxResponse extends Vr360Object
 	}
 
 	/**
-	 * @param   string  $message  Message
+	 * @param   string $message Message
 	 *
 	 * @return Vr360AjaxResponse
 	 */
@@ -100,7 +100,7 @@ class Vr360AjaxResponse extends Vr360Object
 	}
 
 	/**
-	 * @param   string  $message  Message
+	 * @param   string $message Message
 	 *
 	 * @return Vr360AjaxResponse
 	 */
@@ -110,7 +110,7 @@ class Vr360AjaxResponse extends Vr360Object
 	}
 
 	/**
-	 * @param   string  $message  Message
+	 * @param   string $message Message
 	 *
 	 * @return Vr360AjaxResponse
 	 */
@@ -120,8 +120,8 @@ class Vr360AjaxResponse extends Vr360Object
 	}
 
 	/**
-	 * @param   string  $key     Key
-	 * @param   mixed   $value   Value
+	 * @param   string $key   Key
+	 * @param   mixed  $value Value
 	 *
 	 * @return $this
 	 */

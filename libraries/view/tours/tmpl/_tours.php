@@ -6,15 +6,15 @@
 	</div>
 	<div class="panel-body">
 		<form method="post">
-		<input
-				type="text"
-				class="form-control"
-				id="task-table-filter"
-				data-action="filter"
-				data-filters="#task-table"
-				placeholder="Search tours"
-				name="keyword"
-		/>
+			<input
+					type="text"
+					class="form-control"
+					id="task-table-filter"
+					data-action="filter"
+					data-filters="#task-table"
+					placeholder="Search tours"
+					name="keyword"
+			/>
 			<input type="hidden" name="view" value="tours"/>
 			<input type="hidden" name="task" value="display"/>
 		</form>
@@ -33,9 +33,14 @@
 		<tbody>
 		<!-- Show tours -->
 		<?php foreach ($this->tours as $tour): ?>
-			<tr id='vtour-<?php echo $tour->id; ?>' data-tour='<?php echo $tour->toJson(); ?>' class="is-valid-<?php echo (int) $tour->isValid(); ?>">
+			<tr id='vtour-<?php echo $tour->id; ?>' data-tour='<?php echo $tour->toJson(); ?>'
+			    class="is-valid-<?php echo (int) $tour->isValid(); ?>">
 				<td class="vtour-id"><?php echo $tour->id; ?></td>
-				<td class="vtour-name"><?php echo $tour->getName(); ?></td>
+				<td class="vtour-name">
+					<?php echo $tour->getName(); ?>
+					<br/>
+					<small><?php echo $tour->dir; ?></small>
+				</td>
 				<td class="vtour-url"><?php echo $tour->alias; ?></td>
 				<td class="vtour-date"><?php echo $tour->created; ?></td>
 				<td class="status"><?php echo ($tour->status == 1) ? '<i class="fa fa-check" aria-hidden="true"></i>' : ''; ?></td>

@@ -19,7 +19,7 @@ class Vr360HelperFile
 	}
 
 	/**
-	 * @param   string  $filePath  File path
+	 * @param   string $filePath File path
 	 *
 	 * @return  boolean
 	 */

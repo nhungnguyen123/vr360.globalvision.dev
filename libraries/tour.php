@@ -14,30 +14,36 @@ class Vr360Tour extends Vr360TableTour
 		return trim($this->name);
 	}
 
-	public function getDescription($truncate = 300)
+	public function getDefaultThumbnail()
 	{
-		$description = !empty($this->description) ? $this->description : Vr360Configuration::getConfig('siteDescription');
+		$jsonData    = $this->getJsonData();
+		$defaultPano = $jsonData['files'][0];
 
-		return mb_substr($description,0, $truncate);
-	}
+		$fileInfo = pathinfo($defaultPano);
 
-	public function getDir()
-	{
-		return VR360_PATH_DATA . '/' . $this->dir;
-	}
-
-	public function getFile($file)
-	{
-		// @TODO Need clean file path to prevent path travel attacking
-
-		$filePath = $this->getDir() . '/' . $file;
-
-		if (!Vr360HelperFile::exists($filePath))
+		// Temporary code for B/C with old tour
+		if (!isset($fileInfo['filename']) || empty($fileInfo['filename']))
 		{
-			return false;
+			$fileInfo['filename'] = 1;
 		}
 
-		return $filePath;
+		$thumbnail         = array();
+		$thumbnail['file'] = '/_/' . $this->dir . '/vtour/panos/' . $fileInfo['filename'] . '.tiles/thumb.jpg';
+		$thumbnail['alt']  = $this->getDescription(150);
+
+		if (Vr360Configuration::getConfig('user_thumb_dimension', true))
+		{
+			$thumbnailFile = $this->getDir() . '/vtour/panos/' . $fileInfo['filename'] . '.tiles/thumb.jpg';
+			if (Vr360HelperFile::exists($thumbnailFile))
+			{
+				$imageSize           = getimagesize($this->getDir() . '/vtour/panos/' . $fileInfo['filename'] . '.tiles/thumb.jpg');
+				$thumbnail['width']  = $imageSize[0];
+				$thumbnail['height'] = $imageSize[1];
+				$thumbnail['mime']   = $imageSize['mime'];
+			}
+		}
+
+		return $thumbnail;
 	}
 
 	/**
@@ -57,36 +63,35 @@ class Vr360Tour extends Vr360TableTour
 		return json_decode($jsonContent, true);
 	}
 
-	public function getDefaultThumbnail()
+	public function getFile($file)
 	{
-		$jsonData    = $this->getJsonData();
-		$defaultPano = $jsonData['files'][0];
+		// @TODO Need clean file path to prevent path travel attacking
 
-		$fileInfo = pathinfo($defaultPano);
+		$filePath = $this->getDir() . '/' . $file;
 
-		// Temporary code for B/C with old tour
-		if (!isset($fileInfo['filename']) || empty($fileInfo['filename']))
+		if (!Vr360HelperFile::exists($filePath))
 		{
-			$fileInfo['filename'] = 1;
+			return false;
 		}
 
-		$thumbnail = array();
-		$thumbnail['file']=  '/_/' . $this->dir . '/vtour/panos/' . $fileInfo['filename'] . '.tiles/thumb.jpg';
-		$thumbnail['alt'] = $this->getDescription(150);
+		return $filePath;
+	}
 
-		if ( Vr360Configuration::getConfig('user_thumb_dimension', true))
-		{
-			$thumbnailFile = $this->getDir() . '/vtour/panos/' . $fileInfo['filename'] . '.tiles/thumb.jpg';
-			if (Vr360HelperFile::exists($thumbnailFile))
-			{
-				$imageSize = getimagesize($this->getDir() . '/vtour/panos/' . $fileInfo['filename'] . '.tiles/thumb.jpg');
-				$thumbnail['width'] = $imageSize[0];
-				$thumbnail['height'] = $imageSize[1];
-				$thumbnail['mime'] = $imageSize['mime'];
-			}
-		}
+	public function getDir()
+	{
+		return VR360_PATH_DATA . '/' . $this->dir;
+	}
 
-		return $thumbnail;
+	public function getDescription($truncate = 300)
+	{
+		$description = !empty($this->description) ? $this->description : Vr360Configuration::getConfig('siteDescription');
+
+		return mb_substr($description, 0, $truncate);
+	}
+
+	public function canEmbed()
+	{
+		return $this->isValid() && (int) $this->status === VR360_TOUR_STATUS_PUBLISHED_READY;
 	}
 
 	/**
@@ -109,11 +114,6 @@ class Vr360Tour extends Vr360TableTour
 		}
 
 		return true;
-	}
-
-	public function canEmbed()
-	{
-		return $this->isValid() && (int) $this->status === VR360_TOUR_STATUS_PUBLISHED_READY;
 	}
 
 	public function canEdit()

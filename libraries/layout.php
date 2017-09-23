@@ -17,7 +17,7 @@ class Vr360Layout
 	/**
 	 * Vr360Layout constructor.
 	 *
-	 * @param   string  $baseDir  Base directory path
+	 * @param   string $baseDir Base directory path
 	 */
 	public function __construct($baseDir = null)
 	{

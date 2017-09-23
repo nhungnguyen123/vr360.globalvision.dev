@@ -65,20 +65,12 @@ class Vr360Session extends Vr360Object
 		return $instance;
 	}
 
-	public function set($property, $value)
+	public function addMessage($message, $type = 'default')
 	{
-		if ($this->isValid())
-		{
-			$_SESSION[$this->namespace][$property] = $value;
-		}
-	}
+		$messages          = $this->get('messages', array());
+		$messages[$type][] = $message;
 
-	/**
-	 * @return bool
-	 */
-	protected function isValid()
-	{
-		return $this->status == PHP_SESSION_ACTIVE;
+		$this->set('messages', $messages);
 	}
 
 	public function get($property, $default = null)
@@ -94,12 +86,20 @@ class Vr360Session extends Vr360Object
 		return $default;
 	}
 
-	public function addMessage($message, $type ='default')
+	/**
+	 * @return bool
+	 */
+	protected function isValid()
 	{
-		$messages = $this->get('messages', array());
-		$messages[$type][] = $message;
+		return $this->status == PHP_SESSION_ACTIVE;
+	}
 
-		$this->set('messages', $messages);
+	public function set($property, $value)
+	{
+		if ($this->isValid())
+		{
+			$_SESSION[$this->namespace][$property] = $value;
+		}
 	}
 
 	public function getMessages()

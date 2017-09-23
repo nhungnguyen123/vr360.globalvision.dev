@@ -5,39 +5,6 @@ defined('_VR360_EXEC') or die;
 class Vr360ControllerTour extends Vr360Controller
 {
 	/**
-	 * Create new tour
-	 */
-	public function ajaxCreateTour()
-	{
-		$ajax = Vr360AjaxResponse::getInstance();
-		$input = Vr360Factory::getInput();
-
-		// Permission verify
-		if (!Vr360HelperAuthorize::isAuthorized())
-		{
-			$ajax->addWarning('User is not authorized')->fail()->respond();
-		}
-
-		$tourName  = $input->getString('name');
-		$tourAlias = $input->getString('alias');
-
-		if (empty($tourName) || empty($tourAlias))
-		{
-			$ajax->addWarning('Missed fields')->fail()->respond();
-		}
-
-		switch ($input->getString('step'))
-		{
-			case 'uploadFile':
-				Vr360ModelTour::getInstance()->ajaxUploadFile();
-				break;
-			case 'createTour':
-				Vr360ModelTour::getInstance()->ajaxCreateTour();
-				break;
-		}
-	}
-
-	/**
 	 * Generate tour
 	 *
 	 * @return bool
@@ -109,9 +76,42 @@ class Vr360ControllerTour extends Vr360Controller
 		$this->ajaxCreateTour();
 	}
 
+	/**
+	 * Create new tour
+	 */
+	public function ajaxCreateTour()
+	{
+		$ajax  = Vr360AjaxResponse::getInstance();
+		$input = Vr360Factory::getInput();
+
+		// Permission verify
+		if (!Vr360HelperAuthorize::isAuthorized())
+		{
+			$ajax->addWarning('User is not authorized')->fail()->respond();
+		}
+
+		$tourName  = $input->getString('name');
+		$tourAlias = $input->getString('alias');
+
+		if (empty($tourName) || empty($tourAlias))
+		{
+			$ajax->addWarning('Missed fields')->fail()->respond();
+		}
+
+		switch ($input->getString('step'))
+		{
+			case 'uploadFile':
+				Vr360ModelTour::getInstance()->ajaxUploadFile();
+				break;
+			case 'createTour':
+				Vr360ModelTour::getInstance()->ajaxCreateTour();
+				break;
+		}
+	}
+
 	public function ajaxRemoveTour()
 	{
-		$ajax = Vr360AjaxResponse::getInstance();
+		$ajax  = Vr360AjaxResponse::getInstance();
 		$input = Vr360Factory::getInput();
 
 		$tour = new Vr360Tour;
@@ -156,7 +156,6 @@ class Vr360ControllerTour extends Vr360Controller
 		{
 			$html = Vr360Layout::getInstance()->fetch('form.tour');
 		}
-
 
 		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
 	}
@@ -212,8 +211,6 @@ class Vr360ControllerTour extends Vr360Controller
 		);
 
 		// Rebuild json
-		// var_dump($input->getString('hotspotList')); die();
-		// var_dump(json_decode($input->getString('hotspotList'), true)); die();
 		$hotSpotList     = json_decode($input->getString('hotspotList'), true);
 		$defaultViewList = json_decode($input->getString('defaultViewList'), true);
 		$uId             = $tour->dir;

@@ -24,7 +24,7 @@ class Vr360Object
 	}
 
 	/**
-	 * @param   array  $properties  Properties
+	 * @param   array $properties Properties
 	 *
 	 * @return  boolean
 	 */
@@ -45,8 +45,8 @@ class Vr360Object
 	}
 
 	/**
-	 * @param   string  $property   Property
-	 * @param   mixed   $value      Value
+	 * @param   string $property Property
+	 * @param   mixed  $value    Value
 	 *
 	 * @return null
 	 */
@@ -67,8 +67,8 @@ class Vr360Object
 	}
 
 	/**
-	 * @param   string  $property   Property
-	 * @param   mixed   $default    Default value
+	 * @param   string $property Property
+	 * @param   mixed  $default  Default value
 	 *
 	 * @return  mixed
 	 */
@@ -98,7 +98,7 @@ class Vr360Object
 	}
 
 	/**
-	 * @param  bool  $public
+	 * @param  bool $public
 	 *
 	 * @return array
 	 */

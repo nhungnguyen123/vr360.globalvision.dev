@@ -39,6 +39,9 @@
 						// Update body
 						$('#vrTour .modal-body .container-fluid').html(data.data.html);
 						$('#vrTour').modal('show');
+
+						// Init default pano
+						$('.addPano').click();
 					}
 				});
 

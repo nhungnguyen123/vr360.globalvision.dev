@@ -27,7 +27,7 @@ class Vr360HelperTour
 		// Check image size  x*2x size
 		$imgSize = getimagesize($filePath);
 
-		if (!($imgSize[0] == 2 * $imgSize[1]))
+		if ($imgSize[0] < 2 * $imgSize[1])
 		{
 			return 'Invalid file dimension';
 		}
@@ -163,9 +163,9 @@ class Vr360HelperTour
 
 			if (isset($jsonData['defaultViewList']))
 			{
-				$xmlData['scenes'][$scene]['fov']         = $jsonData['defaultViewList']["scene_$xmlFileName"]['fov'];
-				$xmlData['scenes'][$scene]['hlookat']     = $jsonData['defaultViewList']["scene_$xmlFileName"]['hlookat'];
-				$xmlData['scenes'][$scene]['vlookat']     = $jsonData['defaultViewList']["scene_$xmlFileName"]['vlookat'];
+				$xmlData['scenes'][$scene]['fov']     = $jsonData['defaultViewList']["scene_$xmlFileName"]['fov'];
+				$xmlData['scenes'][$scene]['hlookat'] = $jsonData['defaultViewList']["scene_$xmlFileName"]['hlookat'];
+				$xmlData['scenes'][$scene]['vlookat'] = $jsonData['defaultViewList']["scene_$xmlFileName"]['vlookat'];
 			}
 			$xmlData['scenes'][$scene]['xmlHotspots'] = self::xmlHotspots($jsonData, $xmlData['scenes'][$scene]['xmlFileName']);
 		}
@@ -208,18 +208,6 @@ class Vr360HelperTour
 		}
 
 		return file_put_contents($tagetXmlFile, $targetXmlFileContents);
-	}
-
-	/**
-	 * @param   object $hotspotObj
-	 *
-	 * @return string
-	 */
-	protected static function xmlHotspot($hotspotObj)
-	{
-		$h = $hotspotObj;
-
-		return "<hotspot name='spot_$h->hotspotID' dataId='$h->hotspotID' style='skin_hotspotstyle|$h->style' ath='$h->ath' atv='$h->atv' hotspot_type='$h->hotspot_type' $h->data /> \n";
 	}
 
 	/**
@@ -275,5 +263,17 @@ class Vr360HelperTour
 		}
 
 		return $returnValue;
+	}
+
+	/**
+	 * @param   object $hotspotObj
+	 *
+	 * @return string
+	 */
+	protected static function xmlHotspot($hotspotObj)
+	{
+		$h = $hotspotObj;
+
+		return "<hotspot name='spot_$h->hotspotID' dataId='$h->hotspotID' style='skin_hotspotstyle|$h->style' ath='$h->ath' atv='$h->atv' hotspot_type='$h->hotspot_type' $h->data /> \n";
 	}
 }

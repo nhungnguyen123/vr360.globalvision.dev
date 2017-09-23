@@ -99,10 +99,25 @@
 				}
 			})
 		},
+
+		generateAlias: function()
+		{
+			$('body').on('blur', 'input[name=alias]', function(){
+				// Prepare
+				var alias = $(this).val();
+				alias = alias.toLowerCase()
+					.replace(/ /g,'-')
+					.replace(/[^\w-]+/g,'');
+				$(this).val(alias);
+			})
+
+		},
 		/**
 		 * Hooks
 		 */
 		hooks: function () {
+			vrAdmin.Tour.generateAlias();
+
 			// Create & edit tour
 			$('body').on('submit', '#createTour', function (event) {
 				vrAdmin.Log.reset();

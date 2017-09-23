@@ -12,7 +12,7 @@ class Vr360Email extends PHPMailer\PHPMailer\PHPMailer
 	/**
 	 * Vr360Email constructor.
 	 *
-	 * @param   null  $exceptions
+	 * @param   null $exceptions
 	 */
 	public function __construct($exceptions = null)
 	{
