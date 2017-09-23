@@ -33,6 +33,25 @@ class Vr360ModelTours extends Vr360Model
 		$offset = $input->getInt('page', 0) * 20;
 		$limit  = 20;
 
+		$condition = array(
+			'tours.created_by' => (int) $userId,
+			'tours.status[!]'  => VR360_TOUR_STATUS_UNPUBLISHED,
+			'ORDER'            => array(
+				'tours.id' => 'DESC'
+			),
+
+			'LIMIT' => array(
+				$offset,
+				$limit
+			)
+		);
+
+		$keyword = $input->getString('keyword');
+		if ($keyword)
+		{
+			$condition['tours.name[~]'] = $keyword;
+		}
+
 		$db   = Vr360Database::getInstance();
 		$rows = $db->select(
 			'tours',
@@ -47,19 +66,7 @@ class Vr360ModelTours extends Vr360Model
 				'tours.status',
 				'tours.params'
 			],
-			[
-				'tours.created_by' => (int) $userId,
-				'tours.status[!]'  => VR360_TOUR_STATUS_UNPUBLISHED,
-				'ORDER'            => [
-					'tours.id' => 'DESC'
-				],
-
-				'LIMIT' => [
-					$offset,
-					$limit
-				]
-
-			]
+			$condition
 		);
 
 		if (!empty($rows))
@@ -68,7 +75,7 @@ class Vr360ModelTours extends Vr360Model
 
 			foreach ($rows as $row)
 			{
-				$tour = new Vr360Tour;
+				$tour          = new Vr360Tour;
 				$row['params'] = json_decode($row['params']);
 				$tour->bind($row);
 				$data[] = $tour;

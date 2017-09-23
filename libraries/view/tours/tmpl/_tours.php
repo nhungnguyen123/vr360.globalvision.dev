@@ -5,7 +5,8 @@
 		<h3 class="panel-title"></h3>
 	</div>
 	<div class="panel-body">
-		<!--<input
+		<form method="post">
+		<input
 				type="text"
 				class="form-control"
 				id="task-table-filter"
@@ -13,7 +14,10 @@
 				data-filters="#task-table"
 				placeholder="Search tours"
 				name="keyword"
-		/>-->
+		/>
+			<input type="hidden" name="view" value="tours"/>
+			<input type="hidden" name="task" value="display"/>
+		</form>
 	</div>
 	<table id="vTours" class="table table-condensed table-bordered table-responsive table-hover">
 		<thead>
