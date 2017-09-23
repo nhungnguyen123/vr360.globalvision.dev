@@ -18,6 +18,20 @@ class Vr360HelperAuthorize
 
 	public static function authorize($userName, $password)
 	{
+		if (empty($userName))
+		{
+			Vr360Session::getInstance()->addMessage('Invalid username');
+
+			return false;
+		}
+
+		if (empty($password))
+		{
+			Vr360Session::getInstance()->addMessage('Invalid password');
+
+			return false;
+		}
+
 		$modelUser = Vr360ModelUser::getInstance();
 
 		return $modelUser->authorize($userName, $password);

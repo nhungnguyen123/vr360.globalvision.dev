@@ -34,8 +34,8 @@ defined('_VR360_EXEC') or die;
 	<link rel="stylesheet" type="text/css" href="./assets/globalvision.min.css">
 	<?php if (Vr360HelperAuthorize::isAuthorized()): ?>
 		<script type="text/javascript" src="./assets/js/admin.min.js"></script>
-        <script type="text/javascript" src="./assets/js/admin.validate.min.js"></script>
-        <script type="text/javascript" src="./assets/js/admin.tours.min.js"></script>
+		<script type="text/javascript" src="./assets/js/admin.validate.min.js"></script>
+		<script type="text/javascript" src="./assets/js/admin.tours.min.js"></script>
 		<script type="text/javascript" src="./assets/js/admin.tour.min.js"></script>
 		<script type="text/javascript" src="./assets/js/log.min.js"></script>
 	<?php endif; ?>
@@ -72,6 +72,21 @@ defined('_VR360_EXEC') or die;
 				</div>
 			</div>
 
+		</div>
+		<div class="col-md-12">
+			<div class="container-fluid">
+				<div class="messages">
+					<?php $messages = Vr360Session::getInstance()->getMessages(); ?>
+					<?php if (!empty($messages)): ?>
+						<?php foreach ($messages as $key=> $type): ?>
+							<?php foreach ($type as $message): ?>
+								<div class="label label-<?php echo $key; ?>"><?php echo $message; ?></div>
+							<?php endforeach; ?>
+						<?php endforeach; ?>
+					<?php endif; ?>
+				</div>
+			</div>
+			<hr />
 		</div>
 		<div class="col-md-12">
 			{content}

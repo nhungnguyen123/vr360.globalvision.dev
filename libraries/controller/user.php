@@ -16,6 +16,10 @@ class Vr360ControllerUser extends Vr360Controller
 			$input->set('view', 'tours');
 			$this->display();
 		}
+
+		Vr360Session::getInstance()->addMessage('Invalid password', 'warning');
+		$input->set('view', 'user');
+		$this->display();
 	}
 
 	/**

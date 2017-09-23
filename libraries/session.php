@@ -94,6 +94,23 @@ class Vr360Session extends Vr360Object
 		return $default;
 	}
 
+	public function addMessage($message, $type ='default')
+	{
+		$messages = $this->get('messages', array());
+		$messages[$type][] = $message;
+
+		$this->set('messages', $messages);
+	}
+
+	public function getMessages()
+	{
+		$messages = $this->get('messages', array());
+
+		$this->set('messages', null);
+
+		return $messages;
+	}
+
 	public function reset()
 	{
 		session_unset();
