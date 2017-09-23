@@ -64,16 +64,26 @@ class Vr360Tour extends Vr360TableTour
 
 		$fileInfo = pathinfo($defaultPano);
 
+		// Temporary code for B/C with old tour
+		if (!isset($fileInfo['filename']) || empty($fileInfo['filename']))
+		{
+			$fileInfo['filename'] = 1;
+		}
+
 		$thumbnail = array();
 		$thumbnail['file']=  '/_/' . $this->dir . '/vtour/panos/' . $fileInfo['filename'] . '.tiles/thumb.jpg';
 		$thumbnail['alt'] = $this->getDescription(150);
 
 		if ( Vr360Configuration::getConfig('user_thumb_dimension', true))
 		{
-			$imageSize = getimagesize($this->getDir() . '/vtour/panos/' . $fileInfo['filename'] . '.tiles/thumb.jpg');
-			$thumbnail['width'] = $imageSize[0];
-			$thumbnail['height'] = $imageSize[1];
-			$thumbnail['mime'] = $imageSize['mime'];
+			$thumbnailFile = $this->getDir() . '/vtour/panos/' . $fileInfo['filename'] . '.tiles/thumb.jpg';
+			if (Vr360HelperFile::exists($thumbnailFile))
+			{
+				$imageSize = getimagesize($this->getDir() . '/vtour/panos/' . $fileInfo['filename'] . '.tiles/thumb.jpg');
+				$thumbnail['width'] = $imageSize[0];
+				$thumbnail['height'] = $imageSize[1];
+				$thumbnail['mime'] = $imageSize['mime'];
+			}
 		}
 
 		return $thumbnail;
