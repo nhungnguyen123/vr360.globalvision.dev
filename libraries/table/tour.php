@@ -4,41 +4,70 @@ defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360TableTour
+ *
+ * @since  2.0.0
  */
 class Vr360TableTour extends Vr360Table
 {
+	/**
+	 * @var null
+	 */
 	public $id = null;
+	/**
+	 * @var null
+	 */
 	public $name = null;
+	/**
+	 * @var null
+	 */
 	public $description = null;
+	/**
+	 * @var null
+	 */
 	public $alias = null;
+	/**
+	 * @var null
+	 */
 	public $created = null;
+	/**
+	 * @var null
+	 */
 	public $created_by = null;
+	/**
+	 * @var null
+	 */
 	public $dir = null;
+	/**
+	 * @var null
+	 */
 	public $status = null;
 
+	/**
+	 * @var null
+	 */
+	public $params = null;
+
+	/**
+	 * @var string
+	 */
 	protected $_table = 'tours';
+
+	/**
+	 * @var  array
+	 */
 	protected $_errors;
 
 	/**
-	 * @return bool|string
+	 * @return array
 	 */
-	public function getJsonContent()
-	{
-		$jsonFile = VR360_PATH_DATA . '/' . $this->dir . '/data.json';
-
-		if (!file_exists($jsonFile) || !is_file($jsonFile))
-		{
-			return false;
-		}
-
-		return file_get_contents($jsonFile);
-	}
-
 	public function getErrors()
 	{
 		return $this->_errors;
 	}
 
+	/**
+	 * @return bool
+	 */
 	protected function check()
 	{
 		$db    = Vr360Database::getInstance();
@@ -91,33 +120,5 @@ class Vr360TableTour extends Vr360Table
 		}
 
 		return parent::check();
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getDataFilePath()
-	{
-		return $this->getDataDirPath() . 'data.json';
-	}
-
-	/**
-	 * @return string
-	 */
-	public function getDataDirPath()
-	{
-		return VR360_PATH_DATA . '/' . $this->dir . '/';
-	}
-
-	public function getData()
-	{
-		$jsonFile = $this->getDataFilePath();
-
-		if (Vr360HelperFile::exists($jsonFile))
-		{
-			return json_decode(file_get_contents($jsonFile), true);
-		}
-
-		return array();
 	}
 }

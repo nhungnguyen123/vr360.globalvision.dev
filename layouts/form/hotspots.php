@@ -5,4 +5,4 @@
     <i class="fa fa-floppy-o" aria-hidden="true"></i> Save
   </button>
 </div>
-<iframe id='editTourHotspots' src="/hotspotsiframe.php?uId=<?php echo $tour->dir; ?>" width="800" height="600"></iframe>
+<iframe id='editTourHotspots' src="/hotspotsiframe.php?uId=<?php echo $tour->dir; ?>" width="100%" height="600"></iframe>

@@ -36,13 +36,14 @@ defined('_VR360_EXEC') or die;
 		<script type="text/javascript" src="./assets/js/admin.min.js"></script>
         <script type="text/javascript" src="./assets/js/admin.validate.min.js"></script>
         <script type="text/javascript" src="./assets/js/admin.tours.min.js"></script>
+		<script type="text/javascript" src="./assets/js/admin.tour.min.js"></script>
 		<script type="text/javascript" src="./assets/js/log.min.js"></script>
 	<?php endif; ?>
 </head>
 <body>
 <div class="container-fluid">
 	<div class="row" style="margin-top: 15px">
-		<div class="waiting"></div>
+		<div id="overlay-waiting" class="waiting"></div>
 		<div class="col-md-12">
 			<div class="container-fluid">
 				<div class="row">

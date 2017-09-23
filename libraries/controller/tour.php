@@ -58,7 +58,7 @@ class Vr360ControllerTour extends Vr360Controller
 		if ($tour->id !== null)
 		{
 			$uId      = $tour->dir;
-			$jsonFile = $tour->getDataFilePath();
+			$jsonFile = $tour->getFile('data.json');
 
 			if (!file_exists($jsonFile) || !is_file($jsonFile))
 			{
@@ -114,7 +114,7 @@ class Vr360ControllerTour extends Vr360Controller
 		$ajax = Vr360AjaxResponse::getInstance();
 		$input = Vr360Factory::getInput();
 
-		$tour = new Vr360TableTour;
+		$tour = new Vr360Tour;
 		$tour->load(
 			array
 			(
@@ -138,7 +138,7 @@ class Vr360ControllerTour extends Vr360Controller
 	{
 		$input = Vr360Factory::getInput();
 
-		$tour = new Vr360TableTour;
+		$tour = new Vr360Tour;
 		$tour->load(
 			array
 			(
@@ -166,7 +166,7 @@ class Vr360ControllerTour extends Vr360Controller
 	{
 		$input = Vr360Factory::getInput();
 
-		$tour = new Vr360TableTour;
+		$tour = new Vr360Tour;
 		$tour->load(
 			array
 			(
@@ -202,7 +202,7 @@ class Vr360ControllerTour extends Vr360Controller
 
 		$input = Vr360Factory::getInput();
 
-		$tour = new Vr360TableTour;
+		$tour = new Vr360Tour;
 		$tour->load(
 			array
 			(

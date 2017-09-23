@@ -41,3 +41,8 @@ body.loading {
 body.loading .waiting {
     display: block;
 }
+
+tr.is-valid-0
+{
+    opacity: 0.5;
+}

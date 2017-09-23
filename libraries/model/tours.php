@@ -44,7 +44,8 @@ class Vr360ModelTours extends Vr360Model
 				'tours.created',
 				'tours.created_by',
 				'tours.dir',
-				'tours.status'
+				'tours.status',
+				'tours.params'
 			],
 			[
 				'tours.created_by' => (int) $userId,
@@ -64,9 +65,11 @@ class Vr360ModelTours extends Vr360Model
 		if (!empty($rows))
 		{
 			$data = array();
+
 			foreach ($rows as $row)
 			{
-				$tour = new Vr360TableTour();
+				$tour = new Vr360Tour;
+				$row['params'] = json_decode($row['params']);
 				$tour->bind($row);
 				$data[] = $tour;
 			}

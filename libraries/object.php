@@ -97,6 +97,11 @@ class Vr360Object
 		return json_encode($this->getProperties());
 	}
 
+	/**
+	 * @param  bool  $public
+	 *
+	 * @return array
+	 */
 	public function getProperties($public = true)
 	{
 		$vars = get_object_vars($this);

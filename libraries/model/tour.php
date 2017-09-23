@@ -26,7 +26,7 @@ class Vr360ModelTour extends Vr360Model
 		$alias = Vr360Factory::getInput()->getRaw('alias');
 		$id    = Vr360Factory::getInput()->getInt('id');
 
-		$table = new Vr360TableTour;
+		$table = new Vr360Tour;
 
 		if ($id)
 		{
@@ -181,13 +181,13 @@ class Vr360ModelTour extends Vr360Model
 			// Update old tour
 			if ($tour->id)
 			{
-				$jsonFile = $tour->getDataFilePath();
+				$jsonFile = $tour->getFile('data.json');
 
-				if (Vr360HelperFile::exists($jsonFile))
+				if ($jsonFile !== false)
 				{
 					$ajax->addInfo('JSON File already exists');
 
-					$jsonData = $tour->getData();
+					$jsonData = $tour->getJsonData();
 
 					$jsonData['name']  = $input->getString('name');
 					$jsonData['alias'] = $input->getString('alias');
@@ -241,7 +241,7 @@ class Vr360ModelTour extends Vr360Model
 		$ajax  = Vr360AjaxResponse::getInstance();
 		$input = Vr360Factory::getInput();
 
-		$table = new Vr360TableTour;
+		$table = new Vr360Tour;
 		$table->bind($_REQUEST);
 
 		$params = $table->params;

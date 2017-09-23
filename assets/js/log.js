@@ -2,11 +2,11 @@
 
 	vrAdmin.Log = {
 		reset: function () {
-			$('#vrLogging').html('');
+			$('#overlay-waiting').html('');
 		},
 
 		append: function (message) {
-			$('#vrLogging').append('<div class="message">' + message + '</div>');
+			$('#overlay-waiting').append('<div class="message">' + message + '</div>');
 		},
 
 		appendArray: function (messages) {

@@ -29,32 +29,43 @@
 		<tbody>
 		<!-- Show tours -->
 		<?php foreach ($this->tours as $tour): ?>
-			<?php $tourDir = VR360_PATH_DATA . '/' . $tour->dir; ?>
-			<tr id='vtour-<?php echo $tour->id; ?>' data-tour='<?php echo $tour->toJson(); ?>' class="">
+			<tr id='vtour-<?php echo $tour->id; ?>' data-tour='<?php echo $tour->toJson(); ?>' class="is-valid-<?php echo (int) $tour->isValid(); ?>">
 				<td class="vtour-id"><?php echo $tour->id; ?></td>
-				<td class="vtour-name"><?php echo $tour->name; ?></td>
+				<td class="vtour-name"><?php echo $tour->getName(); ?></td>
 				<td class="vtour-url"><?php echo $tour->alias; ?></td>
 				<td class="vtour-date"><?php echo $tour->created; ?></td>
 				<td class="status"><?php echo ($tour->status == 1) ? '<i class="fa fa-check" aria-hidden="true"></i>' : ''; ?></td>
 				<td class="controls">
-					<?php if ($tour->status == VR360_TOUR_STATUS_PUBLISHED_READY && Vr360HelperFolder::exists($tourDir)): ?>
-						<!-- Embed -->
-						<button type="button" class="btn btn-default embedCode">
-							<i class="fa fa-code" aria-hidden="true"></i> Embed
-						</button>
-						<!-- Edit -->
-						<button type="button" class="btn btn-primary editTour">
-							<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-						</button>
-						<!-- Hotspot -->
-						<button type="button" class="btn btn-primary editTourHotspot">
-							<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hotspot
-						</button>
+					<?php if (!$tour->canEmbed() && !$tour->canEdit() && !$tour->canEditHotspot() && !$tour->canPreview()): ?>
+						<span class="label label-default">This tour is not generated success or invalid</span>
+					<?php else: ?>
+						<?php if ($tour->canEmbed()): ?>
+							<!-- Embed -->
+							<button type="button" class="btn btn-default embedCode">
+								<i class="fa fa-code" aria-hidden="true"></i> Embed
+							</button>
+						<?php endif; ?>
 
-						<!-- Preview -->
-						<button type="button" class="btn btn-info previewTour">
-							<i class="fa fa-external-link" aria-hidden="true"></i> Preview
-						</button>
+						<?php if ($tour->canEdit()): ?>
+							<!-- Edit -->
+							<button type="button" class="btn btn-primary editTour">
+								<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+							</button>
+						<?php endif; ?>
+
+						<?php if ($tour->canEditHotspot()): ?>
+							<!-- Hotspot -->
+							<button type="button" class="btn btn-primary editTourHotspot">
+								<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hotspot
+							</button>
+						<?php endif; ?>
+
+						<?php if ($tour->canPreview()): ?>
+							<!-- Preview -->
+							<button type="button" class="btn btn-info previewTour">
+								<i class="fa fa-external-link" aria-hidden="true"></i> Preview
+							</button>
+						<?php endif; ?>
 					<?php endif; ?>
 					<button type="button" class="btn btn-danger removeTour">
 						<i class="fa fa-eraser" aria-hidden="true"></i> Remove
@@ -65,6 +76,7 @@
 		</tbody>
 	</table>
 
+	<!-- Pagination -->
 	<div class="col-md-12">
 		<div class="row">
 			<div class="container-fluid">
