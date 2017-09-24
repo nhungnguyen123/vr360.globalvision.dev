@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=krpano Tools
+Exec="/home/soulevil/Downloads/krpano/krpano-1.19-pr13/krpano Tools.sh" %F
+Icon=/home/soulevil/Downloads/krpano/krpano-1.19-pr13/.krpanotoolsicon
+Terminal=false
+Type=Application
+Categories=Application;Graphics;
+StartupNotify=false

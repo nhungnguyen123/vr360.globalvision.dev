@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=MAKE PANO (FLAT) droplet
+Exec="/home/soulevil/Downloads/krpano/krpano-1.19-pr13/krpanotools" makepano -config=templates/flat.config %F
+Path=/home/soulevil/Downloads/krpano/krpano-1.19-pr13/
+Icon=/home/soulevil/Downloads/krpano/krpano-1.19-pr13/.makepanoicon
+Terminal=true
+Type=Application
+Categories=Application;Graphics;
+StartupNotify=false
