@@ -35,11 +35,21 @@ class Vr360HelperFile
 	 */
 	public static function read($filePath)
 	{
-		if (self::exists($filePath))
+		if (!self::exists($filePath))
 		{
-			return file_get_contents($filePath);
+			return false;
 		}
 
-		return false;
+		return file_get_contents($filePath);
+	}
+
+	public static function delete($filePath)
+	{
+		if (!self::exists($filePath))
+		{
+			return false;
+		}
+
+		return unlink($filePath);
 	}
 }

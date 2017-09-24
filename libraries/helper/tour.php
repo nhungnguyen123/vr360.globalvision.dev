@@ -107,7 +107,7 @@ class Vr360HelperTour
 		// Delete old tour.xml if exists
 		if (Vr360HelperFile::exists($vTourXmlFilePath))
 		{
-			unlink($vTourXmlFilePath);
+			Vr360HelperFile::delete($vTourXmlFilePath);
 		}
 
 		// There is no panos
@@ -134,12 +134,12 @@ class Vr360HelperTour
 			return false;
 		}
 
-		$krPanoPath      = './assets/krpano/krpanotools ';
-		$krPanoCongig    = 'makepano -config=./assets/krpano/templates/vtour-normal.config ';
+		$krPanoPath      = './krpano/krpanotools ';
+		$krPanoConfig    = 'makepano -config=./krpano/templates/vtour-normal.config ';
 		$krPanoListImage = implode(' ', $files);
 
 		// Generate tour via exec
-		return exec($krPanoPath . $krPanoCongig . $krPanoListImage);
+		return exec($krPanoPath . $krPanoConfig . $krPanoListImage);
 	}
 
 	/**
