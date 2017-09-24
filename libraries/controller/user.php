@@ -17,7 +17,7 @@ class Vr360ControllerUser extends Vr360Controller
 			$this->display();
 		}
 
-		Vr360Session::getInstance()->addMessage('Invalid password', 'warning');
+		Vr360Session::getInstance()->addMessage('Invalid Username or password', 'warning');
 		$input->set('view', 'user');
 		$this->display();
 	}

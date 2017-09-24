@@ -99,7 +99,7 @@ class Vr360HelperTour
 	 *
 	 * @return string
 	 */
-	public static function generateTour($uId, $jsonData)
+	public static function generateTour($uId, $jsonData, &$command = null)
 	{
 		$preImageDir      = VR360_PATH_DATA . '/' . $uId . '/';
 		$vTourXmlFilePath = $preImageDir . '/vtour/tour.xml';
@@ -138,8 +138,10 @@ class Vr360HelperTour
 		$krPanoConfig    = 'makepano -config=./krpano/templates/vtour-normal.config ';
 		$krPanoListImage = implode(' ', $files);
 
+		$command = $krPanoPath . $krPanoConfig . $krPanoListImage;
+
 		// Generate tour via exec
-		return exec($krPanoPath . $krPanoConfig . $krPanoListImage);
+		return shell_exec($command);
 	}
 
 	/**

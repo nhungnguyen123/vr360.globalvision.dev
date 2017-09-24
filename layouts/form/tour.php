@@ -142,9 +142,9 @@ if (isset($params->socials) && $params->socials == '1')
 						<div class="col-md-8">
 							<div id="tour-panos" class="panos">
 								<?php if ($tour->id): ?>
-									<?php if (!empty($tour->params->panos)): ?>
+									<?php if (isset($tour->params->panos) && !empty($tour->params->panos)): ?>
 										<?php $panos = $tour->params->panos; ?>
-										<?php foreach ($panos->title as $index => $title): ?>
+										<?php foreach ($panos as $index => $pano): ?>
 											<div class="well well-sm pano">
 												<label>Panorama</label>
 												<div class="pull-right">
@@ -159,10 +159,10 @@ if (isset($params->socials) && $params->socials == '1')
 														<div class="form-group">
 															<label>File input</label>
 															<input type="text"
-															       value="<?php echo $panos->files[$index]; ?>"
+															       value="<?php echo $pano->file; ?>"
 															       disabled="disabled"/>
 															<input type="hidden" name="panoFile[]"
-															       value="<?php echo $panos->files[$index]; ?>"/>
+															       value="<?php echo $pano->file; ?>"/>
 														</div>
 
 														<div class="form-group">
@@ -170,7 +170,7 @@ if (isset($params->socials) && $params->socials == '1')
 															<input name="panoTitle[]" type="text" class="form-control"
 															       placeholder="Pano title"
 															       required
-															       value="<?php echo $panos->title[$index]; ?>"/>
+															       value="<?php echo $pano->title; ?>"/>
 														</div>
 
 														<div class="form-group">
@@ -182,7 +182,7 @@ if (isset($params->socials) && $params->socials == '1')
 																	size="80"
 																	placeholder="Pano sub title"
 																	required
-																	value="<?php echo $panos->description[$index]; ?>"
+																	value="<?php echo $pano->description; ?>"
 															/>
 														</div>
 													</div>

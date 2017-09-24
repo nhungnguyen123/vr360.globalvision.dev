@@ -49,9 +49,10 @@ class Vr360ControllerTour extends Vr360Controller
 			}
 
 			// Using krpano tool to cut images
-			if (Vr360HelperTour::generateTour($uId, $jsonData) === false)
+			$command = '';
+			if (Vr360HelperTour::generateTour($uId, $jsonData, $command) === null)
 			{
-				$ajax->addWarning('Can not generate vTour')->fail()->respond();
+				$ajax->addWarning('Can not generate vTour: ' . $command)->fail()->respond();
 			}
 
 			// Create xml for tour

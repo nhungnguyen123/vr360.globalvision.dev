@@ -24,7 +24,7 @@
 	</div>
 
 	<br/>
-	<input class='btn btn-primary' type="submit">
+	<input class='btn btn-primary' type="submit" name="submit" value="Submit">
 
 	<fieldset>
 		<input type="hidden" name="view" value="user"/>
