@@ -29,6 +29,8 @@
 	<!-- Krpano -->
 	<script src="./krpano/viewer/krpano.js"></script>
 
+	<script src="./assets/js/site.tour.min.js"></script>
+
 	<!-- SEO Metadata -->
 	<meta name="robots" content="index, follow"/>
 
@@ -52,11 +54,9 @@
 		<meta property="og:image:height" content="<?php echo $defaultThumbnail['height']; ?>"/>
 		<meta property="og:image:type" content="<?php echo $defaultThumbnail['mime']; ?>"/>
 	<?php endif; ?>
-	<!-- jQuery -->
-	<script type="text/javascript" src="./assets/jquery-2.2.4.min.js"></script>
 </head>
 <body>
-<pre>
+
 	<?php if (!$this->tour->isValid()): ?>
 		<span class="label label-danger">Invalid tour or data broken</span>
 	<?php else: ?>
@@ -82,34 +82,6 @@
 				});
 			</script>
 		</div>
-		<script type="text/javascript">
-			var vr_mode = false;
-			var krpano = document.getElementById('krpanoSWFObject');
-
-			function shareFacebook() {
-				var urlfb = 'https://api.addthis.com/oexchange/0.8/forward/facebook/offer?url=' + window.location.href;
-				window.open(urlfb);
-			}
-
-			function shareTwitter() {
-				var urltt = 'https://api.addthis.com/oexchange/0.8/forward/twitter/offer?url=' + window.location.href;
-				window.open(urltt);
-			}
-
-			function shareGooglePlus() {
-				var urlgp = 'https://api.addthis.com/oexchange/0.8/forward/google_plusone_share/offer?url=' + window.location.href;
-				window.open(urlgp);
-			}
-
-			function toggleEmbedcode() {
-				document.getElementById('embedcode').style.display = (document.getElementById('embedcode').style.display == 'none' ? 'block' : 'none');
-				document.getElementById('embed_code_txt').value = '<iframe width="800px" height="400px" src="' + window.location.href + '"></iframe>';
-			}
-
-			$(document).ready(function () {
-				if (vr_mode) krpano.call('wait(LOAD); webvr.enterVR();');
-			});
-		</script>
 	<?php endif; ?>
 </body>
 </html>
