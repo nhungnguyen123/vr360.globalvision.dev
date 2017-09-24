@@ -150,7 +150,7 @@ class Vr360HelperTour
 		$xmlData['header'] = array();
 		$xmlData['scenes'] = array();
 		$xmlData['footer'] = array();
-		
+
 		// Assign xmlData to array
 		if(isset($jsonData['rotation']) && $jsonData['rotation'] == "1")
 		{
@@ -173,8 +173,6 @@ class Vr360HelperTour
 			$xmlData['header']['openSocialTag'] = '<!--';
 			$xmlData['header']['closeSocialTag'] = '-->';
 		}
-
-		var_dump($xmlData);
 
 		foreach ($jsonData['files'] as $scene => $fileName)
 		{
