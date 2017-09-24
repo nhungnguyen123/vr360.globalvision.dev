@@ -19,31 +19,43 @@ class Vr360HelperTour
 			return 'File not found: ' . $filePath;
 		}
 
-		if (!in_array(mime_content_type($filePath), Vr360Configuration::getConfig('allowMimeTypes')))
+		$imageSize = getimagesize($filePath);
+
+		if ($imageSize)
 		{
-			return 'Invalid file mime';
+			$mime = $imageSize['mime'];
+
+			if (!in_array($mime, Vr360Configuration::getConfig('allowMimeTypes')))
+			{
+				return 'Invalid file mime';
+			}
+
+			if ($imageSize[0] < Vr360Configuration::getConfig('minimumWidth'))
+			{
+				return 'Invalid image width. Minimum required: ' . Vr360Configuration::getConfig('minimumWidth');
+			}
+
+			if ($imageSize[1] < Vr360Configuration::getConfig('minimumHeight'))
+			{
+				return 'Invalid image height. Minimum required: ' . Vr360Configuration::getConfig('minimumHeight');
+			}
+
+			if ($imageSize[0] < 2 * $imageSize[1])
+			{
+				return 'Invalid file dimension';
+			}
 		}
 
-		// Check image size  x*2x size
-		$imgSize = getimagesize($filePath);
-
-		if ($imgSize[0] < 2 * $imgSize[1])
-		{
-			return 'Invalid file dimension';
-		}
-
-		return true;
+		return $imageSize;
 	}
 
 	/**
-	 * @param $fileName
+	 * @param   string  $fileName
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	public static function generateFilename($fileName)
 	{
-		//$fileName = mb_ereg_replace("([^\w\s\d\-_~,;\[\]\(\).])", '', $fileName);
-		//$fileName = mb_ereg_replace("([\.]{2,})", '', $fileName);
 		$md5 = md5(uniqid('sth', true));
 		$md5 = substr($md5, 0, 12);
 

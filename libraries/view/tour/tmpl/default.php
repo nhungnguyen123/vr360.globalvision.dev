@@ -25,7 +25,9 @@
 
 	<!-- Globalvision -->
 	<link rel="stylesheet" type="text/css" href="./assets/tour.min.css">
-	<script src="assets/js/tour.js"></script>
+
+	<!-- Krpano -->
+	<script src="./assets/krpano/viewer/krpano.js"></script>
 
 	<!-- SEO Metadata -->
 	<meta name="robots" content="index, follow"/>

@@ -32,10 +32,10 @@ class Vr360ControllerTour extends Vr360Controller
 				$ajax->addWarning('File not found')->fail()->respond();
 			}
 
-			$jsonContent = Vr360HelperFile::read($jsonFile);
-			$jsonData    = json_decode($jsonContent, true);
-			$jsonData['rotation'] = $tour->params->rotation;
-			$jsonData['socials']  = $tour->params->socials;
+			$jsonContent          = Vr360HelperFile::read($jsonFile);
+			$jsonData             = json_decode($jsonContent, true);
+			$jsonData['rotation'] = isset($tour->params->rotation) ? $tour->params->rotation : 0;
+			$jsonData['socials']  = isset($tour->params->socials) ? $tour->params->socials : 0;
 
 			// There is no panos then we'll not execute generate
 			if (!isset($jsonData['panoTitle']))

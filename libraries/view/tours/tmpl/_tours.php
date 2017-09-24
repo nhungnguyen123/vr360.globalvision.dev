@@ -55,19 +55,24 @@
 							</button>
 						<?php endif; ?>
 
-						<?php if ($tour->canEdit()): ?>
-							<!-- Edit -->
-							<button type="button" class="btn btn-primary editTour">
-								<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-							</button>
+						<?php if (!$tour->canEdit() && !$tour->canEditHotspot()): ?>
+							<span class="label label-default">This tour is not migrated to latest version</span>
+						<?php else: ?>
+							<?php if ($tour->canEdit()): ?>
+								<!-- Edit -->
+								<button type="button" class="btn btn-primary editTour">
+									<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+								</button>
+							<?php endif; ?>
+
+							<?php if ($tour->canEditHotspot()): ?>
+								<!-- Hotspot -->
+								<button type="button" class="btn btn-primary editTourHotspot">
+									<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hotspot
+								</button>
+							<?php endif; ?>
 						<?php endif; ?>
 
-						<?php if ($tour->canEditHotspot()): ?>
-							<!-- Hotspot -->
-							<button type="button" class="btn btn-primary editTourHotspot">
-								<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hotspot
-							</button>
-						<?php endif; ?>
 
 						<?php if ($tour->canPreview()): ?>
 							<!-- Preview -->

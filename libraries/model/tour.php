@@ -91,7 +91,7 @@ class Vr360ModelTour extends Vr360Model
 				// Need to check file size!! if not krpano will hang 4ever!
 				$message = Vr360HelperTour::fileValidate($uploadedFile);
 
-				if ($message !== true)
+				if ($message === false || !is_array($message))
 				{
 					$ajax->addWarning($message)->fail()->respond();
 
@@ -111,6 +111,8 @@ class Vr360ModelTour extends Vr360Model
 						// @TODO Add error message but no need respond yet
 						$ajax->fail()->respond();
 					}
+
+					$ajax->addInfo('Valid file: ' . $message[0] . 'x' . $message[1] . ' ' . $message['mime']);
 
 					// Save generated filename
 					$jsonFiles[] = $validFiles[$i];

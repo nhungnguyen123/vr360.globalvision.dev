@@ -9,9 +9,37 @@ defined('_VR360_EXEC') or die;
  */
 class Vr360Tour extends Vr360TableTour
 {
+	/**
+	 * @return string
+	 */
 	public function getName()
 	{
 		return trim($this->name);
+	}
+
+	/**
+	 * @param   int  $truncateLength
+	 *
+	 * @return  string
+	 */
+	public function getDescription($truncateLength = 300)
+	{
+		$description = !empty($this->description) ? $this->description : Vr360Configuration::getConfig('siteDescription');
+
+		return mb_substr($description, 0, $truncateLength);
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getPanos ()
+	{
+		if (isset($this->params->panos))
+		{
+			return $this->params->panos;
+		}
+
+		return array();
 	}
 
 	public function getDefaultThumbnail()
@@ -82,13 +110,6 @@ class Vr360Tour extends Vr360TableTour
 		return VR360_PATH_DATA . '/' . $this->dir;
 	}
 
-	public function getDescription($truncate = 300)
-	{
-		$description = !empty($this->description) ? $this->description : Vr360Configuration::getConfig('siteDescription');
-
-		return mb_substr($description, 0, $truncate);
-	}
-
 	public function canEmbed()
 	{
 		return $this->isValid() && (int) $this->status === VR360_TOUR_STATUS_PUBLISHED_READY;
@@ -118,7 +139,7 @@ class Vr360Tour extends Vr360TableTour
 
 	public function canEdit()
 	{
-		return $this->isValid() && (int) $this->status === VR360_TOUR_STATUS_PUBLISHED_READY;
+		return $this->isValid() && !empty($this->getPanos()) && (int) $this->status === VR360_TOUR_STATUS_PUBLISHED_READY;
 	}
 
 	public function canEditHotspot()
