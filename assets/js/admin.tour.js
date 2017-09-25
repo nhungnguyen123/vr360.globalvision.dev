@@ -92,7 +92,7 @@
 					vrAdmin.Log.append('Page reloading ...');
 
 					// Reload page
-					setTimeout(location.reload(), 2000);
+					setTimeout(window.location.replace('index.php'), 2000);
 				}
 				else {// Append messages
 					vrAdmin.Log.appendArray(data.messages);
@@ -199,7 +199,7 @@
 														vrAdmin.Log.append('Page reloading ...');
 
 														// Reload page
-														setTimeout(location.reload(), 2000);
+														setTimeout(window.location.replace('index.php'), 2000);
 													}
 													else {
 														// Append messages
