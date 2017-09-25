@@ -50,7 +50,7 @@ class Vr360HelperTour
 	}
 
 	/**
-	 * @param   string  $fileName
+	 * @param   string $fileName
 	 *
 	 * @return  string
 	 */
@@ -99,7 +99,7 @@ class Vr360HelperTour
 	 *
 	 * @return string
 	 */
-	public static function generateTour($uId, $jsonData, &$command = null)
+	public static function generateTour($uId, $jsonData, &$command = array())
 	{
 		$preImageDir      = VR360_PATH_DATA . '/' . $uId . '/';
 		$vTourXmlFilePath = $preImageDir . '/vtour/tour.xml';
@@ -134,14 +134,16 @@ class Vr360HelperTour
 			return false;
 		}
 
-		$krPanoPath      = './krpano/krpanotools ';
-		$krPanoConfig    = 'makepano -config=./krpano/templates/vtour-normal.config ';
-		$krPanoListImage = implode(' ', $files);
+		$command = array ();
 
-		$command = $krPanoPath . $krPanoConfig . $krPanoListImage;
+		$krPanoPath      = Vr360Configuration::getConfig('krPanoPath');
+		$command [] = $krPanoPath . ' register ' . Vr360Configuration::getConfig('krPanoLicense');
+
+		$krPanoConfig    = ' makepano -config=./krpano/templates/vtour-normal.config ' . implode(' ', $files);
+		$command [] = $krPanoPath . $krPanoConfig;
 
 		// Generate tour via exec
-		return shell_exec($command);
+		return shell_exec(implode(' && ' , $command));
 	}
 
 	/**
@@ -166,25 +168,25 @@ class Vr360HelperTour
 		$xmlData['footer'] = array();
 
 		// Assign xmlData to array
-		if(isset($jsonData['rotation']) && $jsonData['rotation'] == "1")
+		if (isset($jsonData['rotation']) && $jsonData['rotation'] == "1")
 		{
-			$xmlData['header']['openRotationTag'] = '';
+			$xmlData['header']['openRotationTag']  = '';
 			$xmlData['header']['closeRotationTag'] = '';
 		}
 		else
 		{
-			$xmlData['header']['openRotationTag'] = '<!--';
+			$xmlData['header']['openRotationTag']  = '<!--';
 			$xmlData['header']['closeRotationTag'] = '-->';
 		}
 
-		if(isset($jsonData['socials']) && $jsonData['socials'] == "1")
+		if (isset($jsonData['socials']) && $jsonData['socials'] == "1")
 		{
-			$xmlData['header']['openSocialTag'] = '';
+			$xmlData['header']['openSocialTag']  = '';
 			$xmlData['header']['closeSocialTag'] = '';
 		}
 		else
 		{
-			$xmlData['header']['openSocialTag'] = '<!--';
+			$xmlData['header']['openSocialTag']  = '<!--';
 			$xmlData['header']['closeSocialTag'] = '-->';
 		}
 
