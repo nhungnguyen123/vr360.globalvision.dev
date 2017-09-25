@@ -50,7 +50,7 @@
 					<?php else: ?>
 						<?php if ($tour->canEmbed()): ?>
 							<!-- Embed -->
-							<button type="button" class="btn btn-default embedCode">
+							<button type="button" class="btn btn-default btn-sm embedCode">
 								<i class="fa fa-code" aria-hidden="true"></i> Embed
 							</button>
 						<?php endif; ?>
@@ -60,14 +60,14 @@
 						<?php else: ?>
 							<?php if ($tour->canEdit()): ?>
 								<!-- Edit -->
-								<button type="button" class="btn btn-primary editTour">
+								<button type="button" class="btn btn-primary btn-sm editTour">
 									<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
 								</button>
 							<?php endif; ?>
 
 							<?php if ($tour->canEditHotspot()): ?>
 								<!-- Hotspot -->
-								<button type="button" class="btn btn-primary editTourHotspot">
+								<button type="button" class="btn btn-primary btn-sm editTourHotspot">
 									<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hotspot
 								</button>
 							<?php endif; ?>
@@ -76,12 +76,12 @@
 
 						<?php if ($tour->canPreview()): ?>
 							<!-- Preview -->
-							<button type="button" class="btn btn-info previewTour">
+							<button type="button" class="btn btn-info btn-sm previewTour">
 								<i class="fa fa-external-link" aria-hidden="true"></i> Preview
 							</button>
 						<?php endif; ?>
 					<?php endif; ?>
-					<button type="button" class="btn btn-danger removeTour">
+					<button type="button" class="btn btn-danger btn-sm removeTour">
 						<i class="fa fa-eraser" aria-hidden="true"></i> Remove
 					</button>
 				</td>
