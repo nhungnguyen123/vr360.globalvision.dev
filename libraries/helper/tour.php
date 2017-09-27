@@ -196,7 +196,7 @@ class Vr360HelperTour
 		}
 		else
 		{
-			$xmlData['header']['defaultPano'] = VR360_TOUR_DEFAULT_DEFAULTPANO;
+			$xmlData['header']['defaultPano'] = (string) VR360_TOUR_DEFAULT_DEFAULTPANO;
 		}
 
 		foreach ($jsonData['files'] as $scene => $fileName)
@@ -259,7 +259,8 @@ class Vr360HelperTour
 
 			$targetXmlFileContents .= $xmlContent;
 		}
-
+		var_dump($xmlData['header']);
+		var_dump($targetXmlFileContents);die();
 		return file_put_contents($tagetXmlFile, $targetXmlFileContents);
 	}
 
