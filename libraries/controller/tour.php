@@ -228,6 +228,7 @@ class Vr360ControllerTour extends Vr360Controller
 		$jsonData['defaultViewList'] = $defaultViewList;
 		$jsonData['rotation']        = $tour->params->rotation;
 		$jsonData['socials']         = $tour->params->socials;
+		$jsonData['defaultPano']     = $tour->params->defaultPano;
 
 		// Create xml for tour
 		if (Vr360HelperTour::generateXml($uId, $jsonData) === false)

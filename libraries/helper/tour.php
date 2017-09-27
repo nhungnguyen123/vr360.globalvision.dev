@@ -190,6 +190,15 @@ class Vr360HelperTour
 			$xmlData['header']['closeSocialTag'] = '-->';
 		}
 
+		if (isset($jsonData['defaultPano']))
+		{
+			$xmlData['header']['defaultPano'] = $jsonData['defaultPano'];
+		}
+		else
+		{
+			$xmlData['header']['defaultPano'] = (string) VR360_TOUR_DEFAULT_DEFAULTPANO;
+		}
+
 		foreach ($jsonData['files'] as $scene => $fileName)
 		{
 			$xmlData['scenes'][$scene] = array();
@@ -250,7 +259,8 @@ class Vr360HelperTour
 
 			$targetXmlFileContents .= $xmlContent;
 		}
-
+		var_dump($xmlData['header']);
+		var_dump($targetXmlFileContents);die();
 		return file_put_contents($tagetXmlFile, $targetXmlFileContents);
 	}
 
