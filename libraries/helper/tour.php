@@ -214,6 +214,12 @@ class Vr360HelperTour
 				$xmlData['scenes'][$scene]['hlookat'] = $jsonData['defaultViewList']["scene_$xmlFileName"]['hlookat'];
 				$xmlData['scenes'][$scene]['vlookat'] = $jsonData['defaultViewList']["scene_$xmlFileName"]['vlookat'];
 			}
+			else
+			{
+				$xmlData['scenes'][$scene]['fov']     = VR360_TOUR_SCENE_DEFAULT_FOV;
+				$xmlData['scenes'][$scene]['hlookat'] = VR360_TOUR_SCENE_DEFAULT_HLOOKAT;
+				$xmlData['scenes'][$scene]['vlookat'] = VR360_TOUR_SCENE_DEFAULT_VLOOKAT;
+			}
 			$xmlData['scenes'][$scene]['xmlHotspots'] = self::xmlHotspots($jsonData, $xmlData['scenes'][$scene]['xmlFileName']);
 		}
 		// Write xmlData to xml Template
