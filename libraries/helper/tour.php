@@ -208,7 +208,7 @@ class Vr360HelperTour
 			$xmlData['scenes'][$scene]['xmlTitle']    = $jsonData['panoTitle'][$scene];
 			$xmlData['scenes'][$scene]['xmlSubTitle'] = $jsonData['panoDescription'][$scene];
 
-			if (isset($jsonData['defaultViewList']))
+			if (isset($jsonData['defaultViewList']["scene_$xmlFileName"]))
 			{
 				$xmlData['scenes'][$scene]['fov']     = $jsonData['defaultViewList']["scene_$xmlFileName"]['fov'];
 				$xmlData['scenes'][$scene]['hlookat'] = $jsonData['defaultViewList']["scene_$xmlFileName"]['hlookat'];
@@ -259,8 +259,7 @@ class Vr360HelperTour
 
 			$targetXmlFileContents .= $xmlContent;
 		}
-		var_dump($xmlData['header']);
-		var_dump($targetXmlFileContents);die();
+
 		return file_put_contents($tagetXmlFile, $targetXmlFileContents);
 	}
 
@@ -298,11 +297,15 @@ class Vr360HelperTour
 					$hotspotObj->ath       = $hotspot['ath'];
 					$hotspotObj->atv       = $hotspot['atv'];
 
+					$isNotSceneIndex = preg_match('/scene\_/',$hotspot['linkedscene']);
+
 					if ($hotspot['hotspot_type'] == 'normal')
 					{
 						$hotspotObj->style        = 'tooltip';
 						$hotspotObj->hotspot_type = 'normal';
-						$hotspotObj->data         = 'linkedscene="scene_' . explode('.', $jsonData['files'][$hotspot['linkedscene']])[0] . '"';
+						$hotspotObj->data         = $isNotSceneIndex ?
+																								'linkedscene="' . $hotspot['linkedscene'] . '"':
+																								'linkedscene="scene_' . explode('.', $jsonData['files'][$hotspot['linkedscene']])[0] . '"';
 					}
 					elseif ($hotspot['hotspot_type'] == 'text')
 					{
