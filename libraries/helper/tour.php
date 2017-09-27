@@ -154,7 +154,7 @@ class Vr360HelperTour
 	 */
 	public static function generateXml($uId, $jsonData)
 	{
-		$tourDataDirPath = VR360_PATH_DATA . '/' . $uId . '/vtour/';
+		$tourDataDirPath = VR360_PATH_DATA . '/' . $uId . '/vtour';
 		$targetXmlFile   = $tourDataDirPath . "/tour.xml";
 
 		$xmlData = array();
