@@ -122,8 +122,8 @@ class Vr360ModelTours extends Vr360Model
 		if (!empty($rows))
 		{
 			return array(
-				'current' => $input->getInt('page', 1),
-				'total'   => round(count($rows) / $limit)
+				'current' => $input->getInt('page', 0),
+				'total'   => round(count($rows) / $limit) - 1
 			);
 		}
 	}

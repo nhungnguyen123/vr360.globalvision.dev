@@ -123,128 +123,136 @@
 				vrAdmin.Log.reset();
 
 				// JS Tour form validate
-				validate = vrAdmin.Validate.validate();
+				vrAdmin.Validate.validate();
 
-				var formData = new FormData(this);
+				// There is no errors
+				if(vrAdmin.Validate.errors.length <= 0){
+					var formData = new FormData(this);
 
-				// First ajax used for file uploading
-				$.ajax({
-					url: 'index.php',
-					type: 'POST',
-					data: formData,
-					async: true,
-					cache: false,
-					contentType: false,
-					processData: false,
-					beforeSend: function (xhr) {
-						// @TODO Blocking elements
-						vrAdmin.Tour.disableForm();
-					}
-				})
-				/**
-				 * Ajax to create tour database
-				 */
-					.done(function (data, textStatus, jqXHR) {
-							// File upload success
-							if (data.status === true) {
-
-								// Append messages
-								vrAdmin.Log.appendArray(data.messages);
-
-								// Second ajax to create tour into database
-								var postData = data.data.tour;
-								postData.view = 'tour';
-								postData.task = 'ajaxCreateTour';
-								postData.step = 'createTour';
-
-								// Append tour id if possible
-								if (typeof data.data.id !== 'undefined') {
-									postData.id = data.data.id;
-								}
-
-								// Ajax to create tour database
-								$.ajax({
-									url: 'index.php',
-									type: 'POST',
-									data: postData,
-									async: true,
-									cache: false,
-								})
-								/**
-								 * Ajax to generate 360
-								 */
-									.done(function (data, textStatus, jqXHR) {
-										if (data.status === true) {
-
-											vrAdmin.Log.appendArray(data.messages);
-
-											vrAdmin.Log.append('Generating vr360');
-
-											// Last ajax to generate tour 360
-											$.ajax({
-												url: 'index.php',
-												type: 'POST',
-												data: {
-													view: 'tour',
-													task: 'ajaxGenerateTour',
-													id: data.data.id
-												},
-												async: true,
-												cache: false,
-											})
-												.done(function (data, textStatus, jqXHR) {
-													if (data.status === true) {
-
-														vrAdmin.Log.appendArray(data.messages);
-														vrAdmin.Log.append('Page reloading ...');
-
-														// Reload page
-														setTimeout(window.location.replace('index.php'), 2000);
-													}
-													else {
-														// Append messages
-														vrAdmin.Log.appendArray(data.messages);
-													}
-												})
-												.always(function (data, textStatus, jqXHR) {
-													if (textStatus == 'timeout') {
-														vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
-													}
-
-													// Release form
-													vrAdmin.Tour.enableForm();
-												})
-												// Fail case always release form and alert
-												.fail(function (data, textStatus, jqXHR) {
-													vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
-												});
-										}
-										else {
-											// Append messages
-											vrAdmin.Log.appendArray(data.messages);
-
-											// Release form
-											vrAdmin.Tour.enableForm();
-										}
-									})
-									// Fail case always release form and alert
-									.fail(function (data, textStatus, jqXHR) {
-										vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
-									});
-							}
-							else {
-								// Append messages
-								vrAdmin.Log.appendArray(data.messages);
-
-								// Release form
-								vrAdmin.Tour.enableForm();
-							}
+					// First ajax used for file uploading
+					$.ajax({
+						url: 'index.php',
+						type: 'POST',
+						data: formData,
+						async: true,
+						cache: false,
+						contentType: false,
+						processData: false,
+						beforeSend: function (xhr) {
+							// @TODO Blocking elements
+							vrAdmin.Tour.disableForm();
 						}
-					)
-					// Fail case always release form and alert
-					.fail(function (data, textStatus, jqXHR) {
-						vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
-					});
+					})
+					/**
+					 * Ajax to create tour database
+					 */
+						.done(function (data, textStatus, jqXHR) {
+								// File upload success
+								if (data.status === true) {
+
+									// Append messages
+									vrAdmin.Log.appendArray(data.messages);
+
+									// Second ajax to create tour into database
+									var postData = data.data.tour;
+									postData.view = 'tour';
+									postData.task = 'ajaxCreateTour';
+									postData.step = 'createTour';
+
+									// Append tour id if possible
+									if (typeof data.data.id !== 'undefined') {
+										postData.id = data.data.id;
+									}
+
+									// Ajax to create tour database
+									$.ajax({
+										url: 'index.php',
+										type: 'POST',
+										data: postData,
+										async: true,
+										cache: false,
+									})
+									/**
+									 * Ajax to generate 360
+									 */
+										.done(function (data, textStatus, jqXHR) {
+											if (data.status === true) {
+
+												vrAdmin.Log.appendArray(data.messages);
+
+												vrAdmin.Log.append('Generating vr360');
+
+												// Last ajax to generate tour 360
+												$.ajax({
+													url: 'index.php',
+													type: 'POST',
+													data: {
+														view: 'tour',
+														task: 'ajaxGenerateTour',
+														id: data.data.id
+													},
+													async: true,
+													cache: false,
+												})
+													.done(function (data, textStatus, jqXHR) {
+														if (data.status === true) {
+
+															vrAdmin.Log.appendArray(data.messages);
+															vrAdmin.Log.append('Page reloading ...');
+
+															// Reload page
+															setTimeout(window.location.replace('index.php'), 2000);
+														}
+														else {
+															// Append messages
+															vrAdmin.Log.appendArray(data.messages);
+														}
+													})
+													.always(function (data, textStatus, jqXHR) {
+														if (textStatus == 'timeout') {
+															vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
+														}
+
+														// Release form
+														vrAdmin.Tour.enableForm();
+													})
+													// Fail case always release form and alert
+													.fail(function (data, textStatus, jqXHR) {
+														vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
+													});
+											}
+											else {
+												// Append messages
+												vrAdmin.Log.appendArray(data.messages);
+
+												// Release form
+												vrAdmin.Tour.enableForm();
+											}
+										})
+										// Fail case always release form and alert
+										.fail(function (data, textStatus, jqXHR) {
+											vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
+										});
+								}
+								else {
+									// Append messages
+									vrAdmin.Log.appendArray(data.messages);
+
+									// Release form
+									vrAdmin.Tour.enableForm();
+								}
+							}
+						)
+						// Fail case always release form and alert
+						.fail(function (data, textStatus, jqXHR) {
+							vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
+						});
+				}
+				else
+				{
+					console.log (vrAdmin.Validate.errors);
+					alert ('File validate failed');
+				}
 
 				event.preventDefault();
 			})

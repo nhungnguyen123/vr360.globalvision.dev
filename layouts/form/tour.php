@@ -114,22 +114,15 @@ if (isset($params->socials) && $params->socials == '1')
                                 <hr/>
 								<?php if ($tour->isValid()) : ?>
 									<?php if (isset($tour->params->panos) && !empty($tour->params->panos)): ?>
-										<?php $defaultPano = isset($tour->params->defaultPano) ? $tour->params->defaultPano : 0; ?>
+										<?php $defaultPano = isset($tour->params->defaultPano) ? $tour->params->defaultPano : ''; ?>
                                         <div class="controls">
                                             <select class="form-control" name="params[defaultPano]">
 												<?php foreach ($tour->params->panos as $index => $pano): ?>
-													<?php if ($defaultPano == 0) : ?>
-														<?php if ($index == 0): ?>
-                                                            <option value="<?php echo $pano->file; ?>"
-                                                                    selected><?php echo $pano->file; ?></option>
-														<?php endif; ?>
+													<?php if ($defaultPano == $pano->file): ?>
+                                                        <option value="<?php echo $pano->file; ?>"
+                                                                selected><?php echo $pano->title; ?></option>
 													<?php else: ?>
-														<?php if ($defaultPano == $pano->file): ?>
-                                                            <option value="<?php echo $pano->file; ?>"
-                                                                    selected><?php echo $pano->file; ?></option>
-														<?php else: ?>
-                                                            <option value="<?php echo $pano->file; ?>"><?php echo $pano->file; ?></option>
-														<?php endif; ?>
+                                                        <option value="<?php echo $pano->file; ?>"><?php echo $pano->title; ?></option>
 													<?php endif; ?>
 												<?php endforeach; ?>
                                             </select>

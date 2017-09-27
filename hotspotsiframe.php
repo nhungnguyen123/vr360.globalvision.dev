@@ -145,8 +145,7 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 		$.getJSON('http://<?php echo $_SERVER['HTTP_HOST']; ?>/_/<?php echo $_GET['uId']; ?>/data.json?' + Math.random(), function (JSONdata)
 		{
 			data = JSONdata;
-			// console.info(data);
-			// document.title = data.tourDes;
+
 			$('.b1').show();
 
 			for (var ii in data.panoTitle)
@@ -190,17 +189,13 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 			}
 			else // THIS HOTSPOT HAVE AADITIONAL DATA FROM HOTDPOT LIST
 			{
-				console.log('load hotspot from array[] type = ' + currentHotspotData.hotspot_type);
-
 				if (currentHotspotData.hotspot_type == 'normal')
 				{
 					krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + currentHotspotData.linkedscene + ");");
-					console.log('linkedscene: ' + currentHotspotData.linkedscene);
 				}
 				if (currentHotspotData.hotspot_type == 'text')
 				{
 					krpano.call("set(hotspot[" + uniqname + "].hotspot_text, " + currentHotspotData.hotspot_text + ");");
-					console.log('hotspot_text: ' + currentHotspotData.hotspot_text);
 				}
 			}
 
@@ -209,15 +204,10 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 			krpano.call("set(hotspot[" + uniqname + "].atv, " + currentHotspotData.atv + ");");
 			krpano.call("set(hotspot[" + uniqname + "].hotspot_type, " + currentHotspotData.hotspot_type + ");");
 			krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
-			// krpano.call("hotspot[" + uniqname + "].loadstyle('hotspot_ani_white');");
-
-			// console.info(currentHotspotData);
 		}
 
 		function list_scene()
 		{
-			// console.log(uniqname);
-			// console.log(krpano.get('hotspot[' + uniqname + '].parr'));
 			krpano.call("set(hotspot[" + uniqname + "].ondown, '');");
 
 			show_link.style.display = 'block';
@@ -242,7 +232,6 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 		{
 			document.getElementById('done_remove').style.display = 'inline-block';
 			document.getElementById('remove_hotpost').style.display = 'none';
-// 				document.getElementById('set_defaultView').disabled = true;
 			document.getElementById('moveHotspot').disabled = true;
 
 			add_hotpost.disabled = true;
@@ -258,7 +247,6 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 		{
 			document.getElementById('done_remove').style.display = 'none';
 			document.getElementById('remove_hotpost').style.display = 'inline-block';
-// 				document.getElementById('set_defaultView').disabled = false;
 			document.getElementById('moveHotspot').disabled = false;
 
 			add_hotpost.disabled = false;
@@ -338,9 +326,7 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 
 		function hmv(currentHotspot, currentScene, i)
 		{
-			console.log('is is: ' + i);
-			console.info(currentHotspot);
-// 				console.log( typeof currentHotspot );
+
 // 				if (typeof currentHotspot !== "object") return false;
 // 				var hotspotList = superHotspot.hotspotList;
 // 				//var sceneName = this.kr.get('xml.scene');
@@ -364,8 +350,6 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 // 				current_vTour_hotspot_counter++;
 // 				hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()] = currentHotspotData;
 
-			console.log('hmv: url: ' + currentHotspot.url);
-
 			//if hotspot just live in js var ( not live in xml yet )
 			if (currentHotspot.url == 'assets/images/hotspot.png')
 			{
@@ -377,7 +361,6 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 				addRemovedHotspot(currentHotspot.name);
 				//2. make it render - able
 				krpano.call("set(hotspot[" + i + "].xreRender, 'true')");
-				console.log('hmv: xreRender: [' + i + '] ' + krpano.get("hotspot[" + i + "].xreRender"));
 			}
 		}
 
@@ -428,7 +411,6 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 			this.saveCurrentHotspotFromCurrentScene = function ()
 			{
 				// if ( thisAlias.firstTimesSave == 0 ){thisAlias.firstTimesSave = 1;}
-				// console.info('**************************************************************');
 
 				sceneName = this.kr.get('xml.scene');
 				console.info('saveCurrentHotspotFromCurrentScene: ' + sceneName);
@@ -437,7 +419,7 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 				for (var i = 0; i < hotspot_count; i++)
 				{
 					console.log(thisAlias.kr.get('hotspot[' + i + '].url'));
-          if (/hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')))
+					if (/hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')))
 					{
 						console.log('collecting hotspot: ' + i);
 						console.info(thisAlias.kr.get('hotspot[' + i + ']'));
@@ -449,7 +431,7 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 							'hotspot_type': thisAlias.kr.get('hotspot[' + i + '].hotspot_type'),
 							'reRender': 'true'
 						}
-            if ( /vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')))
+						if (/vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')))
 						{
 							//hotspot which is aready in xml shouldnt re-render by js anymore, if not, doulicate hotspot will apperent.
 							console.log('superHotspot: xreRender: [' + i + '] ' + thisAlias.kr.get('hotspot[' + i + '].xreRender'));
@@ -474,30 +456,25 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 					}
 					else
 					{
-						console.log('skipAddHotspot N0: ' + i);
-						// console.info(thisAlias.kr.get('hotspot[' + i + ']'));
 					}
 				}
-				console.info(thisAlias.hotspotList);
 			}
 
 			this.loadHotspotsToCurrentSceneFromSavedData = function ()
 			{
-				console.info('**************************************************************');
-
 				sceneName = this.kr.get('xml.scene');
-				console.info('loadHotspotsToCurrentSceneFromSavedData: ' + sceneName);
+
 				for (var hotspotId in thisAlias.hotspotList[sceneName])
 				{
 					var currentHotspotData = thisAlias.hotspotList[sceneName][hotspotId];
 					if (thisAlias.hotspotList[sceneName][hotspotId].reRender == "true")
 					{
-						console.log('rdy for rerender: ');
-						console.info(currentHotspotData);
 						add_hotspot_to_scene(currentHotspotData);
 					}
 					else
-						console.log('skip reRender: ' + hotspotId);
+					{
+
+					}
 				}
 
 				//this go as sub-job

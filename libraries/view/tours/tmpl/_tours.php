@@ -12,7 +12,7 @@
 					id="task-table-filter"
 					data-action="filter"
 					data-filters="#task-table"
-					placeholder="Search tours"
+					placeholder="Enter your tour name then press enter"
 					name="keyword"
 			/>
 			<input type="hidden" name="view" value="tours"/>
@@ -96,7 +96,8 @@
 			<div class="container-fluid">
 				<nav aria-label="...">
 					<ul class="pagination">
-						<?php for ($index = 1; $index <= $this->pagination['total']; $index++): ?>
+                        <?php var_dump($this->pagination); ?>
+						<?php for ($index = 0; $index <= $this->pagination['total']; $index++): ?>
 							<li class="<?php echo $index == $this->pagination['current'] ? 'active' : ''; ?>">
 								<a href="index.php?page=<?php echo $index; ?>"><?php echo $index; ?></a>
 							</li>
