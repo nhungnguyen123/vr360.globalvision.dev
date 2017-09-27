@@ -437,7 +437,7 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 				for (var i = 0; i < hotspot_count; i++)
 				{
 					console.log(thisAlias.kr.get('hotspot[' + i + '].url'));
-					if (thisAlias.kr.get('hotspot[' + i + '].url') == 'assets/images/hotspot.png' || thisAlias.kr.get('hotspot[' + i + '].url') == atob("<?php echo $hotSpotImgUrl; ?>") || thisAlias.kr.get('hotspot[' + i + '].url') == atob("<?php echo $hotSpotInfoImgUrl; ?>"))
+          if (/hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')))
 					{
 						console.log('collecting hotspot: ' + i);
 						console.info(thisAlias.kr.get('hotspot[' + i + ']'));
@@ -449,7 +449,7 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 							'hotspot_type': thisAlias.kr.get('hotspot[' + i + '].hotspot_type'),
 							'reRender': 'true'
 						}
-						if (thisAlias.kr.get('hotspot[' + i + '].url') == atob("<?php echo $hotSpotImgUrl; ?>") || thisAlias.kr.get('hotspot[' + i + '].url') == atob("<?php echo $hotSpotInfoImgUrl; ?>"))
+            if ( /vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')))
 						{
 							//hotspot which is aready in xml shouldnt re-render by js anymore, if not, doulicate hotspot will apperent.
 							console.log('superHotspot: xreRender: [' + i + '] ' + thisAlias.kr.get('hotspot[' + i + '].xreRender'));
