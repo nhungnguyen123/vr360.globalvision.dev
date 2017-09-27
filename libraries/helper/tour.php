@@ -134,16 +134,16 @@ class Vr360HelperTour
 			return false;
 		}
 
-		$command = array ();
+		$command = array();
 
-		$krPanoPath      = Vr360Configuration::getConfig('krPanoPath');
+		$krPanoPath = Vr360Configuration::getConfig('krPanoPath');
 		$command [] = $krPanoPath . ' register ' . Vr360Configuration::getConfig('krPanoLicense');
 
-		$krPanoConfig    = ' makepano -config=./krpano/templates/vtour-normal.config ' . implode(' ', $files);
-		$command [] = $krPanoPath . $krPanoConfig;
+		$krPanoConfig = ' makepano -config=' . Vr360Configuration::getConfig('krPanoConfigFile') . ' ' . implode(' ', $files);
+		$command []   = $krPanoPath . $krPanoConfig;
 
 		// Generate tour via exec
-		return shell_exec(implode(' && ' , $command));
+		return shell_exec(implode(' && ', $command));
 	}
 
 	/**
@@ -155,7 +155,7 @@ class Vr360HelperTour
 	public static function generateXml($uId, $jsonData)
 	{
 		$tourDataDirPath = VR360_PATH_DATA . '/' . $uId . '/vtour/';
-		$tagetXmlFile    = $tourDataDirPath . "/tour.xml";
+		$targetXmlFile   = $tourDataDirPath . "/tour.xml";
 
 		$xmlData = array();
 
@@ -190,13 +190,18 @@ class Vr360HelperTour
 			$xmlData['header']['closeSocialTag'] = '-->';
 		}
 
-		if (isset($jsonData['defaultPano']))
+		// Try to set default pano
+		if (isset($jsonData['params']['defaultPano']))
 		{
-			$xmlData['header']['defaultPano'] = $jsonData['defaultPano'];
+			// Try to get index
+			$defaultPanoFile  = $jsonData['params']['defaultPano'];
+			$defaultPanoIndex = array_search($defaultPanoFile, isset($jsonData['files']) ? $jsonData['files'] : array());
+
+			$xmlData['header']['defaultPano'] = (string) $defaultPanoIndex;
 		}
 		else
 		{
-			$xmlData['header']['defaultPano'] = (string) VR360_TOUR_DEFAULT_DEFAULTPANO;
+			$xmlData['header']['defaultPano'] = (string) VR360_TOUR_DEFAULT_PANO;
 		}
 
 		foreach ($jsonData['files'] as $scene => $fileName)
@@ -259,9 +264,8 @@ class Vr360HelperTour
 
 			$targetXmlFileContents .= $xmlContent;
 		}
-		var_dump($xmlData['header']);
-		var_dump($targetXmlFileContents);die();
-		return file_put_contents($tagetXmlFile, $targetXmlFileContents);
+
+		return file_put_contents($targetXmlFile, $targetXmlFileContents);
 	}
 
 	/**

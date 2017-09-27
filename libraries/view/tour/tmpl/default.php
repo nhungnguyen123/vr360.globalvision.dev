@@ -2,10 +2,9 @@
 <html>
 <head>
 	<?php
-	$url                   = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
-	$fullUrl               = $url . $_SERVER['REQUEST_URI'];
+	$fullUrl               = VR360_URL_ROOT . $_SERVER['REQUEST_URI'];
 	$defaultThumbnail      = $this->tour->getDefaultThumbnail();
-	$defaultThumbnailImage = $url . $defaultThumbnail['file'];
+	$defaultThumbnailImage = VR360_URL_ROOT . $defaultThumbnail['file'];
 	$defaultThumbnailAlt   = $defaultThumbnail['alt'];
 	?>
 	<title>VR360 Globalvision - <?php echo $this->tour->getName(); ?></title>
@@ -27,7 +26,7 @@
 	<link rel="stylesheet" type="text/css" href="./assets/tour.min.css">
 
 	<!-- Krpano -->
-	<script src="./krpano/viewer/krpano.js"></script>
+	<script src="<?php echo VR360_KRPANO_VIEWER_JS_PATH; ?>"></script>
 
 	<script src="./assets/js/site.tour.min.js"></script>
 
@@ -60,7 +59,6 @@
 	<?php if (!$this->tour->isValid()): ?>
 		<span class="label label-danger">Invalid tour or data broken</span>
 	<?php else: ?>
-
 		<div id="pano" style="width:100%;height:100%;">
 			<noscript>
 				<table style="width:100%;height:100%;">
@@ -73,7 +71,7 @@
 			</noscript>
 			<script>
 				embedpano({
-					swf: "/krpano/viewer/krpano.swf",
+					swf: '<?php echo VR360_KRPANO_VIEWER_SWF_PATH; ?>',
 					xml: "_/<?php echo $data->tour->dir; ?>/vtour/tour.xml",
 					target: "pano",
 					html5: "auto",
