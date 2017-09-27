@@ -192,11 +192,11 @@ class Vr360HelperTour
 
 		if (isset($jsonData['defaultPano']))
 		{
-			$xmlData['defaultPano'] = $jsonData['defaultPano'];
+			$xmlData['header']['defaultPano'] = $jsonData['defaultPano'];
 		}
 		else
 		{
-			$xmlData['defaultPano'] = VR360_TOUR_DEFAULT_DEFAULTPANO;
+			$xmlData['header']['defaultPano'] = VR360_TOUR_DEFAULT_DEFAULTPANO;
 		}
 
 		foreach ($jsonData['files'] as $scene => $fileName)
