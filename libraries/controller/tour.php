@@ -228,8 +228,8 @@ class Vr360ControllerTour extends Vr360Controller
 
 		$jsonData['hotspotList']     = $hotSpotList;
 		$jsonData['defaultViewList'] = $defaultViewList;
-		$jsonData['rotation']        = $tour->params->rotation;
-		$jsonData['socials']         = $tour->params->socials;
+		$jsonData['rotation']        = isset($tour->params->rotation) ? $tour->params->rotation : NULL;
+		$jsonData['socials']         = isset($tour->params->socials) ? $tour->params->socials : NULL;
 		$jsonData['defaultPano']     = $tour->params->defaultPano;
 
 		// Create xml for tour
