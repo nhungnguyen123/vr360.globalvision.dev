@@ -134,16 +134,12 @@ class Vr360HelperTour
 			return false;
 		}
 
-		$command = array();
+		$command = '';
+		$krPano  = new Vr360Krpano(Vr360Configuration::getConfig('krPanoPath'), Vr360Configuration::getConfig('krPanoLicense'));
+		$krPano->useConfigFile(Vr360Configuration::getConfig('krPanoConfigFile'));
+		$krPano->addFiles($files);
 
-		$krPanoPath = Vr360Configuration::getConfig('krPanoPath');
-		$command [] = $krPanoPath . ' register ' . Vr360Configuration::getConfig('krPanoLicense');
-
-		$krPanoConfig = ' makepano -config=' . Vr360Configuration::getConfig('krPanoConfigFile') . ' ' . implode(' ', $files);
-		$command []   = $krPanoPath . $krPanoConfig;
-
-		// Generate tour via exec
-		return shell_exec(implode(' && ', $command));
+		return $krPano->makePano($command);
 	}
 
 	/**
@@ -155,7 +151,13 @@ class Vr360HelperTour
 	public static function generateXml($uId, $jsonData)
 	{
 		$tourDataDirPath = VR360_PATH_DATA . '/' . $uId . '/vtour';
-		$targetXmlFile   = $tourDataDirPath . "/tour.xml";
+
+		if (!Vr360HelperFolder::exists($tourDataDirPath))
+		{
+			return false;
+		}
+
+		$targetXmlFile = $tourDataDirPath . "/tour.xml";
 
 		$xmlData = array();
 
@@ -302,15 +304,15 @@ class Vr360HelperTour
 					$hotspotObj->ath       = $hotspot['ath'];
 					$hotspotObj->atv       = $hotspot['atv'];
 
-					$isNotSceneIndex = preg_match('/scene\_/',$hotspot['linkedscene']);
+					$isNotSceneIndex = preg_match('/scene\_/', $hotspot['linkedscene']);
 
 					if ($hotspot['hotspot_type'] == 'normal')
 					{
 						$hotspotObj->style        = 'tooltip';
 						$hotspotObj->hotspot_type = 'normal';
 						$hotspotObj->data         = $isNotSceneIndex ?
-																								'linkedscene="' . $hotspot['linkedscene'] . '"':
-																								'linkedscene="scene_' . explode('.', $jsonData['files'][$hotspot['linkedscene']])[0] . '"';
+							'linkedscene="' . $hotspot['linkedscene'] . '"' :
+							'linkedscene="scene_' . explode('.', $jsonData['files'][$hotspot['linkedscene']])[0] . '"';
 					}
 					elseif ($hotspot['hotspot_type'] == 'text')
 					{
