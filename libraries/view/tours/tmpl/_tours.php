@@ -96,7 +96,6 @@
 			<div class="container-fluid">
 				<nav aria-label="...">
 					<ul class="pagination">
-                        <?php var_dump($this->pagination); ?>
 						<?php for ($index = 0; $index <= $this->pagination['total']; $index++): ?>
 							<li class="<?php echo $index == $this->pagination['current'] ? 'active' : ''; ?>">
 								<a href="index.php?page=<?php echo $index; ?>"><?php echo $index; ?></a>
