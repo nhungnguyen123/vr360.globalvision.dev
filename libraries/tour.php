@@ -110,6 +110,16 @@ class Vr360Tour extends Vr360TableTour
 		return VR360_PATH_DATA . '/' . $this->dir;
 	}
 
+	public function getKrpanoJsUrl()
+	{
+		return VR360_URL_ROOT . '/_/' . $this->dir . '/vtour/tour.js';
+	}
+
+	public function getKrpanoSwfUrl()
+	{
+		return VR360_URL_ROOT . '/_/' . $this->dir . '/vtour/tour.swf';
+	}
+
 	public function canEmbed()
 	{
 		return $this->isValid() && (int) $this->status === VR360_TOUR_STATUS_PUBLISHED_READY;

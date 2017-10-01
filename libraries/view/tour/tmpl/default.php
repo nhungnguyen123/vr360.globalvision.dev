@@ -2,7 +2,6 @@
 <html>
 <head>
 	<?php
-	$fullUrl               = VR360_URL_ROOT . $_SERVER['REQUEST_URI'];
 	$defaultThumbnail      = $this->tour->getDefaultThumbnail();
 	$defaultThumbnailImage = VR360_URL_ROOT . $defaultThumbnail['file'];
 	$defaultThumbnailAlt   = $defaultThumbnail['alt'];
@@ -26,7 +25,7 @@
 	<link rel="stylesheet" type="text/css" href="./assets/tour.min.css">
 
 	<!-- Krpano -->
-	<script src="<?php echo VR360_KRPANO_VIEWER_JS_PATH; ?>"></script>
+	<script src="<?php echo $this->tour->getKrpanoJsUrl(); ?>"></script>
 
 	<script src="./assets/js/site.tour.min.js"></script>
 
@@ -42,7 +41,7 @@
 	<meta name="twitter:image:src" content="<?php echo $defaultThumbnailImage; ?>">
 
 	<!-- Opengraph -->
-	<meta property="og:url" content="<?php echo $fullUrl; ?>"/>
+	<meta property="og:url" content="<?php echo VR360_URL_FULL; ?>"/>
 	<meta property="og:type" content="website"/>
 	<meta property="og:title" content="VR360 Globalvision - <?php echo $this->tour->getName(); ?>"/>
 	<meta property="og:description" content="<?php echo $this->tour->getDescription(); ?>"/>
@@ -71,7 +70,7 @@
 			</noscript>
 			<script>
 				embedpano({
-					swf: '<?php echo VR360_KRPANO_VIEWER_SWF_PATH; ?>',
+					swf: '<?php echo $this->tour->getKrpanoSwfUrl(); ?>',
 					xml: "_/<?php echo $data->tour->dir; ?>/vtour/tour.xml",
 					target: "pano",
 					html5: "auto",

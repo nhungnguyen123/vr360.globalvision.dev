@@ -44,8 +44,8 @@ class Vr360ModelTour extends Vr360Model
 		// Edit old tour
 		if ($tourId)
 		{
-			$tour = $this->getItem();
-			$uId  = $tour->dir;
+			$tour        = $this->getItem();
+			$tourDataDir = $tour->dir;
 
 			// This is old tour than we will respond with ID
 			$ajax->addData('id', $tourId);
@@ -62,18 +62,18 @@ class Vr360ModelTour extends Vr360Model
 			if (!$tourId)
 			{
 				// All files are validated than loop again to make json data
-				$uId = Vr360HelperTour::createDataDir();
+				$tourDataDir = Vr360HelperTour::createDataDir();
 
-				$ajax->addInfo('Created data directory: ' . $uId);
+				$ajax->addInfo('Created data directory: ' . $tourDataDir);
 			}
 
-			if ($uId === false)
+			if ($tourDataDir === false)
 			{
 				$ajax->addWarning('Can not create data directory')->fail()->respond();
 			}
 
-			$jsonData ['uId'] = $uId;
-			$destDir          = VR360_PATH_DATA . '/' . $uId;
+			$jsonData ['uId'] = $tourDataDir;
+			$destDir          = VR360_PATH_DATA . '/' . $tourDataDir;
 
 			// Prepare list of uploaded files
 			$jsonFiles = array();
