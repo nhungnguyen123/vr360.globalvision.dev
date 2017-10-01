@@ -28,6 +28,7 @@
 			<th><i class="fa fa-calendar" aria-hidden="true"></i> Creation day</th>
 			<th><i class="fa fa-check-square-o" aria-hidden="true"></i> Status</th>
 			<th><i class="fa fa-cogs" aria-hidden="true"></i> Controls</th>
+			<th>ID</th>
 		</tr>
 		</thead>
 		<tbody>
@@ -35,7 +36,7 @@
 		<?php foreach ($this->tours as $tour): ?>
 			<tr id='vtour-<?php echo $tour->id; ?>' data-tour='<?php echo $tour->toJson(); ?>'
 			    class="is-valid-<?php echo (int) $tour->isValid(); ?>">
-				<td class="vtour-id"><?php echo $tour->id; ?></td>
+				<td><input id="checkBox" type="checkbox" name="id[]" value="<?php echo $tour->id; ?>"></td>
 				<td class="vtour-name">
 					<?php echo $tour->getName(); ?>
 					<br/>
@@ -85,6 +86,7 @@
 						<i class="fa fa-eraser" aria-hidden="true"></i> Remove
 					</button>
 				</td>
+				<td class="vtour-id"><?php echo $tour->id; ?></td>
 			</tr>
 		<?php endforeach; ?>
 		</tbody>
