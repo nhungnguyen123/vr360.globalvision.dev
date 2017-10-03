@@ -160,6 +160,10 @@ class Vr360ControllerTour extends Vr360Controller
 			)
 		);
 
+		// Try to migrate tour
+		$tour->migrate();
+		$tour->getKrpanoVersion();
+
 		if ($tour !== false)
 		{
 			$html = Vr360Layout::getInstance()->fetch('form.tour', array('tour' => $tour));

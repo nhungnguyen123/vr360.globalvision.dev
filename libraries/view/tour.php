@@ -12,6 +12,9 @@ class Vr360ViewTour extends Vr360View
 
 		$this->tour = $model->getItem();
 
+		// Try to migrate tour before render
+		$this->tour->migrate();
+
 		return parent::display($layout);
 	}
 }
