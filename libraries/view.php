@@ -27,35 +27,6 @@ class Vr360View extends Vr360Layout
 		return $this->fetch('_' . $layout, array('data' => $displayData));
 	}
 
-	public function getCache()
-	{
-		$id        = md5(VR360_URL_FULL);
-		$cacheFile = VR360_PATH_ROOT . '/cache/' . $id;
-
-		if (Vr360HelperFile::exists($cacheFile))
-		{
-			return Vr360HelperFile::read($cacheFile);
-		}
-
-		return false;
-	}
-
-	public function writeCache($html)
-	{
-		$id        = md5(VR360_URL_FULL);
-		$cacheFile = VR360_PATH_ROOT . '/cache/' . $id;
-
-		// Optimize cache
-
-		// Write back to XML
-		$handler = fopen($cacheFile, 'w');
-
-		if ($handler)
-		{
-			fwrite($handler, $this->optimizeHtml($html));
-		}
-	}
-
 	public function optimizeHtml($text)
 	{
 		// 8MB stack. *nix

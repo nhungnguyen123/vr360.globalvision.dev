@@ -2,11 +2,16 @@
 
 defined('_VR360_EXEC') or die;
 
+/**
+ * Class Vr360ControllerTour
+ */
 class Vr360ControllerTour extends Vr360Controller
 {
 
 	/**
 	 * Create new tour
+	 *
+	 * @since  2.0.0
 	 */
 	public function ajaxCreateTour()
 	{
