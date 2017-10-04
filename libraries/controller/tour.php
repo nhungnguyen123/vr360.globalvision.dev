@@ -217,6 +217,9 @@ class Vr360ControllerTour extends Vr360Controller
 		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
 	}
 
+	/**
+	 *
+	 */
 	public function ajaxSaveHotspot()
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
@@ -232,35 +235,33 @@ class Vr360ControllerTour extends Vr360Controller
 			)
 		);
 
-		// Rebuild json
-		$hotSpotList     = json_decode($input->getString('hotspotList'), true);
-		$defaultViewList = json_decode($input->getString('defaultViewList'), true);
-		$uId             = $tour->dir;
-		$jsonData        = json_decode(file_get_contents(VR360_PATH_DATA . "/$uId/data.json"), true);
-
-		$jsonData['hotspotList']     = $hotSpotList;
-		$jsonData['defaultViewList'] = $defaultViewList;
-		$jsonData['rotation']        = isset($tour->params->rotation) ? $tour->params->rotation : null;
-		$jsonData['socials']         = isset($tour->params->socials) ? $tour->params->socials : null;
-		$jsonData['defaultPano']     = $tour->params->defaultPano;
-
-		// Create xml for tour
-		if (Vr360HelperTour::generateXml($uId, $jsonData) === false)
+		if ($tour)
 		{
-			$ajax->addWarning('Can not generate xml for vTour')->fail()->respond();
+			// Get current json data
+			$jsonData                    = $tour->getJsonData();
+
+			// Add hotspot list
+			$jsonData['hotspotList']     = json_decode($input->getString('hotspotList'), true);
+
+			// Add default view list
+			$jsonData['defaultViewList'] = json_decode($input->getString('defaultViewList'), true);
+
+			// Create xml for tour
+			if (Vr360HelperTour::generateXml($tour->dir, $jsonData) === false)
+			{
+				$ajax->addWarning('Can not generate xml for vTour')->fail()->respond();
+			}
+
+			// Write back to data.json
+			$jsonFile = $tour->getFile('data.json');
+			$handler  = fopen($jsonFile, 'w');
+
+			if ($handler)
+			{
+				fwrite($handler, json_encode($jsonData));
+			}
 		}
 
-		// Have done
-		$tour->status = VR360_TOUR_STATUS_PUBLISHED_READY;
-		$tour->save();
 
-		// Send mail
-		$mailer = new Vr360Email;
-		$mailer->isHTML(true);
-		$mailer->Subject = 'Your tour was created and generated success';
-		$mailer->Body    = '';
-		$mailer->send();
-
-		$ajax->addSuccess('Tour generated success')->success()->respond();
 	}
 }

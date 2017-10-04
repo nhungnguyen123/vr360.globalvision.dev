@@ -2,126 +2,122 @@
 
 $hotSpotImgUrl     = base64_encode("/assets/images/hotspot.png");
 $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
+$uId               = $_GET['uId'];
+$tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="viewport"
-          content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
-    <meta name="apple-mobile-web-app-capable" content="yes"/>
-    <meta name="apple-mobile-web-app-status-bar-style" content="black"/>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <meta http-equiv="x-ua-compatible" content="IE=edge"/>
-    <style>
-        @
-        -ms-viewport {
-            width: device-width;
-        }
+	<meta name="viewport"
+		  content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+	<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+	<style>
+		@
+		-ms-viewport {
+			width: device-width;
+		}
 
-        @media only screen and (min-device-width: 800px) {
-            html {
-                overflow: hidden;
-            }
-        }
+		@media only screen and (min-device-width: 800px) {
+			html {
+				overflow: hidden;
+			}
+		}
 
-        html {
-            height: 100%;
-        }
+		html {
+			height: 100%;
+		}
 
-        body {
-            height: 100%;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 16px;
-            color: #FFFFFF;
-            background-color: #000000;
-        }
-    </style>
-    <script type="text/javascript"
-            src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-    <script type="text/javascript"
-            src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
-    <link rel="stylesheet"
-          href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-
-    <script src="http://<?php echo $_SERVER['HTTP_HOST']; ?>/krpano/viewer/krpano.js"></script>
+		body {
+			height: 100%;
+			overflow: hidden;
+			margin: 0;
+			padding: 0;
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 16px;
+			color: #FFFFFF;
+			background-color: #000000;
+		}
+	</style>
+	<script type="text/javascript" src="./assets/jquery-2.2.4.min.js"></script>
+	<script src='<?php echo $tourUrl . '/tour.js'; ?>'></script>
 </head>
 <body>
 <div id="button-container"
-     style="position: absolute; z-index: 9999; top: 40px; right: 50px; background-color: gray; padding: 10px; opacity: 0.95; border-radius: 5px;">
-    <button id="add_hotpost"
-            style=""
-            onclick="add_hotspot_to_scene()">ADD Hotspot
-    </button>
-    <button id="hotpost_done"
-            style="display: none;"
-            onclick="choose_hotSpot_type();">Next step >>
-    </button>
+	 style="position: absolute; z-index: 9999; top: 40px; right: 50px; background-color: gray; padding: 10px; opacity: 0.95; border-radius: 5px;">
+	<button id="add_hotpost"
+			style=""
+			onclick="add_hotspot_to_scene()">ADD Hotspot
+	</button>
+	<button id="hotpost_done"
+			style="display: none;"
+			onclick="choose_hotSpot_type();">Next step >>
+	</button>
 
-    <button id="remove_hotpost"
-            style=""
-            onclick="remove_hotspot()">Remove Hotspot
-    </button>
-    <button id="done_remove"
-            style="display: none;"
-            onclick="done_remove()">Removed Done
-    </button>
+	<button id="remove_hotpost"
+			style=""
+			onclick="remove_hotspot()">Remove Hotspot
+	</button>
+	<button id="done_remove"
+			style="display: none;"
+			onclick="done_remove()">Removed Done
+	</button>
 
-    <button id="set_defaultView"
-            style=""
-            onclick="setDefaultView()">Set DefaultView
-    </button>
+	<button id="set_defaultView"
+			style=""
+			onclick="setDefaultView()">Set DefaultView
+	</button>
 
-    <button id="moveHotspot"
-            style=""
-            onclick="moveHotspot()">Move Hotspots
-    </button>
-    <button id="moveHotspotDone"
-            style="display: none;"
-            onclick="moveHotspotDone()">Moved Done
-    </button>
+	<button id="moveHotspot"
+			style=""
+			onclick="moveHotspot()">Move Hotspots
+	</button>
+	<button id="moveHotspotDone"
+			style="display: none;"
+			onclick="moveHotspotDone()">Moved Done
+	</button>
 </div>
 <div id="choose_hotSpot_type_id"
-     style="position: absolute; z-index: 9999; top: 40%; left: 10px; display: none; background-color: gray; padding: 10px; opacity: 0.95;">
-    Choose hotspot type:
-    <button onclick="setHotSpotType_Text()">Text Popup</button>
-    <button onclick="setHotSpotType_Nomal()">Normal</button>
+	 style="position: absolute; z-index: 9999; top: 40%; left: 10px; display: none; background-color: gray; padding: 10px; opacity: 0.95;">
+	Choose hotspot type:
+	<button onclick="setHotSpotType_Text()">Text Popup</button>
+	<button onclick="setHotSpotType_Nomal()">Normal</button>
 </div>
 
 <div id="input_text_dialog"
-     style="position: absolute; z-index: 9999; top: 40%; left: 10px; display: none; background-color: gray; padding: 10px; opacity: 0.95;">
-    <input id='text_input_hotspot' type="text" size="30"
-           placeholder="Input Text for your hotspot here"/>
-    <button onclick="hotspot_add_text_from_input()">Done</button>
+	 style="position: absolute; z-index: 9999; top: 40%; left: 10px; display: none; background-color: gray; padding: 10px; opacity: 0.95;">
+	<input id='text_input_hotspot' type="text" size="30"
+		   placeholder="Input Text for your hotspot here"/>
+	<button onclick="hotspot_add_text_from_input()">Done</button>
 </div>
 
 <div id="show_link"
-     style="position: absolute; z-index: 9999; top: 40%; left: 10px; display: none; background-color: gray; padding: 10px; opacity: 0.95;">
-    Linked scene: <select id="selectbox">
-    </select>
-    <button id="done_link" onclick="get_link()">Done</button>
+	 style="position: absolute; z-index: 9999; top: 40%; left: 10px; display: none; background-color: gray; padding: 10px; opacity: 0.95;">
+	Linked scene: <select id="selectbox">
+	</select>
+	<button id="done_link" onclick="get_link()">Done</button>
 </div>
 
 <div id="pano" style="width: 100%; height: 100%;">
-    <noscript>
-        <table style="width: 100%; height: 100%;">
-            <tr style="vertical-align: middle;">
-                <td>
-                    <div style="text-align: center;">
-                        ERROR:<br/>
-                        <br/>Javascript not activated<br/>
-                        <br/>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </noscript>
-    <script type="text/javascript">
+	<noscript>
+		<table style="width: 100%; height: 100%;">
+			<tr style="vertical-align: middle;">
+				<td>
+					<div style="text-align: center;">
+						ERROR:<br/>
+						<br/>Javascript not activated<br/>
+						<br/>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</noscript>
+	<script type="text/javascript">
 		embedpano({
-			swf: "http://<?php echo $_SERVER['HTTP_HOST']; ?>/krpano/viewer/krpano.swf",
-			xml: "http://<?php echo $_SERVER['HTTP_HOST']; ?>/_/<?php echo $_GET['uId']; ?>/vtour/tour.xml?" + Math.round(Math.random() * 1000000000).toString(),
+			swf: '<?php echo $tourUrl . '/tour.swf'; ?>',
+			xml: '<?php echo $tourUrl . '/tour.xml?' . time(); ?>',
 			target: "pano",
 			html5: "prefer",
 			passQueryParameters: true
@@ -505,7 +501,7 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 		}
 
 		var superHotspot = new superHotspotObj(krpano);
-    </script>
+	</script>
 
 
 </div>

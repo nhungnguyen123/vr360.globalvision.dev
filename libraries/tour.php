@@ -9,6 +9,8 @@ defined('_VR360_EXEC') or die;
  */
 class Vr360Tour extends Vr360TableTour
 {
+	protected $tourDir = 'vtour';
+
 	/**
 	 * @return string
 	 */
@@ -26,7 +28,7 @@ class Vr360Tour extends Vr360TableTour
 	{
 		$description = !empty($this->description) ? $this->description : Vr360Configuration::getConfig('siteDescription');
 
-		return mb_substr($description, 0, $truncateLength);
+		return trim(mb_substr($description, 0, $truncateLength));
 	}
 
 	/**
@@ -46,11 +48,32 @@ class Vr360Tour extends Vr360TableTour
 	}
 
 	/**
+	 * @param $property
+	 * @param $value
+	 */
+	public function setParam($property, $value)
+	{
+		$this->params->$property = $value;
+	}
+
+	/**
 	 * @return array
 	 */
 	public function getPanos()
 	{
-		return $this->getParam('panos', array());
+		static $panos;
+
+		if (!isset($panos))
+		{
+			$panos = $this->getParam('panos', array());
+
+			foreach ($panos as $index => $pano)
+			{
+				$panos[$index] = new Vr360Pano($pano);
+			}
+		}
+
+		return $panos;
 	}
 
 	/**
@@ -79,19 +102,8 @@ class Vr360Tour extends Vr360TableTour
 			}
 		}
 
+		// By default return first pano
 		return $panos[0];
-	}
-
-	/**
-	 * @param $pano
-	 *
-	 * @return string
-	 */
-	protected function getTiles($pano)
-	{
-		$fileInfo = pathinfo($pano->file);
-
-		return $fileInfo['filename'] . '.tiles';
 	}
 
 	/**
@@ -106,20 +118,23 @@ class Vr360Tour extends Vr360TableTour
 			return false;
 		}
 
-		// Get title
-		$tiles = $this->getTiles($defaultPano);
+		$panoThumbnail = $defaultPano->getThumbnail();
+
+		if ($panoThumbnail === false)
+		{
+			return false;
+		}
 
 		$thumbnail         = array();
-		$thumbnail['file'] = '/_/' . $this->dir . '/vtour/panos/' . $tiles . '/thumb.jpg';
+		$thumbnail['file'] = '/_/' . $this->dir . '/' . $this->tourDir . '/panos/' . $panoThumbnail;
 		$thumbnail['url']  = VR360_URL_ROOT . $thumbnail['file'];
 		$thumbnail['alt']  = $defaultPano->title;
 
 		if (Vr360Configuration::getConfig('user_thumb_dimension', true))
 		{
-			$thumbnailFile = $this->getDir() . '/vtour/panos/' . $tiles . '/thumb.jpg';
+			$thumbnailFile = $this->getDir() . '/vtour/panos/' . $panoThumbnail;
 
-			// @TODO Store dimension for next time use without calc again
-
+			// No need to cache this because we already have whole tour view caching
 			if (Vr360HelperFile::exists($thumbnailFile))
 			{
 				$imageSize           = getimagesize($thumbnailFile);
@@ -170,12 +185,12 @@ class Vr360Tour extends Vr360TableTour
 
 	public function getKrpanoJsUrl()
 	{
-		return VR360_URL_ROOT . '/_/' . $this->dir . '/vtour/tour.js';
+		return $this->getDir() . '/vtour/tour.js';
 	}
 
 	public function getKrpanoSwfUrl()
 	{
-		return VR360_URL_ROOT . '/_/' . $this->dir . '/vtour/tour.swf';
+		return $this->getDir() . '/vtour/tour.swf';
 	}
 
 	public function getKrpanoEmbedPano()
@@ -185,7 +200,7 @@ class Vr360Tour extends Vr360TableTour
 		// @TODO Verify this file exists or not or use t.xml instead ( old method )
 		$embed->xml                 = '_/' . $this->dir . '/vtour/tour.xml';
 		$embed->target              = 'pano';
-		$embed->html5               = 'auto';
+		$embed->html5               = Vr360Configuration::getConfig('krPanoEmbedHtml5', 'auto');
 		$embed->mobilescale         = '1.0';
 		$embed->passQueryParameters = 'true';
 
@@ -193,7 +208,7 @@ class Vr360Tour extends Vr360TableTour
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isValid()
 	{
@@ -214,6 +229,9 @@ class Vr360Tour extends Vr360TableTour
 		return true;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function isValidForRender()
 	{
 		if (!Vr360HelperFile::exists(VR360_PATH_ROOT . '/krpano/viewer/skin/vtourskin.xml'))
@@ -234,26 +252,41 @@ class Vr360Tour extends Vr360TableTour
 		return true;
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function canEmbed()
 	{
 		return $this->isValid() && (int) $this->status === VR360_TOUR_STATUS_PUBLISHED_READY;
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function canEdit()
 	{
 		return $this->isValid() && (int) $this->status === VR360_TOUR_STATUS_PUBLISHED_READY;
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function canEditHotspot()
 	{
 		return $this->isValid() && (int) $this->status === VR360_TOUR_STATUS_PUBLISHED_READY;
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function canPreview()
 	{
 		return $this->isValid() && (int) $this->status === VR360_TOUR_STATUS_PUBLISHED_READY;
 	}
 
+	/**
+	 * Migrate from old json format
+	 */
 	public function migrate()
 	{
 		$oldJsonData = $this->getJsonData();
@@ -261,24 +294,33 @@ class Vr360Tour extends Vr360TableTour
 		// Old format
 		if ($this->params == null || isset($oldJsonData['editID']))
 		{
+			// Prepare new params
 			$newParams        = new stdClass;
+
+			// List of files. Actually we'll not use this
 			$newParams->files = array();
 			$newParams->panos = array();
 
+			// Work on old panos list
 			foreach ($oldJsonData['panoList'] as $index => $pano)
 			{
 				$parts                      = explode('/', $pano['currentFileName']);
+
+				// Store filename only
 				$newPanoData['file']        = end($parts);
 				$newPanoData['title']       = $pano['des'];
-				$newPanoData['description'] = $pano['des'];
+				$newPanoData['description'] = $pano['des_sub'];
 
+				// Store list of panos
 				$newParams->panos[] = $newPanoData;
 
+				// Store default pano
 				if ($index == $oldJsonData['defaultScene'])
 				{
 					$newParams->defaultPano = $newPanoData['file'];
 				}
 
+				// Store list of files
 				$newParams->files[] = $newPanoData['file'];
 			}
 
@@ -296,6 +338,7 @@ class Vr360Tour extends Vr360TableTour
 				fwrite($handler, json_encode($newParams));
 			}
 
+			// Now we are going to read our XML tour format
 			// Old XML format
 			$xmlFile = $this->getFile('vtour/t.xml');
 
@@ -304,6 +347,7 @@ class Vr360Tour extends Vr360TableTour
 				$xmlFile = $this->getFile('vtour/tour.xml');
 			}
 
+			// Replace include XML to correct link
 			$xmlBuffer = Vr360HelperFile::read($xmlFile);
 			$xmlBuffer = str_replace('<include url="http://data.globalvision.ch/krpano/1.19/skin/vtourskin.xml" />', '<include url="/krpano/viewer/skin/vtourskin.xml" />', $xmlBuffer);
 			$xmlBuffer = str_replace('<include url="http://data.globalvision.ch/krpano/1.19/skin/tour-vtskin.xml" />', '<include url="/krpano/viewer/skin/tour-vtskin.xml" />', $xmlBuffer);
@@ -317,7 +361,7 @@ class Vr360Tour extends Vr360TableTour
 				fwrite($handler, $xmlBuffer);
 			}
 
-			// Copy files
+			// Copy new files
 			$src = VR360_PATH_ROOT . '/krpano/viewer/plugins';
 			$dst = VR360_PATH_ROOT . '/_/' . $this->dir . '/vtour/plugins';
 
@@ -336,6 +380,7 @@ class Vr360Tour extends Vr360TableTour
 			Vr360HelperFile::delete($this->getDir() . '/kr.log.err.html');
 			Vr360HelperFile::delete($this->getDir() . '/kr.log.html');
 			Vr360HelperFile::delete($this->getDir() . '/php.mail.log.html');
+			Vr360HelperFile::delete($this->getDir() . '/tour_testingserver.exe');
 		}
 	}
 

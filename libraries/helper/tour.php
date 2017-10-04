@@ -227,8 +227,10 @@ class Vr360HelperTour
 				$xmlData['scenes'][$scene]['hlookat'] = VR360_TOUR_SCENE_DEFAULT_HLOOKAT;
 				$xmlData['scenes'][$scene]['vlookat'] = VR360_TOUR_SCENE_DEFAULT_VLOOKAT;
 			}
+
 			$xmlData['scenes'][$scene]['xmlHotspots'] = self::xmlHotspots($jsonData, $xmlData['scenes'][$scene]['xmlFileName']);
 		}
+
 		// Write xmlData to xml Template
 		$targetXmlFileContents = '';
 
@@ -290,35 +292,41 @@ class Vr360HelperTour
 			return $returnValue;
 		}
 
+		// Process hotspots list
 		foreach ($jsonData['hotspotList'] as $scene => $value)
 		{
 			$file = str_replace('scene_', '', $scene);
 
+			// Match filename
 			if ($file == $xmlFileName)
 			{
 				$hotspotObj = new stdClass;
 
-				foreach ($jsonData['hotspotList'][$scene] as $hotspotID => $hotspot)
+				foreach ($jsonData['hotspotList'][$scene] as $hotspotId => $hotspot)
 				{
-					$hotspotObj->hotspotID = $hotspotID;
+					$hotspotObj->hotspotID = $hotspotId;
 					$hotspotObj->ath       = $hotspot['ath'];
 					$hotspotObj->atv       = $hotspot['atv'];
 
+					$hotspot['linkedscene'] = isset($hotspot['linkedscene']) ? $hotspot['linkedscene'] : '';
+
 					$isNotSceneIndex = preg_match('/scene\_/', $hotspot['linkedscene']);
 
-					if ($hotspot['hotspot_type'] == 'normal')
+					switch ($hotspot['hotspot_type'])
 					{
-						$hotspotObj->style        = 'tooltip';
-						$hotspotObj->hotspot_type = 'normal';
-						$hotspotObj->data         = $isNotSceneIndex ?
-							'linkedscene="' . $hotspot['linkedscene'] . '"' :
-							'linkedscene="scene_' . explode('.', $jsonData['files'][$hotspot['linkedscene']])[0] . '"';
-					}
-					elseif ($hotspot['hotspot_type'] == 'text')
-					{
-						$hotspotObj->style        = 'textpopup';
-						$hotspotObj->hotspot_type = 'text';
-						$hotspotObj->data         = 'hotspot_text="' . $hotspot['hotspot_text'] . '"';
+						case 'normal':
+							$hotspotObj->style        = 'tooltip';
+							$hotspotObj->hotspot_type = 'normal';
+							$hotspotObj->data         = $isNotSceneIndex ?
+								'linkedscene="' . $hotspot['linkedscene'] . '"' :
+								'linkedscene="scene_' . explode('.', $jsonData['files'][$hotspot['linkedscene']])[0] . '"';
+							break;
+						case'text':
+							$hotspotObj->style        = 'textpopup';
+							$hotspotObj->hotspot_type = 'text';
+							$hotspotObj->data         = 'hotspot_text="' . $hotspot['hotspot_text'] . '"';
+						default:
+							break;
 					}
 
 					$returnValue .= self::xmlHotspot($hotspotObj);
