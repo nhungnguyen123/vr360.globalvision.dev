@@ -107,6 +107,7 @@ class Vr360TableTour extends Vr360Table
 		$str = trim(strtolower($str));
 		// Remove any duplicate whitespace and replace whitespaces by hyphens
 		$str         = preg_replace('#\x20+#', '-', $str);
+
 		$this->alias = $str;
 
 		if ($this->created === null)

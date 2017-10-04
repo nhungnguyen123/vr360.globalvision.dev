@@ -2,11 +2,16 @@
 
 defined('_VR360_EXEC') or die;
 
+/**
+ * Class Vr360ControllerTour
+ */
 class Vr360ControllerTour extends Vr360Controller
 {
 
 	/**
 	 * Create new tour
+	 *
+	 * @since  2.0.0
 	 */
 	public function ajaxCreateTour()
 	{
@@ -84,7 +89,8 @@ class Vr360ControllerTour extends Vr360Controller
 
 			// Using krpano tool to cut images
 			$command = '';
-			if (Vr360HelperTour::generateTour($uId, $jsonData, $command) === null || Vr360HelperTour::generateTour($uId, $jsonData, $command) === false)
+			$result  = Vr360HelperTour::generateTour($uId, $jsonData, $command);
+			if ($result === null || $result === false)
 			{
 				$ajax->addWarning('Can not generate vTour: ' . $command)->fail()->respond();
 			}
@@ -158,6 +164,10 @@ class Vr360ControllerTour extends Vr360Controller
 				'created_by' => Vr360Factory::getUser()->id
 			)
 		);
+
+		// Try to migrate tour
+		$tour->migrate();
+		$tour->getKrpanoVersion();
 
 		if ($tour !== false)
 		{
