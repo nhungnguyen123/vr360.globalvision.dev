@@ -104,8 +104,7 @@ class Vr360ControllerTour extends Vr360Controller
 			}
 
 			// Have done
-			$tour->status = VR360_TOUR_STATUS_PUBLISHED_READY;
-			$tour->save();
+			// No need to save tour again
 
 			// Send mail
 			$mailer = new Vr360Email;
@@ -125,7 +124,6 @@ class Vr360ControllerTour extends Vr360Controller
 	{
 		$this->ajaxCreateTour();
 	}
-
 
 	public function ajaxRemoveTour()
 	{
@@ -199,22 +197,8 @@ class Vr360ControllerTour extends Vr360Controller
 		if ($tour !== false)
 		{
 			$html = Vr360Layout::getInstance()->fetch('form.hotspots', array('tour' => $tour));
+			Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
 		}
-
-		else
-		{
-			$html = Vr360Layout::getInstance()->fetch('form.hotspotsiframe');
-		}
-
-
-		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
-	}
-
-	public function getEditTourHtmlHotspotEditorIFrame()
-	{
-		// I cant make this!
-		$html = Vr360Layout::getInstance()->fetch('form.hotspotsiframe', '');
-		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
 	}
 
 	/**
@@ -223,7 +207,6 @@ class Vr360ControllerTour extends Vr360Controller
 	public function ajaxSaveHotspot()
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
-
 		$input = Vr360Factory::getInput();
 
 		$tour = new Vr360Tour;
@@ -240,11 +223,25 @@ class Vr360ControllerTour extends Vr360Controller
 			// Get current json data
 			$jsonData                    = $tour->getJsonData();
 
-			// Add hotspot list
-			$jsonData['hotspotList']     = json_decode($input->getString('hotspotList'), true);
+			$hotspotsList = json_decode($input->getString('hotspotList'), true);
+			$defaultViewsList = json_decode($input->getString('defaultViewList'), true);
 
-			// Add default view list
-			$jsonData['defaultViewList'] = json_decode($input->getString('defaultViewList'), true);
+			if ($hotspotsList === null || $defaultViewsList === null)
+			{
+				$ajax->addWarning('Invalid data')->fail()->respond();
+			}
+
+			// Apply data
+			foreach ($hotspotsList as $scene => $hotspots)
+			{
+				$jsonData['hotspotList'][$scene] = $hotspots;
+			}
+
+			// Apply data
+			foreach ($defaultViewsList as $scene => $defaultView)
+			{
+				$jsonData['defaultViewList'][$scene] = $defaultView;
+			}
 
 			// Create xml for tour
 			if (Vr360HelperTour::generateXml($tour->dir, $jsonData) === false)
@@ -254,14 +251,9 @@ class Vr360ControllerTour extends Vr360Controller
 
 			// Write back to data.json
 			$jsonFile = $tour->getFile('data.json');
-			$handler  = fopen($jsonFile, 'w');
-
-			if ($handler)
-			{
-				fwrite($handler, json_encode($jsonData));
-			}
+			Vr360HelperFile::write($jsonFile, json_encode($jsonData));
 		}
 
-
+		$ajax->success()->respond();
 	}
 }

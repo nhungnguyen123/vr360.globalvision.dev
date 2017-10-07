@@ -151,13 +151,12 @@ class Vr360HelperTour
 	public static function generateXml($uId, $jsonData)
 	{
 		$tourDataDirPath = VR360_PATH_DATA . '/' . $uId . '/vtour';
+		$tourXmlFile     = $tourDataDirPath . "/tour.xml";
 
 		if (!Vr360HelperFolder::exists($tourDataDirPath))
 		{
 			return false;
 		}
-
-		$targetXmlFile = $tourDataDirPath . "/tour.xml";
 
 		$xmlData = array();
 
@@ -269,7 +268,9 @@ class Vr360HelperTour
 			$targetXmlFileContents .= $xmlContent;
 		}
 
-		return file_put_contents($targetXmlFile, $targetXmlFileContents);
+		$xmlObject = simplexml_load_string($targetXmlFileContents);
+
+		return $xmlObject->asXML($tourXmlFile);
 	}
 
 	/**

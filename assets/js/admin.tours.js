@@ -96,6 +96,10 @@
 					})
 			})
 		},
+		/**
+		 *
+		 * @param el
+		 */
 		showEditHotspot: function (el)
 		{
 			var tourData = $(el).data();
