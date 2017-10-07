@@ -373,6 +373,7 @@ class Vr360Tour extends Vr360TableTour
 
 		// Replace include XML to correct link
 		$xmlBuffer = Vr360HelperFile::read($xmlFile);
+		$xmlBuffer = str_replace('<krpano version="1.18" />', '<krpano version="1.19', $xmlBuffer);
 		$xmlBuffer = str_replace('<include url="http://data.globalvision.ch/krpano/1.19/skin/vtourskin.xml" />', '<include url="/krpano/viewer/skin/vtourskin.xml" />', $xmlBuffer);
 		$xmlBuffer = str_replace('<include url="http://data.globalvision.ch/krpano/1.19/skin/tour-vtskin.xml" />', '<include url="/krpano/viewer/skin/tour-vtskin.xml" />', $xmlBuffer);
 		$xmlBuffer = str_replace('<include url="http://data.globalvision.ch/krpano/1.19/skin/social-skin.xml" />', '<include url="/krpano/viewer/skin/social-skin.xml" />', $xmlBuffer);

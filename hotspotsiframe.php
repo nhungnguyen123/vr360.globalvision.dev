@@ -103,7 +103,7 @@ $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 				// console.info(data.panoList[i].des);
 				option = document.createElement('option');
 				option.value = ii;
-				option.text = data.panoDescription[ii];
+				option.text = data.panoTitle[ii];
 				selectbox.add(option);
 			}
 		});
