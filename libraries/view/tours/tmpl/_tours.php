@@ -53,9 +53,7 @@
 				<td class="vtour-date"><?php echo $tour->created; ?></td>
 				<td class="status"><?php echo ($tour->status == 1) ? '<i class="fa fa-check" aria-hidden="true"></i>' : ''; ?></td>
 				<td class="controls">
-					<?php if (!$tour->canEmbed() && !$tour->canEdit() && !$tour->canEditHotspot() && !$tour->canPreview()): ?>
-						<span class="label label-default">This tour is not generated success or invalid</span>
-					<?php else: ?>
+
 						<?php if ($tour->canEmbed()): ?>
 							<!-- Embed -->
 							<button type="button" class="btn btn-default btn-sm embedCode">
@@ -83,10 +81,15 @@
 								<i class="fa fa-external-link" aria-hidden="true"></i> Preview
 							</button>
 						<?php endif; ?>
-					<?php endif; ?>
-					<button type="button" class="btn btn-danger btn-sm removeTour">
-						<i class="fa fa-eraser" aria-hidden="true"></i> Remove
-					</button>
+
+						<button type="button" class="btn btn-danger btn-sm removeTour">
+							<i class="fa fa-eraser" aria-hidden="true"></i> Remove
+						</button>
+
+					<div>
+						<span class="label label-primary">Panos: <?php echo count($tour->getPanos());?></span>
+						<span class="label label-primary">Hotspots: <?php echo count($tour->getHotspots());?></span>
+					</div>
 				</td>
 				<td class="vtour-id"><?php echo $tour->id; ?></td>
 			</tr>

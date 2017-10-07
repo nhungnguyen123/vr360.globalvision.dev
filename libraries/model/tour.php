@@ -276,6 +276,7 @@ class Vr360ModelTour extends Vr360Model
 			));
 		}
 
+		$table->migrate();
 
 		return $table;
 	}
@@ -308,7 +309,7 @@ class Vr360ModelTour extends Vr360Model
 
 		$table->params = $params;
 		$table->dir    = $input->get('uId');
-		$table->status = VR360_TOUR_STATUS_PENDING;
+		$table->status = VR360_TOUR_STATUS_PUBLISHED_READY;
 
 		if ($id = $table->save())
 		{

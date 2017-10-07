@@ -16,31 +16,39 @@ $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 	<meta http-equiv="x-ua-compatible" content="IE=edge"/>
 	<!-- Globalvision -->
 	<link rel="stylesheet" type="text/css" href="./assets/tour.min.css">
+	<link rel="stylesheet" type="text/css" href="./assets/css/hotspots.min.css">
 	<script type="text/javascript" src="./assets/jquery-2.2.4.min.js"></script>
 	<script src='<?php echo $tourUrl . '/tour.js'; ?>'></script>
+
+	<!-- Bootstrap -->
+	<script type="text/javascript" src="./assets/bootstrap/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.css">
+
+	<link rel="stylesheet" href="./assets/font-awesome/css/font-awesome.css">
+
 </head>
 <body>
 <div id="button-container">
-	<button id="add_hotpost" onclick="add_hotspot_to_scene()">Add hotspot</button>
-	<button id="hotpost_done" onclick="choose_hotSpot_type();">Next step >></button>
+	<button type="button" id="add_hotpost" class="btn btn-primary" onclick="add_hotspot_to_scene();">Add hotspot</button>
+	<button type="button" id="hotpost_done" class="btn btn-primary" onclick="choose_hotSpot_type();">Choose type</button>
 
-	<button id="remove_hotpost" onclick="remove_hotspot()">Remove hotspot</button>
-	<button id="done_remove" onclick="done_remove()">Removed done</button>
+	<button type="button" id="remove_hotpost" class="btn btn-danger" onclick="remove_hotspot();">Remove hotspot</button>
+	<button type="button" id="done_remove" class="btn btn-danger" onclick="done_remove();">Removed done</button>
 
-	<button id="set_defaultView" onclick="setDefaultView()">Set default view</button>
+	<button type="button" id="set_defaultView" class="btn btn-primary" onclick="setDefaultView();">Set default view</button>
 
-	<button id="moveHotspot" onclick="moveHotspot()">Move hotspots</button>
-	<button id="moveHotspotDone" onclick="moveHotspotDone()">Moved done</button>
+	<button type="button" id="moveHotspot" class="btn btn-warning" onclick="moveHotspot();">Move hotspots</button>
+	<button type="button" id="moveHotspotDone" class="btn btn-warning" onclick="moveHotspotDone();">Moved done</button>
 </div>
 <div id="choose_hotSpot_type_id">
 	Choose hotspot type:
-	<button onclick="setHotSpotType_Text()">Text Popup</button>
-	<button onclick="setHotSpotType_Nomal()">Normal</button>
+	<button type="button" class="btn btn-default" onclick="setHotSpotType_Text()">Text Popup</button>
+	<button type="button" class="btn btn-default" onclick="setHotSpotType_Nomal()">Scene linking</button>
 </div>
 
 <div id="input_text_dialog">
 	<input id='text_input_hotspot' type="text" size="30" placeholder="Input Text for your hotspot here"/>
-	<button onclick="hotspot_add_text_from_input()">Done</button>
+	<button type="button" class="btn btn-default" onclick="hotspot_add_text_from_input()">Finish</button>
 </div>
 
 <div id="show_link">
@@ -236,6 +244,8 @@ $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 			defaultViewList[scene].hlookat = krpano.get('view.hlookat');
 			defaultViewList[scene].vlookat = krpano.get('view.vlookat');
 			defaultViewList[scene].fov = krpano.get('view.fov');
+
+			alert ('Applied default view hlookat: ' + defaultViewList[scene].hlookat + ' , vlookat: ' + defaultViewList[scene].vlookat + ' , fov: ' + defaultViewList[scene].fov);
 		}
 
 		function rotateToDefaultViewOf(scene) {
