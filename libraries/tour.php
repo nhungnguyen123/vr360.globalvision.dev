@@ -317,7 +317,7 @@ class Vr360Tour extends Vr360TableTour
 			$newParams->files = array();
 			// List of panos
 			$newParams->panos = array();
-			$newHotspots = array();
+			$newHotspots      = array();
 
 			if (isset($oldJsonData['panoList']))
 			{
@@ -430,5 +430,13 @@ class Vr360Tour extends Vr360TableTour
 		}
 
 		return 'Invalid';
+	}
+
+	public function getXml()
+	{
+		$xml = new Vr360TourXml();
+		$xml->load($this->getFile('vtour/tour.xml'));
+
+		return $xml;
 	}
 }
