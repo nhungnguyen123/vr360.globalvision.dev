@@ -31,12 +31,12 @@ class Vr360TourXml
 	{
 		if ($doc->hasChildNodes())
 		{
-			foreach ($doc->childNodes as $node)
+			foreach ($doc->childNodes as $index => $node)
 			{
 				if (isset($node->nodeName))
 				{
-					$nodes[$node->nodeName]['atttributes'] = $this->getNodeAttributes($node);
-					$nodes[$node->nodeName]['value']       = $node->nodeValue;
+					$nodes[$node->nodeName][$index]['atttributes'] = $this->getNodeAttributes($node);
+					$nodes[$node->nodeName][$index]['value']       = $node->nodeValue;
 				}
 
 				if ($node->hasChildNodes())
