@@ -77,6 +77,11 @@ class Vr360Tour extends Vr360TableTour
 		{
 			$panos = $this->getParam('panos', array());
 
+			if (!is_array($panos) || empty($panos))
+			{
+				return array();
+			}
+
 			foreach ($panos as $index => $pano)
 			{
 				$panos[$index] = new Vr360Pano($pano);
@@ -301,8 +306,6 @@ class Vr360Tour extends Vr360TableTour
 	{
 		if (!empty($this->dir))
 		{
-			$oldJsonData = $this->getJsonData();
-
 			// Old format
 			if (
 				$this->params == null ||
@@ -355,11 +358,11 @@ class Vr360Tour extends Vr360TableTour
 					// Write back to data.json
 					Vr360HelperFile::write($this->getFile('data.json'), json_encode($newParams));
 				}
-			}
 
-			$this->migrateXml();
-			$this->updateKrpano();
-			$this->cleanup();
+				$this->migrateXml();
+				$this->updateKrpano();
+				$this->cleanup();
+			}
 		}
 	}
 
@@ -374,6 +377,16 @@ class Vr360Tour extends Vr360TableTour
 		if (!Vr360HelperFile::exists($xmlFile))
 		{
 			$xmlFile = $this->getFile('vtour/tour.xml');
+		}
+
+		if (!$xmlFile)
+		{
+			$xmlFile = VR360_PATH_DATA . '/' . $this->dir . '/vtour/tour.xml';
+		}
+
+		if (!Vr360HelperFile::exists($xmlFile))
+		{
+			return false;
 		}
 
 		// Replace include XML to correct link
@@ -412,7 +425,8 @@ class Vr360Tour extends Vr360TableTour
 
 		foreach ($files as $file)
 		{
-			copy($file, str_replace($src, $dst, $file));
+			$to = str_replace($src, $dst, $file);
+			copy($file, $to);
 		}
 
 		// Update new krpano scripts
