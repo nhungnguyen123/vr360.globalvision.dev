@@ -299,68 +299,73 @@ class Vr360Tour extends Vr360TableTour
 	 */
 	public function migrate()
 	{
-
-		$oldJsonData = $this->getJsonData();
-
-		// Old format
-		if (
-			$this->params == null ||
-			isset($oldJsonData['editID']) ||
-			isset($oldJsonData['jsonData']) ||
-			isset($oldJsonData['email'])
-		)
+		if (!empty($this->dir))
 		{
-			// Prepare new params
-			$newParams = new stdClass;
+			$oldJsonData = $this->getJsonData();
 
-			// List of files. Actually we'll not use this
-			$newParams->files = array();
-			// List of panos
-			$newParams->panos = array();
-			$newHotspots      = array();
-
-			if (isset($oldJsonData['panoList']))
+			// Old format
+			if (
+				$this->params == null ||
+				isset($oldJsonData['editID']) ||
+				isset($oldJsonData['jsonData']) ||
+				isset($oldJsonData['email'])
+			)
 			{
-				// Work on old panos list
-				foreach ($oldJsonData['panoList'] as $index => $pano)
+				// Prepare new params
+				$newParams = new stdClass;
+
+				// List of files. Actually we'll not use this
+				$newParams->files = array();
+
+				// List of panos
+				$newParams->panos = array();
+
+				if (isset($oldJsonData['panoList']))
 				{
-					$parts = explode('/', $pano['currentFileName']);
-
-					// Store filename only
-					$newPanoData['file']        = end($parts);
-					$newPanoData['title']       = $pano['des'];
-					$newPanoData['description'] = $pano['des_sub'];
-
-					// Store list of panos
-					$newParams->panos[] = $newPanoData;
-
-					// Store default pano
-					if ($index == $oldJsonData['defaultScene'])
+					// Work on old panos list
+					foreach ($oldJsonData['panoList'] as $index => $pano)
 					{
-						$newParams->defaultPano = $newPanoData['file'];
+						$parts = explode('/', $pano['currentFileName']);
+
+						// Store filename only
+						$newPanoData['file']        = end($parts);
+						$newPanoData['title']       = $pano['des'];
+						$newPanoData['description'] = $pano['des_sub'];
+
+						// Store list of panos
+						$newParams->panos[] = $newPanoData;
+
+						// Store default pano
+						if ($index == $oldJsonData['defaultScene'])
+						{
+							$newParams->defaultPano = $newPanoData['file'];
+						}
+
+						// Store list of files
+						$newParams->files[] = $newPanoData['file'];
 					}
 
-					// Store list of files
-					$newParams->files[] = $newPanoData['file'];
+					$this->params = json_decode(json_encode($newParams));
+
+					// Save to database
+					$this->save();
+
+					copy($this->getFile('data.json'), $this->getFile('data.json') . '.bak');
+
+					// Write back to data.json
+					Vr360HelperFile::write($this->getFile('data.json'), json_encode($newParams));
 				}
-
-				$this->params = json_decode(json_encode($newParams));
-
-				// Save to database
-				//$this->save();
-
-				copy($this->getFile('data.json'), $this->getFile('data.json') . '.bak');
-
-				// Write back to data.json
-				Vr360HelperFile::write($this->getFile('data.json'), json_encode($newParams));
 			}
-		}
 
-		$this->migrateXml();
-		$this->updateKrpano();
-		$this->cleanup();
+			$this->migrateXml();
+			$this->updateKrpano();
+			$this->cleanup();
+		}
 	}
 
+	/**
+	 *
+	 */
 	protected function migrateXml()
 	{
 		// Old XML format
@@ -434,9 +439,16 @@ class Vr360Tour extends Vr360TableTour
 
 	public function getXml()
 	{
-		$xml = new Vr360TourXml();
-		$xml->load($this->getFile('vtour/tour.xml'));
+		$tourXml = $this->getFile('vtour/tour.xml');
 
-		return $xml;
+		if (Vr360HelperFile::exists($tourXml))
+		{
+			$xml = new Vr360TourXml();
+			$xml->load($tourXml);
+
+			return $xml;
+		}
+
+		return false;
 	}
 }
