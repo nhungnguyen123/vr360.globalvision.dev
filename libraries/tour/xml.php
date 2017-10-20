@@ -12,86 +12,135 @@ class Vr360TourXml
 	/**
 	 * @var  DOMDocument
 	 */
-	public $dom;
+	protected $dom;
 
+	/**
+	 * @var  DOMElement
+	 */
+	protected $root;
+
+	/**
+	 * @var array
+	 */
 	protected $nodes = array();
 
+	/**
+	 * @param   string $file XML file
+	 *
+	 * @return  array|boolean
+	 */
 	public function load($file)
 	{
 		if (Vr360HelperFile::exists($file))
 		{
 			$this->dom = new DOMDocument;
 			$this->dom->load($file);
+			$this->root = $this->dom->documentElement;
 
-			$this->loadNodes($this->dom->documentElement, $this->nodes);
+			$this->nodes = $this->loadNodes($this->root);
+
+			return $this->nodes;
 		}
+
+		return false;
 	}
 
-	protected function loadNodes($doc, &$nodes)
+	/**
+	 * @param   documentElement $node Node
+	 *
+	 * @return  array|string
+	 */
+	protected function loadNodes($node)
 	{
-		if ($doc->hasChildNodes())
+		$nodes = array();
+
+		switch ($node->nodeType)
 		{
-			foreach ($doc->childNodes as $index => $node)
-			{
-				if (isset($node->nodeName))
+			case XML_CDATA_SECTION_NODE:
+			case XML_TEXT_NODE:
+				$nodes = trim($node->textContent);
+				break;
+			case XML_ELEMENT_NODE:
+
+				foreach ($node->childNodes as $child)
 				{
-					$nodes[$node->nodeName][$index]['atttributes'] = $this->getNodeAttributes($node);
-					$nodes[$node->nodeName][$index]['value']       = $node->nodeValue;
+					$tmpNodes = $this->loadNodes($child);
+
+					if (isset($child->tagName))
+					{
+						$tagName = $child->tagName;
+
+						if (!isset($nodes[$tagName]))
+						{
+							$nodes[$tagName] = array();
+						}
+
+						$nodes[$tagName][] = $tmpNodes;
+					}
+					elseif ($tmpNodes || $tmpNodes === '0')
+					{
+						$nodes = (string) $tmpNodes;
+					}
 				}
 
-				if ($node->hasChildNodes())
+				if ($node->attributes->length && !is_array($nodes))
 				{
-					$this->loadNodes($node, $nodes[$node->nodeName]);
+					// Has attributes but isn't an array
+					// Change output into an array.
+					$nodes = array('@content' => $nodes);
 				}
-			}
-		}
-	}
 
-	public function getNodes()
-	{
-		return $this->nodes;
-	}
-
-	public function getInclude()
-	{
-		return $this->getNode('include');
-	}
-
-	protected function getNode($tag)
-	{
-		$nodesList = $this->dom->getElementsByTagName($tag);
-		$nodes     = array();
-
-		foreach ($nodesList as $index => $node)
-		{
-			$nodes[$index] = array();
-
-			if ($node->hasAttributes())
-			{
-				$attributes = array();
-				foreach ($node->attributes as $attribute)
+				if (is_array($nodes))
 				{
-					$attributes[$attribute->nodeName] = $attribute->nodeValue;
+					if ($node->attributes->length)
+					{
+						$array = array();
+
+						foreach ($node->attributes as $attrName => $attrNode)
+						{
+							$array[$attrName] = (string) $attrNode->value;
+						}
+
+						$nodes['@attributes'] = $array;
+					}
+
+					foreach ($nodes as $tag => $value)
+					{
+						if (is_array($value) && count($value) == 1 && $tag != '@attributes')
+						{
+							$nodes[$tag] = $value[0];
+						}
+					}
 				}
-				$nodes[$index]['attributes'] = $attributes;
-			}
+				break;
 		}
 
 		return $nodes;
 	}
 
-	protected function getNodeAttributes($node)
+	/**
+	 * Get array of nodes
+	 *
+	 * @return array
+	 */
+	public function getNodes()
 	{
-		$attributes = array();
-		if ($node->hasAttributes())
-		{
+		return $this->nodes;
+	}
 
-			foreach ($node->attributes as $attribute)
-			{
-				$attributes[$attribute->nodeName] = $attribute->nodeValue;
-			}
-		}
+	/**
+	 * Save back from array to XML
+	 */
+	public function flush()
+	{
 
-		return $attributes;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function toXml()
+	{
+		return $this->dom->saveXML();
 	}
 }
