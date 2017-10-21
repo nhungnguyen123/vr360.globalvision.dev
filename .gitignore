@@ -3,6 +3,8 @@ _backup/*
 .idea/*
 assets/krpano/*
 
+configuration.php
+
 # Created by https://www.gitignore.io/api/phpstorm
 
 ### PhpStorm ###
