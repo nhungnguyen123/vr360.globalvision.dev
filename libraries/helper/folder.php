@@ -38,4 +38,22 @@ class Vr360HelperFolder
 	{
 		return (boolean) file_exists($path) && is_dir($path);
 	}
+
+	public static function create($dir)
+	{
+		if (!self::exists($dir))
+		{
+			mkdir($dir, 0777, true);
+		}
+	}
+
+	public static function move($source, $dir)
+	{
+		if (self::exists($source))
+		{
+			return rename($source, $dir, 0777, true);
+		}
+
+		return false;
+	}
 }
