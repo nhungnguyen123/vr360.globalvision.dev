@@ -53,6 +53,8 @@ before_script:
 
 script:
 - composer install --prefer-dist
+- composer update
+- cd tests
 - mv acceptance.suite.dist.yml acceptance.suite.yml
 - php vendor/bin/robo run:tests 1
 
