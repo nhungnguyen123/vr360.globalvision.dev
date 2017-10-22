@@ -24,9 +24,9 @@ cache:
 
 matrix:
   fast_finish: true
-
+before_install:
+  - php /home/travis/.phpenv/versions/5.4.25/bin/composer.phar self-update
 before_script:
-- composer config -g github-oauth.github.com $GITHUB_TOKEN
 - npm install -g gulp-cli
 - composer global require hirak/prestissimo
 - sudo sed -i '1s/^/127.0.0.1 localhost\n/' /etc/hosts # forcing localhost to be the 1st alias of 127.0.0.1 in /etc/hosts (https://github.com/seleniumhq/selenium/issues/2074)
@@ -57,6 +57,5 @@ before_script:
 - mv gulp-config.json.dist gulp-config.json
 - gulp release --skip-version
 - cd ../tests
-# Generic RoboFile init file
-- mv RoboFile.ini.dist RoboFile.ini
+
 
