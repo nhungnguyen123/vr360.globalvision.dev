@@ -51,5 +51,11 @@ before_script:
 - sleep 3 # give fluxbox some time to start
 - npm install
 - cd ../tests
-
+script:
+- composer install --prefer-dist
+- vendor/bin/robo check:for-missed-debug-code
+- vendor/bin/robo check:for-parse-errors
+- vendor/bin/robo check:codestyle
+- mv acceptance.suite.dist.yml acceptance.suite.yml
+- php vendor/bin/robo run:tests 1
 
