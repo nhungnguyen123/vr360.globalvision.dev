@@ -56,5 +56,6 @@ script:
 - composer update
 - cd tests
 - mv acceptance.suite.dist.yml acceptance.suite.yml
+- cd ..
 - vendor/bin/robo run:test
 
