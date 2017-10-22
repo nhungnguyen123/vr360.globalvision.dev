@@ -24,8 +24,7 @@ cache:
 
 matrix:
   fast_finish: true
-before_install:
-  - php /home/travis/.phpenv/versions/5.4.25/bin/composer.phar self-update
+  
 before_script:
 - npm install -g gulp-cli
 - composer global require hirak/prestissimo
