@@ -49,7 +49,6 @@ before_script:
 - sudo apt-get install fluxbox -y --force-yes
 - fluxbox &
 - sleep 3 # give fluxbox some time to start
-- cd build
 - npm install
 - mv gulp-config.json.dist gulp-config.json
 - gulp release --skip-version
