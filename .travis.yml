@@ -56,5 +56,5 @@ script:
 - composer update
 - cd tests
 - mv acceptance.suite.dist.yml acceptance.suite.yml
-- php vendor/bin/robo run:tests 1
+- php vendor/bin/robo run:test
 
