@@ -183,7 +183,7 @@ class RoboFile extends \Robo\Tasks
             ->arg('--steps')
             ->arg('--debug')
             ->arg('--tap')
-            ->arg('--fail-fast')
+//            ->arg('--fail-fast')
             ->arg('tests/acceptance/AdminLoginCest.php')
             ->run();
 
