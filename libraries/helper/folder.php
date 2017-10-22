@@ -51,7 +51,7 @@ class Vr360HelperFolder
 	{
 		if (self::exists($source))
 		{
-			return rename($source, $dir, 0777, true);
+			return rename($source, $dir);
 		}
 
 		return false;

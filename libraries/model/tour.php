@@ -276,8 +276,6 @@ class Vr360ModelTour extends Vr360Model
 			));
 		}
 
-		$table->migrate();
-
 		return $table;
 	}
 
