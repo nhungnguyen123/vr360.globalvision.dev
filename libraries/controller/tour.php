@@ -164,8 +164,6 @@ class Vr360ControllerTour extends Vr360Controller
 		);
 
 		// Try to migrate tour
-		$tour->migrate();
-		$tour->getKrpanoVersion();
 
 		if ($tour !== false)
 		{

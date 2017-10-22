@@ -36,7 +36,6 @@
 			<tr id='vtour-<?php echo $tour->id; ?>' data-tour='<?php echo $tour->toJson(); ?>'
 			    class="is-valid-<?php echo (int) $tour->isValid(); ?>">
 				<td><input id="checkBox" type="checkbox" name="id[]" value="<?php echo $tour->id; ?>"></td>
-
 				<?php
 				$tooltip = '';
 				if (!$tour->isValid())
@@ -90,11 +89,12 @@
 					<button type="button" class="btn btn-danger btn-sm removeTour">
 						<i class="fa fa-eraser" aria-hidden="true"></i> Remove
 					</button>
-
+					<!--
 					<div>
 						<span class="label label-primary">Panos: <?php echo count($tour->getPanos()); ?></span>
 						<span class="label label-primary">Hotspots: <?php echo count($tour->getHotspots()); ?></span>
 					</div>
+					-->
 				</td>
 				<td class="vtour-id"><?php echo $tour->id; ?></td>
 			</tr>
