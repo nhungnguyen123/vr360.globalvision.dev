@@ -8,7 +8,7 @@ class AdminLoginCest
         $I->amOnPage('');
         $I->comment('Fill Username Text Field');
         // $I->wait(30);
-        $I->fillField(['xpath'=>"//input[@name='username']"], 'designteam');
+        $I->fillField(['xpath'=>"//input[@name='']"], 'designteam');
         $I->comment('Fill Password Text Field');
         $I->fillField("//input[@name='password']", 'nQ-yQ?3ba');
         $I->comment('I click Login button');
