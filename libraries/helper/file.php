@@ -43,6 +43,18 @@ class Vr360HelperFile
 		return file_get_contents($filePath);
 	}
 
+	public static function write($filePath, $content)
+	{
+		$handler = fopen($filePath, 'w');
+
+		if ($handler)
+		{
+			return fwrite($handler, $content);
+		}
+
+		return false;
+	}
+
 	public static function delete($filePath)
 	{
 		if (!self::exists($filePath))

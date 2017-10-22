@@ -26,7 +26,6 @@
 			<th><i class="fa fa-window-maximize" aria-hidden="true"></i> vTour name</th>
 			<th><i class="fa fa-link" aria-hidden="true"></i> Friendly URL</th>
 			<th><i class="fa fa-calendar" aria-hidden="true"></i> Creation day</th>
-			<th><i class="fa fa-check-square-o" aria-hidden="true"></i> Status</th>
 			<th><i class="fa fa-cogs" aria-hidden="true"></i> Controls</th>
 			<th>ID</th>
 		</tr>
@@ -35,9 +34,17 @@
 		<!-- Show tours -->
 		<?php foreach ($this->tours as $tour): ?>
 			<tr id='vtour-<?php echo $tour->id; ?>' data-tour='<?php echo $tour->toJson(); ?>'
-				class="is-valid-<?php echo (int) $tour->isValid(); ?>">
+			    class="is-valid-<?php echo (int) $tour->isValid(); ?>">
 				<td><input id="checkBox" type="checkbox" name="id[]" value="<?php echo $tour->id; ?>"></td>
-				<td class="vtour-name">
+
+				<?php
+				$tooltip = '';
+				if (!$tour->isValid())
+				{
+					$tooltip = 'Missing data files';
+				}
+				?>
+				<td class="vtour-name" data-toggle="tooltip" data-placement="left" title="<?php echo $tooltip; ?>">
 					<?php echo $tour->getName(); ?>
 					<div>
 						<small><?php echo $tour->dir . '/vtour/tour.xml'; ?></small>
@@ -51,42 +58,43 @@
 				</td>
 				<td class="vtour-url"><?php echo $tour->alias; ?></td>
 				<td class="vtour-date"><?php echo $tour->created; ?></td>
-				<td class="status"><?php echo ($tour->status == 1) ? '<i class="fa fa-check" aria-hidden="true"></i>' : ''; ?></td>
 				<td class="controls">
-					<?php if (!$tour->canEmbed() && !$tour->canEdit() && !$tour->canEditHotspot() && !$tour->canPreview()): ?>
-						<span class="label label-default">This tour is not generated success or invalid</span>
-					<?php else: ?>
-						<?php if ($tour->canEmbed()): ?>
-							<!-- Embed -->
-							<button type="button" class="btn btn-default btn-sm embedCode">
-								<i class="fa fa-code" aria-hidden="true"></i> Embed
-							</button>
-						<?php endif; ?>
-
-						<?php if ($tour->canEdit()): ?>
-							<!-- Edit -->
-							<button type="button" class="btn btn-primary btn-sm editTour">
-								<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
-							</button>
-						<?php endif; ?>
-
-						<?php if ($tour->canEditHotspot()): ?>
-							<!-- Hotspot -->
-							<button type="button" class="btn btn-primary btn-sm editTourHotspot">
-								<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hotspot
-							</button>
-						<?php endif; ?>
-
-						<?php if ($tour->canPreview()): ?>
-							<!-- Preview -->
-							<button type="button" class="btn btn-info btn-sm previewTour">
-								<i class="fa fa-external-link" aria-hidden="true"></i> Preview
-							</button>
-						<?php endif; ?>
+					<?php if ($tour->canEmbed()): ?>
+						<!-- Embed -->
+						<button type="button" class="btn btn-default btn-sm embedCode">
+							<i class="fa fa-code" aria-hidden="true"></i> Embed
+						</button>
 					<?php endif; ?>
+
+					<?php if ($tour->canEdit()): ?>
+						<!-- Edit -->
+						<button type="button" class="btn btn-primary btn-sm editTour">
+							<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+						</button>
+					<?php endif; ?>
+
+					<?php if ($tour->canEditHotspot()): ?>
+						<!-- Hotspot -->
+						<button type="button" class="btn btn-primary btn-sm editTourHotspot">
+							<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hotspot
+						</button>
+					<?php endif; ?>
+
+					<?php if ($tour->canPreview()): ?>
+						<!-- Preview -->
+						<button type="button" class="btn btn-info btn-sm previewTour">
+							<i class="fa fa-external-link" aria-hidden="true"></i> Preview
+						</button>
+					<?php endif; ?>
+
 					<button type="button" class="btn btn-danger btn-sm removeTour">
 						<i class="fa fa-eraser" aria-hidden="true"></i> Remove
 					</button>
+
+					<div>
+						<span class="label label-primary">Panos: <?php echo count($tour->getPanos()); ?></span>
+						<span class="label label-primary">Hotspots: <?php echo count($tour->getHotspots()); ?></span>
+					</div>
 				</td>
 				<td class="vtour-id"><?php echo $tour->id; ?></td>
 			</tr>

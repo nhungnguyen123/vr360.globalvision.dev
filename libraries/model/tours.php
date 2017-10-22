@@ -4,9 +4,14 @@ defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360ModelTours
+ *
+ * @since  1.0.0
  */
 class Vr360ModelTours extends Vr360Model
 {
+	/**
+	 * @return static
+	 */
 	public static function getInstance()
 	{
 		static $instance;
@@ -16,46 +21,50 @@ class Vr360ModelTours extends Vr360Model
 			return $instance;
 		}
 
-		$instance = new static();
+		$instance = new static;
 
 		return $instance;
 	}
 
-	public function getList($userId = null)
+	/**
+	 * @param null $userId
+	 *
+	 * @return array|bool
+	 */
+	public function getList()
 	{
-		if ($userId === null)
-		{
-			$userId = Vr360Factory::getUser()->id;
-		}
-
+		$user  = Vr360Factory::getUser();
 		$input = Vr360Factory::getInput();
 
 		$offset = $input->getInt('page', 0) * 20;
 		$limit  = 20;
 
-		$condition = array(
-			'tours.created_by' => (int) $userId,
-			'tours.status[!]'  => VR360_TOUR_STATUS_UNPUBLISHED,
-			'ORDER'            => array(
-				'tours.id' => 'DESC'
-			),
+		// Show all tours for administrator
+		if ($user->isAdmin !== 1)
+		{
+			$condition = array('tours.created_by' => (int) $user->id);
+		}
 
-			'LIMIT' => array(
-				$offset,
-				$limit
+		$condition = array_merge(
+			$condition,
+			array(
+				'tours.status[!]' => VR360_TOUR_STATUS_UNPUBLISHED,
+				'ORDER'           => array('tours.id' => 'DESC'),
+				'LIMIT'           => array($offset, $limit)
 			)
 		);
 
+		// Filter by keyword
 		$keyword = $input->getString('keyword');
+
 		if ($keyword)
 		{
 			$condition['tours.name[~]'] = $keyword;
 		}
 
-		$db   = Vr360Database::getInstance();
-		$rows = $db->select(
+		$rows = Vr360Database::getInstance()->select(
 			'tours',
-			[
+			array(
 				'tours.id',
 				'tours.name',
 				'tours.description',
@@ -65,7 +74,7 @@ class Vr360ModelTours extends Vr360Model
 				'tours.dir',
 				'tours.status',
 				'tours.params'
-			],
+			),
 			$condition
 		);
 
@@ -73,6 +82,7 @@ class Vr360ModelTours extends Vr360Model
 		{
 			$data = array();
 
+			// Assign to tour object
 			foreach ($rows as $row)
 			{
 				$tour          = new Vr360Tour;

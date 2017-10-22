@@ -30,10 +30,7 @@
 		 * @param jqXHR
 		 */
 		throwFail: function (data, textStatus, jqXHR) {
-			alert(textStatus);
-
-			// Release form
-			vrAdmin.Tour.enableForm();
+			alert('Ajax failed: ' + textStatus + '. Please check ajax request response for detail.');
 		},
 
 		/**
@@ -68,7 +65,7 @@
 		 */
 		saveHotspot: function (data) {
 			var ifHotspotObj = document.getElementById('editTourHotspots').contentWindow;
-			if (!ifHotspotObj.rdy4save()) {
+			if (!ifHotspotObj.isReady()) {
 				alert('Please finish to add hotspot before saving or click cancel');
 				return false;
 			}
