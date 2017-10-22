@@ -57,5 +57,6 @@ script:
 - cd tests
 - mv acceptance.suite.dist.yml acceptance.suite.yml
 - cd ..
+- vendor/bin/codecept bootstrap
 - vendor/bin/robo run:test
 
