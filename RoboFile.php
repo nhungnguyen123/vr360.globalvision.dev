@@ -103,96 +103,18 @@ class RoboFile extends \Robo\Tasks
         // Make sure to Run the Build Command to Generate AcceptanceTester
         $this->_exec("vendor/bin/codecept build");
 
-//        if (!$opts['test'])
-//        {
-//            $this->say('Available tests in the system:');
-//
-//            $iterator = new RecursiveIteratorIterator(
-//                new RecursiveDirectoryIterator(
-//                    $opts['suite'],
-//                    RecursiveDirectoryIterator::SKIP_DOTS
-//                ),
-//                RecursiveIteratorIterator::SELF_FIRST
-//            );
-//
-//            $tests = array();
-//
-//            $iterator->rewind();
-//            $i = 1;
-//
-//            while ($iterator->valid())
-//            {
-//                if (strripos($iterator->getSubPathName(), 'cept.php')
-//                    || strripos($iterator->getSubPathName(), 'cest.php')
-//                    || strripos($iterator->getSubPathName(), '.feature'))
-//                {
-//                    $this->say('[' . $i . '] ' . $iterator->getSubPathName());
-//                    $tests[$i] = $iterator->getSubPathName();
-//                    $i++;
-//                }
-//
-//                $iterator->next();
-//            }
-//
-//            $this->say('');
-//            $testNumber	= $this->ask('Type the number of the test  in the list that you want to run...');
-//            $opts['test'] = $tests[$testNumber];
-//        }
 
         $pathToTestFile = './' . $opts['suite'] . '/' . $opts['test'];
-
-        // If test is Cest, give the option to execute individual methods
-//        if (strripos($opts['test'], 'cest'))
-//        {
-//            // Loading the class to display the methods in the class
-//            require './' . $opts['suite'] . '/' . $opts['test'];
-//
-//            $classes = Nette\Reflection\AnnotationsParser::parsePhp(file_get_contents($pathToTestFile));
-//            $className = array_keys($classes)[0];
-//
-//            if (strripos($className, 'cest'))
-//            {
-//                $testFile = new Nette\Reflection\ClassType($className);
-//                $testMethods = $testFile->getMethods(ReflectionMethod::IS_PUBLIC);
-//
-//                foreach ($testMethods as $key => $method)
-//                {
-//                    $this->say('[' . $key . '] ' . $method->name);
-//                }
-//
-//                $this->say('');
-//                $methodNumber = $this->askDefault('Choose the method in the test to run (hit ENTER for All)', 'All');
-//
-//                if ($methodNumber != 'All')
-//                {
-//                    $method = $testMethods[$methodNumber]->name;
-//                    $pathToTestFile = $pathToTestFile . ':' . $method;
-//                }
-//            }
-//        }
-
-//        $this->taskCodecept()
-//            ->test($pathToTestFile)
-//            ->arg('--steps')
-//            ->arg('--debug')
-//            ->arg('--fail-fast')
-//            ->run()
-//            ->stopOnFail();
 
         $this->taskCodecept()
             ->arg('--steps')
             ->arg('--debug')
             ->arg('--tap')
-//            ->arg('--fail-fast')
             ->arg('tests/acceptance/AdminLoginCest.php')
             ->run()
             ->stopOnFail();
 
         $this->killSelenium();
-//        if (!'api' == $opts['suite'])
-//        {
-//            $this->killSelenium();
-//        }
     }
 
     /**
