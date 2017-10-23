@@ -12,7 +12,7 @@ class AdminLoginCest
         $I->comment('Fill Password Text Field');
         $I->fillField("//input[@name='password']", 'nQ-yQ?3ba');
         $I->comment('I click Login button');
-        $I->click("//input[@name='submit']");
+        $I->click("//input[@name='']");
         $I->waitForElement("//img[@id='logo']",30);
         $I->wait(5);
 
