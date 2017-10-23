@@ -185,7 +185,8 @@ class RoboFile extends \Robo\Tasks
             ->arg('--tap')
 //            ->arg('--fail-fast')
             ->arg('tests/acceptance/AdminLoginCest.php')
-            ->run();
+            ->run()
+            ->stopOnFail();
 
         $this->killSelenium();
 //        if (!'api' == $opts['suite'])
