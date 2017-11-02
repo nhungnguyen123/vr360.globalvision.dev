@@ -1,22 +1,31 @@
 <?php
 
-
+use Step\LoginSteps as LoginSteps;
 class AdminLoginCest
 {
-    public function login(AcceptanceTester $I)
+    public function __construct()
     {
-        $I->amOnPage('');
-        $I->comment('Fill Username Text Field');
-        // $I->wait(30);
-        $I->fillField(['xpath'=>"//input[@name='username']"], 'designteam');
-        $I->comment('Fill Password Text Field');
-        $I->fillField("//input[@name='password']", 'nQ-yQ?3ba');
-        $I->comment('I click Login button');
-        $I->click("//input[@name='submit']");
-        $I->waitForElement("//img[@id='logo']",30);
-        $I->wait(5);
+        $this->userName = 'bory';
+        $this->pass = '-vietvu-';
+    }
 
-        $I->comment('I see Administrator Control Panel');
-        // $I->see('Control Panel', '.page-title');
+    public function login(LoginSteps $I)
+    {
+        $I->comment('Do login with Bory');
+        $I->login($this->userName, $this->pass);
+    }
+
+    public function LoginWrongValue(LoginSteps $I)
+    {
+        $I->comment('Do login with Bory');
+        $I->LoginWrongValue($this->userName, $this->pass,'name');
+
+        $I->comment('login with missing input Pass');
+        $I->LoginWrongValue($this->userName, $this->pass,'pass');
+
+        $I->LoginWrongValue($this->userName, $this->pass,'both');
+
+        $I->LoginWrongValue($this->userName, $this->pass,'wrong');
+
     }
 }
