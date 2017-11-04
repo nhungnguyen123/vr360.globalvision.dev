@@ -9,6 +9,8 @@ class ManagePage
     public static $btnAddNew = ['xpath' => '//button[contains(text(), \'Add new\')]'];
     
     public static $searchId = ['id' => 'task-table-filter'];
+
+    
     
     
 }
