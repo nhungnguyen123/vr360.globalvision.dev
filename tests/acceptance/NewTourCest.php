@@ -7,15 +7,17 @@ class NewTourCest
 
     public function __construct()
     {
+        $this->faker = Faker\Factory::create();
         $this->userName = 'bory';
         $this->pass = '-vietvu-';
-        $this->nameTour = 'NewTour';
-        $this->url = 'testtour';
-        $this->title = 'This is title';
-        $this->description = 'This is description';
 
+        $this->nameTour = $this->faker->bothify('nametour?##?');
+        $this->url = $this->faker->bothify('url?##?');
+        $this->title = $this->faker->bothify('title?##?');
+        $this->description = $this->faker->bothify('description?##?');
         //edit name tour
-        $this->nameTourEdit = 'edit';
+        $this->nameTourEdit = $this->nameTour.'edit';
+        $this->urlEdit = $this->url.'edit';
 
     }
 
@@ -24,7 +26,7 @@ class NewTourCest
         $I->login($this->userName, $this->pass);
         $I->create($this->nameTour, $this->url, $this->title, $this->description);
     }
-
+//
     public function editTour(NewTourSteps $I)
     {
         $I->login($this->userName, $this->pass);

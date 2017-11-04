@@ -34,7 +34,7 @@ class NewTourSteps extends ManageSteps
 
         $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
 
-        $I->comment('I click Login button');
+        $I->comment('I click Create button');
         $I->click(NewTourPage::$btnCreate);
         $I->wait(500);
         $I->waitForElement(ManagePage::$btnLogout,60);
@@ -48,6 +48,26 @@ class NewTourSteps extends ManageSteps
 
     public function checkMissing($name, $url, $title, $description)
     {
+
+        $I = $this;
+        $I->click(ManagePage::$btnAddNew);
+        $I->waitForElement(NewTourPage::$fieldName,30);
+        $I->switchToIFrame();
+        $I->wait(3);
+
+        $I->comment('Missing field name');
+        $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
+
+        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
+        $I->wait(3);
+
+        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
+        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
+
+        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
+
+        $I->comment('I click Create button');
+        $I->click(NewTourPage::$btnCreate);
 
     }
     
@@ -81,6 +101,7 @@ class NewTourSteps extends ManageSteps
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
         $I->waitForElement(ManagePage::$urlValue,30);
         $I->click(ManagePage::$btnRemove);
+        $I->acceptPopup();
         $I->wait(3);
         $I->waitForElement(ManagePage::$searchId,30);
         $I->fillField(ManagePage::$searchId,$name);
