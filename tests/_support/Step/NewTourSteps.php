@@ -50,4 +50,43 @@ class NewTourSteps extends ManageSteps
     {
 
     }
+    
+    public function editTour($name, $nameEdit, $url)
+    {
+        $I = $this;
+        $I->waitForElement(ManagePage::$searchId,30);
+        $I->fillField(ManagePage::$searchId,$name);
+        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->waitForElement(ManagePage::$urlValue,30);
+        $I->see($url,ManagePage::$urlValue);
+        $I->click(ManagePage::$btnEditFrirst);
+        $I->wait(5);
+        $I->waitForElement(NewTourPage::$fieldName,30);
+        $I->fillField(NewTourPage::$fieldName, $nameEdit);
+        $I->click(NewTourPage::$btnCreate);
+        $I->wait(30);
+        $I->waitForElement(ManagePage::$searchId,30);
+        $I->fillField(ManagePage::$searchId,$nameEdit);
+        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->waitForElement(ManagePage::$nameTour,30);
+        $I->see($nameEdit,ManagePage::$nameTour);
+        $I->comment('I see Administrator Control Panel');
+    }
+    
+    public function delete($name)
+    {
+        $I = $this;
+        $I->waitForElement(ManagePage::$searchId,30);
+        $I->fillField(ManagePage::$searchId,$name);
+        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->waitForElement(ManagePage::$urlValue,30);
+        $I->click(ManagePage::$btnRemove);
+        $I->wait(3);
+        $I->waitForElement(ManagePage::$searchId,30);
+        $I->fillField(ManagePage::$searchId,$name);
+        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->dontSee($name,ManagePage::$nameTour);
+        
+        
+    }
 }
