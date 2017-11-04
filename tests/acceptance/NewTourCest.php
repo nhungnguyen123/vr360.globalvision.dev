@@ -17,7 +17,6 @@ class NewTourCest
 
     public function createNew(NewTourSteps $I)
     {
-        $I->comment('Do login with Bory');
         $I->login($this->userName, $this->pass);
         $I->create($this->nameTour, $this->url, $this->title, $this->description);
     }

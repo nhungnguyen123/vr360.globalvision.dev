@@ -6,7 +6,7 @@ use Page\ManagePage as ManagePage;
 class ManageSteps extends \AcceptanceTester
 {
     
-        public function login($username, $pass)
+    public function login($username, $pass)
     {
         $I = $this;
         $I->amOnPage('');
