@@ -92,6 +92,10 @@
 							// Update body
 							$('#vrTour .modal-body .container-fluid').html(data.data.html);
 							$('#vrTour').modal('show');
+							$( "#tour-panos" ).sortable({
+								placeholder: "ui-state-highlight"
+							});
+							$( "#tour-panos" ).disableSelection();
 						}
 					})
 			})
