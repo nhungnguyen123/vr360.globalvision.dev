@@ -55,6 +55,26 @@ class NewTourSteps extends ManageSteps
         $I->switchToIFrame();
         $I->wait(3);
 
+        $I->comment('Missing attach image value');
+        $I->fillField(NewTourPage::$fieldName, $name);
+        $I->comment('Fill URL Text Field');
+        $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
+
+        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
+        $I->wait(3);
+
+        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
+        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
+        $I->comment('I click Create button');
+        $I->click(NewTourPage::$btnCreate);
+        $I->wait(300);
+        $I->waitForElement(ManagePage::$searchId,30);
+        $I->fillField(ManagePage::$searchId,$name);
+        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->waitForElement(ManagePage::$urlValue,30);
+        $I->dontSee($url,ManagePage::$urlValue);
+
+
         $I->comment('Missing field name');
         $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
 
@@ -63,7 +83,23 @@ class NewTourSteps extends ManageSteps
 
         $I->fillField(NewTourPage::$fieldTitleFirst,$title);
         $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
+        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
+        $I->comment('I click Create button');
+        $I->click(NewTourPage::$btnCreate);
+        $I->wait(100);
+        $I->waitForElement(ManagePage::$searchId,30);
+        $I->fillField(ManagePage::$searchId,$name);
+        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->waitForElement(ManagePage::$urlValue,30);
+        $I->dontSee($url,ManagePage::$urlValue);
 
+        $I->clear();
+        $I->comment('Missing field URL ');
+        $I->fillField(NewTourPage::$fieldName, $name);
+        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
+        $I->wait(3);
+        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
+        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
         $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
 
         $I->comment('I click Create button');
@@ -74,9 +110,43 @@ class NewTourSteps extends ManageSteps
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
         $I->waitForElement(ManagePage::$urlValue,30);
         $I->dontSee($url,ManagePage::$urlValue);
-        $I->comment('I see Administrator Control Panel');
+
+        $I->clear();
+        $I->comment('Missing Title of first');
+        $I->fillField(NewTourPage::$fieldName, $name);
+        $I->comment('Fill URL Text Field');
+        $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
+
+        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
+        $I->wait(3);
+
+        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
+        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
+        $I->wait(100);
+        $I->waitForElement(ManagePage::$searchId,30);
+        $I->fillField(ManagePage::$searchId,$name);
+        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->waitForElement(ManagePage::$urlValue,30);
+        $I->dontSee($url,ManagePage::$urlValue);
+
+        $I->clear();
+        $I->comment('Missing Description of first ');
+        $I->fillField(NewTourPage::$fieldName, $name);
+        $I->comment('Fill URL Text Field');
+        $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
+
+        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
+        $I->wait(3);
+        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
+        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
+        $I->wait(100);
+        $I->waitForElement(ManagePage::$searchId,30);
+        $I->fillField(ManagePage::$searchId,$name);
+        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->waitForElement(ManagePage::$urlValue,30);
+        $I->dontSee($url,ManagePage::$urlValue);
     }
-    
+
     public function editTour($name, $nameEdit, $url)
     {
         $I = $this;
@@ -113,7 +183,15 @@ class NewTourSteps extends ManageSteps
         $I->fillField(ManagePage::$searchId,$name);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
         $I->dontSee($name,ManagePage::$nameTour);
-        
-        
+
+    }
+
+    public function clear()
+    {
+        $I = $this;
+        $I->fillField(ManagePage::$nameTour,"");
+        $I->fillField(ManagePage::$urlValue,"");
+        $I->fillField(NewTourPage::$fieldTitleFirst,"");
+        $I->fillField(NewTourPage::$fieldDescriptionFirst,"");
     }
 }
