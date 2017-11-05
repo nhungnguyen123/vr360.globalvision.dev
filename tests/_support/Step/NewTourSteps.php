@@ -76,6 +76,7 @@ class NewTourSteps extends ManageSteps
 
 
         $I->comment('Missing field name');
+        $I->clear();
         $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
 
         $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
