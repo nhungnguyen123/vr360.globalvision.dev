@@ -68,7 +68,13 @@ class NewTourSteps extends ManageSteps
 
         $I->comment('I click Create button');
         $I->click(NewTourPage::$btnCreate);
-
+        $I->wait(100);
+        $I->waitForElement(ManagePage::$searchId,30);
+        $I->fillField(ManagePage::$searchId,$name);
+        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->waitForElement(ManagePage::$urlValue,30);
+        $I->dontSee($url,ManagePage::$urlValue);
+        $I->comment('I see Administrator Control Panel');
     }
     
     public function editTour($name, $nameEdit, $url)
