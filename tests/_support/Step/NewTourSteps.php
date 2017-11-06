@@ -50,7 +50,7 @@ class NewTourSteps extends ManageSteps
     {
 
         $I = $this;
-//        $I->click(ManagePage::$btnAddNew);
+        $I->click(ManagePage::$btnAddNew);
 //        $I->waitForElement(NewTourPage::$fieldName,30);
 //        $I->switchToIFrame();
 //        $I->wait(3);
