@@ -13,8 +13,22 @@ class AdminLoginCest
     {
         $I->comment('Do login with Bory');
         $I->login($this->userName, $this->pass);
+        
+    }
+    
+    public function checkFace(LoginSteps $I)
+    {
+        $I->checkFaceSocialIcon();
+    }
+    public function check(LoginSteps $I)
+    {
+        $I->checkTwitter();
     }
 
+    public function checkGoogle(LoginSteps $I)
+    {
+        $I->checkGoogle();
+    }
     public function LoginWrongValue(LoginSteps $I)
     {
         $I->comment('Do login with Bory');

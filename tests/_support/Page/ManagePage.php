@@ -34,6 +34,7 @@ class ManagePage
     //content
     public static $contentEdit = 'Edit tour';
 
+    
 
 
     
