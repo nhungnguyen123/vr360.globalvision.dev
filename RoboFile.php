@@ -114,6 +114,14 @@ class RoboFile extends \Robo\Tasks
             ->run()
             ->stopOnFail();
 
+        $this->taskCodecept()
+            ->arg('--steps')
+            ->arg('--debug')
+            ->arg('--tap')
+            ->arg('tests/acceptance/NewTourSteps.php')
+            ->run()
+            ->stopOnFail();
+
         $this->killSelenium();
     }
 
