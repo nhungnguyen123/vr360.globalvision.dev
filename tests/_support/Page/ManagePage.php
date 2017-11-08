@@ -30,9 +30,27 @@ class ManagePage
     
     //edit page 
     public static $contentEditXpath = ['xpath' => '(//h4[@id=\'myModalLabel\'])[2]'];
+
+
+    //preview page
+     public static $titlePreview = ['xpath' => '//div[@id=\'pano\']/div/div[1]/div[2]/div[10]//div//div/div'];
+
+    public static $descriptionPreview = ['xpath' => '//div[@id=\'pano\']/div/div[1]/div[2]/div[11]/div//div/div/div'];
+
     
     //content
     public static $contentEdit = 'Edit tour';
+
+    //hotpot
+    public static $addHotsPotContent = 'Add hotspot';
+
+    public static $addHotsPotXpath = ['id' => 'myModalLabel'];
+
+    public function returnURL($url)
+    {
+        $urlShow = 'http://dev.globalvision.ch/'.$url;
+        return $urlShow;
+    }
 
     
 

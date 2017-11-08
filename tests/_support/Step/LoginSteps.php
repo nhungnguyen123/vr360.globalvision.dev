@@ -96,6 +96,17 @@ class LoginSteps extends ManageSteps
         $I->amOnUrl(LoginPage::$googleURL);
     }
 
+    public function checkLogo()
+    {
+        $I = $this;
+        $I->comment('Check facebook icon');
+        $I->amOnPage('');
+        $I->click(LoginPage::$pageMain);
+        $I->switchToNextTab();
+        $I->wait(5);
+        $I->amOnUrl(LoginPage::$pageMain);
+    }
+    
     public function clearField()
     {
         $I  = $this;

@@ -29,6 +29,12 @@ class AdminLoginCest
     {
         $I->checkGoogle();
     }
+    
+    public function checkLogo(LoginSteps $I)
+    {
+        $I->checkLogo();
+    }
+    
     public function LoginWrongValue(LoginSteps $I)
     {
         $I->comment('Do login with Bory');

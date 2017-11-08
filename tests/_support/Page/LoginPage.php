@@ -23,6 +23,8 @@ class LoginPage
     
     public static $warningInvalidPassMessage = 'Invalid password';
 
+    public static $logoId = ['id' => 'logo'];
+
     public static $faceIcon = ['xpath' => '//i[@id=\'social-fb\']'];
 
     public static $facePage = ['xpath' =>'//i[@class=\'fb_logo img sp_ex0C8BIsLat sx_7401de\']'];
@@ -36,6 +38,8 @@ class LoginPage
     public static $googleIcon = ['xpath' =>'//i[@id=\'social-gp\']'];
     
     public static $googleURL = 'https://plus.google.com/+GlobalVisionSwitzerland';
+
+    public static $pageMain = 'http://globalvision.ch/en/home-page/';
 
 
     
