@@ -24,7 +24,7 @@ class NewTourCest
     public function checkMissing(NewTourSteps $I)
     {
         $I->login($this->userName, $this->pass);
-        $I->checkMissing($this->nameTour,$this->url,$this->title,$this->description);
+//        $I->checkMissing($this->nameTour,$this->url,$this->title,$this->description);
     }
     public function createNew(NewTourSteps $I)
     {
