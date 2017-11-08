@@ -63,6 +63,39 @@ class LoginSteps extends ManageSteps
 
     }
 
+
+    public function checkFaceSocialIcon()
+    {
+        $I = $this;
+        $I->comment('Check facebook icon');
+        $I->amOnPage('');
+        $I->click(LoginPage::$faceIcon);
+        $I->switchToNextTab();
+        $I->waitForElement(LoginPage::$facePage,30);
+        $I->amOnUrl(LoginPage::$faceURL);
+    }
+    
+    public function checkTwitter()
+    {
+
+        $I = $this;
+        $I->comment('Check tweet ');
+        $I->amOnPage('');
+        $I->click(LoginPage::$tweeticon);
+        $I->switchToNextTab();
+        $I->amOnUrl(LoginPage::$twitterURL);
+    }
+    
+    public function checkGoogle()
+    {
+        $I  = $this;
+        $I->comment('Check Google + ');
+        $I->amOnPage('');
+        $I->click(LoginPage::$googleIcon);
+        $I->switchToNextTab();
+        $I->amOnUrl(LoginPage::$googleURL);
+    }
+
     public function clearField()
     {
         $I  = $this;
