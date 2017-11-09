@@ -36,6 +36,7 @@ class NewTourCest
 
     public function createReady(NewTourSteps $I)
     {
+        $I->login($this->userName, $this->pass);
         $I->createWithURLReady($this->nameTourAlreday, $this->url,$this->title, $this->description);
     }
     public function preview(NewTourSteps $I)

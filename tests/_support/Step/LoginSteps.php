@@ -101,7 +101,7 @@ class LoginSteps extends ManageSteps
         $I = $this;
         $I->comment('Check facebook icon');
         $I->amOnPage('');
-        $I->click(LoginPage::$pageMain);
+        $I->click(LoginPage::$logoId);
         $I->switchToNextTab();
         $I->wait(5);
         $I->amOnUrl(LoginPage::$pageMain);
