@@ -41,7 +41,11 @@ class Vr360Table extends Vr360Object
 		if ($row !== false)
 		{
 			$this->setProperties($row);
-			$this->params = json_decode($this->params);
+			$this->params = new Vr360Object(json_decode($this->params));
+		}
+		else
+		{
+			$this->params = new Vr360Object();
 		}
 
 		return $this;

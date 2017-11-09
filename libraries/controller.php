@@ -9,10 +9,19 @@ defined('_VR360_EXEC') or die;
  */
 class Vr360Controller
 {
+	/**
+	 * @var string
+	 */
 	protected $defaultView = 'tours';
 
+	/**
+	 * @var string
+	 */
 	protected $defaultTask = 'display';
 
+	/**
+	 * @return static
+	 */
 	public static function getInstance()
 	{
 		static $instance;
@@ -27,6 +36,9 @@ class Vr360Controller
 		return $instance;
 	}
 
+	/**
+	 * @return bool
+	 */
 	public function execute()
 	{
 		$view = Vr360Factory::getInput()->getString('view', $this->defaultView);

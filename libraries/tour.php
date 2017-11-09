@@ -54,6 +54,9 @@ class Vr360Tour extends Vr360TableTour
 		$this->params->$property = $value;
 	}
 
+	/**
+	 * @return array|mixed
+	 */
 	public function getHotspots()
 	{
 		$jsonData = $this->getJsonData();
@@ -309,6 +312,11 @@ class Vr360Tour extends Vr360TableTour
 		}
 
 		return 'Invalid';
+	}
+
+	public function getScenes()
+	{
+
 	}
 
 	public function getXml()

@@ -1,4 +1,5 @@
-(function (w, $) {
+(function (w, $)
+{
 	/**
 	 * Handle a tour
 	 * @type {{validate: validate, hooks: hooks}}
@@ -7,7 +8,8 @@
 		/**
 		 *
 		 */
-		disableForm: function () {
+		disableForm: function ()
+		{
 			$('form input').prop("disabled", true);
 			$('form button').prop("disabled", true);
 			$('body').addClass('loading');
@@ -16,7 +18,8 @@
 		/**
 		 *
 		 */
-		enableForm: function () {
+		enableForm: function ()
+		{
 			$('form input').prop("disabled", false);
 			$('form button').prop("disabled", false);
 
@@ -29,7 +32,8 @@
 		 * @param textStatus
 		 * @param jqXHR
 		 */
-		throwFail: function (data, textStatus, jqXHR) {
+		throwFail: function (data, textStatus, jqXHR)
+		{
 			alert('Ajax failed: ' + textStatus + '. Please check ajax request response for detail.');
 		},
 
@@ -37,7 +41,8 @@
 		 *
 		 * @param data
 		 */
-		removeTour: function (data) {
+		removeTour: function (data)
+		{
 			$.ajax({
 				url: 'index.php',
 				type: 'POST',
@@ -47,12 +52,15 @@
 					id: data.id
 				}
 			})
-				.done(function (data, textStatus, jqXHR) {
+				.done(function (data, textStatus, jqXHR)
+				{
 
-					if (data.status == true) {
+					if (data.status == true)
+					{
 						$('#vtour-' + data.data.id).fadeOut("slow");
 					}
-					else {
+					else
+					{
 						alert('Something wrong');
 					}
 				})
@@ -63,9 +71,11 @@
 		 * @param data
 		 * @returns {boolean}
 		 */
-		saveHotspot: function (data) {
+		saveHotspot: function (data)
+		{
 			var ifHotspotObj = document.getElementById('editTourHotspots').contentWindow;
-			if (!ifHotspotObj.isReady()) {
+			if (!ifHotspotObj.isReady())
+			{
 				alert('Please finish to add hotspot before saving or click cancel');
 				return false;
 			}
@@ -82,8 +92,10 @@
 				},
 				async: true,
 				cache: false,
-			}).done(function (data, textStatus, jqXHR) {
-				if (data.status === true) {
+			}).done(function (data, textStatus, jqXHR)
+			{
+				if (data.status === true)
+				{
 
 					vrAdmin.Log.appendArray(data.messages);
 					vrAdmin.Log.append('Page reloading ...');
@@ -91,172 +103,214 @@
 					// Reload page
 					setTimeout(window.location.replace('index.php'), 2000);
 				}
-				else {// Append messages
+				else
+				{// Append messages
 					vrAdmin.Log.appendArray(data.messages);
 				}
 			})
 		},
 
-		generateAlias: function()
+		generateAlias: function ()
 		{
-			$('body').on('blur', 'input[name=alias]', function(){
-				// Prepare
-				var alias = $(this).val();
-				alias = alias.toLowerCase()
-					.replace(/ /g,'-')
-					.replace(/[^\w-]+/g,'');
-				$(this).val(alias);
-			})
+
+			// Prepare
+			var alias = $('input#name').val();
+			alias = alias.toLowerCase()
+				.replace(/ /g, '-')
+				.replace(/[^\w-]+/g, '');
+			$('input#alias').val(alias);
+
 
 		},
+
+		validate: function ()
+		{
+
+			var name = $('input#name').val();
+
+			if (name == '')
+			{
+				alert($('input#name').attr('title'));
+				//return false;
+			}
+
+			vrAdmin.Tour.generateAlias();
+
+			// File validate
+
+			$('form#form-tour input[type="file"]').each(function(index) {
+				console.log(this.files);
+			});
+
+			return false;
+			return true;
+		},
+
+
 		/**
 		 * Hooks
 		 */
-		hooks: function () {
-			vrAdmin.Tour.generateAlias();
-
+		hooks: function ()
+		{
 			// Create & edit tour
-			$('body').on('submit', '#createTour', function (event) {
+			$('body').on('submit', '#form-tour', function (event)
+			{
+				event.preventDefault();
+
+				if (vrAdmin.Tour.validate() == false)
+				{
+					return false;
+				}
+
 				vrAdmin.Log.reset();
 
-				// JS Tour form validate
-				vrAdmin.Validate.validate();
 
-				// There is no errors
-				if(vrAdmin.Validate.errors.length <= 0){
-					var formData = new FormData(this);
+				var formData = new FormData(this);
 
-					// First ajax used for file uploading
-					$.ajax({
-						url: 'index.php',
-						type: 'POST',
-						data: formData,
-						async: true,
-						cache: false,
-						contentType: false,
-						processData: false,
-						beforeSend: function (xhr) {
-							// @TODO Blocking elements
-							vrAdmin.Tour.disableForm();
-						}
-					})
-					/**
-					 * Ajax to create tour database
-					 */
-						.done(function (data, textStatus, jqXHR) {
-								// File upload success
-								if (data.status === true) {
+				// First ajax used for file uploading
+				$.ajax({
+					url: 'index.php',
+					type: 'POST',
+					data: formData,
+					async: true,
+					cache: false,
+					contentType: false,
+					processData: false,
+					beforeSend: function (xhr)
+					{
+						// @TODO Blocking elements
+						vrAdmin.Tour.disableForm();
+					}
+				})
+				/**
+				 * Ajax to create tour database
+				 */
+					.done(function (data, textStatus, jqXHR)
+						{
+							// File upload success
+							if (data.status === true)
+							{
 
-									// Append messages
-									vrAdmin.Log.appendArray(data.messages);
+								// Append messages
+								vrAdmin.Log.appendArray(data.messages);
 
-									// Second ajax to create tour into database
-									var postData = data.data.tour;
-									postData.view = 'tour';
-									postData.task = 'ajaxCreateTour';
-									postData.step = 'createTour';
+								// Second ajax to create tour into database
+								var postData = data.data.tour;
+								postData.view = 'tour';
+								postData.task = 'ajaxCreateTour';
+								postData.step = 'createTour';
 
-									// Append tour id if possible
-									if (typeof data.data.id !== 'undefined') {
-										postData.id = data.data.id;
-									}
+								// Append tour id if possible
+								if (typeof data.data.id !== 'undefined')
+								{
+									postData.id = data.data.id;
+								}
 
-									// Ajax to create tour database
-									$.ajax({
-										url: 'index.php',
-										type: 'POST',
-										data: postData,
-										async: true,
-										cache: false,
-									})
-									/**
-									 * Ajax to generate 360
-									 */
-										.done(function (data, textStatus, jqXHR) {
-											if (data.status === true) {
+								// Ajax to create tour database
+								$.ajax({
+									url: 'index.php',
+									type: 'POST',
+									data: postData,
+									async: true,
+									cache: false,
+								})
+								/**
+								 * Ajax to generate 360
+								 */
+									.done(function (data, textStatus, jqXHR)
+									{
+										if (data.status === true)
+										{
 
-												vrAdmin.Log.appendArray(data.messages);
+											vrAdmin.Log.appendArray(data.messages);
 
-												vrAdmin.Log.append('Generating vr360');
+											vrAdmin.Log.append('Generating vr360');
 
-												// Last ajax to generate tour 360
-												$.ajax({
-													url: 'index.php',
-													type: 'POST',
-													data: {
-														view: 'tour',
-														task: 'ajaxGenerateTour',
-														id: data.data.id
-													},
-													async: true,
-													cache: false,
+											// Last ajax to generate tour 360
+											$.ajax({
+												url: 'index.php',
+												type: 'POST',
+												data: {
+													view: 'tour',
+													task: 'ajaxGenerateTour',
+													id: data.data.id
+												},
+												async: true,
+												cache: false,
+											})
+												.done(function (data, textStatus, jqXHR)
+												{
+													if (data.status === true)
+													{
+
+														vrAdmin.Log.appendArray(data.messages);
+														vrAdmin.Log.append('Page reloading ...');
+
+														// Reload page
+														setTimeout(window.location.replace('index.php'), 2000);
+													}
+													else
+													{
+														// Append messages
+														vrAdmin.Log.appendArray(data.messages);
+													}
 												})
-													.done(function (data, textStatus, jqXHR) {
-														if (data.status === true) {
-
-															vrAdmin.Log.appendArray(data.messages);
-															vrAdmin.Log.append('Page reloading ...');
-
-															// Reload page
-															setTimeout(window.location.replace('index.php'), 2000);
-														}
-														else {
-															// Append messages
-															vrAdmin.Log.appendArray(data.messages);
-														}
-													})
-													.always(function (data, textStatus, jqXHR) {
-														if (textStatus == 'timeout') {
-															vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
-														}
-
-														// Release form
-														vrAdmin.Tour.enableForm();
-													})
-													// Fail case always release form and alert
-													.fail(function (data, textStatus, jqXHR) {
+												.always(function (data, textStatus, jqXHR)
+												{
+													if (textStatus == 'timeout')
+													{
 														vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
-													});
-											}
-											else {
-												// Append messages
-												vrAdmin.Log.appendArray(data.messages);
+													}
 
-												// Release form
-												vrAdmin.Tour.enableForm();
-											}
-										})
-										// Fail case always release form and alert
-										.fail(function (data, textStatus, jqXHR) {
-											vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
-										});
-								}
-								else {
-									// Append messages
-									vrAdmin.Log.appendArray(data.messages);
+													// Release form
+													vrAdmin.Tour.enableForm();
+												})
+												// Fail case always release form and alert
+												.fail(function (data, textStatus, jqXHR)
+												{
+													vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
+												});
+										}
+										else
+										{
+											// Append messages
+											vrAdmin.Log.appendArray(data.messages);
 
-									// Release form
-									vrAdmin.Tour.enableForm();
-								}
+											// Release form
+											vrAdmin.Tour.enableForm();
+										}
+									})
+									// Fail case always release form and alert
+									.fail(function (data, textStatus, jqXHR)
+									{
+										vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
+									});
 							}
-						)
-						// Fail case always release form and alert
-						.fail(function (data, textStatus, jqXHR) {
-							vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
-						});
-				}
-				else
-				{
-					console.log (vrAdmin.Validate.errors);
-					alert ('File validate failed');
-				}
+							else
+							{
+								// Append messages
+								vrAdmin.Log.appendArray(data.messages);
+
+								// Release form
+								vrAdmin.Tour.enableForm();
+							}
+						}
+					)
+					// Fail case always release form and alert
+					.fail(function (data, textStatus, jqXHR)
+					{
+						vrAdmin.Tour.throwFail(data, textStatus, jqXHR);
+					});
+
 
 				event.preventDefault();
 			})
 
 			// Hook on remove tour
-			$('body').on('click', '.removeTour', function (event) {
-				if (confirm("Confirm delete a tour")) {
+			$('body').on('click', '.removeTour', function (event)
+			{
+				if (confirm("Confirm delete a tour"))
+				{
 					var data = $(this).parent().parent().data();
 
 					vrAdmin.Tour.removeTour(data.tour);
@@ -265,7 +319,8 @@
 				}
 			})
 
-			$('body').on('click', '#saveHotspots', function (event) {
+			$('body').on('click', '#saveHotspots', function (event)
+			{
 				vrAdmin.Tour.saveHotspot($(this).data());
 			})
 		}

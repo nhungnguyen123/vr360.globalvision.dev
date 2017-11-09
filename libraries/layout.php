@@ -15,6 +15,11 @@ class Vr360Layout
 	protected $layoutBase;
 
 	/**
+	 * @var
+	 */
+	protected $layout;
+
+	/**
 	 * Vr360Layout constructor.
 	 *
 	 * @param   string $baseDir Base directory path
@@ -46,17 +51,28 @@ class Vr360Layout
 		return $instance;
 	}
 
+	/**
+	 * @param       $layout
+	 * @param array $data
+	 */
 	public function load($layout, $data = array())
 	{
+		$this->layout = $layout;
+
 		extract($data);
 		require $this->layoutBase . DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $layout) . '.php';
 	}
 
+	/**
+	 * @param       $layout
+	 * @param array $data
+	 *
+	 * @return string
+	 */
 	public function fetch($layout, $data = array())
 	{
 		ob_start();
-		extract($data);
-		require $this->layoutBase . DIRECTORY_SEPARATOR . str_replace('.', DIRECTORY_SEPARATOR, $layout) . '.php';
+		$this->load($layout, $data);
 
 		$html = ob_get_contents();
 		ob_end_clean();
