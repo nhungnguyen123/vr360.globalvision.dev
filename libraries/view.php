@@ -9,9 +9,21 @@ defined('_VR360_EXEC') or die;
  */
 class Vr360View extends Vr360Layout
 {
+	/**
+	 * @var string
+	 */
 	protected $name = '';
+
+	/**
+	 * @var string
+	 */
 	protected $layoutBase = '';
 
+	/**
+	 * Vr360View constructor.
+	 *
+	 * @param null $baseDir
+	 */
 	public function __construct($baseDir = null)
 	{
 		parent::__construct(__DIR__ . '/view/' . $this->name . '/tmpl/');
@@ -22,11 +34,11 @@ class Vr360View extends Vr360Layout
 		return $this->fetch($layout, array('data' => $this));
 	}
 
-	public function fetchSub($layout, $displayData = array())
-	{
-		return $this->fetch('_' . $layout, array('data' => $displayData));
-	}
-
+	/**
+	 * @param $text
+	 *
+	 * @return mixed
+	 */
 	public function optimizeHtml($text)
 	{
 		// 8MB stack. *nix

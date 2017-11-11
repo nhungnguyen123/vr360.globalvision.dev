@@ -1,1 +1,0 @@
-#logo{margin:54px}#footer{padding:15px;margin-bottom:15px;background-color:#fcf8e3}.waiting{display:none;position:fixed;z-index:1100;top:0;left:0;height:100%;width:100%;background:rgba(255,255,255,.8) url('./images/ajax-loader.gif') 50% 50% no-repeat}body.loading{overflow:hidden}body.loading .waiting{display:block}tr.is-valid-0{opacity:.5}

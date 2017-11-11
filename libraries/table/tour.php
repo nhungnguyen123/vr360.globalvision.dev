@@ -12,10 +12,6 @@ class Vr360TableTour extends Vr360Table
 	/**
 	 * @var null
 	 */
-	public $id = null;
-	/**
-	 * @var null
-	 */
 	public $name = null;
 	/**
 	 * @var null
@@ -41,11 +37,6 @@ class Vr360TableTour extends Vr360Table
 	 * @var null
 	 */
 	public $status = null;
-
-	/**
-	 * @var null
-	 */
-	public $params = null;
 
 	/**
 	 * @var string

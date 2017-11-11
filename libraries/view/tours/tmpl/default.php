@@ -1,39 +1,10 @@
-<?php defined('_VR360_EXEC') or die; ?>
+<?php
+defined('_VR360_EXEC') or die;
+?>
 
-<div class="col-md-12">
-	<nav class="navbar navbar-default">
-		<div class="container-fluid">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-				<a class="navbar-brand" href="#">
-					<i class="fa fa-user-circle-o"
-					   aria-hidden="true"></i> <?php echo Vr360Factory::getUser()->name; ?>
-				</a>
-			</div>
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<div class="navbar-form navbar-left">
-					<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-					<button type="button" class="btn btn-primary addNew"><i class="fa fa-plus-square"
-					                                                        aria-hidden="true"></i>
-						Add new</a></button>
-				</div>
-				<form action="index.php" class="navbar-form navbar-right">
-					<input type="hidden" name="view" value="user"/>
-					<input type="hidden" name="task" value="logout"/>
-					<button type="submit" class="btn btn-danger">Logout</button>
-				</form>
-			</div><!-- /.navbar-collapse -->
-		</div><!-- /.container-fluid -->
-	</nav>
-</div>
+<?php require_once __DIR__ . '/default_nav.php'; ?>
 
-<div class="col-md-12">
-	<div class="container-fluid">
-		<div class="row">
-			<?php echo $this->fetchSub('tours'); ?>
-		</div>
-	</div>
-</div>
+<?php require_once __DIR__ . '/default_tours.php'; ?>
 
 <div class="modal fade" id="vrModal" tabindex="-1" role="dialog" aria-labelledby="vrModalLabel">
 	<div class="modal-dialog" role="document">
@@ -63,11 +34,9 @@
 				</h4>
 			</div>
 			<div class="modal-body">
-
 				<div class="container-fluid">
-					<?php Vr360Layout::getInstance()->load('form.tour'); ?>
-				</div>
 
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

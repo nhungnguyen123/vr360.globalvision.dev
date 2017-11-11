@@ -31,7 +31,7 @@ defined('_VR360_EXEC') or die;
 	<link rel="stylesheet" href="./assets/font-awesome/css/font-awesome.css">
 
 	<!-- Globalvision -->
-	<link rel="stylesheet" type="text/css" href="./assets/globalvision.min.css">
+	<link rel="stylesheet" type="text/css" href="./assets/css/globalvision.min.css">
 	<?php if (Vr360HelperAuthorize::isAuthorized()): ?>
 		<script type="text/javascript" src="./assets/js/admin.min.js"></script>
 		<script type="text/javascript" src="./assets/js/admin.validate.min.js?<?php echo time(); ?>"></script>

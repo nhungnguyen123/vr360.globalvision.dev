@@ -49,21 +49,6 @@
 		},
 
 		/**
-		 * Show embed code modal
-		 * @param el
-		 */
-		showEmbed: function (el)
-		{
-			$(el).find('.embedCode').on('click', function (event)
-			{
-				var alias = vrAdmin.Tours.Controls.getProperty(this, 'alias');
-				var template = '<iframe width="800px" height="400px" src="http://vr360.globalvision.ch/' + alias + '" ></iframe>';
-				$('#vrModal .modal-body').text(template);
-				$('#vrModal').modal('show');
-			})
-		},
-
-		/**
 		 * Show edit tour modal
 		 * @param el
 		 */
@@ -100,6 +85,23 @@
 					})
 			})
 		},
+
+		/**
+		 * Show embed code modal
+		 * @param el
+		 */
+		showEmbed: function (el)
+		{
+			$(el).find('.embedCode').on('click', function (event)
+			{
+				var alias = vrAdmin.Tours.Controls.getProperty(this, 'alias');
+				var template = '<iframe width="800px" height="400px" src="http://vr360.globalvision.ch/' + alias + '" ></iframe>';
+				$('#vrModal .modal-body').text(template);
+				$('#vrModal').modal('show');
+			})
+		},
+
+
 		/**
 		 *
 		 * @param el

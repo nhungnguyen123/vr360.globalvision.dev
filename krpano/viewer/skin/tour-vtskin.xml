@@ -1,5 +1,4 @@
 <krpano>
-
     <layer name="top_title_scene" url="%SWFPATH%/plugins/textfield.swf" align="lefttop" keep="true" html=""
            background="false" border="false"
            css="text-align:left; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:23px; text-transform: capitalize;"
@@ -8,8 +7,6 @@
            background="false" border="false"
            css="text-align:left; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:15px; text-transform: capitalize;"
            textshadow="1" x="20" y="35" zorder="12" visible="true"/>
-
-    <!-- skin layout -->
     <layer name="skin_layer" keep="true" type="container" align="top" width="get:skin_settings.layout_width"
            maxwidth="get:skin_settings.layout_maxwidth" height="100%" maskchildren="true" visible="false"
            bgcapture="false" zorder="1">
@@ -21,16 +18,6 @@
                    bgalpha="get:skin_settings.design_bgalpha" bgcolor="get:skin_settings.design_bgcolor"
                    bgborder="get:skin_settings.design_bgborder" bgroundedge="get:skin_settings.design_bgroundedge"
                    bgshadow="get:skin_settings.design_bgshadow">
-                <!-- <layer name="skin_title" url="%SWFPATH%/plugins/textfield.swf" align="lefttop" edge="leftbottom" x="4" y="0" zorder="4" enabled="false" background="false" border="false" css="calc:skin_settings.design_text_css + ' text-align:left; font-style:italic; font-size:12px;'" textshadow="get:skin_settings.design_text_shadow" visible="false" onautosized="skin_video_updateseekbarwidth();" />
-                <layer name="skin_video_controls" type="container" align="lefttop" edge="leftbottom" width="100%" height="18" visible="false">
-                    <layer name="skin_video_seekbar_container" type="container" align="lefttop" width="100%" height="100%" bgcapture="true" ondown="skin_video_ondownseeking();" >
-                        <layer name="skin_video_seekbar" type="container" bgcolor="0xFFFFFF" bgalpha="0.25" align="center" width="100%" height="2">
-                            <layer name="skin_video_loadbar" type="container" bgcolor="0xFFFFFF" bgalpha="0.5" align="left" width="0" height="2" />
-                            <layer name="skin_video_seekpos" type="container" bgcolor="0xFFFFFF" bgalpha="1.0" align="left" edge="center" x="0" bgroundedge="8" width="10" height="10" />
-                        </layer>
-                    </layer>
-                    <layer name="skin_video_time" url="%SWFPATH%/plugins/textfield.swf" align="rightbottom" x="4" enabled="false" background="false" border="false" css="calc:skin_settings.design_text_css + ' text-align:left; font-style:italic; font-size:12px;'" textshadow="get:skin_settings.design_text_shadow" html="0:00 / 0:00" />
-                </layer> -->
                 <layer name="skin_scroll_container" type="container" align="lefttop" width="100%" height="100%" x="0"
                        y="0" bgroundedge="get:skin_settings.design_bgroundedge" maskchildren="true">
                     <layer name="skin_thumbs_container" type="container" align="lefttop" width="100%" height="100%"
@@ -71,7 +58,6 @@
                 </layer>
             </layer>
         </layer>
-
         <layer name="skin_splitter_bottom" type="container" align="bottom" width="100%"
                height="calc:skin_settings.controlbar_offset + skin_settings.controlbar_height - skin_settings.controlbar_overlap"
                y="0" maskchildren="true" onloaded="skin_calc_opened_closed();" zorder="2">
@@ -81,13 +67,11 @@
                    bgalpha="get:skin_settings.design_bgalpha" bgborder="get:skin_settings.design_bgborder"
                    bgroundedge="get:skin_settings.design_bgroundedge" bgshadow="get:skin_settings.design_bgshadow"/>
         </layer>
-
         <layer name="skin_control_bar" type="container" align="bottom" width="get:skin_settings.controlbar_width"
                height="calc:skin_settings.controlbar_height" x="0" y="get:skin_settings.controlbar_offset"
                onloaded="skin_calc_opened_closed();" zorder="3">
             <layer name="skin_control_bar_buttons" type="container" align="leftbottom" width="100%"
                    height="get:skin_settings.controlbar_height">
-                <!-- <layer name="skin_btn_prev"      style="skin_base|skin_glow" crop="0|64|64|64"   align="left"        x="5"    y="0"  scale="0.5" alpha="0.5"  onclick="if(skin_settings.thumbs_loop, skin_nextscene_loop(-1), skin_nextscene(-1) );" /> -->
                 <layer name="skin_btn_thumbs" style="skin_base|skin_glow" crop="0|128|64|64" align="left" x="50" y="0"
                        scale="0.5" ondown2="skin_showmap(false); skin_showthumbs();"/>
                 <layer name="skin_btn_map" style="skin_base|skin_glow" crop="64|128|64|64" align="left" x="90" y="0"
@@ -124,10 +108,8 @@
                     <layer name="skin_btn_show_icon" style="skin_base" crop="64|448|64|64" scale="0.5" align="bottom"
                            y="2" enabled="false"/>
                 </layer>
-                <!-- <layer name="skin_btn_next"      style="skin_base|skin_glow" crop="64|64|64|64"  align="right"       x="5"    y="0"   scale="0.5" alpha="0.5"  onclick="if(skin_settings.thumbs_loop, skin_nextscene_loop(+1), skin_nextscene(+1) );" /> -->
             </layer>
         </layer>
-
         <layer name="skin_loadingtext" url="%SWFPATH%/plugins/textfield.swf" align="center" x="5" y="-5"
                html="get:skin_settings.loadingtext" visible="false" autoheight="true" background="false" border="false"
                enabled="false"
@@ -142,10 +124,8 @@
                enabled="false" align="lefttop" bgborder="get:skin_settings.design_thumbborder_bgborder"
                bgroundedge="get:skin_settings.design_thumbborder_bgroundedge"/>
     </layer>
-
     <layer name="overlay" type="container" keep="true" align="lefttop" width="100%" height="100%" x="0" y="0"
            bgcolor="0x000000" bgalpha="0.5" zorder="10" bgcapture="true" visible="false" onclick="show_hotspot();">
-
         <layer name="parent_text_popup" type="container" keep="true" align="center" width="500" height="250" x="0" y="0"
                bgcolor="0xFFFFFF" bgalpha="1.0" zorder="11">
             <layer name="close" url="fancybox_sprite.png" keep="true" align="righttop" x="-13" y="-13"
@@ -156,31 +136,12 @@
                    textshadow="" html=""
             />
         </layer>
-
     </layer>
-
-    <action name="hide_hotspot_popup">
-
-    </action>
-
-
-    <!-- <plugin name="hotspotinfo" keep="true"
-            url="%SWFPATH%/plugins/textfield.swf"
-            html="drag the hotspots..."
-            css="font-family:Courier;"
-            border="false"
-            selectable="true"
-            align="left" y="-100"
-            width="200"
-            height="80"
-            /> -->
-
-    <action name="draghotspot">
-        <![CDATA[
+    <action name="draghotspot"><![CDATA[
 			if(%1 != dragging,
 				spheretoscreen(ath, atv, hotspotcenterx, hotspotcentery);
-				sub(drag_adjustx, mouse.stagex, hotspotcenterx); 
-				sub(drag_adjusty, mouse.stagey, hotspotcentery); 
+				sub(drag_adjustx, mouse.stagex, hotspotcenterx);
+				sub(drag_adjusty, mouse.stagey, hotspotcentery);
 				draghotspot(dragging);
 			  ,
 				if(pressed,
@@ -195,9 +156,7 @@
 					delayedcall(0, draghotspot(dragging) );
 				  );
 			  );
-		]]>
-    </action>
-
+		]]></action>
     <action name="get_title_scene" autorun="onstart">
         txtadd(title_scene, <p>, get(scene[get(xml.scene)].title),</p>);
         txtadd(sub_title_scene, <p>, get(scene[get(xml.scene)].subtitle),</p>);
@@ -211,14 +170,9 @@
         set(layer[top_sub_title_scene].y, '45');
         );
     </action>
-
     <contextmenu>
         <item caption="360° by GlobalVision Communication" onclick="openurl('http://www.globalvision.ch',_blank);"/>
         <item name="krp" caption="KRPANO"/>
-        <!--  <item name="fsc" caption="FULLSCREEN" />  -->
-        <!--
-         <item name="scm" caption="Change Controlmode" onclick="switch(control.mousetype, 'moveto', 'drag2d');"               separator="true"      />
-        -->
         <item name="nrm" caption="Normal View" onclick="skin_view_normal();" showif="view.vlookatrange == 180"
               separator="true"/>
         <item name="fis" caption="Fisheye View" onclick="skin_view_fisheye();" showif="view.vlookatrange == 180"
@@ -233,47 +187,36 @@
               showif="view.vlookatrange == 180" devices="flash|webgl"/>
         <item name="fsc" caption="FULLSCREEN"/>
     </contextmenu>
-
-    <!-- <action name="skin_changecontrolmode">
-        switch(control.mousetype, moveto, drag2d);
-        switch(control.touchtype, moveto, drag2d);
-    </action>
- -->
     <action name="skin_view_look_straight">
         if(view.vlookat LT -80 OR view.vlookat GT +80,
         tween(view.vlookat, 0.0, 1.0, easeInOutSine);
         tween(view.fov, 100, distance(150,0.8));
         );
     </action>
-
     <action name="skin_view_normal">
         skin_view_look_straight();
         tween(view.architectural, 0.0, distance(1.0,0.5));
         tween(view.pannini, 0.0, distance(1.0,0.5));
         tween(view.distortion, 0.0, distance(1.0,0.5));
     </action>
-
     <action name="skin_view_fisheye">
         skin_view_look_straight();
         tween(view.architectural, 0.0, distance(1.0,0.5));
         tween(view.pannini, 0.0, distance(1.0,0.5));
         tween(view.distortion, 0.35, distance(1.0,0.5));
     </action>
-
     <action name="skin_view_architectural">
         skin_view_look_straight();
         tween(view.architectural, 1.0, distance(1.0,0.5));
         tween(view.pannini, 0.0, distance(1.0,0.5));
         tween(view.distortion, 0.0, distance(1.0,0.5));
     </action>
-
     <action name="skin_view_stereographic">
         skin_view_look_straight();
         tween(view.architectural, 0.0, distance(1.0,0.5));
         tween(view.pannini, 0.0, distance(1.0,0.5));
         tween(view.distortion, 1.0, distance(1.0,0.8));
     </action>
-
     <action name="skin_view_pannini">
         skin_view_look_straight();
         tween(view.architectural, 0.0, distance(1.0,0.5));
@@ -282,7 +225,6 @@
         tween(view.distortion, 1.0, distance(1.0,0.8));
         );
     </action>
-
     <action name="skin_view_littleplanet">
         set(display.flash10,off);
         tween(view.architectural, 0.0, 0.25);
@@ -297,6 +239,4 @@
         tween(view.fisheye, 1.0, distance(1.0, 0.75), easeoutquad);
         tween(view.fov, 150, distance(179, 0.75), easeoutquad);
     </action>
-
-
 </krpano>
