@@ -80,7 +80,7 @@ if ($tour->id)
 									</label>
 								</div>
 
-								<?php require_once __DIR__ . '/tour_skinsettings.php'; ?>
+								<!-- <?php require_once __DIR__ . '/tour_skinsettings.php'; ?> -->
 
 								<hr/>
 								<?php if ($tour->isValid()) : ?>

@@ -119,45 +119,58 @@
 				.replace(/ /g, '-')
 				.replace(/[^\w-]+/g, '');
 			$('input#alias').val(alias);
-
-
 		},
 
 		validate: function ()
 		{
+			var nameEl = $('input#name');
+			var aliasEl = $('input#alias');
+			var fileEls = $('input[type="file"]');
 
-			var name = $('input#name').val();
-
-			if (name == '')
+			if ($(nameEl).val() == '')
 			{
-				alert($('input#name').attr('title'));
-				//return false;
+				alert('Missing tour name');
+
+				return false;
 			}
 
-			vrAdmin.Tour.generateAlias();
+			if ($(aliasEl).val() == '')
+			{
+				alert('Missing tour alias / sef URL');
+
+				return false;
+			}
 
 			// File validate
 
 			$('form#form-tour input[type="file"]').each(function(index) {
 				console.log(this.files);
+				if (this.files.length == 0)
+				{
+					alert ('Missing pano file');
+
+					return false;
+				}
 			});
 
 			return false;
-			return true;
 		},
-
 
 		/**
 		 * Hooks
 		 */
 		hooks: function ()
 		{
+			$('body').on('blur', 'input#name', function(event){
+				vrAdmin.Tour.generateAlias();
+			});
+
 			// Create & edit tour
 			$('body').on('submit', '#form-tour', function (event)
 			{
 				event.preventDefault();
 
-				if (vrAdmin.Tour.validate() == false)
+				if (!vrAdmin.Tour.validate())
 				{
 					return false;
 				}
