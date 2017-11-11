@@ -276,6 +276,7 @@ class NewTourSteps extends ManageSteps
         $use = new ManagePage();
         $I->amOnUrl($use->returnURL($url));
         $I->wait(5);
+        $I->waitForElement(ManagePage::$titlePreview,30);
         $I->waitForText($firstTitle, 30 , ManagePage::$titlePreview);
     }
     
