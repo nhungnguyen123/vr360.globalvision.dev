@@ -7,7 +7,7 @@ defined('_VR360_EXEC') or die;
  */
 class Vr360Configuration extends Vr360Object
 {
-	public $dbName = 'globalvision_vr360';
+	public $dbName = 'vr360_dev';
 	public $dbUser = 'root';
 	public $dbPassword = 'root';
 	public $dbServer = 'localhost';
@@ -15,7 +15,7 @@ class Vr360Configuration extends Vr360Object
 
 	public $allowMimeTypes = array('image/png', 'image/jpeg');
 
-	public $salt = '?xlE7%:EmC$u yt;l;wBw&dyt^@/E+*`>bO&oGS&jZn|!AIQ/%XY/23nK/{h2.AJ\')';
+	public $salt = '';
 	public $cookieTime = 86400;
 	public $sessionNamespace = 'VR360';
 
@@ -26,8 +26,15 @@ class Vr360Configuration extends Vr360Object
 	public $mailPort = '';
 	public $mailer = 'sendmail';
 
-	public $siteDescription = '';
-	public $siteKeyword = '';
+	public $siteDescription = 'Creation of high-resolution 360° images in immersive and panoramic format. Photographic services related to immersive 360° vision. Our panoramas display on all internet browsers, mobile devices and smartphones, i.e. iOS and Android.';
+	public $siteKeyword = '360°, 360 degrés, photo, photographie, photographe, panographe, prise de vue, reportage, technique, technologie, immersive, immersion, panorama, omnidirectionnel, regarder alentour, environnement, création de visite virtuelle, tour virtuel';
+
+	public $minimumWidth = 2000;
+	public $minimumHeight = 1080;
+
+	public $krPanoPath = './krpano/krpanotools';
+	public $krPanoConfigFile = './krpano/templates/vtour-normal.config';
+	public $krPanoLicense = '';
 
 	public $debug = true;
 

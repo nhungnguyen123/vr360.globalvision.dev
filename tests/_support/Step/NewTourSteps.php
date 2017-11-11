@@ -46,6 +46,37 @@ class NewTourSteps extends ManageSteps
         $I->comment('I see Administrator Control Panel');
     }
 
+    public function createWithURLReady($name, $url, $title, $description)
+    {
+        $I = $this;
+        $I->click(ManagePage::$btnAddNew);
+        $I->comment('create Tour with url is already taken ');
+        $I->waitForElement(NewTourPage::$fieldName,30);
+        $I->switchToIFrame();
+        $I->comment('Fill Name Text Field');
+        $I->wait(3);
+        $I->fillField(NewTourPage::$fieldName, $name);
+        $I->comment('Fill URL Text Field');
+        $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
+
+        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
+        $I->wait(3);
+
+        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
+        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
+
+        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
+
+        $I->comment('I click Create button');
+        $I->click(NewTourPage::$btnCreate);
+        $I->wait(500);
+        $I->waitForElement(ManagePage::$btnLogout,60);
+        $I->waitForElement(ManagePage::$searchId,30);
+        $I->fillField(ManagePage::$searchId,$name);
+        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->waitForElement(ManagePage::$urlValue,30);
+        $I->dontSee($url,ManagePage::$urlValue);
+    }
     public function checkMissing($name, $url, $title, $description)
     {
 
@@ -151,6 +182,36 @@ class NewTourSteps extends ManageSteps
         $I->dontSee($url,ManagePage::$urlValue);
     }
 
+    public function createWithClose($name, $url, $title, $description)
+    {
+        $I = $this;
+        $I->click(ManagePage::$btnAddNew);
+        $I->comment('create Tour with url is already taken ');
+        $I->waitForElement(NewTourPage::$fieldName,30);
+        $I->switchToIFrame();
+        $I->comment('Fill Name Text Field');
+        $I->wait(3);
+        $I->fillField(NewTourPage::$fieldName, $name);
+        $I->comment('Fill URL Text Field');
+        $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
+
+        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
+        $I->wait(3);
+
+        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
+        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
+
+        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
+
+        $I->comment('I click Create button');
+        $I->click(NewTourPage::$btnClose);
+        $I->waitForElement(ManagePage::$btnLogout,60);
+        $I->waitForElement(ManagePage::$searchId,30);
+        $I->fillField(ManagePage::$searchId,$name);
+        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->dontSeeElement(ManagePage::$urlValue,30);
+    }
+    
     public function editTour($name, $nameEdit, $url)
     {
         $I = $this;
@@ -197,5 +258,28 @@ class NewTourSteps extends ManageSteps
         $I->fillField(ManagePage::$urlValue,"");
         $I->fillField(NewTourPage::$fieldTitleFirst,"");
         $I->fillField(NewTourPage::$fieldDescriptionFirst,"");
+    }
+
+    public function preview($name, $url, $firstTitle, $firstDescription)
+    {
+        $I = $this;
+        $I->comment('Check preview page ');
+        $I->waitForElement(ManagePage::$searchId,30);
+        $I->fillField(ManagePage::$searchId,$name);
+        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->waitForElement(ManagePage::$urlValue,30);
+        $I->see($url,ManagePage::$urlValue);
+        $I->click(ManagePage::$btnPreview);
+        $I->switchToNextTab();
+        $use = new ManagePage();
+        $I->amOnUrl($use->returnURL($url));
+        $I->wait(5);
+        $I->waitForText($firstTitle, 30 , ManagePage::$titlePreview);
+        $I->waitForElement($firstDescription, 30, ManagePage::$descriptionPreview);
+    }
+    
+    public function hostPot($name)
+    {
+
     }
 }
