@@ -209,7 +209,7 @@ class NewTourSteps extends ManageSteps
         $I->waitForElement(ManagePage::$searchId,30);
         $I->fillField(ManagePage::$searchId,$name);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-        $I->dontSeeElement(ManagePage::$urlValue,30);
+        $I->dontSee($url,ManagePage::$urlValue);
     }
     
     public function editTour($name, $nameEdit, $url)
@@ -268,14 +268,16 @@ class NewTourSteps extends ManageSteps
         $I->fillField(ManagePage::$searchId,$name);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
         $I->waitForElement(ManagePage::$urlValue,30);
+        $I->wait(3);
         $I->see($url,ManagePage::$urlValue);
         $I->click(ManagePage::$btnPreview);
+        $I->wait(3);
         $I->switchToNextTab();
         $use = new ManagePage();
         $I->amOnUrl($use->returnURL($url));
         $I->wait(5);
+        $I->waitForElement(ManagePage::$titlePreview,30);
         $I->waitForText($firstTitle, 30 , ManagePage::$titlePreview);
-        $I->waitForElement($firstDescription, 30, ManagePage::$descriptionPreview);
     }
     
     public function hostPot($name)

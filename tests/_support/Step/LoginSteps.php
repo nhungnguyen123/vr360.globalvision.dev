@@ -71,7 +71,6 @@ class LoginSteps extends ManageSteps
         $I->amOnPage('');
         $I->click(LoginPage::$faceIcon);
         $I->switchToNextTab();
-        $I->waitForElement(LoginPage::$facePage,30);
         $I->amOnUrl(LoginPage::$faceURL);
     }
     

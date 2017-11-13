@@ -33,11 +33,8 @@ class ManagePage
 
 
     //preview page
-     public static $titlePreview = ['xpath' => '//div[@id=\'pano\']/div/div[1]/div[2]/div[10]//div//div/div'];
+     public static $titlePreview = ['xpath' => '//div[@id=\'pano\']/div/div[1]/div[2]/div[10]//div//div/div/div'];
 
-    public static $descriptionPreview = ['xpath' => '//div[@id=\'pano\']/div/div[1]/div[2]/div[11]/div//div/div/div'];
-
-    
     //content
     public static $contentEdit = 'Edit tour';
 
