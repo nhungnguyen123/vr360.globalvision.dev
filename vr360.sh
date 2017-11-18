@@ -14,3 +14,4 @@ wget https://krpano.com/download/files/krpano-1.19-pr13-linux64.tar.gz
 tar -xvf krpano-1.19-pr13-linux64.tar.gz
 mv ./krpano-1.19-pr13 ./krpano
 ./krpano/INSTALL\ -\ Create\ Linux\ Desktop\ Icons.sh 
+rm -rk krpano-1.19-pr13-linux64.tar.gz
