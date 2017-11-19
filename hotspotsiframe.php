@@ -15,7 +15,7 @@ $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 	<meta http-equiv="x-ua-compatible" content="IE=edge"/>
 	<!-- Globalvision -->
-	<link rel="stylesheet" type="text/css" href="./assets/tour.min.css">
+	<link rel="stylesheet" type="text/css" href="./assets/css/tour.min.css">
 	<link rel="stylesheet" type="text/css" href="./assets/css/hotspots.min.css">
 	<script type="text/javascript" src="./assets/jquery-2.2.4.min.js"></script>
 	<script src='<?php echo $tourUrl . '/tour.js'; ?>'></script>

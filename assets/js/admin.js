@@ -1,111 +1,199 @@
 (function (w, $) {
 
-	var vrAdmin = {
-		/**
-		 *
-		 */
-		addTour: function () {
-			$.ajax({
-				url: 'index.php',
-				type: 'POST',
-				data: {
-					view: 'tour',
-					task: 'ajaxGetTourHtml',
-				},
-				async: true,
-				cache: false,
-			})
-				.done(function (data, textStatus, jqXHR) {
-					if (data.status) {
-						// Update title
-						$('#vrTour .modal-title').html('<i class="fa fa-plus-square" aria-hidden="true"></i> New tour');
-						// Update body
-						$('#vrTour .modal-body .container-fluid').html(data.data.html);
-						$('#vrTour').modal('show');
+    var vrAdmin = {
+        /**
+         * Add new tour
+         */
+        addTour: function () {
+            $.ajax({
+                url  : "index.php",
+                type : "POST",
+                data : {
+                    view: "tour",
+                    task: "ajaxGetTourHtml"
+                },
+                async: true,
+                cache: false
+            }).done(function (data, textStatus, jqXHR) {
+                if (data.status) {
+                    // Update title
+                    $("#vrTour .modal-title").html("<i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> New tour");
+                    // Update body
+                    $("#vrTour .modal-body .container-fluid").html(data.data.html);
+                    $("#vrTour").modal("show");
 
-						// Init default pano
-						$('.addPano').click();
-					}
-				});
+                    // Init default pano
+                    $(".addPano").click();
+                }
+            });
 
-			$('#vrTour').modal('show');
-		},
+            $("#vrTour").modal("show");
+        },
 
-		hooks: function () {
-			$('body').on('click', '.addNew', function () {
-				vrAdmin.addTour();
-			})
+        /**
+         * Edit tour
+         */
+        editTour: function (el) {
+            var tourId = $(el).attr('data-tour-id');
 
-			vrTour.hooks();
-		}
-	};
-	var vrTour = {
+            $.ajax({
+                url  : "index.php",
+                type : "POST",
+                data : {
+                    id   : tourId,
+                    view : "tour",
+                    task : "ajaxGetTourHtml"
+                },
+                async: true,
+                cache: false
+            }).done(function (data, textStatus, jqXHR) {
+                if (data.status) {
+                    // Update title
+                    $("#vrTour .modal-title").html("<i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> Edit tour");
+                    // Update body
+                    $("#vrTour .modal-body .container-fluid").html(data.data.html);
+                    $("#vrTour").modal("show");
 
-		generateAlias: function()
-		{
-			// Prepare
-			var alias = $('#form-tour input#name').val();
-			alias = alias.toLowerCase()
-				.replace(/\s+/g, '-')           // Replace spaces with -
-				.replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-				.replace(/\-\-+/g, '-')         // Replace multiple - with single -
-				.replace(/^-+/, '')             // Trim - from start of text
-				.replace(/-+$/, '');            // Trim - from end of text
-			$('#form-tour input#alias').val(alias);
-		},
+                    // Init default pano
+                    $(".addPano").click();
+                }
+            });
 
-		hooks: function () {
+            $("#vrTour").modal("show");
+        },
 
-			vrScene.hooks();
+        /**
+         * Edit tour
+         */
+        editTourHotspot: function (el) {
+            var tourId = $(el).attr('data-tour-id');
 
-			$('body').on('blur', '#form-tour input#name', function(){
-				vrTour.generateAlias();
-			})
+            $.ajax({
+                url  : "index.php",
+                type : "POST",
+                data : {
+                    id   : tourId,
+                    view : "tour",
+                    task : "ajaxGetHotspotEditorHtml"
+                },
+                async: true,
+                cache: false
+            }).done(function (data, textStatus, jqXHR) {
+                if (data.status) {
+                    // Update title
+                    $('#vrTour .modal-title').html('<i class="fa fa-plus-square" aria-hidden="true"></i> Add hotspot <br/>');
 
-			$('body').on('submit', 'form#form-tour', function(event){
-				event.preventDefault();
+                    // Update body
+                    $('#vrTour .modal-body .container-fluid').html(data.data.html);
+                    $('#vrTour').modal('show');
+                }
+            });
 
-				var formData = new FormData(this);
+            $("#vrTour").modal("show");
+        },
 
-				// First ajax used for file uploading
-				$.ajax({
-					url: 'index.php',
-					type: 'POST',
-					data: formData,
-					async: true,
-					cache: false,
-					processData: false,
-					contentType: false
-				})
-			})
-		}
-	};
-	var vrScene = {
+        /**
+         * Embed tour
+         */
+        embedTour: function (el) {
+            var alias = $(el).attr('data-tour-alias');
+            var template = '<iframe width="800px" height="400px" src="http://localhost/vr360.globalvision.dev/' + alias + '" ></iframe>';
 
-		addNew: function () {
-			var sceneHtml = $('.hidden .scene').parent().html();
-			$('#scenes').append(sceneHtml);
-			$.validate({
-				modules: 'file'
-			});
-		},
-		/**
-		 *
-		 */
-		hooks: function () {
-			$('body').on('click', 'button#addScene', function () {
-				vrScene.addNew();
-			})
-		}
-	}
+            $('#vrTour .modal-title').html('<i class="fa fa-plus-square" aria-hidden="true"></i> Embed code');
+            $('#vrTour .modal-body .container-fluid').text(template);
+            $('#vrTour').modal('show');
+        },
 
-	vrAdmin.Tour = vrTour;
-	vrAdmin.Tour.Scene = vrScene;
+        /**
+         * Hooks event.
+         */
+        hooks: function () {
+            $("body").on("click", ".addNew", function () {
+                vrAdmin.addTour();
+            });
 
-	w.vrAdmin = vrAdmin;
+            $("body").on("click", ".editTour", function () {
+                vrAdmin.editTour(this);
+            });
 
-	$(document).ready(function () {
-		w.vrAdmin.hooks();
-	})
+            $("body").on("click", ".editTourHotspot", function () {
+                vrAdmin.editTourHotspot(this);
+            });
+
+            $("body").on("click", ".embedCode", function () {
+                vrAdmin.embedTour(this);
+            });
+
+            vrTour.hooks();
+        }
+    };
+
+    var vrTour = {
+
+        generateAlias: function () {
+            // Prepare
+            var alias = $("#form-tour input#name").val();
+            alias     = alias.toLowerCase().replace(/\s+/g, "-")           // Replace spaces with -
+                .replace(/[^\w\-]+/g, "")       // Remove all non-word chars
+                .replace(/\-\-+/g, "-")         // Replace multiple - with single -
+                .replace(/^-+/, "")             // Trim - from start of text
+                .replace(/-+$/, "");            // Trim - from end of text
+            $("#form-tour input#alias").val(alias);
+        },
+
+        hooks: function () {
+
+            vrScene.hooks();
+
+            $("body").on("blur", "#form-tour input#name", function () {
+                vrTour.generateAlias();
+            });
+
+            $("body").on("submit", "form#form-tour", function (event) {
+                event.preventDefault();
+
+                var formData = new FormData(this);
+
+                // First ajax used for file uploading
+                $.ajax({
+                    url        : "index.php",
+                    type       : "POST",
+                    data       : formData,
+                    async      : true,
+                    cache      : false,
+                    processData: false,
+                    contentType: false
+                });
+            });
+        }
+    };
+
+    var vrScene = {
+
+        addNew: function () {
+            var sceneHtml = $(".hidden .scene").parent().html();
+            $("#scenes").append(sceneHtml);
+            $.validate({
+                modules: "file"
+            });
+        },
+        /**
+         *
+         */
+        hooks : function () {
+            $("body").on("click", "button#addScene", function () {
+                vrScene.addNew();
+            });
+        }
+    };
+
+    vrAdmin.Tour       = vrTour;
+    vrAdmin.Tour.Scene = vrScene;
+
+    w.vrAdmin = vrAdmin;
+
+    $(document).ready(function () {
+        w.vrAdmin.hooks();
+    });
 
 })(window, jQuery);

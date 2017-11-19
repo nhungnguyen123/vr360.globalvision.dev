@@ -21,7 +21,7 @@
 	<?php endif; ?>
 
 	<!-- Globalvision -->
-	<link rel="stylesheet" type="text/css" href="./assets/tour.min.css">
+	<link rel="stylesheet" type="text/css" href="./assets/css/tour.min.css">
 
 	<!-- Krpano -->
 	<script src="<?php echo $this->tour->getKrpanoJsUrl(); ?>"></script>
@@ -59,7 +59,6 @@
 	<?php endif; ?>
 </head>
 <body>
-
 <?php if (!$this->tour->isValid() || !$this->tour->isValidForRender()): ?>
 	<span class="label label-danger">Invalid tour or data broken</span>
 <?php else: ?>
@@ -73,7 +72,7 @@
 				</tr>
 			</table>
 		</noscript>
-		<script>
+		<script type="text/javascript">
 			window.onload = function ()
 			{
 				<?php echo $this->tour->getKrpanoEmbedPano(); ?>
