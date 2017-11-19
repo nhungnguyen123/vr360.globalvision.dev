@@ -31,7 +31,7 @@ class Vr360Krpano
 
 	public function useConfigFile($file)
 	{
-		$this->addParameter('-config=' . $file);
+		$this->addParameter('-config=' . Vr360HelperFile::clean($file));
 	}
 
 	public function addParameter($parameter)

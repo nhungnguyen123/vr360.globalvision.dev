@@ -28,7 +28,7 @@ class Vr360ModelTour extends Vr360Model
 
 	public function ajaxSave()
 	{
-		$ajax = Vr360AjaxResponse::getInstance();
+		$ajax  = Vr360AjaxResponse::getInstance();
 		$input = Vr360Factory::getInput();
 
 		// Do file validate first
@@ -68,7 +68,7 @@ class Vr360ModelTour extends Vr360Model
 
 		if ($tour->save() === false)
 		{
-			$ajax->addDanger($tour->getErrors())->fail()->respond();
+			$ajax->addDanger($tour->getError())->fail()->respond();
 		}
 
 		// Tour saved success
@@ -76,7 +76,7 @@ class Vr360ModelTour extends Vr360Model
 		{
 			try
 			{
-				$files = $input->files->get('sceneFile');
+				$files       = $input->files->get('sceneFile');
 				$tourDataDir = VR360_PATH_DATA . '/' . $tour->id;
 
 				if (!Vr360HelperFolder::exists($tourDataDir))
@@ -86,7 +86,8 @@ class Vr360ModelTour extends Vr360Model
 
 				// Okay now we can process
 				$uploadedFiles = array();
-				foreach ($files as $index=>$file)
+
+				foreach ($files as $index => $file)
 				{
 					$fileName = Vr360HelperTour::generateFilename($file['name']);
 
@@ -96,7 +97,7 @@ class Vr360ModelTour extends Vr360Model
 					}
 
 					$uploadedFiles[] = $tourDataDir . '/' . $fileName;
-					$scene = new Vr360Scene();
+					$scene           = new Vr360Scene();
 					$scene->set('tourId', $tour->id);
 					$scene->set('name', $input->get('sceneName')[$index]);
 					$scene->set('description', $input->get('sceneDescription')[$index]);
@@ -122,8 +123,38 @@ class Vr360ModelTour extends Vr360Model
 
 
 		// Save scene
-		$ajax->addInfo('Tour is created');
+		$ajax->addInfo('Tour is created')->respond();
+	}
 
+	public function getItem()
+	{
+		$alias = Vr360Factory::getInput()->getRaw('alias');
+		$id    = Vr360Factory::getInput()->getInt('id');
+
+		$table = new Vr360Tour;
+
+		if ($id)
+		{
+			$table->load(
+				array
+				(
+					'id'         => (int) Vr360Factory::getInput()->getInt('id'),
+					'created_by' => Vr360Factory::getUser()->id
+				)
+			);
+		}
+
+		if ($alias)
+		{
+
+			$table->load(
+				array(
+					'alias' => $alias
+				)
+			);
+		}
+
+		return $table;
 	}
 
 	/**
@@ -349,34 +380,6 @@ class Vr360ModelTour extends Vr360Model
 		}
 
 		$ajax->addWarning('No pano. Please add at least 1 pano to create a vTour')->fail()->respond();
-	}
-
-	public function getItem()
-	{
-		$alias = Vr360Factory::getInput()->getRaw('alias');
-		$id    = Vr360Factory::getInput()->getInt('id');
-
-		$table = new Vr360Tour;
-
-		if ($id)
-		{
-			$table->load(
-				array
-				(
-					'id'         => (int) Vr360Factory::getInput()->getInt('id'),
-					'created_by' => Vr360Factory::getUser()->id
-				));
-		}
-
-		if ($alias)
-		{
-
-			$table->load(array(
-				'alias' => $alias
-			));
-		}
-
-		return $table;
 	}
 
 	/**

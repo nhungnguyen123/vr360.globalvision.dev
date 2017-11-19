@@ -27,17 +27,14 @@ class Vr360ControllerTour extends Vr360Controller
 	 */
 	public function ajaxCreateTour()
 	{
-
 		$input = Vr360Factory::getInput();
-
-
 
 		$tourName  = $input->getString('name');
 		$tourAlias = $input->getString('alias');
 
 		if (empty($tourName) || empty($tourAlias))
 		{
-			$ajax->addWarning('Missed fields')->fail()->respond();
+			Vr360AjaxResponse::getInstance()->addWarning('Missed fields')->fail()->respond();
 		}
 
 		switch ($input->getString('step'))
@@ -172,7 +169,6 @@ class Vr360ControllerTour extends Vr360Controller
 		);
 
 		// Try to migrate tour
-
 		if ($tour !== false)
 		{
 			$html = Vr360Layout::getInstance()->fetch('form.tour', array('tour' => $tour));
@@ -200,10 +196,17 @@ class Vr360ControllerTour extends Vr360Controller
 			)
 		);
 
-		if ($tour !== false)
+		$ajaxResponse = Vr360AjaxResponse::getInstance();
+
+		if ($tour === false)
+		{
+			$ajaxResponse->addData('html', 'Tour not found.')->fail()->respond();
+		}
+		else
 		{
 			$html = Vr360Layout::getInstance()->fetch('form.hotspots', array('tour' => $tour));
-			Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
+
+			$ajaxResponse->addData('html', $html)->success()->respond();
 		}
 	}
 

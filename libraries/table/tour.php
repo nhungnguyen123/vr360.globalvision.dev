@@ -32,13 +32,18 @@ class Vr360TableTour extends Vr360Table
 	protected function check()
 	{
 		$db    = Vr360Database::getInstance();
+
+		$condition = array('alias' => $this->alias);
+
+		if ($this->id)
+		{
+			$condition['id[!]'] = $this->get('id');
+		}
+
 		$tours = $db->select(
 			$this->_table,
 			'*',
-			array
-			(
-				'alias' => $this->alias
-			)
+			$condition
 		);
 
 		if ($tours !== false && count($tours) > 0)
