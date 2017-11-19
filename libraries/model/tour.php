@@ -26,12 +26,112 @@ class Vr360ModelTour extends Vr360Model
 		return $instance;
 	}
 
+	public function ajaxSave()
+	{
+		$ajax = Vr360AjaxResponse::getInstance();
+		$input = Vr360Factory::getInput();
+
+		// Do file validate first
+		try
+		{
+			$files = $input->files->get('sceneFile');
+
+			if (empty($files))
+			{
+				$ajax->addDanger('No scenes')->fail()->respond();
+			}
+
+			// File validate
+			foreach ($files as $file)
+			{
+				// Respond ajax if anything faile
+				if (!Vr360HelperTour::fileValidate($file['tmp_name']))
+				{
+					$ajax->addDanger('Invalid scene: ' . $file['name'])->fail()->respond();
+				}
+			}
+		}
+		catch (Exception $exception)
+		{
+
+		}
+
+		// Okay at least all scenes files are validated. Now try to create tour
+
+		/**
+		 * @var $tour Vr360TableTour
+		 */
+		$tour = $this->getItem();
+		$tour->bind($_REQUEST);
+		$params       = new Vr360Object(isset($_REQUEST['params']) ? $_REQUEST['params'] : array());
+		$tour->params = $params;
+
+		if ($tour->save() === false)
+		{
+			$ajax->addDanger($tour->getErrors())->fail()->respond();
+		}
+
+		// Tour saved success
+		if ($tour->id)
+		{
+			try
+			{
+				$files = $input->files->get('sceneFile');
+				$tourDataDir = VR360_PATH_DATA . '/' . $tour->id;
+
+				if (!Vr360HelperFolder::exists($tourDataDir))
+				{
+					Vr360HelperFolder::create($tourDataDir);
+				}
+
+				// Okay now we can process
+				$uploadedFiles = array();
+				foreach ($files as $index=>$file)
+				{
+					$fileName = Vr360HelperTour::generateFilename($file['name']);
+
+					if (!move_uploaded_file($file['tmp_name'], $tourDataDir . '/' . $fileName))
+					{
+
+					}
+
+					$uploadedFiles[] = $tourDataDir . '/' . $fileName;
+					$scene = new Vr360Scene();
+					$scene->set('tourId', $tour->id);
+					$scene->set('name', $input->get('sceneName')[$index]);
+					$scene->set('description', $input->get('sceneDescription')[$index]);
+					$scene->set('file', $fileName);
+					$scene->set('ordering', $index);
+					$scene->save();
+				}
+
+				// And now generate tour
+				$command = '';
+				$krPano  = new Vr360Krpano(Vr360Configuration::getConfig('krPanoPath'), Vr360Configuration::getConfig('krPanoLicense'));
+				$krPano->useConfigFile(Vr360Configuration::getConfig('krPanoConfigFile'));
+				$krPano->addFiles($uploadedFiles);
+
+				print_r($krPano->makePano($command));
+				print_r($command);
+			}
+			catch (Exception $exception)
+			{
+
+			}
+		}
+
+
+		// Save scene
+		$ajax->addInfo('Tour is created');
+
+	}
+
 	/**
 	 * File upload process only
 	 */
 	public function ajaxUploadFile()
 	{
-		$ajax = Vr360AjaxResponse::getInstance();
+
 
 		$numberOfFiles = isset($_FILES['panoFile']['name']) ? count($_FILES['panoFile']['name']) : 0;
 

@@ -85,7 +85,9 @@
 		addNew: function () {
 			var sceneHtml = $('.hidden .scene').parent().html();
 			$('#scenes').append(sceneHtml);
-			$.validate();
+			$.validate({
+				modules: 'file'
+			});
 		},
 		/**
 		 *

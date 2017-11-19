@@ -165,7 +165,9 @@ $skins = Vr360HelperFolder::files(VR360_PATH_ASSETS . '/krpano/skins');
 				</div>
 
 				<fieldset>
+					<?php if($tour->id): ?>
 					<input type="hidden" name="id" value="<?php echo $tour->id; ?>"/>
+					<?php endif; ?>
 					<input type="hidden" name="view" value="tour"/>
 					<input type="hidden" name="task" value="ajaxSaveTour"/>
 				</fieldset>

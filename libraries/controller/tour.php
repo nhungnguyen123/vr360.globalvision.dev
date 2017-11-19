@@ -17,6 +17,8 @@ class Vr360ControllerTour extends Vr360Controller
 		{
 			$ajax->addWarning('User is not authorized')->fail()->respond();
 		}
+
+		Vr360ModelTour::getInstance()->ajaxSave();
 	}
 	/**
 	 * Create new tour

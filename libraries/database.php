@@ -58,24 +58,6 @@ class Vr360Database extends \Medoo\Medoo
 	}
 
 	/**
-	 * Create new record
-	 *
-	 * @param $table
-	 * @param $data
-	 *
-	 * @return bool|int|mixed|string
-	 */
-	public function create($table, $data)
-	{
-		if ($this->insert($table, $data) !== false)
-		{
-			return $this->id();
-		}
-
-		return false;
-	}
-
-	/**
 	 * Update a record
 	 *
 	 * @param $table
