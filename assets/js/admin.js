@@ -1,5 +1,9 @@
 (function (w, $) {
 
+	/**
+	 * Entrypoint class for backend
+	 * @type {{addTour: addTour, hooks: hooks}}
+	 */
 	var vrAdmin = {
 		/**
 		 *
@@ -39,6 +43,11 @@
 			vrTour.hooks();
 		}
 	};
+
+	/**
+	 * A tour class
+	 * @type {{generateAlias: generateAlias, hooks: hooks}}
+	 */
 	var vrTour = {
 
 		generateAlias: function()
@@ -80,6 +89,11 @@
 			})
 		}
 	};
+
+	/**
+	 * A scene class
+	 * @type {{addNew: addNew, hooks: hooks}}
+	 */
 	var vrScene = {
 
 		addNew: function () {
