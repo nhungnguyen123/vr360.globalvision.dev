@@ -9,6 +9,7 @@ defined('_VR360_EXEC') or die;
  */
 class Vr360Object
 {
+	protected $_errors = array();
 
 	/**
 	 * Vr360Object constructor.
@@ -20,6 +21,19 @@ class Vr360Object
 		if ($properties !== null)
 		{
 			$this->setProperties($properties);
+		}
+	}
+
+	public function bind($properties)
+	{
+		$classProperties = get_class_vars($this);
+
+		foreach ($properties as $key => $property)
+		{
+			if (array_key_exists($key, $classProperties))
+			{
+				$this->$key = $property;
+			}
 		}
 	}
 
@@ -118,5 +132,30 @@ class Vr360Object
 		}
 
 		return $vars;
+	}
+
+	public function setError($error)
+	{
+		$this->_errors[] = $error;
+	}
+
+	public function getError()
+	{
+		return array_pop($this->_errors);
+	}
+
+	public function getErrors()
+	{
+		return $this->_errors;
+	}
+
+	public function hasError()
+	{
+		return !empty($this->_errors);
+	}
+
+	public function resetErrors()
+	{
+		$this->_errors = array();
 	}
 }

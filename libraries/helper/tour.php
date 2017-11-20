@@ -20,7 +20,7 @@ class Vr360HelperTour
 		}
 
 		$imageSize = getimagesize($filePath);
-
+var_dump($imageSize);
 		if ($imageSize)
 		{
 			$mime = $imageSize['mime'];
@@ -46,7 +46,7 @@ class Vr360HelperTour
 			}
 		}
 
-		return $imageSize;
+		return true;
 	}
 
 	/**

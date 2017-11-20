@@ -15,25 +15,8 @@ class Vr360Table extends Vr360Object
 
 	protected $_table = null;
 
-	public function bind($properties)
-	{
-		$classProperties = get_class_vars($this);
-
-		foreach ($properties as $key => $property)
-		{
-			if (array_key_exists($key, $classProperties))
-			{
-				$this->$key = $property;
-			}
-		}
-	}
-
 	public function load($condition)
 	{
-		if (is_int($condition))
-		{
-			$condition = array('id' => $condition);
-		};
 
 		$db  = Vr360Database::getInstance();
 		$row = $db->load($this->_table, $condition);
@@ -56,24 +39,32 @@ class Vr360Table extends Vr360Object
 	 */
 	public function save()
 	{
-		if ($this->check())
+		if (!$this->check())
 		{
-			if ($this->id === null)
-			{
-				$properties = $this->getProperties();
-				unset($properties['id']);
-
-				$this->id = Vr360Database::getInstance()->create($this->_table, $properties);
-
-				return $this->id;
-			}
-			else
-			{
-				return Vr360Database::getInstance()->update($this->_table, $this->getProperties());
-			}
+			return false;
 		}
 
-		return false;
+		// Insert
+		if ($this->id === null)
+		{
+			$properties = $this->getProperties();
+			unset($properties['id']);
+
+			$db = Vr360Database::getInstance();
+			$db->insert($this->_table, $properties);
+
+			if (!$db->id())
+			{
+				$errors = $db->error();
+				$this->setError(end($errors));
+
+				return false;
+			}
+
+			$this->id = $db->id();
+
+			return true;
+		}
 	}
 
 	/**

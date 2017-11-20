@@ -56,4 +56,16 @@ class Vr360HelperFolder
 
 		return false;
 	}
+
+	public static function files($dir)
+	{
+		if (self::exists($dir))
+		{
+			return array_diff(scandir($dir), array('..', '.'));
+		}
+
+		return false;
+
+	}
+
 }

@@ -8,6 +8,18 @@ defined('_VR360_EXEC') or die;
 class Vr360ControllerTour extends Vr360Controller
 {
 
+	public function ajaxSaveTour()
+	{
+		$ajax  = Vr360AjaxResponse::getInstance();
+
+		// Permission verify
+		if (!Vr360HelperAuthorize::isAuthorized())
+		{
+			$ajax->addWarning('User is not authorized')->fail()->respond();
+		}
+
+		Vr360ModelTour::getInstance()->ajaxSave();
+	}
 	/**
 	 * Create new tour
 	 *
@@ -15,14 +27,10 @@ class Vr360ControllerTour extends Vr360Controller
 	 */
 	public function ajaxCreateTour()
 	{
-		$ajax  = Vr360AjaxResponse::getInstance();
+
 		$input = Vr360Factory::getInput();
 
-		// Permission verify
-		if (!Vr360HelperAuthorize::isAuthorized())
-		{
-			$ajax->addWarning('User is not authorized')->fail()->respond();
-		}
+
 
 		$tourName  = $input->getString('name');
 		$tourAlias = $input->getString('alias');

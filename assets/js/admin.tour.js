@@ -110,16 +110,6 @@
 			})
 		},
 
-		generateAlias: function ()
-		{
-
-			// Prepare
-			var alias = $('input#name').val();
-			alias = alias.toLowerCase()
-				.replace(/ /g, '-')
-				.replace(/[^\w-]+/g, '');
-			$('input#alias').val(alias);
-		},
 
 		validate: function ()
 		{

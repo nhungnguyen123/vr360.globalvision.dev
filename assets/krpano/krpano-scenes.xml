@@ -1,16 +1,13 @@
-<scene name="scene_{{xmlFileName}}" title="{{xmlTitle}}" subtitle="{{xmlSubTitle}} " onstart="" thumburl="panos/{{xmlFileName}}.tiles/thumb.jpg"
+<scene name="scene_{{xmlFileName}}" title="{{xmlTitle}}" subtitle="{{xmlSubTitle}} " onstart=""
+       thumburl="panos/{{xmlFileName}}.tiles/thumb.jpg"
        lat="" lng="" heading="">
 
     <view hlookat="{{hlookat}}" vlookat="{{vlookat}}" fovtype="MFOV" fov="{{fov}}" maxpixelzoom="2.0" fovmin="70"
           fovmax="140"
           limitview="auto"/>
-
     <preview url="panos/{{xmlFileName}}.tiles/preview.jpg"/>
-
     <image>
         <cube url="panos/{{xmlFileName}}.tiles/pano_%s.jpg"/>
     </image>
-
     {{xmlHotspots}}
-
 </scene>

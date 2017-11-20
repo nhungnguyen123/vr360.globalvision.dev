@@ -33,12 +33,8 @@ defined('_VR360_EXEC') or die;
 	<!-- Globalvision -->
 	<link rel="stylesheet" type="text/css" href="./assets/css/globalvision.min.css">
 	<?php if (Vr360HelperAuthorize::isAuthorized()): ?>
-		<script type="text/javascript" src="./assets/js/admin.min.js"></script>
-		<script type="text/javascript" src="./assets/js/admin.validate.min.js?<?php echo time(); ?>"></script>
-		<script type="text/javascript" src="./assets/js/admin.tours.min.js?<?php echo time(); ?>"></script>
-		<script type="text/javascript" src="./assets/js/admin.tour.min.js?<?php echo time(); ?>"></script>
-		<script type="text/javascript" src="./assets/js/log.min.js"></script>
-		<script type="text/javascript" src="./assets/js/util.js?<?php echo time(); ?>"></script>
+		<script type="text/javascript" src="./assets/js/admin.js"></script>
+		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 	<?php endif; ?>
 </head>
 <body>
