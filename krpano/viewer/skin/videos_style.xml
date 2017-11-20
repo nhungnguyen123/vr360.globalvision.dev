@@ -1,0 +1,239 @@
+<krpano>
+	<include url="videoplayer_timebar.xml" />
+	<!-- <layer name="start_video_skin" type="container" align="lefttop" x="0" y="0" height="100%" width="100%" keep="true" bgcapture="true" zorder="100" visible="true" bgcolor="0x00000" bgalpha="1">
+		<layer name="video_auto" url="%SWFPATH%/plugins/videoplayer.swf" alturl="%SWFPATH%/plugins/videoplayer.js" videourl="%SWFPATH%/videos/hole_01.mp4" align="center" x="0" y="0" width="100%" height="prop" posterurl="" pausedonstart="false" loop="false" volume="1.0" playbackrate="1.0" preferredformat="" buffertime="0.1" ignoremetadata="false" onvideoready="" onvideoplay="" onvideopaused="" onvideocomplete="set(layer[start_video_skin].visible,false);layer[video_auto].closevideo();set(events[skin_events].onresize,skin_onresize();check_resize();)"  bgcapture="true" scalechildren="true" onover="" onout="" />
+
+		<layer name="skip_video" url="video_img/skipintro.png" align="rightbottom" x="0" y="46" zorder="1" onclick="set(layer[start_video_skin].visible,false);layer[video_auto].closevideo();set(events[skin_events].onresize,skin_onresize();check_resize();)" />
+	</layer> -->
+
+	<layer name="video_wrapper" type="container" keep="true" align="lefttop" x="0" y="0" width="100%" height="100%" bgcolor="0x000000" bgalpha="0.5" zorder="5" bgcapture="true" onclick="turn_video_table(false);" visible="false">
+		<layer name="video_table" type="container" bgalpha="0.5" bgcolor="0xffffff" align="center" x="0" y="0" width="720" height="405" handcursor="false" scalechildren="true">	
+	 		
+	 		<!-- <layer name="video_contain" type="container" align="top" x="0" y="59" width="762" height="498" bgalpha="1" bgcolor="0xffffff" handcursor="false" bgcapture="true" onhover="set(layer[btn_group].visible,true)" zorder="100"  onout="set(layer[btn_group].visible,false)"> -->
+				<layer name="video" url="%SWFPATH%/plugins/videoplayer.swf" alturl="%SWFPATH%/plugins/videoplayer.js" align="center" x="0" y="-1" width="100%" height="100%" zorder="100"  pausedonstart="false" loop="false" volume="1.0" playbackrate="1.0" preferredformat="" buffertime="0.1" ignoremetadata="false" onvideoready="do_time_bar(video,btn_group,center,null,80%,2,0,0,false,10)" onvideoplay="" onvideopaused="" onvideocomplete="video_done(false)" handcursor="false" bgcapture="true" onover="tween(layer[video_header_bg].bgalpha, 0.5, 0.5);" onout="tween(layer[video_header_bg].bgalpha, 0.0, 0.5);">
+					<layer name="video_header_bg" type="container" align="lefttop" x="0" y="0" width="100%" height="55" bgcolor="0x202020" bgalpha="0.0" zorder="111" handcursor="false">
+						<layer name="close_btn_video" url="video_img/close.png" align="righttop" x="10" y="20" zorder="2" onclick="turn_video_table(false);" alpha="0.7" onover="set(alpha, 1.0);" onout="set(alpha, 0.7);"/>
+		 			</layer>
+				</layer>
+
+				
+	 			<layer name="video_slogan" url="%SWFPATH%/plugins/textfield.swf" align="lefttop" x="17" y="20" html="" background="false" css="font-size:18px; font-family:Trajan Pro;color:#e6b799;text-align:center; font-weight:bold; text-transform:uppercase" zorder="111" handcursor="false"/>
+				
+				<layer name="btn_group" url="video_img/video_bar.png" align="bottom" x="0" y="-41" width="100%" height="42" zorder="111" visible="true" >  
+		 			<layer name="pause_video" url="video_img/pause_play.png"  align="leftbottom" x="0" y="0" crop="43|42|43|42" onovercrop="43|0|43|42" zorder="111"   onclick="turn_playpause_video(false);"/>
+
+		 			<layer name="play_video" url="video_img/pause_play.png"   align="leftbottom" x="0" y="0" crop="0|42|43|42" onovercrop="0|0|43|42"  zorder="111" visible="false" onclick="turn_playpause_video(true)"/>
+
+		 			<layer name="play_video_start" url="video_img/pause_play.png"   align="leftbottom" x="0" y="0" crop="0|42|43|42" onovercrop="0|0|43|42"  zorder="111" visible="false" onclick="video_done(true); layer[video].play();"/>
+
+		 			<layer name="fullscreen_video_on" url="video_img/fullscreen.jpg"   align="rightbottom" x="0" y="0" crop="0|42|43|42" onovercrop="0|0|43|42"  zorder="111" visible="true" onclick="fullscreen_video();"/>
+
+		 			<layer name="fullscreen_video_off" url="video_img/fullscreen.jpg"   align="rightbottom" x="0" y="0" crop="43|42|43|42" onovercrop="43|0|43|42"  zorder="111" visible="false" onclick="fullscreen_video();"/>
+
+		 			<!-- <layer name="btn_pre" url="video_img/pre.png"  align="left" x="20" y="0" zorder="102" crop="0|0|71|64" onovercrop="0|64|71|64"  onclick="action_pre_video()" />
+					
+					<layer name="btn_next" url="video_img/next.png"  align="right" x="20" y="0" zorder="102" crop="0|0|71|64" onovercrop="0|64|71|64"  onclick="action_next_video()"  /> -->
+
+
+				</layer>
+			<!-- </layer> -->
+	 		<!-- <layer name="video_footer_bg" url="video_img/table_footer.png" align="leftbottom" x="0" y="0" width="100%" handcursor="false"/> -->
+	 	</layer>
+
+	</layer>
+
+	<action name="fullscreen_video">
+		if(layer[video_table].width != 100%,
+			set(layer[video_table].width, 100%);
+			set(layer[video_table].height, 100%);
+			set(layer[video_wrapper].zorder, 99999);
+			set(layer[btn_group].y, 0);
+			set(plugin[time_bar].width, 90%);
+			set(layer[fullscreen_video_off].visible, true);
+			set(layer[fullscreen_video_on].visible, false);
+			,
+			set(layer[video_table].width, 720);
+			set(layer[video_table].height, 405);
+			set(layer[video_wrapper].zorder, 5);
+			set(layer[btn_group].y, -41);
+			set(plugin[time_bar].width, 80%);
+			set(layer[fullscreen_video_off].visible, false);
+			set(layer[fullscreen_video_on].visible, true);
+		);		
+	</action>
+	<action name="fullscreen_video_esc">
+		if(layer[video_table].width == 100%,
+			set(layer[video_table].width, 720);
+			set(layer[video_table].height, 405);
+			set(layer[video_wrapper].zorder, 5);
+			set(layer[btn_group].y, -41);
+			set(plugin[time_bar].width, 80%);	
+		);	
+	</action>
+
+	<action name="choose_video">
+		set(layer[btn_video_open_list].crop,0|43|229|43);
+ 		tween(layer[view_table_video].y,get(layer[view_table_video].y_closed),0.5,easeOutCirc);
+ 		set(layer[btn_view_open].crop,0|43|229|43);
+ 		tween(layer[view_table].y,get(layer[view_table].y_closed),0.5,easeOutCirc);	
+		
+		turn_video_table(true);
+		if(device.mobile,
+			layer[video].playvideo(get(layer[%1].link2));			
+			,
+			layer[video].playvideo(get(layer[%1].link));
+		);
+		set(current_video,get(layer[%1].stt));
+		if(current_video GT 1, set(layer[btn_pre].visible,true););
+		if(current_video LT 6, set(layer[btn_next].visible,true););
+		if(current_video==1, set(layer[btn_pre].visible,false););
+		if(current_video==6, set(layer[btn_next].visible,false););
+		txtadd(title_video_box, layer[skin_thumb_title_v_,get(current_video),].html1);
+		copy(layer[video_slogan].html,get(title_video_box));	
+		set(layer[pause_video].visible,true); 
+		set(layer[play_video].visible,false);
+		set(layer[play_video_start].visible,false);
+		video_done(true);
+		set(layer[btn_group].visible,true);
+		show_hide_thumb();
+	</action>
+
+	<action name="action_next_video">
+ 		set(layer[pause_video].visible,true);
+ 		set(layer[play_video].visible,false);
+ 		set(layer[play_video_start].visible,false);
+ 		set(layer[btn_group].visible,true);
+ 		add(current_video,1);
+ 		if(current_video==7,set(current_video,1));
+ 		txtadd(name_scene,skin_thumb_v_,get(current_video));
+ 		choose_video(get(name_scene));
+<!--  		video_done(true); -->
+ 	</action>
+ 	<action name="action_pre_video">
+ 		set(layer[pause_video].visible,true);
+ 		set(layer[play_video].visible,false);
+ 		set(layer[play_video_start].visible,false);
+ 		set(layer[btn_group].visible,true);
+ 		sub(current_video,1);
+ 		if(current_video == 0,  set(current_video,6));
+ 		txtadd(name_scene,skin_thumb_v_,get(current_video));
+ 		choose_video(get(name_scene));
+ 	<!-- 	video_done(true); -->
+ 	</action>
+
+ 	<action name="video_done">
+ 		if(%1==false,
+		set(layer[btn_group].visible,true);
+		set(layer[pause_video].visible,false);
+		set(layer[play_video].visible,false);
+		set(layer[play_video_start].visible,true);
+		set(layer[video_contain].onout,null);
+		,
+		set(layer[btn_group].visible,true);
+		set(layer[pause_video].visible,true);
+		set(layer[play_video].visible,false);
+		set(layer[play_video_start].visible,false);
+		set(layer[video_contain].onout,set(layer[btn_group].visible,false));
+		)
+ 	</action>
+
+ 	<action name="turn_playpause_video">
+ 		if(%1==false,
+ 			set(layer[pause_video].visible,false);
+ 			set(layer[play_video].visible,true);
+ 			layer[video].togglepause();
+ 			,
+ 			set(layer[pause_video].visible,true);
+ 			set(layer[play_video].visible,false);
+ 			layer[video].togglepause();
+ 		)
+ 	</action>
+ 	<action name="turn_video_table">
+ 		if(%1==true,
+ 			set(layer[video_wrapper].visible,true);
+ 			turn_info_table(false);
+ 		,
+ 			set(layer[video_wrapper].visible,false);
+ 			layer[video].stop();
+ 		);
+ 		set(layer[video_table].width, 720);
+		set(layer[video_table].height, 405);
+		set(layer[video_wrapper].zorder, 5);
+		set(layer[btn_group].y, -41);
+		set(plugin[time_bar].width, 80%);
+		set(layer[fullscreen_video_off].visible, false);
+		set(layer[fullscreen_video_on].visible, true);
+ 	</action>
+ 	<action name="turn_fullscreen">
+ 		if(%1==false,
+ 			set(fullscreen,true);
+ 			set(layer[btn_full].crop,0|0|32|31);
+ 			,
+ 			set(fullscreen,false);
+ 			set(layer[btn_full].crop,0|31|32|31);
+ 		)
+ 	</action>
+ 	<action name="turn_info_table">
+ 		if(%1==true,
+ 			set(layer[over_bg].visible,true);
+ 			turn_video_table(false);
+ 			set(layer[btn_info].crop,0|0|32|31);
+ 		,
+ 			set(layer[over_bg].visible,false);
+ 			set(layer[btn_info].crop,0|31|32|31);
+ 		)
+ 	</action>
+ 	<action name="play_pause">
+ 		if(%1==true,
+ 			set(autorotate.enabled,true);
+ 			set(layer[btn_pause].visible,true);
+ 			set(layer[btn_play].visible,false);
+ 			,
+ 			set(autorotate.enabled,false);
+ 			set(layer[btn_pause].visible,false);
+ 			set(layer[btn_play].visible,true);
+ 		)
+ 	</action>
+ 	<action name="turn_view">
+ 		set(checkview,get(layer[view_table].y));
+ 		if(checkview LT 0,
+ 			set(layer[btn_view_open].crop,0|0|229|43);
+ 			tween(layer[view_table].y,get(layer[view_table].y_opened),0.5,easeOutCirc);
+ 			if(starttextstatus==true,open_close_start_text(true);)
+ 			,
+ 			set(layer[btn_view_open].crop,0|43|229|43);
+ 			tween(layer[view_table].y,get(layer[view_table].y_closed),0.5,easeOutCirc);	
+ 		)
+ 	</action>
+ 	
+
+ 	<action name="turn_video">
+ 		set(checkvideolist,get(layer[view_table_video].y));
+ 		if(checkvideolist LT 0,
+ 			set(layer[btn_video_open_list].crop,0|0|229|43);
+ 			tween(layer[view_table_video].y,get(layer[view_table_video].y_opened),0.5,easeOutCirc);
+ 			if(starttextstatus==true,open_close_start_text(true);)
+ 			,
+ 			set(layer[btn_video_open_list].crop,0|43|229|43);
+ 			tween(layer[view_table_video].y,get(layer[view_table_video].y_closed),0.5,easeOutCirc);
+ 		)
+ 	</action>
+ 	<action name="turn_control">
+ 		if(%1==true,
+ 			set(layer[btn_control_open].visible,true);
+ 			set(layer[btn_control_close].visible,false);
+ 			tween(layer[view_table].alpha,1,0.4);
+ 			tween(layer[view_table_video].alpha,1,0.4);
+ 			tween(layer[footer].x,get(layer[footer].x_opened),0.5,easeOutCirc);
+ 			,
+ 			set(layer[btn_control_open].visible,false);
+ 			set(layer[btn_control_close].visible,true);
+ 			tween(layer[view_table].alpha,0,0.4);
+ 			tween(layer[view_table_video].alpha,0,0.4);
+ 			tween(layer[footer].x,get(layer[footer].x_closed),0.5,easeOutCirc);
+ 		)
+ 	</action>
+
+	
+</krpano>
+
