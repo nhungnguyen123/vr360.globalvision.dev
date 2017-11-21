@@ -305,6 +305,7 @@ class Vr360Tour extends Vr360TableTour
 	public function getKrpanoVersion()
 	{
 		$xml = $this->getXml();
+
 		if ($xml)
 		{
 			$nodes = $xml->getNodes();
@@ -314,9 +315,46 @@ class Vr360Tour extends Vr360TableTour
 		return 'Invalid';
 	}
 
+	/**
+	 * Method for get all scenes of tour
+	 *
+	 * @return   array|false  Array of scenes. False otherwise.
+	 *
+	 * @since  3.0.0
+	 */
 	public function getScenes()
 	{
+		if (!$this->id)
+		{
+			return false;
+		}
 
+		$items = Vr360Database::getInstance()->select(
+			'v2_scenes',
+			array(
+				'id', 'tourId', 'name', 'description', 'file', 'ordering', 'status', 'default', 'params'
+			),
+			array(
+				'status[!]' => VR360_TOUR_STATUS_UNPUBLISHED,
+				'tourId'    => $this->id,
+				'ORDER'     => array('ordering' => 'ASC')
+			)
+		);
+
+		if (empty($items))
+		{
+			return false;
+		}
+
+		foreach ($items as $key => $item)
+		{
+			$scene          = new Vr360Scene;
+			$item['params'] = json_decode($item['params']);
+			$scene->bind($item);
+			$items[$key] = $scene;
+		}
+
+		return $items;
 	}
 
 	public function getXml()

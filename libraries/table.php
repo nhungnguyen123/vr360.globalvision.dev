@@ -35,7 +35,7 @@ class Vr360Table extends Vr360Object
 	}
 
 	/**
-	 * @return bool|PDOStatement
+	 * @return   bool|PDOStatement
 	 */
 	public function save()
 	{
@@ -44,13 +44,14 @@ class Vr360Table extends Vr360Object
 			return false;
 		}
 
+		$db = Vr360Database::getInstance();
+
 		// Insert
 		if ($this->id === null)
 		{
 			$properties = $this->getProperties();
 			unset($properties['id']);
 
-			$db = Vr360Database::getInstance();
 			$db->insert($this->_table, $properties);
 
 			if (!$db->id())
@@ -62,9 +63,20 @@ class Vr360Table extends Vr360Object
 			}
 
 			$this->id = $db->id();
-
-			return true;
 		}
+		else
+		{
+			$properties = $this->getProperties();
+
+			if (!$db->update($this->_table, $properties, array('id' => $properties['id'])))
+			{
+				$this->setError(end($db->error()));
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	/**

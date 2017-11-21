@@ -26,6 +26,11 @@ class Vr360Krpano
 
 	public function addFiles($files)
 	{
+		foreach ($files as $key => $file)
+		{
+			$files[$key] = Vr360HelperFile::clean($file);
+		}
+
 		$this->files = $files;
 	}
 
@@ -55,6 +60,7 @@ class Vr360Krpano
 
 		// Make pano
 		array_unshift($this->parameters, 'makepano');
+
 		$execute[] = $this->binPath . ' ' . implode(' ', $this->parameters) . ' ' . implode(' ', $this->files);
 
 		$command = implode(' && ', $execute);

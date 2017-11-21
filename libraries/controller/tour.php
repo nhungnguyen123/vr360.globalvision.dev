@@ -157,6 +157,11 @@ class Vr360ControllerTour extends Vr360Controller
 		$ajax->addWarning('Something wrong')->fail()->respond();
 	}
 
+	/**
+	 * Method for load create/edit tour html form
+	 *
+	 * @since   3.0.0
+	 */
 	public function ajaxGetTourHtml()
 	{
 		$input = Vr360Factory::getInput();

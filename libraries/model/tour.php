@@ -28,35 +28,7 @@ class Vr360ModelTour extends Vr360Model
 
 	public function ajaxSave()
 	{
-		$ajax  = Vr360AjaxResponse::getInstance();
-		$input = Vr360Factory::getInput();
-
-		// Do file validate first
-		try
-		{
-			$files = $input->files->get('sceneFile');
-
-			if (empty($files))
-			{
-				$ajax->addDanger('No scenes')->fail()->respond();
-			}
-
-			// File validate
-			foreach ($files as $file)
-			{
-				// Respond ajax if anything faile
-				if (!Vr360HelperTour::fileValidate($file['tmp_name']))
-				{
-					$ajax->addDanger('Invalid scene: ' . $file['name'])->fail()->respond();
-				}
-			}
-		}
-		catch (Exception $exception)
-		{
-
-		}
-
-		// Okay at least all scenes files are validated. Now try to create tour
+		$ajax = Vr360AjaxResponse::getInstance();
 
 		/**
 		 * @var $tour Vr360TableTour
@@ -71,55 +43,47 @@ class Vr360ModelTour extends Vr360Model
 			$ajax->addDanger($tour->getError())->fail()->respond();
 		}
 
-		// Tour saved success
-		if ($tour->id)
+		// Make sure tour data folder exist.
+		$tourDataDir = VR360_PATH_DATA . '/' . $tour->id;
+
+		if (!Vr360HelperFolder::exists($tourDataDir))
 		{
+			Vr360HelperFolder::create($tourDataDir);
+		}
+
+		// Update / delete current scenes
+		$currentScenes = $this->saveScenes($tour, $ajax);
+
+		// Try to save new scenes files
+		$newScenes = $this->saveNewScenes($tour, $ajax);
+
+		// If there are new scenes. Regenerate with krpano program.
+		if (!empty($newScenes))
+		{
+			$newScenes = array_merge($newScenes, $currentScenes);
+
 			try
 			{
-				$files       = $input->files->get('sceneFile');
-				$tourDataDir = VR360_PATH_DATA . '/' . $tour->id;
-
-				if (!Vr360HelperFolder::exists($tourDataDir))
+				// Remove old folder vtour
+				if (Vr360HelperFolder::exists(Vr360HelperFile::clean($tourDataDir . '/vtour')))
 				{
-					Vr360HelperFolder::create($tourDataDir);
-				}
-
-				// Okay now we can process
-				$uploadedFiles = array();
-
-				foreach ($files as $index => $file)
-				{
-					$fileName = Vr360HelperTour::generateFilename($file['name']);
-
-					if (!move_uploaded_file($file['tmp_name'], $tourDataDir . '/' . $fileName))
-					{
-
-					}
-
-					$uploadedFiles[] = $tourDataDir . '/' . $fileName;
-					$scene           = new Vr360Scene();
-					$scene->set('tourId', $tour->id);
-					$scene->set('name', $input->get('sceneName')[$index]);
-					$scene->set('description', $input->get('sceneDescription')[$index]);
-					$scene->set('file', $fileName);
-					$scene->set('ordering', $index);
-					$scene->save();
+					Vr360HelperFolder::delete(Vr360HelperFile::clean($tourDataDir . '/vtour'));
 				}
 
 				// And now generate tour
 				$command = '';
 				$krPano  = new Vr360Krpano(Vr360Configuration::getConfig('krPanoPath'), Vr360Configuration::getConfig('krPanoLicense'));
 				$krPano->useConfigFile(Vr360Configuration::getConfig('krPanoConfigFile'));
-				$krPano->addFiles($uploadedFiles);
-
+				$krPano->addFiles($newScenes);
 				$krPano->makePano($command);
 			}
 			catch (Exception $exception)
 			{
-
+				$ajax->addInfo($exception->getMessage());
 			}
 		}
 
+		// @TODO: Add modify XML script here.
 
 		// Save scene
 		$ajax->addInfo('Tour is created')->respond();
@@ -127,7 +91,7 @@ class Vr360ModelTour extends Vr360Model
 
 	public function getItem()
 	{
-		$alias = Vr360Factory::getInput()->getRaw('alias');
+		$alias = Vr360Factory::getInput()->get('alias', '', 'RAW');
 		$id    = Vr360Factory::getInput()->getInt('id');
 
 		$table = new Vr360Tour;
@@ -157,12 +121,167 @@ class Vr360ModelTour extends Vr360Model
 	}
 
 	/**
+	 * Method for store new scenes
+	 *
+	 * @param   Vr360Tour         $tour Tour data
+	 * @param   Vr360AjaxResponse $ajax Ajax response.
+	 *
+	 * @return  array|false               Array of new scenes files if success. False otherwise.
+	 *
+	 * @since   3.0.0
+	 */
+	protected function saveNewScenes($tour, $ajax)
+	{
+		$input       = Vr360Factory::getInput();
+		$tourDataDir = VR360_PATH_DATA . '/' . $tour->id;
+		$files       = $input->files->get('newSceneFile');
+
+		// Just check if user upload new files.
+		if (empty($files))
+		{
+			return false;
+		}
+
+		// File validate
+		foreach ($files as $i => $file)
+		{
+			// Respond ajax if anything failed
+			if (!Vr360HelperTour::fileValidate($file['tmp_name']))
+			{
+				unset($files[$i]);
+				$ajax->addDanger('Invalid scene: ' . $file['name'])->fail()->respond();
+			}
+		}
+
+		// Just check if user upload new files.
+		if (empty($files))
+		{
+			return false;
+		}
+
+		$uploadedFiles = array();
+
+		try
+		{
+			// Okay now we can process
+			$sceneNames        = $input->get('newSceneName', array(), 'Array');
+			$sceneDescriptions = $input->get('newSceneDescription', array(), 'Array');
+
+			foreach ($files as $index => $file)
+			{
+				$fileName = Vr360HelperTour::generateFilename($file['name']);
+
+				if (!move_uploaded_file($file['tmp_name'], $tourDataDir . '/' . $fileName))
+				{
+					continue;
+				}
+
+				$uploadedFiles[] = $tourDataDir . '/' . $fileName;
+
+				$scene = new Vr360Scene;
+
+				$scene->set('tourId', $tour->id);
+				$scene->set('name', $sceneNames[$index]);
+				$scene->set('description', $sceneDescriptions[$index]);
+				$scene->set('file', $fileName);
+
+				if (!$scene->save())
+				{
+					$ajax->addDanger('Can not save scene: ' . $sceneNames[$index]);
+				}
+				else
+				{
+					$ajax->addSuccess('Save scene: ' . $sceneNames[$index] . ' success');
+				}
+			}
+		}
+		catch (Exception $exception)
+		{
+			$ajax->addDanger($exception->getMessage())->fail()->respond();
+		}
+
+		return empty($uploadedFiles) ? false : $uploadedFiles;
+	}
+
+	/**
+	 * Method for store current scenes
+	 *
+	 * @param   Vr360Tour          $tour  Tour data
+	 * @param   Vr360AjaxResponse  $ajax  Ajax response.
+	 *
+	 * @return  array                     List of scene files.
+	 *
+	 * @since   3.0.0
+	 */
+	protected function saveScenes($tour, $ajax)
+	{
+		$input = Vr360Factory::getInput();
+
+		$sceneNames        = $input->get('sceneName', array(), 'Array');
+		$sceneDescriptions = $input->get('sceneDescription', array(), 'Array');
+		$sceneDefault      = $input->getInt('sceneDefault');
+		$sceneIds          = $input->get('sceneId', array(), 'Array');
+
+		$files = array();
+
+		// Clean up current default
+		Vr360Database::getInstance()->update(
+			'v2_scenes',
+			array('default' => 0),
+			array('tourId' => $tour->id)
+		);
+
+		// Get current scenes of tour
+		$currentScenes = $tour->getScenes();
+
+		foreach ($currentScenes as $currentScene)
+		{
+			/** @var Vr360Scene $currentScene */
+
+			// This means user delete this scene.
+			if (!in_array($currentScene->id, $sceneIds))
+			{
+				if (!$currentScene->delete())
+				{
+					$ajax->addWarning('Can not delete Scene: ' . $currentScene->name . ' [' . $currentScene->id . ']');
+				}
+				else
+				{
+					$ajax->addWarning('Delete Scene: ' . $currentScene->name . ' [' . $currentScene->id . '] success');
+				}
+
+				continue;
+			}
+
+			$currentScene->name        = $sceneNames[$currentScene->id];
+			$currentScene->description = $sceneDescriptions[$currentScene->id];
+
+			if ($currentScene->id == $sceneDefault)
+			{
+				$currentScene->default = 1;
+			}
+
+			if (!$currentScene->save())
+			{
+				$ajax->addWarning('Can not update Scene: ' . $currentScene->name . ' [' . $currentScene->id . ']');
+			}
+			else
+			{
+				$ajax->addSuccess('Update Scene: ' . $currentScene->name . ' [' . $currentScene->id . '] successful');
+			}
+
+			$files[] = VR360_PATH_DATA . '/' . $tour->id . '/' . $currentScene->file;
+		}
+
+		return $files;
+	}
+
+	/**
 	 * File upload process only
 	 */
 	public function ajaxUploadFile()
 	{
-
-
+		$ajax          = Vr360AjaxResponse::getInstance();
 		$numberOfFiles = isset($_FILES['panoFile']['name']) ? count($_FILES['panoFile']['name']) : 0;
 
 		// This json included all form post
@@ -195,6 +314,10 @@ class Vr360ModelTour extends Vr360Model
 				$tourDataDir = Vr360HelperTour::createDataDir();
 
 				$ajax->addInfo('Created data directory: ' . $tourDataDir);
+			}
+			else
+			{
+				$tourDataDir = VR360_PATH_DATA . '/' . $tourId;
 			}
 
 			if ($tourDataDir === false)
