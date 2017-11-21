@@ -1,0 +1,692 @@
+<krpano>
+	<!-- krpano 1.17.4 default buttons skin -->
+
+	<!-- topleft logo -->
+	<layer name="main_wrapper" type="container" keep="true"  align="lefttop" x="0" y="0" width="100%" height="100%" zorder="100">
+		
+		<layer name="header" type="container" keep="true" align="lefttop" bgcolor="0x202020"  bgalpha="0.0" width="100%" height="100%" zorder="10" x="0" y="0">
+				<layer name="topleft_logo" url="%HTMLPATH%/skin/images/dalat_golfclub_01.png" keep="true" align="lefttop" x="0" y="0" width="223" height="254" zorder="20" />
+				<layer name="header_line" type="container" keep="true" align="lefttop" x="0" y="0" bgcolor="0x202020"  bgalpha="1.0" width="100%" height="43" zorder="10" />
+				<layer name="righttitle" url="%SWFPATH%/plugins/textfield.swf" keep="true" html="" x="227" y="10" background="false" border="false" css="text-align:left; color:#FFFFFF; font-family:Trajan Pro; font-weight:bold; font-size:15px;" textshadow="1" zorder="12" visible="true"/>
+				<layer name="embed" type="image" url="images/embed.png" keep="true" align="righttop" x="305" y="6" crop="0|31|39|31" zorder="11" width="39" height="31" onclick="js(toggleEmbed(););"/>
+				<layer name="topright_mapDropDown" url="%HTMLPATH%/skin/images/Map_button.png" keep="true" align="righttop" x="0" y="0" width="292" height="43" zorder="11" onclick="show_hide_map();"/>
+				<layer name="topright_mapDropDownArrow" url="%HTMLPATH%/skin/images/dalat_golfclub_arrow.png" keep="true" align="righttop" x="17" y="16" width="20" height="12" crop="0|12|20|12" zorder="12" onclick="show_hide_map();"/>
+				<!-- map -->
+				<layer name="minimap" type="container" keep="true" align="righttop" x="0" y="-390" width="396" height="390" bgcolor="0x000000" bgalpha="0.5" visible="true" bgcapture="true">
+					<layer name="mapscroll" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" align="lefttop" width="396" height="390" direction="all" mwheel="true" friction="0">
+						<layer name="map" url="images/maps.jpg" align="lefttop" scale="0.5" width="792" height="780" scalechildren="true">
+
+							<layer name="spot1" style="spot1" x="413" y="232" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole1-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot2" style="spot2" x="372" y="195" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole2-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot3" style="spot3" x="221" y="124" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole3-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot4" style="spot4" x="228" y="204" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole4-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot5" style="spot5" x="351" y="231" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole05-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot6" style="spot6" x="345" y="304" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole6-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot7" style="spot7" x="293" y="231" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole7-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot8" style="spot8" x="314" y="374" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole8-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot9" style="spot9" x="390" y="336" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole9-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot10" style="spot10" x="589" y="356" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole10-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot11" style="spot11" x="676" y="348" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole11-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot12" style="spot12" x="645" y="374" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole12-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot13" style="spot13" x="685" y="426" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole13-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot14" style="spot14" x="738" y="398" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole14-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot15" style="spot15" x="786" y="359" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole15-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot16" style="spot16" x="758" y="242" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole16-00-teebox,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot17" style="spot17" x="714" y="265" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole17-00-tee_fix,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot18" style="spot18" x="629" y="312" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_hole18-00-tee,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot19" style="spotwr" x="273" y="583" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_west_residential,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot20" style="spoter" x="441" y="662" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_east_residential,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+							<layer name="spot21" style="spotng" x="284" y="122" crop="0|0|67|41" scale="1.0" onclick="loadscene(scene_near_gate,null,MERGE,BLEND(0.5));" onover="set(scale, 1.2);" onout="set(scale, 1.0);"/>
+
+						</layer>
+					</layer>
+					<layer name="zoom_in_map" url="images/zoom.png" keep="true" align="leftbottom" x="15" y="43" width="28" height="28" bgcolor="0x000000" bgalpha="0.0" zorder="999" bgcapture="true" crop="31|0|28|28" onover="set(crop, 1|0|28|28);" onout="set(crop, 31|0|28|28);" onclick="map_zoom_in();"/>					
+					<layer name="zoom_out_map" url="images/zoom.png" keep="true" align="leftbottom" x="15" y="15" width="28" height="28" bgcolor="0xFFFFFF" bgalpha="0.0" zorder="999" crop="1|28|28|28" onover="set(crop, 31|28|28|28);" onout="set(crop, 1|28|28|28);" bgcapture="true" onclick="map_zoom_out();"/>					
+				</layer>
+
+		</layer>
+		
+
+		<layer name="footer" type="container" keep="true" align="leftbottom" bgcolor=""  bgalpha="0.0" width="100%" height="100%" x="0" y="0"> 
+
+			<layer name="thumbnail_wrapper" url="images/bg_thumbnail.png" keep="true" align="leftbottom" width="292" height="439" autoheight="true" x="0" y="-462" bgcolor="0xffffff" bgalpha="0.0" visible="true" zorder="10" bgcapture="true" >
+				<layer name="scrollbar_bg" type="container" keep="true" align="left" width="17" height="100%" x="0" y="0" bgcolor="0xf1f1f1" bgalpha="1.0" maskchildren="true" handcursor="false" zorder="12">
+					<layer name="scroll_up" url="images/scroll_up.png" keep="true" align="lefttop" width="17" height="17" zorder="13" x="0" y="0" ondown="asyncloop(pressed, layer[thumbnail_items].scrollby(0,+1));"/>
+
+					<layer name="scroll_bar" url="images/sidebar.png" align="lefttop" width="13" height="108" x="2" y="15" ondown="copy(cy, y); copy(sy, mouse.stagey); dragging();" zorder="14"/>
+
+					<layer name="scroll_down" url="images/scroll_down.png" keep="true" align="leftbottom" width="17" height="17" zorder="13" x="0" y="0" ondown="asyncloop(pressed, layer[thumbnail_items].scrollby(0,-1));"/>
+
+					<!-- dragging="if(pressed, sub(dy, mouse.stagey, sy); add(ny, cy, dy); if(ny LT 15, set(ny, 15)); if(ny GT 168, set(ny, 168)); copy(y, ny); sub(ty, ny, 15); div(ty, 213); sub(th, 15, layer[thumbnail_items].pixelheight); mul(ty, th); add(ty,0); copy(layer[thumbnail_items].y, ty); delayedcall(0,dragging()); );" -->
+				</layer>
+
+				<layer name="thumbnail_container" type="container" keep="true" align="right" width="292" height="428" x="4" y="5" maskchildren="true" scalechildren="true">
+					<layer name="thumbnail_items" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" align="righttop" width="292" height="2574" zorder="11" direction="v" onscroll="if(hoverflow GT 0, div(yp,toverflow,hoverflow);Math.min(yp,1);Math.max(yp,0); copy(th,layer[scrollbar_bg].pixelheight);sub(th,layer[scroll_up].pixelheight);sub(th,layer[scroll_down].pixelheight);sub(th,layer[scroll_bar].pixelheight); mul(yp,th);add(yp,layer[scroll_up].pixelheight); copy(layer[scroll_bar].y,yp); );" x="0" y="10" maskchildren="true" handcursor="false">
+
+						<layer name="skin_thumb_v_1" url="%SWFPATH%/panos/hole1-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="0" maskchildren="true" stt="1" link="%SWFPATH%/videos/hole_01.mp4" link2="%SWFPATH%/videos/mobile/hole_01.mp4"  onhover="tween(layer[skin_thumb_skin_v_1].y, 0,0.2,easeOutSine); tween(layer[skin_bg_video_v_1].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_1].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_1].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_1].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_1].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_1" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_1)"/>
+							<layer name="skin_thumb_skin_v_1" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_1)">
+								<layer name="skin_bg_title_v_1" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_1)"/>
+								<layer name="skin_thumb_title_v_1" url="%SWFPATH%/plugins/textfield.swf" html="Hole #1" html1="Hole #1"  css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_1)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_2" url="%SWFPATH%/panos/hole2-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="143" maskchildren="true" stt="2" link="%SWFPATH%/videos/hole_02.mp4" link2="%SWFPATH%/videos/mobile/hole_02.mp4" onhover="tween(layer[skin_thumb_skin_v_2].y, 0,0.2,easeOutSine); tween(layer[skin_bg_video_v_2].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_2].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_2].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_2].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_2].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_2" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_2)"/>
+							<layer name="skin_thumb_skin_v_2" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_2)">
+								<layer name="skin_bg_title_v_2" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center"  onclick="choose_video(skin_thumb_v_2)"/>
+								<layer name="skin_thumb_title_v_2" url="%SWFPATH%/plugins/textfield.swf" html="Hole #2" html1="Hole #2" css="font-size:16px; font-family:Trajan Pro;color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true'  onclick="choose_video(skin_thumb_v_2)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_3" url="%SWFPATH%/panos/hole3-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="286" maskchildren="true" stt="3" link="%SWFPATH%/videos/hole_03.mp4" link2="%SWFPATH%/videos/mobile/hole_03.mp4" onhover="tween(layer[skin_thumb_skin_v_3].y, 0,0.2,easeOutSine); tween(layer[skin_bg_video_v_3].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_3].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_3].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_3].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_3].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_3" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_3)"/>
+							<layer name="skin_thumb_skin_v_3" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%"  onclick="choose_video(skin_thumb_v_3)">
+								<layer name="skin_bg_title_v_3" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center"  onclick="choose_video(skin_thumb_v_3)"/>
+								<layer name="skin_thumb_title_v_3" url="%SWFPATH%/plugins/textfield.swf" html="Hole #3" html1="Hole #3" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true'  onclick="choose_video(skin_thumb_v_3)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_4" url="%SWFPATH%/panos/hole4-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="429" maskchildren="true" stt="4" link="%SWFPATH%/videos/hole_04.mp4" link2="%SWFPATH%/videos/mobile/hole_04.mp4" onhover="tween(layer[skin_thumb_skin_v_4].y, 0,0.2,easeOutSine); tween(layer[skin_bg_video_v_4].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_4].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_4].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_4].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_4].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_4" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_4)"/>
+							<layer name="skin_thumb_skin_v_4" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_4)">
+								<layer name="skin_bg_title_v_4" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_4)"/>
+								<layer name="skin_thumb_title_v_4" url="%SWFPATH%/plugins/textfield.swf" html="Hole #4" html1="Hole #4" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_4)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_5" url="%SWFPATH%/panos/hole05-00-teebox.tiles/thumb.jpg " align="lefttop" width="255" height="133" x="30" y="572" maskchildren="true" stt="5" link="%SWFPATH%/videos/hole_05.mp4" link2="%SWFPATH%/videos/mobile/hole_05.mp4" onhover="tween(layer[skin_thumb_skin_v_5].y, 0,0.2,easeOutSine); tween(layer[skin_bg_video_v_5].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_5].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_5].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_5].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_5].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_5" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_5)"/>
+							<layer name="skin_thumb_skin_v_5" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_5)">
+								<layer name="skin_bg_title_v_5" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_5)"/>
+								<layer name="skin_thumb_title_v_5" url="%SWFPATH%/plugins/textfield.swf" html="Hole #5" html1="Hole #5" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_5)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_6" url="%SWFPATH%/panos/hole6-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="715" maskchildren="true" stt="6" link="%SWFPATH%/videos/hole_06.mp4" link2="%SWFPATH%/videos/mobile/hole_06.mp4" onhover="tween(layer[skin_thumb_skin_v_6].y, 0,0.2,easeOutSine);  tween(layer[skin_bg_video_v_6].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_6].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_6].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_6].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_6].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_6" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_6)"/>
+							<layer name="skin_thumb_skin_v_6" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_6)">
+								<layer name="skin_bg_title_v_6" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_6)"/>
+								<layer name="skin_thumb_title_v_6" url="%SWFPATH%/plugins/textfield.swf" html="Hole #6" html1="Hole #6" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_6)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_7" url="%SWFPATH%/panos/hole7-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="858" maskchildren="true" stt="7" link="%SWFPATH%/videos/hole_07.mp4" link2="%SWFPATH%/videos/mobile/hole_07.mp4" onhover="tween(layer[skin_thumb_skin_v_7].y, 0,0.2,easeOutSine);  tween(layer[skin_bg_video_v_7].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_7].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_7].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_7].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_7].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_7" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_7)"/>
+							<layer name="skin_thumb_skin_v_7" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_7)">
+								<layer name="skin_bg_title_v_7" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_7)"/>
+								<layer name="skin_thumb_title_v_7" url="%SWFPATH%/plugins/textfield.swf" html="Hole #7" html1="Hole #7" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_7)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_8" url="%SWFPATH%/panos/hole8-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="1001" maskchildren="true" stt="8" link="%SWFPATH%/videos/hole_08.mp4" link2="%SWFPATH%/videos/mobile/hole_08.mp4" onhover="tween(layer[skin_thumb_skin_v_8].y, 0,0.2,easeOutSine);  tween(layer[skin_bg_video_v_8].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_8].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_8].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_8].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_8].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_8" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_8)"/>
+							<layer name="skin_thumb_skin_v_8" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_8)">
+								<layer name="skin_bg_title_v_8" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_8)"/>
+								<layer name="skin_thumb_title_v_8" url="%SWFPATH%/plugins/textfield.swf" html="Hole #8" html1="Hole #8" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_8)"/>
+							</layer>
+						</layer>	
+
+						<layer name="skin_thumb_v_9" url="%SWFPATH%/panos/hole9-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="1144" maskchildren="true" stt="9" link="%SWFPATH%/videos/hole_09.mp4" link2="%SWFPATH%/videos/mobile/hole_09.mp4" onhover="tween(layer[skin_thumb_skin_v_9].y, 0,0.2,easeOutSine);  tween(layer[skin_bg_video_v_9].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_9].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_9].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_9].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_9].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_9" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_9)"/>
+							<layer name="skin_thumb_skin_v_9" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_9)">
+								<layer name="skin_bg_title_v_9" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_9)"/>
+								<layer name="skin_thumb_title_v_9" url="%SWFPATH%/plugins/textfield.swf" html="Hole #9" html1="Hole #9" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_9)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_10" url="%SWFPATH%/panos/hole10-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="1287" maskchildren="true" stt="10" link="%SWFPATH%/videos/hole_10.mp4" link2="%SWFPATH%/videos/mobile/hole_10.mp4" onhover="tween(layer[skin_thumb_skin_v_10].y, 0,0.2,easeOutSine);  tween(layer[skin_bg_video_v_10].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_10].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_10].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_10].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_10].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_10" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_10)"/>
+							<layer name="skin_thumb_skin_v_10" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_10)">
+								<layer name="skin_bg_title_v_10" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_10)"/>
+								<layer name="skin_thumb_title_v_10" url="%SWFPATH%/plugins/textfield.swf" html="Hole #10" html1="Hole #10" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_10)"/>
+							</layer>
+						</layer>	
+
+						<layer name="skin_thumb_v_11" url="%SWFPATH%/panos/hole11-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="1430" maskchildren="true" stt="11" link="%SWFPATH%/videos/hole_11.mp4" link2="%SWFPATH%/videos/mobile/hole_11.mp4" onhover="tween(layer[skin_thumb_skin_v_11].y, 0,0.2,easeOutSine);  tween(layer[skin_bg_video_v_11].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_11].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_11].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_11].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_11].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_11" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_11)"/>
+							<layer name="skin_thumb_skin_v_11" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_11)">
+								<layer name="skin_bg_title_v_11" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_11)"/>
+								<layer name="skin_thumb_title_v_11" url="%SWFPATH%/plugins/textfield.swf" html="Hole #11" html1="Hole #11" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_11)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_12" url="%SWFPATH%/panos/hole12-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="1573" maskchildren="true" stt="12" link="%SWFPATH%/videos/hole_12.mp4" link2="%SWFPATH%/videos/mobile/hole_12.mp4" onhover="tween(layer[skin_thumb_skin_v_12].y, 0,0.2,easeOutSine);  tween(layer[skin_bg_video_v_12].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_12].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_12].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_12].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_12].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_12" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_12)"/>
+							<layer name="skin_thumb_skin_v_12" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_12)">
+								<layer name="skin_bg_title_v_12" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_12)"/>
+								<layer name="skin_thumb_title_v_12" url="%SWFPATH%/plugins/textfield.swf" html="Hole #12" html1="Hole #12" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_12)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_13" url="%SWFPATH%/panos/hole13-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="1716" maskchildren="true" stt="13" link="%SWFPATH%/videos/hole_13.mp4" link2="%SWFPATH%/videos/mobile/hole_13.mp4" onhover="tween(layer[skin_thumb_skin_v_13].y, 0,0.2,easeOutSine);  tween(layer[skin_bg_video_v_13].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_13].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_13].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_13].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_13].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_13" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_13)"/>
+							<layer name="skin_thumb_skin_v_13" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_13)">
+								<layer name="skin_bg_title_v_13" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_13)"/>
+								<layer name="skin_thumb_title_v_13" url="%SWFPATH%/plugins/textfield.swf" html="Hole #13" html1="Hole #13" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_13)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_14" url="%SWFPATH%/panos/hole14-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="1859" maskchildren="true" stt="14" link="%SWFPATH%/videos/hole_14.mp4" link2="%SWFPATH%/videos/mobile/hole_14.mp4" onhover="tween(layer[skin_thumb_skin_v_14].y, 0,0.2,easeOutSine);  tween(layer[skin_bg_video_v_14].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_14].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_14].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_14].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_14].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_14" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_14)"/>
+							<layer name="skin_thumb_skin_v_14" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_14)">
+								<layer name="skin_bg_title_v_14" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_14)"/>
+								<layer name="skin_thumb_title_v_14" url="%SWFPATH%/plugins/textfield.swf" html="Hole #14" html1="Hole #14" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_14)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_15" url="%SWFPATH%/panos/hole15-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="2002" maskchildren="true" stt="15" link="%SWFPATH%/videos/hole_15.mp4" link2="%SWFPATH%/videos/mobile/hole_15.mp4" onhover="tween(layer[skin_thumb_skin_v_15].y, 0,0.2,easeOutSine);  tween(layer[skin_bg_video_v_15].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_15].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_15].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_15].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_15].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_15" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_15)"/>
+							<layer name="skin_thumb_skin_v_15" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_15)">
+								<layer name="skin_bg_title_v_15" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_15)"/>
+								<layer name="skin_thumb_title_v_15" url="%SWFPATH%/plugins/textfield.swf" html="Hole #15" html1="Hole #15" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_15)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_16" url="%SWFPATH%/panos/hole16-00-teebox.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="2145" maskchildren="true" stt="16" link="%SWFPATH%/videos/hole_15.mp4" link2="%SWFPATH%/videos/mobile/hole_16.mp4" onhover="tween(layer[skin_thumb_skin_v_16].y, 0,0.2,easeOutSine);  tween(layer[skin_bg_video_v_16].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_16].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_16].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_16].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_16].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_16" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_16)"/>
+							<layer name="skin_thumb_skin_v_16" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_16)">
+								<layer name="skin_bg_title_v_16" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_16)"/>
+								<layer name="skin_thumb_title_v_16" url="%SWFPATH%/plugins/textfield.swf" html="Hole #16" html1="Hole #16" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_16)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_17" url="%SWFPATH%/panos/hole17-00-tee_fix.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="2288" maskchildren="true" stt="17" link="%SWFPATH%/videos/hole_17.mp4" link2="%SWFPATH%/videos/mobile/hole_17.mp4" onhover="tween(layer[skin_thumb_skin_v_17].y, 0,0.2,easeOutSine);  tween(layer[skin_bg_video_v_17].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_17].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_17].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_17].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_17].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_17" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_17)"/>
+							<layer name="skin_thumb_skin_v_17" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_17)">
+								<layer name="skin_bg_title_v_17" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_17)"/>
+								<layer name="skin_thumb_title_v_17" url="%SWFPATH%/plugins/textfield.swf" html="Hole #17" html1="Hole #17" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_17)"/>
+							</layer>
+						</layer>
+
+						<layer name="skin_thumb_v_18" url="%SWFPATH%/panos/hole18-00-tee.tiles/thumb.jpg" align="lefttop" width="255" height="133" x="30" y="2431" maskchildren="true" stt="18" link="%SWFPATH%/videos/hole_18.mp4" link2="%SWFPATH%/videos/mobile/hole_18.mp4" onhover="tween(layer[skin_thumb_skin_v_18].y, 0,0.2,easeOutSine);  tween(layer[skin_bg_video_v_18].y, -100%, 0.2,easeOutSine); tween(layer[skin_thumb_v_18].alpha, 0.8, 0.2,easeOutSine);" onout="tween(layer[skin_thumb_skin_v_18].y, 100%, 0,easeOutSine); tween(layer[skin_bg_video_v_18].y, 0, 0.2,easeOutSine); tween(layer[skin_thumb_v_18].alpha, 1.0, 0.2,easeOutSine);" onclick="choose_video(get(name))">
+							<layer name="skin_bg_video_v_18" url="video_img/video_play_button.png" bgcapture="true" width="57" height="58" zorder="20" align="center" onclick="choose_video(skin_thumb_v_18)"/>
+							<layer name="skin_thumb_skin_v_18" type="container" align="lefttop" width="255" height="133" x="0" bgcolor="0xffffff" bgalpha="0.6" bgcapture="true" maskchildren="true" zorder="19" y="100%" onclick="choose_video(skin_thumb_v_18)">
+								<layer name="skin_bg_title_v_18" url="images/thumb_title_bg.png" bgcapture="true" width="100%" zorder="20" align="center" onclick="choose_video(skin_thumb_v_18)"/>
+								<layer name="skin_thumb_title_v_18" url="%SWFPATH%/plugins/textfield.swf" html="Hole #18" html1="Hole #18" css="font-size:16px; font-family:Trajan Pro; color:#202020;text-align:center; font-weight:bold; text-transform:uppercase" background="false" zorder="21" selectable="false" align="center" autoheight='true' autowidth='true' onclick="choose_video(skin_thumb_v_18)"/>
+							</layer>
+						</layer>
+
+					</layer>	
+
+				</layer>
+			</layer>
+
+			<layer name="bottom_wp" type="container" keep="true" align="leftbottom" width="100%" height="43" zorder="15" x="0" y="0">
+				<layer name="controllhide" url="images/controll_hide.png" keep="true" align="leftbottom" width="43" height="43" zorder="11" x="-43" y="0" onclick="show_controllbar();"/>
+
+				<layer name="bottomLine" type="container" keep="true" align="leftbottom" bgcolor="0x202020"  bgalpha="1.0" width="100%" height="43" zorder="5" x="0" y="0"/>
+				<layer name="controlToggleVideoThumb" url="images/Hole_button.png" keep="true" align="leftbottom " x="0" y="0" width="292" height="43" zorder="11" onclick="show_hide_thumb();"/>
+				<layer name="controlToggleVideoThumbArrow" url="images/dalat_golfclub_arrow.png" keep="true" align="leftbottom" x="20" y="16" width="20" height="12" crop="0|0|20|12" zorder="12" onclick="show_hide_thumb();"/>
+
+
+				<layer name="controlButtonFullScreenOn" url="images/button_02.png" keep="true" align="leftbottom " x="300" y="6" width="31" height="31" zorder="11" crop="39|32|31|31" onover="set(crop, 39|1|31|31);" onout="set(crop, 39|32|31|31);" onclick="fullscreen_mode();"/>
+				<layer name="controlButtonFullScreenOff" url="images/button_02.png" keep="true" align="leftbottom " x="300" y="6" width="31" height="31" zorder="11" crop="2|32|31|31" onover="set(crop, 2|1|31|31);" onout="set(crop, 2|32|31|31);" onclick="fullscreen_mode();" visible="false" />
+				<layer name="controlButtonZoomIn" url="images/button_02.png" keep="true" align="leftbottom " x="344" y="6" width="31" height="31" zorder="11" crop="84|32|31|31" onover="set(crop, 84|1|31|31);" onout="set(crop, 84|32|31|31);" ondown="set(fov_moveforce, -0.5)" onup="set(fov_moveforce, 0)"/>
+				<layer name="controlButtonZoomOut" url="images/button_02.png" keep="true" align="leftbottom " x="382" y="6" width="31" height="31" zorder="11" crop="122|32|31|31" onover="set(crop, 122|1|31|31);" onout="set(crop, 122|32|31|31);" ondown="set(fov_moveforce, +0.5)" onup="set(fov_moveforce, 0)"/>
+				<layer name="controlButtonInfo" url="images/button_02.png" keep="true" align="leftbottom " x="427" y="6" width="31" height="31" zorder="11" crop="167|32|31|31" onover="set(crop, 167|1|31|31);" onout="set(crop, 167|32|31|31);" onclick="openurl('http://www.dalat1200.com/en/country-club', '_blank');"/>
+
+				<layer name="skin_btn_vrss" url="images/vr_button2.png" keep="true" align="leftbottom " x="472" y="6" width="47" height="31" zorder="11" crop="0|0|47|31" onclick="webvr.enterVR();"/>
+
+				<!-- <layer name="skin_btn_vr" style="skin_base|skin_glow" crop="0|0|80|64"  keep="true"  align="leftbottom" x="500" y="0"  scale="0.5"  zorder="11" onclick="webvr.enterVR();"  /> -->
+
+				<layer name="controlToggleBottomLine" url="images/Controll_button.png" keep="true" align="rightbottom " x="0" y="0" width="292" height="43" zorder="11" onclick="hide_controllbar()"/>
+
+			</layer>
+
+		</layer>
+
+	</layer>
+
+	<layer name="skin_loadingtext"  keep="true" url="%SWFPATH%/plugins/textfield.swf" align="center" x="5" y="-5" html="loading..." visible="false" autoheight="true" background="false" border="false" enabled="false" css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:22px; font-style:italic;" textshadow="2" />
+
+	
+
+
+	<events name="skin_events" keep="true"
+	        onxmlcomplete=""
+	        onnewpano="skin_showloading(true);"
+	        onremovepano="skin_showloading(true);"
+	        onloadcomplete="skin_showloading(false);get_title_scene();"
+	        onresize="resize_screen();"
+	        />
+
+	<events name="skin_events" devices="fullscreensupport"
+	        onenterfullscreen="full_screen_on();"		
+	        onexitfullscreen="full_screen_off();"
+	        />
+
+	<!-- action check resize thumbnail -->
+
+	<action name="get_title_scene">
+		txtadd(title_scene, <p>, get(scene[get(xml.scene)].title), </p>);
+		copy(layer[righttitle].html, title_scene);
+	</action>
+
+	<!-- action resize -->
+
+	<action name="resize_screen">
+		if(stagewidth LT 814,
+			set(layer[topleft_logo].scale, 0.8);
+			set(layer[righttitle].x, 190);
+			set(layer[video_table].scale, 0.8);
+			set(layer[controlButtonZoomIn].visible, false);
+			set(layer[controlButtonZoomOut].visible, false);
+			set(layer[skin_btn_vrss].x, 344);
+			,
+			set(layer[topleft_logo].scale, 1.0);
+			set(layer[righttitle].x, 227);
+			set(layer[video_table].scale, 1.0);
+			set(layer[controlButtonZoomIn].visible, true);
+			set(layer[controlButtonZoomOut].visible, true);
+			set(layer[skin_btn_vrss].x, 472);
+		);
+		if(stagewidth LT 1025,
+			set(layer[topleft_logo].scale, 0.8);
+			set(layer[righttitle].x, 190);
+			set(layer[video_table].scale, 0.8);
+			,
+			set(layer[topleft_logo].scale, 1.0);
+			set(layer[righttitle].x, 227);
+			set(layer[video_table].scale, 1.0);
+		);
+		if(stagewidth LT 681,
+			set(layer[topleft_logo].scale, 0.6);
+			set(layer[controlButtonFullScreenOn].visible, false);
+			set(layer[skin_btn_vrss].x, 300);
+			,
+			set(layer[controlButtonFullScreenOn].visible, true);
+		);
+	</action>
+
+	<action name="check_device">
+		if(device.mobile, 
+			set(layer[thumbnail_wrapper].height, 290);
+			set(layer[thumbnail_container].height, 280);
+			,
+			set(layer[thumbnail_wrapper].height, 439);
+			set(layer[thumbnail_container].height, 428);
+		);
+		if(device.tablet, 
+			set(layer[video_table].scale, 0.7);
+			,
+			set(layer[video_table].scale, 1.0);
+		);
+	</action>
+
+	<action name="dragging">
+		if(device.mobile,
+			if(pressed, 
+				sub(dy, mouse.stagey, sy); 
+				add(ny, cy, dy);
+				if(ny LT 15, 
+					set(ny, 15)
+				); 
+				if(ny GT 168, 
+					set(ny, 168)
+				);
+				copy(y, ny); 
+				sub(ty, ny, 15);
+				div(ty, 170); 
+				sub(th, 15, layer[thumbnail_items].pixelheight); 
+				mul(ty, th); 
+				add(ty,0); 
+				copy(layer[thumbnail_items].y, ty); 
+				delayedcall(0,dragging()); 
+			);
+			,
+			if(pressed, 
+				sub(dy, mouse.stagey, sy); 
+				add(ny, cy, dy);
+				if(ny LT 15, 
+					set(ny, 15)
+				); 
+				if(ny GT 314, 
+					set(ny, 400)
+				);
+				copy(y, ny); 
+				sub(ty, ny, 15);
+				div(ty, 400); 
+				sub(th, 15, layer[thumbnail_items].pixelheight); 
+				mul(ty, th); 
+				add(ty,0); 
+				copy(layer[thumbnail_items].y, ty); 
+				delayedcall(0,dragging()); 
+			);
+		);
+	</action>
+
+	<!-- map action -->
+
+	<action name="show_hide_map">
+		if(layer[minimap].y == -390,
+			tween(layer[minimap].y, 43, 0.5);
+			set(layer[topright_mapDropDownArrow].crop, 0|0|20|12);
+			,
+			tween(layer[minimap].y, -390, 0.5, easeOutQuint);
+			set(layer[topright_mapDropDownArrow].crop, 0|12|20|12);
+		);
+	</action>
+
+	<!-- action active hotspot -->
+
+	<action name="active_hotspot">
+		for(set(i, 1), i LT 22, inc(i),
+			txtadd(spotnum, 'spot', get(i));
+			set(layer[get(spotnum)].crop, 0|0|67|40);
+			set(layer[get(spotnum)].scale, 1.0);
+			set(layer[get(spotnum)].onover, set(scale, 1.2));
+			set(layer[get(spotnum)].onout, set(scale, 1.0));
+		);
+		set(layer[%1].crop, 0|41|67|40);
+		set(layer[%1].scale, 1.2);
+		set(layer[%1].onover, set(scale, 1.2));
+		set(layer[%1].onout, set(scale, 1.2));
+		<!-- set(layer[%1].crop, 0|41|67|40);
+		set(layer[%1].scale, 1.2);
+		set(layer[%1].onover, set(scale, 1.2));
+		set(layer[%1].onout, set(scale, 1.2));
+
+		set(layer[%2].crop, 0|0|67|40);
+		set(layer[%2].scale, 1.0);
+		set(layer[%2].onover, set(scale, 1.2));
+		set(layer[%2].onout, set(scale, 1.0));
+
+		set(layer[%3].crop, 0|0|67|40);
+		set(layer[%3].scale, 1.0);
+		set(layer[%3].onover, set(scale, 1.2));
+		set(layer[%3].onout, set(scale, 1.0));
+
+		set(layer[%4].crop, 0|0|67|40);
+		set(layer[%4].scale, 1.0);
+		set(layer[%4].onover, set(scale, 1.2));
+		set(layer[%4].onout, set(scale, 1.0));
+
+		set(layer[%5].crop, 0|0|67|40);
+		set(layer[%5].scale, 1.0);		
+		set(layer[%5].onover, set(scale, 1.2));
+		set(layer[%5].onout, set(scale, 1.0));
+
+		set(layer[%6].crop, 0|0|67|40);
+		set(layer[%6].scale, 1.0);		
+		set(layer[%6].onover, set(scale, 1.2));
+		set(layer[%6].onout, set(scale, 1.0));
+
+		set(layer[%7].crop, 0|0|67|40);
+		set(layer[%7].scale, 1.0);		
+		set(layer[%7].onover, set(scale, 1.2));
+		set(layer[%7].onout, set(scale, 1.0));
+
+		set(layer[%8].crop, 0|0|67|40);
+		set(layer[%8].scale, 1.0);		
+		set(layer[%8].onover, set(scale, 1.2));
+		set(layer[%8].onout, set(scale, 1.0)); -->
+	</action>
+
+	<!-- zoom map -->
+
+	<action name="map_zoom_in">
+		if(layer[map].scale == 0.5,
+			tween(layer[map].scale, 0.6, 0.1);
+			set(layer[mapscroll].width, 475);
+			set(layer[mapscroll].height, 468);
+		);
+		if(layer[map].scale == 0.6,
+			tween(layer[map].scale, 0.7, 0.1);
+			set(layer[mapscroll].width, 554);
+			set(layer[mapscroll].height, 546);
+		);
+		if(layer[map].scale == 0.7,
+			tween(layer[map].scale, 0.8, 0.1);
+			set(layer[mapscroll].width, 633);
+			set(layer[mapscroll].height, 624);
+		);
+		if(layer[map].scale == 0.8,
+			tween(layer[map].scale, 0.9, 0.1);
+			set(layer[mapscroll].width, 712);
+			set(layer[mapscroll].height, 702);
+		);
+		if(layer[map].scale == 0.9,
+			tween(layer[map].scale, 1.0, 0.1);
+			set(layer[mapscroll].width, 792);
+			set(layer[mapscroll].height, 780);
+		);
+
+	</action>
+
+	<action name="map_zoom_out">
+		if(layer[map].scale == 1.0,
+			tween(layer[map].scale, 0.9, 0.1);
+			set(layer[mapscroll].width, 712);
+			set(layer[mapscroll].height, 702);
+		);
+		if(layer[map].scale == 0.9,
+			tween(layer[map].scale, 0.8, 0.1);
+			set(layer[mapscroll].width, 633);
+			set(layer[mapscroll].height, 624);
+		);
+		if(layer[map].scale == 0.8,
+			tween(layer[map].scale, 0.7, 0.1);
+			set(layer[mapscroll].width, 554);
+			set(layer[mapscroll].height, 546);
+		);
+		if(layer[map].scale == 0.7,
+			tween(layer[map].scale, 0.6, 0.1);
+			set(layer[mapscroll].width, 475);
+			set(layer[mapscroll].height, 468);
+		);
+		if(layer[map].scale == 0.6,
+			tween(layer[map].scale, 0.5, 0.1);
+			set(layer[mapscroll].width, 396);
+			set(layer[mapscroll].height, 390);
+			set(layer[map].width, 792);
+			set(layer[map].height, 780);
+		);
+	</action>
+
+	<action name="skin_showloading">
+		set(layer[skin_loadingtext].visible, %1);
+	</action>
+
+	<action name="fullscreen_mode">
+		if(fullscreen == true, 
+			set(fullscreen, false);
+			set(layer[controlButtonFullScreenOn].visible, true);
+			set(layer[controlButtonFullScreenOff].visible, false);
+			,
+			set(fullscreen, true);
+			set(layer[controlButtonFullScreenOn].visible, false);
+			set(layer[controlButtonFullScreenOff].visible, true);
+		);
+	</action>
+
+	<action name="full_screen_on">
+		set(layer[controlButtonFullScreenOn].visible, false);
+		set(layer[controlButtonFullScreenOff].visible, true);
+	</action>
+
+	<action name="full_screen_off">		
+		set(layer[controlButtonFullScreenOn].visible, true);
+		set(layer[controlButtonFullScreenOff].visible, false);
+	</action>
+
+	<action name="show_controllbar">
+		tween(layer[bottom_wp].x, 0, 0.5);
+	</action>
+
+	<action name="hide_controllbar">
+		if(layer[controlToggleVideoThumbArrow].crop == 0|12|20|12,
+			set(layer[controlToggleVideoThumbArrow].crop, 0|0|20|12);
+			set(layer[thumbnail_wrapper].y, -462);
+			
+		);
+
+		tween(layer[bottom_wp].x, 100%, 0.5);
+	</action>
+
+	<action name="show_hide_thumb">
+		if(layer[controlToggleVideoThumbArrow].crop == 0|0|20|12, 
+			set(layer[controlToggleVideoThumbArrow].crop, 0|12|20|12);
+			tween(layer[thumbnail_wrapper].y, 43, 0.5);
+			,
+			set(layer[controlToggleVideoThumbArrow].crop, 0|0|20|12);
+			tween(layer[thumbnail_wrapper].y, -462, 0.5);
+		);
+	</action>
+
+	<action name="skin_addthumbs">
+		<!-- copy(thumbwidth, skin_settings.thumbs_width);
+		copy(thumbheight, skin_settings.thumbs_height);
+		copy(thumbpadding, skin_settings.thumbs_padding);
+		copy(thumbcrop, skin_settings.thumbs_crop);
+
+
+		add(thumbxoffset, thumbheight, thumbpadding);
+		mul(thumbxcenter, thumbxoffset, 0.5);
+		mul(thumbbarheight, thumbxoffset, scene.count);
+		add(thumbbarheight, thumbpadding);
+		add(thumbbarwidth, thumbpadding, thumbwidth);
+		add(thumbbarwidth, thumbpadding);
+
+		
+
+		copy(layer[thumbnail_items].height, thumbbarheight);
+		copy(layer[thumbnail_items].width, thumbbarwidth);
+
+		mul(halfheight, thumbbarheight, 0.5);
+		copy(layer[skin_thumbs_scrollleft].y, halfheight);
+		copy(layer[skin_thumbs_scrollright].y, halfheight);
+
+		for(set(i,0), i LT scene.count, inc(i),
+			
+			txtadd(thumbname,'skin_thumb_',get(i));
+			txtadd(img_scene,'skin/images/',get(scene[get(i)].name),'.jpg');
+			addlayer(get(thumbname));
+			copy(layer[get(thumbname)].url, scene[get(i)].thumburl);
+			set(layer[get(thumbname)].keep, true);
+			set(layer[get(thumbname)].parent, 'thumbnail_items');
+			set(layer[get(thumbname)].align, lefttop);
+			set(layer[get(thumbname)].maskchildren, true);
+
+			set(layer[get(thumbname)].width, 255);
+			set(layer[get(thumbname)].height, 133);
+			set(layer[get(thumbname)].zorder, 12);
+			copy(layer[get(thumbname)].link, scene[get(i)].video_url);
+						
+			mul(thumbx, i, thumbxoffset);
+			copy(layer[get(thumbname)].x, thumbpadding);
+			copy(layer[get(thumbname)].y, thumbx);
+			add(scene[get(i)].thumbx, thumbx, thumbxcenter);
+			copy(scene[get(i)].thumby, thumbpadding);
+			set(layer[get(thumbname)].linkedscene, get(scene[get(i)].name) );
+			set(layer[get(thumbname)].onclick, loadscene(get(linkedscene), null, MERGE, BLEND(0.5)); );	 -->
+
+			<!-- video icon -->
+
+			<!-- txtadd(video_icon,'video_icon_',get(i));
+			addlayer(get(video_icon));
+			set(layer[get(video_icon)].url, '%SWFPATH%/skin/images/video_play_button.png');
+			set(layer[get(video_icon)].keep, true);
+			set(layer[get(video_icon)].parent, get(layer[get(thumbname)].name));
+			set(layer[get(video_icon)].align, center);
+			set(layer[get(video_icon)].width, 57);
+			set(layer[get(video_icon)].height, 58);
+			set(layer[get(video_icon)].bgcolor, 0xffffff);
+			set(layer[get(video_icon)].bgalpha, 0.5);
+			set(layer[get(video_icon)].visible, true);
+			set(layer[get(video_icon)].zorder, 16);
+
+			set(layer[get(video_icon)].x, -10);
+			set(layer[get(video_icon)].y, 0); -->
+			
+
+			<!-- bg thumb -->
+
+			<!-- txtadd(thumbname_title_img_parent,'skin_thumb_wrapper_title_img_',get(i));
+			addlayer(get(thumbname_title_img_parent));
+			set(layer[get(thumbname_title_img_parent)].type, container);
+			set(layer[get(thumbname_title_img_parent)].keep, true);
+			set(layer[get(thumbname_title_img_parent)].parent, get(layer[get(thumbname)].name));
+			set(layer[get(thumbname_title_img_parent)].align, lefttop);
+			set(layer[get(thumbname_title_img_parent)].width, 255);
+			set(layer[get(thumbname_title_img_parent)].height, 133);
+			set(layer[get(thumbname_title_img_parent)].bgcolor, 0x000000);
+			set(layer[get(thumbname_title_img_parent)].bgalpha, 0.7);
+			set(layer[get(thumbname_title_img_parent)].visible, true);
+			set(layer[get(thumbname_title_img_parent)].zorder, 16);
+
+			set(layer[get(thumbname_title_img_parent)].x, 0);
+			set(layer[get(thumbname_title_img_parent)].y, 100%);
+
+			set(layer[get(thumbname)].childname, get(layer[get(thumbname_title_img_parent)].name));
+
+			set(layer[get(thumbname)].onover, set(layer[get(childname)].y, 0); );
+			set(layer[get(thumbname)].onout, set(layer[get(childname)].y, 100%);  ); -->
+
+			<!-- title bg -->
+
+			<!-- txtadd(thumbname_title_bg,'skin_thumb_title_bg_',get(i));
+			addlayer(get(thumbname_title_bg));
+			set(layer[get(thumbname_title_bg)].url, '%SWFPATH%/skin/images/thumb_title_bg.png');
+			set(layer[get(thumbname_title_bg)].keep, true);
+			set(layer[get(thumbname_title_bg)].parent, get(layer[get(thumbname_title_img_parent)].name));
+			set(layer[get(thumbname_title_bg)].align, center);
+			set(layer[get(thumbname_title_bg)].width, 255);
+			set(layer[get(thumbname_title_bg)].height, 41);
+			set(layer[get(thumbname_title_bg)].visible, true);
+			set(layer[get(thumbname_title_bg)].zorder, 17);
+
+			set(layer[get(thumbname_title_bg)].x, 0);
+			set(layer[get(thumbname_title_bg)].y, 0); -->
+
+			<!-- set(layer[get(thumbname)].childname, get(layer[get(thumbname_title_bg)].name));
+
+			set(layer[get(thumbname)].onover, set(layer[get(childname)].y, 0); );
+			set(layer[get(thumbname)].onout, set(layer[get(childname)].y, 100%);  ); -->
+
+			
+			
+			<!-- layer for pano title -->
+
+			<!-- txtadd(thumbname_title_sub,'skin_thumb_title_sub_',get(i));
+			addlayer(get(thumbname_title_sub));
+			set(layer[get(thumbname_title_sub)].url, '%SWFPATH%/plugins/textfield.swf');
+			set(layer[get(thumbname_title_sub)].keep, true);
+			set(layer[get(thumbname_title_sub)].parent, get(layer[get(thumbname_title_img_parent)].name));
+			set(layer[get(thumbname_title_sub)].align, left);
+			set(layer[get(thumbname_title_sub)].width, 255);
+			set(layer[get(thumbname_title_sub)].autoheight, true);
+			set(layer[get(thumbname_title_sub)].html, get(scene[get(i)].title));
+			set(layer[get(thumbname_title_sub)].css, 'text-align:center; color:#202020; font-family:Helvetica Neue LT Std; font-size:22px;');
+			set(layer[get(thumbname_title_sub)].background, false);
+			set(layer[get(thumbname_title_sub)].visible, true);
+			set(layer[get(thumbname_title_sub)].zorder, 17);
+
+			set(layer[get(thumbname_title_sub)].x, 0);
+			set(layer[get(thumbname_title_sub)].y, -0);
+
+			set(layer[get(thumbname_title_sub)].onover, set(layer[get(childname)].visible, true); );
+
+			set(layer[get(thumbname_title_sub)].linkedscenes, get(scene[get(i)].name) );
+			set(layer[get(thumbname_title_sub)].onclick, loadscene(get(linkedscenes), null, MERGE, BLEND(0.5)); );
+		); -->
+
+	</action>
+
+</krpano>
+
+<!-- <layer name="thumbnail_wrapper" url="images/bg_thumbnail.png" keep="true" align="leftbottom" width="292" height="439" autoheight="true" x="0" y="-462" bgcolor="0xffffff" bgalpha="0.0" visible="true" zorder="10" bgcapture="true" >
+				<layer name="scrollbar_bg" type="container" keep="true" align="left" width="17" height="439" x="0" y="0" bgcolor="0xf1f1f1" bgalpha="1.0" maskchildren="true" handcursor="false" zorder="12">
+
+					<layer name="scroll_up" url="images/scroll_up.png" keep="true" align="lefttop" width="17" height="17" zorder="13" x="0" y="0" ondown="asyncloop(pressed, layer[thumbnail_items].scrollby(0,+1));"/>
+
+					<layer name="scroll_bar" url="images/sidebar.png" align="lefttop" width="13" height="108" x="2" y="17"  ondown="if(layer[thumbnail_items].hoverflow GT 0, copy(cy,y);copy(sy,mouse.stagey); dragging(); );"  zorder="14"/>
+
+					<layer name="scroll_down" url="images/scroll_down.png" keep="true" align="leftbottom" width="17" height="17" zorder="13" x="0" y="0" ondown="asyncloop(pressed, layer[thumbnail_items].scrollby(0,-1));"/>
+
+				</layer>
+				<layer name="thumbnail_container" type="container" keep="true" align="right" width="292" height="439" x="4" y="10" maskchildren="true">
+					<layer name="thumbnail_items" url="%SWFPATH%/plugins/scrollarea.swf" alturl="%SWFPATH%/plugins/scrollarea.js" align="righttop" width="100%" height="100%" zorder="11" direction="v" onscroll="if(hoverflow GT 0, div(yp,toverflow,hoverflow);Math.min(yp,1);Math.max(yp,0); copy(th,layer[scrollbar_bg].pixelheight);sub(th,layer[scroll_up].pixelheight);sub(th,layer[scroll_down].pixelheight);sub(th,layer[scroll_bar].pixelheight); mul(yp,th);add(yp,layer[scroll_up].pixelheight); copy(layer[scroll_bar].y,yp); );" x="0" y="2" handcursor="false"/>
+
+				</layer>
+			</layer> -->
