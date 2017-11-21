@@ -13,7 +13,6 @@ class Vr360TableTour extends Vr360Table
 	 * @var null
 	 */
 	public $name = null;
-
 	public $alias = null;
 	public $description = null;
 	public $keyword = null;
@@ -21,6 +20,7 @@ class Vr360TableTour extends Vr360Table
 	public $created  = null;
 	public $created_by  = null;
 	public $status  = null;
+
 	/**
 	 * @var string
 	 */

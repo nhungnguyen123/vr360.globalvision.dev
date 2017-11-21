@@ -40,7 +40,7 @@ class Vr360Krpano
 	}
 
 	/**
-	 * @param $command
+	 * @param  $command
 	 *
 	 * @return bool|string
 	 */

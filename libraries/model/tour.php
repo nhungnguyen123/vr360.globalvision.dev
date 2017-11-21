@@ -112,8 +112,7 @@ class Vr360ModelTour extends Vr360Model
 				$krPano->useConfigFile(Vr360Configuration::getConfig('krPanoConfigFile'));
 				$krPano->addFiles($uploadedFiles);
 
-				print_r($krPano->makePano($command));
-				print_r($command);
+				$krPano->makePano($command);
 			}
 			catch (Exception $exception)
 			{

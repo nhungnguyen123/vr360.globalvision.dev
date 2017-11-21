@@ -7,7 +7,6 @@ defined('_VR360_EXEC') or die;
  */
 class Vr360ControllerTour extends Vr360Controller
 {
-
 	public function ajaxSaveTour()
 	{
 		$ajax  = Vr360AjaxResponse::getInstance();
@@ -55,6 +54,9 @@ class Vr360ControllerTour extends Vr360Controller
 	 */
 	public function ajaxGenerateTour()
 	{
+		var_dump('here');
+		exit;
+
 		$ajax = Vr360AjaxResponse::getInstance();
 
 		// Permission verify
