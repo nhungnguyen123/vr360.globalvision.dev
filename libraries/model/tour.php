@@ -26,6 +26,9 @@ class Vr360ModelTour extends Vr360Model
 		return $instance;
 	}
 
+	/**
+	 *
+	 */
 	public function ajaxSave()
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
@@ -193,7 +196,7 @@ class Vr360ModelTour extends Vr360Model
 				}
 				else
 				{
-					$ajax->addSuccess('Save scene: ' . $sceneNames[$index] . ' success');
+					$ajax->addSuccess('Save scene: ' . $sceneNames[$index] . ' successed');
 				}
 			}
 		}
@@ -299,9 +302,7 @@ class Vr360ModelTour extends Vr360Model
 
 		if (!Vr360HelperFolder::exists($tourDataDirPath))
 		{
-			$ajax->addDanger('Missing folder Tour: ' . $tourDataDirPath);
-
-			return false;
+			$ajax->addDanger('Missing folder Tour: ' . $tourDataDirPath)->fail()->respond();
 		}
 
 		$sceneFiles  = array();

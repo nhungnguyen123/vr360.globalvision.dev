@@ -159,7 +159,7 @@ $scenes = $tour->getScenes();
                     <input type="hidden" name="view" value="tour" />
                     <input type="hidden" name="task" value="ajaxSaveTour" />
                 </fieldset>
-                <script>jQuery.validate();</script>
+                <script>jQuery.validate({ modules : 'file, date'});</script>
             </form>
         </div>
     </div>
