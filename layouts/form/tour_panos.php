@@ -1,52 +1,65 @@
-<?php if (isset($tourSettings['scene']) && !empty($tourSettings['scene'])): ?>
-	<?php foreach ($tourSettings['scene'] as $pano): ?>
-		<?php
-		$ext_file = substr($pano['@attributes']['thumburl'], -4);
-		$file     = explode("_", $pano['@attributes']['name']);
-		?>
-		<div class="sortable ui-sortable well well-sm pano">
-			<label>Panorama</label>
-			<div class="pull-right">
-				<button type="button" class="btn btn-danger removePano">
-					Remove this pano
-				</button>
-			</div>
+<?php
 
-			<hr/>
-			<div class="container-fluid">
-				<div id="panoWrap">
-					<div class="form-group">
-						<label>File input</label>
-						<input type="text"
-						       value="<?php echo $file[1] . $ext_file; ?>"
-						       disabled="disabled"/>
-						<input type="hidden" name="panoFile[]"
-						       value="<?php echo $file[1] . $ext_file; ?>"/>
-					</div>
+defined('_VR360_EXEC') or die;
 
-					<div class="form-group">
-						<label>Title</label>
-						<input name="panoTitle[]" type="text" class="form-control"
-						       placeholder="Pano title"
-						       required
-						       value="<?php echo $pano['@attributes']['title']; ?>"/>
-					</div>
-
-					<div class="form-group">
-						<label>Description</label>
-						<input
-							name="panoDescription[]"
-							type="text"
-							class="form-control"
-							size="80"
-							placeholder="Pano sub title"
-							required
-							value="<?php echo $pano['@attributes']['subtitle']; ?>"
-						/>
-					</div>
-				</div>
-			</div>
-		</div>
+/** @var  array $scenes List of scenes */
+?>
+<?php if (isset($scenes) && !empty($scenes)): ?>
+	<?php foreach ($scenes as $scene): ?>
+        <div class="panel <?php echo $scene->default ? 'panel-primary' : 'panel-info' ?> scene">
+            <div class="panel-heading">
+                <div class="container-fluid">
+                    <div class="col-md-6">
+                        <div class="panel-title">Scene</div>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-danger btn-sm pull-right removeScene"><i class="fa fa-remove"></i> Remove</button>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <div class="container-fluid">
+                    <div class="col-md-12">
+                        <div id="sceneWrap form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Scene file *</label>
+                                <div class="col-sm-9">
+                                    <input type="text" value="<?php echo $scene->file ?>" class="form-control disabled" disabled="disabled" title="Scene File" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Name *</label>
+                                <div class="col-sm-9">
+                                    <input name="sceneName[<?php echo $scene->id ?>]" type="text" class="form-control input-sm"
+                                           placeholder="Scene name" data-validation="required" value="<?php echo $scene->name ?>" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Description</label>
+                                <div class="col-sm-9">
+                                    <input
+                                            name="sceneDescription[<?php echo $scene->id ?>]"
+                                            type="text"
+                                            class="form-control input-sm"
+                                            size="80"
+                                            placeholder="Scene description"
+                                            value="<?php echo $scene->description ?>" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input name="sceneDefault" type="checkbox" value="<?php echo $scene->id ?>" <?php echo $scene->default ? 'checked' : '' ?> /> Default
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" name="sceneId[]" value="<?php echo $scene->id ?>" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 	<?php endforeach; ?>
-
-<?php endif; ?>
+<?php endif;

@@ -6,6 +6,8 @@ class Vr360ViewTours extends Vr360View
 {
 	protected $name = 'tours';
 
+	public $tours;
+
 	protected $layoutBase = '';
 
 	public function display($layout = 'default')

@@ -66,8 +66,8 @@ class Vr360Object
 	 */
 	public function set($property, $value)
 	{
-		$previous        = isset($this->$property) ? $this->$property : null;
-		$this->$property = $value;
+		$previous          = property_exists($this, $property) ? $this->{$property} : null;
+		$this->{$property} = $value;
 
 		return $previous;
 	}

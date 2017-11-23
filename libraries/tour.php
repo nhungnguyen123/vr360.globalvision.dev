@@ -51,7 +51,7 @@ class Vr360Tour extends Vr360TableTour
 	 */
 	public function setParam($property, $value)
 	{
-		$this->params->$property = $value;
+		$this->params->{$property} = $value;
 	}
 
 	/**
@@ -144,7 +144,7 @@ class Vr360Tour extends Vr360TableTour
 		}
 
 		$thumbnail         = array();
-		$thumbnail['file'] = '/_/' . $this->dir . '/vtour/panos/' . $panoThumbnail;
+		$thumbnail['file'] = '/_/' . $this->id . '/vtour/panos/' . $panoThumbnail;
 		$thumbnail['url']  = VR360_URL_ROOT . $thumbnail['file'];
 		$thumbnail['alt']  = $defaultPano->title;
 
@@ -198,17 +198,17 @@ class Vr360Tour extends Vr360TableTour
 
 	public function getDir()
 	{
-		return VR360_PATH_DATA . '/' . $this->dir;
+		return VR360_PATH_DATA . '/' . $this->id;
 	}
 
 	public function getKrpanoJsUrl()
 	{
-		return './_/' . $this->dir . '/vtour/tour.js';
+		return './_/' . $this->id . '/vtour/tour.js';
 	}
 
 	public function getKrpanoSwfUrl()
 	{
-		return './_/' . $this->dir . '/vtour/tour.swf';
+		return './_/' . $this->id . '/vtour/tour.swf';
 	}
 
 	public function getKrpanoEmbedPano()
@@ -216,7 +216,7 @@ class Vr360Tour extends Vr360TableTour
 		$embed      = new stdClass;
 		$embed->swf = $this->getKrpanoSwfUrl();
 		// @TODO Verify this file exists or not or use t.xml instead ( old method )
-		$embed->xml                 = '_/' . $this->dir . '/vtour/tour.xml';
+		$embed->xml                 = '_/' . $this->id . '/vtour/tour.xml';
 		$embed->target              = 'pano';
 		$embed->html5               = Vr360Configuration::getConfig('krPanoEmbedHtml5', 'auto');
 		$embed->mobilescale         = '1.0';
@@ -252,20 +252,20 @@ class Vr360Tour extends Vr360TableTour
 	 */
 	public function isValidForRender()
 	{
-		if (!Vr360HelperFile::exists(VR360_PATH_ROOT . '/krpano/viewer/skin/vtourskin.xml'))
+		if (!Vr360HelperFile::exists(Vr360HelperFile::clean($this->getDir() . '/vtour/skin/vtourskin.xml')))
 		{
 			return false;
 		}
 
-		if (!Vr360HelperFile::exists(VR360_PATH_ROOT . '/krpano/viewer/skin/tour-vtskin.xml'))
+		/*if (!Vr360HelperFile::exists(Vr360HelperFile::clean($this->getDir() . '/vtour/skin/tour-vtskin.xml')))
 		{
 			return false;
 		}
 
-		if (!Vr360HelperFile::exists(VR360_PATH_ROOT . '/krpano/viewer/skin/social-skin.xml'))
+		if (!Vr360HelperFile::exists(Vr360HelperFile::clean($this->getDir() . '/vtour/skin/social-skin.xml')))
 		{
 			return false;
-		}
+		}*/
 
 		return true;
 	}
@@ -305,6 +305,7 @@ class Vr360Tour extends Vr360TableTour
 	public function getKrpanoVersion()
 	{
 		$xml = $this->getXml();
+
 		if ($xml)
 		{
 			$nodes = $xml->getNodes();
@@ -314,9 +315,46 @@ class Vr360Tour extends Vr360TableTour
 		return 'Invalid';
 	}
 
+	/**
+	 * Method for get all scenes of tour
+	 *
+	 * @return   array|false  Array of scenes. False otherwise.
+	 *
+	 * @since  3.0.0
+	 */
 	public function getScenes()
 	{
+		if (!$this->id)
+		{
+			return false;
+		}
 
+		$items = Vr360Database::getInstance()->select(
+			'v2_scenes',
+			array(
+				'id', 'tourId', 'name', 'description', 'file', 'ordering', 'status', 'default', 'params'
+			),
+			array(
+				'status[!]' => VR360_TOUR_STATUS_UNPUBLISHED,
+				'tourId'    => $this->id,
+				'ORDER'     => array('ordering' => 'ASC')
+			)
+		);
+
+		if (empty($items))
+		{
+			return false;
+		}
+
+		foreach ($items as $key => $item)
+		{
+			$scene          = new Vr360Scene;
+			$item['params'] = json_decode($item['params']);
+			$scene->bind($item);
+			$items[$key] = $scene;
+		}
+
+		return $items;
 	}
 
 	public function getXml()
@@ -332,5 +370,35 @@ class Vr360Tour extends Vr360TableTour
 		}
 
 		return false;
+	}
+
+	/**
+	 * Delete tour
+	 *
+	 * @return  boolean
+	 *
+	 * @since   3.0.0
+	 */
+	public function delete()
+	{
+		if (!$this->id)
+		{
+			return false;
+		}
+
+		// Delete scenes
+		if (!Vr360Database::getInstance()->delete('v2_scenes', array('tourId' => $this->id)))
+		{
+			return false;
+		}
+
+		if (!Vr360Database::getInstance()->delete('v2_tours', array('id' => $this->id)))
+		{
+			return false;
+		}
+
+		Vr360HelperFolder::delete(Vr360HelperFile::clean(VR360_PATH_DATA . '/' . $this->id));
+
+		return true;
 	}
 }

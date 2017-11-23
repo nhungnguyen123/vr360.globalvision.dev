@@ -68,9 +68,8 @@ class Vr360Database extends \Medoo\Medoo
 	 */
 	public function update($table, $data, $where = null)
 	{
-		if (parent::update($table, $data, array('id' => $data['id'])) !== false)
-		{
-			return $data['id'];
-		}
+		$return = parent::update($table, $data, $where);
+
+		return ($return !== false && isset($data['id'])) ? $data['id'] : $return;
 	}
 }
