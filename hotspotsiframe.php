@@ -3,7 +3,8 @@
 $hotSpotImgUrl     = base64_encode("/assets/images/hotspot.png");
 $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 $uId               = $_GET['uId'];
-$tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
+// $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
+$tourUrl           = '//localhost/vr360.globalvision.dev/_/' . $uId . '/vtour';
 ?>
 <!DOCTYPE html>
 <html>
@@ -426,9 +427,6 @@ $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 
 		var superHotspot = new superHotspotObj(krpano);
 	</script>
-
-
 </div>
-
 </body>
 </html>

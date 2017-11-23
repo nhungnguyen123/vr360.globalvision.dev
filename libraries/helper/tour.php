@@ -273,11 +273,6 @@ class Vr360HelperTour
 		return $xmlObject->asXML($tourXmlFile);
 	}
 
-	public static function generateXmlNew($tour)
-	{
-
-	}
-
 	/**
 	 * @param $jsonData
 	 * @param $xmlFileName

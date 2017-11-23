@@ -90,6 +90,7 @@
             });
 
             $("#vrTour").modal("show");
+            vrAdmin.Tour.Hotspot.hooks();
         },
 
         /**
@@ -102,6 +103,29 @@
             $("#vrTour .modal-title").html("<i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> Embed code");
             $("#vrTour .modal-body .container-fluid").text(template);
             $("#vrTour").modal("show");
+        },
+
+        /**
+         * Delete tour
+         */
+        deleteTour: function (el) {
+            var tourId = $(el).attr("data-tour-id");
+
+            $.ajax({
+                url  : "index.php",
+                type : "POST",
+                data : {
+                    id  : tourId,
+                    view: "tour",
+                    task: "ajaxDeleteTour"
+                },
+                async: true,
+                cache: false
+            }).done(function (data, textStatus, jqXHR) {
+                if (data.status == true) {
+                    $("table#vTours tr#vtour-" + tourId).remove();
+                }
+            });
         },
 
         /**
@@ -122,6 +146,14 @@
 
             $("body").on("click", ".embedCode", function () {
                 vrAdmin.embedTour(this);
+            });
+
+            $("body").on("click", "button.removeTour", function (event) {
+                event.preventDefault();
+
+                if (confirm("Confirm delete a tour")) {
+                    vrAdmin.deleteTour(this);
+                }
             });
 
             vrTour.hooks();
@@ -209,8 +241,49 @@
         }
     };
 
+    var vrHotspot = {
+        saveHotspot: function(el) {
+            var tourId = $(el).data('tour-id');
+            var ifHotspotObj = document.getElementById('editTourHotspots').contentWindow;
+
+            if (!ifHotspotObj.isReady())
+            {
+                alert('Please finish to add hotspot before saving or click cancel');
+                return false;
+            }
+
+            $.ajax({
+                url: 'index.php',
+                type: 'POST',
+                data: {
+                    view: 'hotspot',
+                    task: 'ajaxSaveHotspot',
+                    id: tourId,
+                    hotspotList: JSON.stringify(ifHotspotObj.superHotspot.getData().hotspotList),
+                    defaultViewList: JSON.stringify(ifHotspotObj.defaultViewList)
+                },
+                async: true,
+                cache: false,
+            }).done(function (data, textStatus, jqXHR) {
+                console.log(data);
+            });
+        },
+        /*
+         *
+         */
+        hooks : function () {
+            console.log("vHotspot hooks");
+
+            $('body').on('click', '#saveHotspots', function (event) {
+                event.preventDefault();
+                vrAdmin.Tour.Hotspot.saveHotspot(this);
+            });
+        }
+    };
+
     vrAdmin.Tour       = vrTour;
     vrAdmin.Tour.Scene = vrScene;
+    vrAdmin.Tour.Hotspot = vrHotspot;
 
     w.vrAdmin = vrAdmin;
 

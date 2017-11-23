@@ -371,4 +371,34 @@ class Vr360Tour extends Vr360TableTour
 
 		return false;
 	}
+
+	/**
+	 * Delete tour
+	 *
+	 * @return  boolean
+	 *
+	 * @since   3.0.0
+	 */
+	public function delete()
+	{
+		if (!$this->id)
+		{
+			return false;
+		}
+
+		// Delete scenes
+		if (!Vr360Database::getInstance()->delete('v2_scenes', array('tourId' => $this->id)))
+		{
+			return false;
+		}
+
+		if (!Vr360Database::getInstance()->delete('v2_tours', array('id' => $this->id)))
+		{
+			return false;
+		}
+
+		Vr360HelperFolder::delete(Vr360HelperFile::clean(VR360_PATH_DATA . '/' . $this->id));
+
+		return true;
+	}
 }

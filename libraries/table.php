@@ -8,6 +8,7 @@ class Vr360Table extends Vr360Object
 	 * @var   int
 	 */
 	public $id = null;
+
 	/**
 	 * @var   object|array
 	 */
@@ -17,7 +18,6 @@ class Vr360Table extends Vr360Object
 
 	public function load($condition)
 	{
-
 		$db  = Vr360Database::getInstance();
 		$row = $db->load($this->_table, $condition);
 

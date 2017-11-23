@@ -57,17 +57,19 @@ class Vr360ModelTour extends Vr360Model
 		// Try to save new scenes files
 		$newScenes = $this->saveNewScenes($tour, $ajax);
 
-		// If there are new scenes. Regenerate with krpano program.
-		if (!empty($newScenes))
+		$vTourFolder = Vr360HelperFile::clean($tourDataDir . '/vtour');
+
+		// If there are new scenes or missing vtour folder. Regenerate with krpano program.
+		if ((is_array($newScenes) && !empty($newScenes)) || !Vr360HelperFolder::exists($vTourFolder))
 		{
-			$newScenes = array_merge($newScenes, $currentScenes);
+			$newScenes = is_array($newScenes) && !empty($newScenes) ? array_merge($newScenes, $currentScenes) : $currentScenes;
 
 			try
 			{
 				// Remove old folder vtour
-				if (Vr360HelperFolder::exists(Vr360HelperFile::clean($tourDataDir . '/vtour')))
+				if (Vr360HelperFolder::exists($vTourFolder))
 				{
-					Vr360HelperFolder::delete(Vr360HelperFile::clean($tourDataDir . '/vtour'));
+					Vr360HelperFolder::delete($vTourFolder);
 				}
 
 				// And now generate tour
@@ -83,7 +85,7 @@ class Vr360ModelTour extends Vr360Model
 			}
 		}
 
-		// @TODO: Add modify XML script here.
+		$this->modifyXML($tour, $ajax);
 
 		// Save scene
 		$ajax->addInfo('Tour is created')->respond();
@@ -234,6 +236,11 @@ class Vr360ModelTour extends Vr360Model
 		// Get current scenes of tour
 		$currentScenes = $tour->getScenes();
 
+		if (empty($currentScenes))
+		{
+			return $files;
+		}
+
 		foreach ($currentScenes as $currentScene)
 		{
 			/** @var Vr360Scene $currentScene */
@@ -274,6 +281,72 @@ class Vr360ModelTour extends Vr360Model
 		}
 
 		return $files;
+	}
+
+	/**
+	 * Method for modify XML file with new data.
+	 *
+	 * @param   Vr360Tour          $tour    Tour data
+	 * @param   Vr360AjaxResponse  $ajax    Ajax response.
+	 *
+	 * @return  array                     List of scene files.
+	 *
+	 * @since   3.0.0
+	 */
+	protected function modifyXML($tour, $ajax)
+	{
+		$tourDataDirPath = VR360_PATH_DATA . '/' . $tour->id . '/vtour';
+
+		if (!Vr360HelperFolder::exists($tourDataDirPath))
+		{
+			$ajax->addDanger('Missing folder Tour: ' . $tourDataDirPath);
+
+			return false;
+		}
+
+		$sceneFiles  = array();
+		$panoFolders = array();
+		$scenes      = $tour->getScenes();
+
+		// Clean up folder
+		if (!empty($scenes))
+		{
+			foreach ($scenes as $scene)
+			{
+				$sceneFiles[]  = $scene->file;
+				$panoFolders[] = explode('.', $scene->file)[0] . '.tiles';
+			}
+		}
+
+		$files = scandir(Vr360HelperFile::clean(VR360_PATH_DATA . '/' . $tour->id));
+
+		foreach ($files as $file)
+		{
+			if (!in_array($file, $sceneFiles))
+			{
+				Vr360HelperFile::delete(VR360_PATH_DATA . '/' . $tour->id . '/' . $file);
+			}
+		}
+
+		$folders = scandir(Vr360HelperFile::clean($tourDataDirPath . '/panos'));
+
+		foreach ($folders as $folder)
+		{
+			if ($folder == '.' || $folder == '..')
+			{
+				continue;
+			}
+
+			if (!in_array($folder, $panoFolders))
+			{
+				Vr360HelperFolder::delete($tourDataDirPath . '/panos/' . $folder);
+			}
+		}
+
+		$xmlData = Vr360Layout::getInstance()->fetch('tour.tour', array('tour' => $tour, 'scenes' => $scenes));
+		$xmlData = simplexml_load_string($xmlData);
+
+		return $xmlData->asXML($tourDataDirPath . '/tour.xml');
 	}
 
 	/**

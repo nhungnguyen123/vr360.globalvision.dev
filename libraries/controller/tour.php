@@ -19,6 +19,7 @@ class Vr360ControllerTour extends Vr360Controller
 
 		Vr360ModelTour::getInstance()->ajaxSave();
 	}
+
 	/**
 	 * Create new tour
 	 *
@@ -187,6 +188,33 @@ class Vr360ControllerTour extends Vr360Controller
 		}
 
 		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
+	}
+
+	public function ajaxDeleteTour()
+	{
+		$ajax  = Vr360AjaxResponse::getInstance();
+		$input = Vr360Factory::getInput();
+
+		$tour = new Vr360Tour;
+		$tour->load(
+			array
+			(
+				'id'         => (int) $input->getInt('id'),
+				'created_by' => Vr360Factory::getUser()->id
+			)
+		);
+
+		if (!$tour->id)
+		{
+			$ajax->addDanger('Tour is not available.')->fail()->respond();
+		}
+
+		if (!$tour->delete())
+		{
+			$ajax->addDanger('Delete tour: ' . (int) $input->getInt('id') . ' fail')->fail()->respond();
+		}
+
+		$ajax->addSuccess('Delete tour: ' . (int) $input->getInt('id') . ' success')->success()->respond();
 	}
 
 

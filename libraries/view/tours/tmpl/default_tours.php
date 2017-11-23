@@ -34,6 +34,7 @@
                     </thead>
                     <tbody>
                     <!-- Show tours -->
+                    <?php if (!empty($this->tours)): ?>
 					<?php foreach ($this->tours as $tour): ?>
 						<?php /** @var Vr360Tour $tour */ ?>
                         <tr id='vtour-<?php echo $tour->id; ?>' data-tour='<?php echo $tour->toJson(); ?>'
@@ -86,7 +87,7 @@
                                     </a>
 								<?php endif; ?>
 
-                                <button type="button" class="btn btn-danger btn-sm removeTour">
+                                <button type="button" class="btn btn-danger btn-sm removeTour" data-tour-id="<?php echo $tour->id ?>">
                                     <i class="fa fa-eraser" aria-hidden="true"></i> Remove
                                 </button>
                                 <!--
@@ -99,6 +100,7 @@
                             <td class="vtour-id"><?php echo $tour->id; ?></td>
                         </tr>
 					<?php endforeach; ?>
+                    <?php endif; ?>
                     </tbody>
                 </table>
 
