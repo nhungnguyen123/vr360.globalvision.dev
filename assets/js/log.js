@@ -1,6 +1,6 @@
-(function (w, $) {
+(function (w, vrAdmin, $) {
 
-	vrAdmin.Log = {
+	var vrLog = {
 		reset: function () {
 			$('#overlay-waiting').html('');
 		},
@@ -11,8 +11,10 @@
 
 		appendArray: function (messages) {
 			$.each(messages, function (index, value) {
-				vrAdmin.Log.append(value);
+				vrLog.append(value);
 			})
 		}
 	}
-})(window, jQuery);
+
+	vrAdmin.Log = vrLog;
+})(window, vrAdmin, jQuery);

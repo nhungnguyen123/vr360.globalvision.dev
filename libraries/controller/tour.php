@@ -7,7 +7,6 @@ defined('_VR360_EXEC') or die;
  */
 class Vr360ControllerTour extends Vr360Controller
 {
-
 	public function ajaxSaveTour()
 	{
 		$ajax  = Vr360AjaxResponse::getInstance();
@@ -20,6 +19,7 @@ class Vr360ControllerTour extends Vr360Controller
 
 		Vr360ModelTour::getInstance()->ajaxSave();
 	}
+
 	/**
 	 * Create new tour
 	 *
@@ -27,17 +27,14 @@ class Vr360ControllerTour extends Vr360Controller
 	 */
 	public function ajaxCreateTour()
 	{
-
 		$input = Vr360Factory::getInput();
-
-
 
 		$tourName  = $input->getString('name');
 		$tourAlias = $input->getString('alias');
 
 		if (empty($tourName) || empty($tourAlias))
 		{
-			$ajax->addWarning('Missed fields')->fail()->respond();
+			Vr360AjaxResponse::getInstance()->addWarning('Missed fields')->fail()->respond();
 		}
 
 		switch ($input->getString('step'))
@@ -58,6 +55,9 @@ class Vr360ControllerTour extends Vr360Controller
 	 */
 	public function ajaxGenerateTour()
 	{
+		var_dump('here');
+		exit;
+
 		$ajax = Vr360AjaxResponse::getInstance();
 
 		// Permission verify
@@ -158,6 +158,11 @@ class Vr360ControllerTour extends Vr360Controller
 		$ajax->addWarning('Something wrong')->fail()->respond();
 	}
 
+	/**
+	 * Method for load create/edit tour html form
+	 *
+	 * @since   3.0.0
+	 */
 	public function ajaxGetTourHtml()
 	{
 		$input = Vr360Factory::getInput();
@@ -172,7 +177,6 @@ class Vr360ControllerTour extends Vr360Controller
 		);
 
 		// Try to migrate tour
-
 		if ($tour !== false)
 		{
 			$html = Vr360Layout::getInstance()->fetch('form.tour', array('tour' => $tour));
@@ -184,6 +188,33 @@ class Vr360ControllerTour extends Vr360Controller
 		}
 
 		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
+	}
+
+	public function ajaxDeleteTour()
+	{
+		$ajax  = Vr360AjaxResponse::getInstance();
+		$input = Vr360Factory::getInput();
+
+		$tour = new Vr360Tour;
+		$tour->load(
+			array
+			(
+				'id'         => (int) $input->getInt('id'),
+				'created_by' => Vr360Factory::getUser()->id
+			)
+		);
+
+		if (!$tour->id)
+		{
+			$ajax->addDanger('Tour is not available.')->fail()->respond();
+		}
+
+		if (!$tour->delete())
+		{
+			$ajax->addDanger('Delete tour: ' . (int) $input->getInt('id') . ' fail')->fail()->respond();
+		}
+
+		$ajax->addSuccess('Delete tour: ' . (int) $input->getInt('id') . ' success')->success()->respond();
 	}
 
 
@@ -200,10 +231,17 @@ class Vr360ControllerTour extends Vr360Controller
 			)
 		);
 
-		if ($tour !== false)
+		$ajaxResponse = Vr360AjaxResponse::getInstance();
+
+		if ($tour === false)
+		{
+			$ajaxResponse->addData('html', 'Tour not found.')->fail()->respond();
+		}
+		else
 		{
 			$html = Vr360Layout::getInstance()->fetch('form.hotspots', array('tour' => $tour));
-			Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
+
+			$ajaxResponse->addData('html', $html)->success()->respond();
 		}
 	}
 

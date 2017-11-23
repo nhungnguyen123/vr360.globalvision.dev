@@ -34,6 +34,7 @@ defined('_VR360_EXEC') or die;
 	<link rel="stylesheet" type="text/css" href="./assets/css/globalvision.min.css">
 	<?php if (Vr360HelperAuthorize::isAuthorized()): ?>
 		<script type="text/javascript" src="./assets/js/admin.js"></script>
+		<script type="text/javascript" src="./assets/js/log.js"></script>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 	<?php endif; ?>
 </head>

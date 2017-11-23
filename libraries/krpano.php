@@ -26,12 +26,17 @@ class Vr360Krpano
 
 	public function addFiles($files)
 	{
+		foreach ($files as $key => $file)
+		{
+			$files[$key] = Vr360HelperFile::clean($file);
+		}
+
 		$this->files = $files;
 	}
 
 	public function useConfigFile($file)
 	{
-		$this->addParameter('-config=' . $file);
+		$this->addParameter('-config=' . Vr360HelperFile::clean($file));
 	}
 
 	public function addParameter($parameter)
@@ -40,7 +45,7 @@ class Vr360Krpano
 	}
 
 	/**
-	 * @param $command
+	 * @param  $command
 	 *
 	 * @return bool|string
 	 */
@@ -55,6 +60,7 @@ class Vr360Krpano
 
 		// Make pano
 		array_unshift($this->parameters, 'makepano');
+
 		$execute[] = $this->binPath . ' ' . implode(' ', $this->parameters) . ' ' . implode(' ', $this->files);
 
 		$command = implode(' && ', $execute);
