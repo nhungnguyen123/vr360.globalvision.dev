@@ -5,8 +5,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 $hotSpotImgUrl     = base64_encode("/assets/images/hotspot.png");
 $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 $tourId            = Vr360Factory::getInput()->getInt('uId', 0);
-// $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
-$tourUrl           = '//localhost/vr360.globalvision.dev/_/' . $tourId . '/vtour';
+$tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 
 $tour = new Vr360Tour;
 $tour->load(
@@ -21,7 +20,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 <html>
 <head>
 	<meta name="viewport"
-	      content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+		  content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
@@ -64,12 +63,12 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 
 <div id="show_link">
 	Linked scene: <select id="selectbox">
-        <?php if (!empty($scenes)): ?>
-            <?php foreach ($scenes as $scene): ?>
-                <option value="<?php echo $scene->id ?>"><?php echo $scene->name ?></option>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </select>
+		<?php if (!empty($scenes)): ?>
+			<?php foreach ($scenes as $scene): ?>
+				<option value="scene_<?php echo explode('.', $scene->file)[0] ?>"><?php echo $scene->name ?></option>
+			<?php endforeach; ?>
+		<?php endif; ?>
+	</select>
 	<button id="done_link" onclick="get_link()">Done</button>
 </div>
 
@@ -198,8 +197,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			for (i = 0; i < hotspot_count; i++) {
 				krpano.call("set(hotspot[" + i + "].onclick, '');");
 			}
-			console.log(hotspot_count);
-			console.info(removedHotspot);
+			/*console.log(hotspot_count);
+			console.info(removedHotspot);*/
 		}
 
 		function choose_hotSpot_type() {
@@ -342,10 +341,9 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			var thisAlias = this;
 
 			this.sceneCount = krpano_Obj.get('scene.count');
-			this.kr = krpano_Obj;
 			this.hotspotList = {};
+			this.kr = krpano_Obj;
 			this.firstTimesSave = 0;
-
 
 			this.saveCurrentHotspotFromCurrentScene = function () {
 				// if ( thisAlias.firstTimesSave == 0 ){thisAlias.firstTimesSave = 1;}
@@ -395,14 +393,10 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				sceneName = this.kr.get('xml.scene');
 
 				for (var hotspotId in thisAlias.hotspotList[sceneName]) {
-
 					var currentHotspotData = thisAlias.hotspotList[sceneName][hotspotId];
 
 					if (thisAlias.hotspotList[sceneName][hotspotId].reRender == "true") {
 						add_hotspot_to_scene(currentHotspotData);
-					}
-					else {
-
 					}
 				}
 

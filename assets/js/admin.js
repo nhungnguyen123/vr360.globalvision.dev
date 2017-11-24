@@ -204,8 +204,9 @@
 						$('body').addClass('loading')
 					}
 				}).done(function (data, textStatus, jqXHR) {
+                    $('body').removeClass('loading');
 					vrAdmin.Log.appendArray(data.messages);
-				})
+				});
 			});
 		}
 	};
@@ -273,17 +274,22 @@
 				},
 				async: true,
 				cache: false,
+                beforeSend: function(){
+                    $('body').addClass('loading');
+                }
 			}).done(function (data, textStatus, jqXHR) {
-			});
+                $('body').removeClass('loading');
+                vrAdmin.Log.appendArray(data.messages);
+            });
 		},
 		/*
 		 *
 		 */
 		hooks: function () {
-			$('body').on('click', '#saveHotspots', function (event) {
-				event.preventDefault();
-				vrAdmin.Tour.Hotspot.saveHotspot(this);
-			});
+            $("body").on("click", "button#saveHotspots", function (event) {
+                event.preventDefault();
+                vrAdmin.Tour.Hotspot.saveHotspot(this);
+            });
 		}
 	};
 
