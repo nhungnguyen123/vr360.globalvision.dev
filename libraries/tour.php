@@ -386,15 +386,20 @@ class Vr360Tour extends Vr360TableTour
 			return false;
 		}
 
-		// Delete scenes
-		if (!Vr360Database::getInstance()->delete('v2_scenes', array('tourId' => $this->id)))
+		if (!Vr360Database::getInstance()->delete('v2_tours', array('id' => $this->id)))
 		{
 			return false;
 		}
 
-		if (!Vr360Database::getInstance()->delete('v2_tours', array('id' => $this->id)))
+		$scenes = $this->getScenes();
+
+		if (!empty($scenes))
 		{
-			return false;
+			foreach ($scenes as $scene)
+			{
+				/** @var  Vr360Scene $scene */
+				$scene->delete();
+			}
 		}
 
 		Vr360HelperFolder::delete(Vr360HelperFile::clean(VR360_PATH_DATA . '/' . $this->id));

@@ -274,15 +274,12 @@
 				async: true,
 				cache: false,
 			}).done(function (data, textStatus, jqXHR) {
-				console.log(data);
 			});
 		},
 		/*
 		 *
 		 */
 		hooks: function () {
-			console.log("vHotspot hooks");
-
 			$('body').on('click', '#saveHotspots', function (event) {
 				event.preventDefault();
 				vrAdmin.Tour.Hotspot.saveHotspot(this);

@@ -7,9 +7,21 @@ defined('_VR360_EXEC') or die;
  * @var   Vr360Scene $scene Scene data
  */
 $fileName = explode('.', $scene->file)[0];
-$fov      = VR360_TOUR_SCENE_DEFAULT_FOV;
-$hLookAt  = VR360_TOUR_SCENE_DEFAULT_HLOOKAT;
-$vLookAt  = VR360_TOUR_SCENE_DEFAULT_HLOOKAT;
+
+if (null !== $scene->params)
+{
+	$fov      = $scene->params->fov;
+	$hLookAt  = $scene->params->hlookat;
+	$vLookAt  = $scene->params->vlookat;
+}
+else
+{
+	$fov      = _DEFAULT_FOV;
+	$hLookAt  = VR360_TOUR_SCENE_DEFAULT_HLOOKAT;
+	$vLookAt  = VR360_TOUR_SCENE_DEFAULT_HLOOKAT;
+}
+
+$hotspots = $scene->getHotspot();
 ?>
 <scene name="scene_<?php echo $fileName ?>" title="<?php echo $scene->name ?>" subtitle="<?php echo $scene->description ?>" onstart=""
        thumburl="panos/<?php echo $fileName ?>.tiles/thumb.jpg" lat="" lng="" heading="">
@@ -19,5 +31,20 @@ $vLookAt  = VR360_TOUR_SCENE_DEFAULT_HLOOKAT;
     <image>
         <cube url="panos/<?php echo $fileName ?>.tiles/pano_%s.jpg" />
     </image>
-	<?php // @TODO: Add hotspot here ?>
+	<?php if (!empty($hotspots)): ?>
+        <?php foreach ($hotspots as $hotspot): ?>
+            <?php
+            $data = array();
+
+            if (null !== $hotspot->params)
+            {
+                foreach ($hotspot->params as $key => $value)
+                {
+                    $data[] = $key . '="' . $value . '"';
+                }
+            }
+            ?>
+    <hotspot name="<?php echo $hotspot->code ?>" dataId="<?php echo $hotspot->code ?>" style="skin_hotspotstyle|<?php echo $hotspot->style ?>" ath="<?php echo $hotspot->ath ?>" atv="<?php echo $hotspot->atv ?>" hotspot_type="<?php echo $hotspot->type ?>" <?php echo implode(' ', $data) ?> />
+        <?php endforeach; ?>
+    <?php endif; ?>
 </scene>
