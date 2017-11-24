@@ -32,7 +32,7 @@ $hotspots = $scene->getHotspot();
         <cube url="panos/<?php echo $fileName ?>.tiles/pano_%s.jpg" />
     </image>
 	<?php if (!empty($hotspots)): ?>
-        <?php foreach ($hotspots as $hotspot): ?>
+        <?php foreach ($hotspots as $index => $hotspot): ?>
             <?php
             $data = array();
 
@@ -44,7 +44,7 @@ $hotspots = $scene->getHotspot();
                 }
             }
             ?>
-    <hotspot name="<?php echo $hotspot->code ?>" dataId="<?php echo $hotspot->code ?>" style="skin_hotspotstyle|<?php echo $hotspot->style ?>" ath="<?php echo $hotspot->ath ?>" atv="<?php echo $hotspot->atv ?>" hotspot_type="<?php echo $hotspot->type ?>" <?php echo implode(' ', $data) ?> />
+    <hotspot name="spot<?php echo $index ?>" dataId="<?php echo $hotspot->code ?>" style="skin_hotspotstyle" ath="<?php echo $hotspot->ath ?>" atv="<?php echo $hotspot->atv ?>" <?php echo implode(' ', $data) ?> />
         <?php endforeach; ?>
     <?php endif; ?>
 </scene>

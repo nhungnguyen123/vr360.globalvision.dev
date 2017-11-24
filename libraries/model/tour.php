@@ -112,16 +112,6 @@ class Vr360ModelTour extends Vr360Model
 			);
 		}
 
-		if ($alias)
-		{
-
-			$table->load(
-				array(
-					'alias' => $alias
-				)
-			);
-		}
-
 		return $table;
 	}
 
