@@ -28,6 +28,7 @@
                         <th><i class="fa fa-window-maximize" aria-hidden="true"></i> vTour name</th>
                         <th><i class="fa fa-link" aria-hidden="true"></i> Friendly URL</th>
                         <th><i class="fa fa-calendar" aria-hidden="true"></i> Creation day</th>
+                        <th><i class="fa fa-image" aria-hidden="true"></i> Scenes</th>
                         <th><i class="fa fa-cogs" aria-hidden="true"></i> Controls</th>
                         <th>ID</th>
                     </tr>
@@ -45,7 +46,7 @@
                                 title="<?php echo $tooltip; ?>">
 								<?php echo $tour->getName(); ?>
                                 <div>
-                                    <small><?php echo $tour->getDir() . '/vtour/tour.xml'; ?></small>
+                                    <small><?php echo '_' . $tour->id . '/vtour/tour.xml'; ?></small>
                                 </div>
                                 <div>
                                     <small>
@@ -58,6 +59,7 @@
                             </td>
                             <td class="vtour-url"><?php echo $tour->alias; ?></td>
                             <td class="vtour-date"><?php echo $tour->created; ?></td>
+                            <td class="scenes"><strong><?php echo count($tour->getScenes()) ?></strong></td>
                             <td class="controls">
 								<?php if ($tour->canEmbed()): ?>
                                     <!-- Embed -->
@@ -82,7 +84,7 @@
 
 								<?php if ($tour->canPreview()): ?>
                                     <!-- Preview -->
-                                    <a type="button" class="btn btn-info btn-sm previewTour" href="/<?php echo $tour->alias ?>">
+                                    <a type="button" class="btn btn-info btn-sm previewTour" target="_blank" href="/<?php echo $tour->alias ?>">
                                         <i class="fa fa-external-link" aria-hidden="true"></i> Preview
                                     </a>
 								<?php endif; ?>

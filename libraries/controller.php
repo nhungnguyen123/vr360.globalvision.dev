@@ -44,11 +44,11 @@ class Vr360Controller
 		$view = Vr360Factory::getInput()->getString('view', $this->defaultView);
 		$task = Vr360Factory::getInput()->getString('task', $this->defaultTask);
 
-		$controllerClassname = 'Vr360Controller' . ucfirst($view);
+		$controller = 'Vr360Controller' . ucfirst($view);
 
-		if (class_exists($controllerClassname))
+		if (class_exists($controller))
 		{
-			$controllerClass = new $controllerClassname;
+			$controllerClass = new $controller;
 
 			return $controllerClass->$task();
 		}
@@ -75,11 +75,11 @@ class Vr360Controller
 			}
 		}
 
-		$viewClassname = 'Vr360View' . ucfirst($view);
+		$viewClassName = 'Vr360View' . ucfirst($view);
 
-		if (class_exists($viewClassname))
+		if (class_exists($viewClassName))
 		{
-			$viewClass = new $viewClassname;
+			$viewClass = new $viewClassName;
 
 			$viewHtml = $viewClass->display();
 		}

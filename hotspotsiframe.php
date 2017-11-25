@@ -5,7 +5,7 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 $hotSpotImgUrl     = base64_encode("/assets/images/hotspot.png");
 $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 $tourId            = Vr360Factory::getInput()->getInt('uId', 0);
-$tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
+$tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $tourId . '/vtour';
 
 $tour = new Vr360Tour;
 $tour->load(
@@ -349,14 +349,14 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				// if ( thisAlias.firstTimesSave == 0 ){thisAlias.firstTimesSave = 1;}
 
 				sceneName = this.kr.get('xml.scene');
-				console.info('saveCurrentHotspotFromCurrentScene: ' + sceneName);
+				// console.info('saveCurrentHotspotFromCurrentScene: ' + sceneName);
 				thisAlias.hotspotList[sceneName] = {};
 				var hotspot_count = thisAlias.kr.get('hotspot.count');
 				for (var i = 0; i < hotspot_count; i++) {
-					console.log(thisAlias.kr.get('hotspot[' + i + '].url'));
+					// console.log(thisAlias.kr.get('hotspot[' + i + '].url'));
 					if (/hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url'))) {
-						console.log('collecting hotspot: ' + i);
-						console.info(thisAlias.kr.get('hotspot[' + i + ']'));
+						// console.log('collecting hotspot: ' + i);
+						// console.info(thisAlias.kr.get('hotspot[' + i + ']'));
 
 						thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()] = {
 							'ath': thisAlias.kr.get('hotspot[' + i + '].ath'),
@@ -367,7 +367,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 						}
 						if (/vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url'))) {
 							//hotspot which is aready in xml shouldnt re-render by js anymore, if not, doulicate hotspot will apperent.
-							console.log('superHotspot: xreRender: [' + i + '] ' + thisAlias.kr.get('hotspot[' + i + '].xreRender'));
+							// console.log('superHotspot: xreRender: [' + i + '] ' + thisAlias.kr.get('hotspot[' + i + '].xreRender'));
 
 							if (thisAlias.kr.get('hotspot[' + i + '].xreRender') == 'true') {
 								thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].reRender == 'true'
