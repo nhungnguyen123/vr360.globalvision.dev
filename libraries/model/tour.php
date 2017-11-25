@@ -112,16 +112,6 @@ class Vr360ModelTour extends Vr360Model
 			);
 		}
 
-		if ($alias)
-		{
-
-			$table->load(
-				array(
-					'alias' => $alias
-				)
-			);
-		}
-
 		return $table;
 	}
 
@@ -296,8 +286,10 @@ class Vr360ModelTour extends Vr360Model
 	 *
 	 * @since   3.0.0
 	 */
-	protected function modifyXML($tour, $ajax)
+	public function modifyXML($tour, $ajax = null)
 	{
+		$ajax = null === $ajax ? Vr360AjaxResponse::getInstance() : $ajax;
+
 		$tourDataDirPath = VR360_PATH_DATA . '/' . $tour->id . '/vtour';
 
 		if (!Vr360HelperFolder::exists($tourDataDirPath))

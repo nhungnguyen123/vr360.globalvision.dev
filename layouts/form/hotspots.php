@@ -1,3 +1,6 @@
+<?php
+defined('_VR360_EXEC') or die;
+?>
 <!-- <iframe src="/index.php?task=getEditTourHtmlHotspotEditorIFrame&uId=<?php echo $tour->dir; ?>"></iframe> -->
 <!-- I dont understand how to render this file in tour controller without any POST param  -->
 <div class="form-group">

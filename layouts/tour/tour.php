@@ -20,13 +20,13 @@ foreach ($scenes as $index => $scene)
 }
 
 $layoutHelper = Vr360Layout::getInstance();
-$params = json_decode($tour->params);
+$params       = json_decode($tour->params);
 ?>
 <krpano version="1.19" title="Virtual Tour">
     <include url="../../../krpano/viewer/skin/vtourskin.xml" />
     <include url="../../../krpano/viewer/skin/tour-vtskin.xml" />
     <include url="../../../krpano/viewer/skin/social-skin.xml" />
-    <?php if (property_exists($params, 'rotation') && $params->rotation == 1): ?>
+    <?php if (null !== $params && property_exists($params, 'rotation') && $params->rotation == 1): ?>
         <autorotate enabled="true" waittime="2.0" speed="2.0" horizon="0.0" />
     <?php endif; ?>
     <skin_settings maps="false"
@@ -84,7 +84,7 @@ $params = json_decode($tour->params);
         loadscene(get(startscene), null, MERGE);
         if(startactions !== null, startactions() );
     </action>
-    <?php if (property_exists($params, 'socials') && $params->socials == 1): ?>
+    <?php if (null !== $params && property_exists($params, 'socials') && $params->socials == 1): ?>
     <layer name="social_share" type="container" keep="true" align="left" width="50" height="200" x="20" y="0"
            bgcolor="0xffffff" bgalpha="0.0">
         <layer name="face" align="righttop" x="0" y="0" url="../../../krpano/viewer/skin/images/f.jpg" zorder="90"
