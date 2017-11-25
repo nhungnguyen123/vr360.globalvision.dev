@@ -27,11 +27,15 @@ class Vr360ModelTour extends Vr360Model
 	}
 
 	/**
-	 *
+	 * Save and generate tour
 	 */
 	public function ajaxSave()
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
+
+		/**
+		 * @TODO Need to validate uploaded files before any action
+		 */
 
 		/**
 		 * @var $tour Vr360TableTour
@@ -91,28 +95,36 @@ class Vr360ModelTour extends Vr360Model
 		$this->modifyXML($tour, $ajax);
 
 		// Save scene
-		$ajax->addInfo('Tour is created')->respond();
+		$ajax->addInfo('Tour is created')->success()->respond();
 	}
 
-	public function getItem()
+	public function getItem($id = null)
 	{
-		$alias = Vr360Factory::getInput()->get('alias', '', 'RAW');
-		$id    = Vr360Factory::getInput()->getInt('id');
-
+		$id    = Vr360Factory::getInput()->getInt('id', $id);
 		$table = new Vr360Tour;
 
 		if ($id)
 		{
-			$table->load(
-				array
-				(
-					'id'         => (int) Vr360Factory::getInput()->getInt('id'),
-					'created_by' => Vr360Factory::getUser()->id
-				)
-			);
+			if ($table->load(array('id' => (int) Vr360Factory::getInput()->getInt('id'), 'created_by' => Vr360Factory::getUser()->id)))
+			{
+				return $table;
+			}
 		}
 
 		return $table;
+	}
+
+	public function getItemByAlias()
+	{
+		$alias = Vr360Factory::getInput()->get('alias', '', 'RAW');
+		$table = new Vr360Tour;
+
+		if ($table->load(array('alias' => $alias)))
+		{
+			return $table;
+		}
+
+		return false;
 	}
 
 	/**
@@ -201,8 +213,8 @@ class Vr360ModelTour extends Vr360Model
 	/**
 	 * Method for store current scenes
 	 *
-	 * @param   Vr360Tour          $tour  Tour data
-	 * @param   Vr360AjaxResponse  $ajax  Ajax response.
+	 * @param   Vr360Tour         $tour Tour data
+	 * @param   Vr360AjaxResponse $ajax Ajax response.
 	 *
 	 * @return  array                     List of scene files.
 	 *
@@ -279,8 +291,8 @@ class Vr360ModelTour extends Vr360Model
 	/**
 	 * Method for modify XML file with new data.
 	 *
-	 * @param   Vr360Tour          $tour    Tour data
-	 * @param   Vr360AjaxResponse  $ajax    Ajax response.
+	 * @param   Vr360Tour         $tour Tour data
+	 * @param   Vr360AjaxResponse $ajax Ajax response.
 	 *
 	 * @return  array                     List of scene files.
 	 *
