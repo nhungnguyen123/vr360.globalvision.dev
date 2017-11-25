@@ -5,22 +5,16 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
 $hotSpotImgUrl     = base64_encode("/assets/images/hotspot.png");
 $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 $tourId            = Vr360Factory::getInput()->getInt('uId', 0);
-$tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
+$tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $tourId . '/vtour';
 
-$tour = new Vr360Tour;
-$tour->load(
-	array(
-		'id'         => $tourId,
-		'created_by' => Vr360Factory::getUser()->id
-	)
-);
+$tour   = Vr360ModelTour::getInstance()->getItem($tourId);
 $scenes = !$tour->id ? array() : $tour->getScenes();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta name="viewport"
-		  content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+	      content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
@@ -39,26 +33,35 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 </head>
 <body>
 <div id="button-container">
-	<button type="button" id="add_hotpost" class="btn btn-primary" onclick="add_hotspot_to_scene();">Add hotspot</button>
-	<button type="button" id="hotpost_done" class="btn btn-primary" onclick="choose_hotSpot_type();">Choose type</button>
+	<button type="button" id="add_hotpost" class="btn btn-primary btn-sm" onclick="add_hotspot_to_scene();">Add
+		hotspot
+	</button>
+	<button type="button" id="hotpost_done" class="btn btn-primary btn-sm" onclick="choose_hotSpot_type();">Choose
+		type
+	</button>
 
-	<button type="button" id="remove_hotpost" class="btn btn-danger" onclick="remove_hotspot();">Remove hotspot</button>
-	<button type="button" id="done_remove" class="btn btn-danger" onclick="done_remove();">Removed done</button>
+	<button type="button" id="remove_hotpost" class="btn btn-danger btn-sm" onclick="remove_hotspot();">Remove hotspot
+	</button>
+	<button type="button" id="done_remove" class="btn btn-danger btn-sm" onclick="done_remove();">Removed done</button>
 
-	<button type="button" id="set_defaultView" class="btn btn-primary" onclick="setDefaultView();">Set default view</button>
+	<button type="button" id="set_defaultView" class="btn btn-primary btn-sm" onclick="setDefaultView();">Set default
+		view
+	</button>
 
-	<button type="button" id="moveHotspot" class="btn btn-warning" onclick="moveHotspot();">Move hotspots</button>
-	<button type="button" id="moveHotspotDone" class="btn btn-warning" onclick="moveHotspotDone();">Moved done</button>
+	<button type="button" id="moveHotspot" class="btn btn-warning btn-sm" onclick="moveHotspot();">Move hotspots
+	</button>
+	<button type="button" id="moveHotspotDone" class="btn btn-warning btn-sm" onclick="moveHotspotDone();">Moved done
+	</button>
 </div>
 <div id="choose_hotSpot_type_id">
 	Choose hotspot type:
-	<button type="button" class="btn btn-default" onclick="setHotSpotType_Text()">Text Popup</button>
-	<button type="button" class="btn btn-default" onclick="setHotSpotType_Nomal()">Scene linking</button>
+	<button type="button" class="btn btn-default btn-sm" onclick="setHotSpotType_Text()">Text Popup</button>
+	<button type="button" class="btn btn-default btn-sm" onclick="setHotSpotType_Nomal()">Scene linking</button>
 </div>
 
 <div id="input_text_dialog">
 	<input id='text_input_hotspot' type="text" size="30" placeholder="Input Text for your hotspot here"/>
-	<button type="button" class="btn btn-default" onclick="hotspot_add_text_from_input()">Finish</button>
+	<button type="button" class="btn btn-default btn-sm" onclick="hotspot_add_text_from_input()">Finish</button>
 </div>
 
 <div id="show_link">
@@ -102,13 +105,13 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		var selectbox = document.getElementById('selectbox');
 		var showlink = document.getElementById('show_link');
 
-		var i                             = 0;
-		var uniqname                      = '';
-		var scene_nums                    = krpano.get('scene.count');
-		var hotspotList                   = [];
-		var current_scene                 = '';
+		var i = 0;
+		var uniqname = '';
+		var scene_nums = krpano.get('scene.count');
+		var hotspotList = [];
+		var current_scene = '';
 		var current_vTour_hotspot_counter = 0;
-		var current_randome_val           = Math.round(Math.random() * 1000000000).toString() + Math.round(Math.random() * 1000000000).toString();
+		var current_randome_val = Math.round(Math.random() * 1000000000).toString() + Math.round(Math.random() * 1000000000).toString();
 
 		function add_hotspot_to_scene(currentHotspotData) {
 			document.getElementById('remove_hotpost').disabled = true;
@@ -247,7 +250,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			defaultViewList[scene].vlookat = krpano.get('view.vlookat');
 			defaultViewList[scene].fov = krpano.get('view.fov');
 
-			alert ('Applied default view hlookat: ' + defaultViewList[scene].hlookat + ' , vlookat: ' + defaultViewList[scene].vlookat + ' , fov: ' + defaultViewList[scene].fov);
+			alert('Applied default view hlookat: ' + defaultViewList[scene].hlookat + ' , vlookat: ' + defaultViewList[scene].vlookat + ' , fov: ' + defaultViewList[scene].fov);
 		}
 
 		function rotateToDefaultViewOf(scene) {

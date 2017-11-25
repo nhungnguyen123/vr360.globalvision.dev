@@ -204,7 +204,7 @@
 						$('body').addClass('loading')
 					}
 				}).done(function (data, textStatus, jqXHR) {
-                    $('body').removeClass('loading');
+					// Actually we won't remove body.loading by ourself. Provide button Close / Reload to do that.
 					vrAdmin.Log.appendArray(data.messages);
 				});
 			});
@@ -216,6 +216,7 @@
 		addNew: function () {
 			var sceneHtml = $(".hidden .scene").parent().html();
 
+			$("#scenes .alert").remove();
 			$("#scenes").append(sceneHtml);
 
 			$.validate({
@@ -240,6 +241,7 @@
 				vrScene.addNew();
 			});
 
+			// Remove a scene
 			$("body").on("click", "#form-tour button.removeScene", function (event) {
 				var el = event.target || event.currentTarget;
 				vrScene.remove(el);
@@ -274,22 +276,22 @@
 				},
 				async: true,
 				cache: false,
-                beforeSend: function(){
-                    $('body').addClass('loading');
-                }
+				beforeSend: function () {
+					$('body').addClass('loading');
+				}
 			}).done(function (data, textStatus, jqXHR) {
-                $('body').removeClass('loading');
-                vrAdmin.Log.appendArray(data.messages);
-            });
+				$('body').removeClass('loading');
+				vrAdmin.Log.appendArray(data.messages);
+			});
 		},
 		/*
 		 *
 		 */
 		hooks: function () {
-            $("body").on("click", "button#saveHotspots", function (event) {
-                event.preventDefault();
-                vrAdmin.Tour.Hotspot.saveHotspot(this);
-            });
+			$("body").on("click", "button#saveHotspots", function (event) {
+				event.preventDefault();
+				vrAdmin.Tour.Hotspot.saveHotspot(this);
+			});
 		}
 	};
 

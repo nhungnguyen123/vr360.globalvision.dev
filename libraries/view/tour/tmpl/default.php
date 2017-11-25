@@ -26,7 +26,7 @@
 	<!-- Krpano -->
 	<script src="<?php echo $this->tour->getKrpanoJsUrl(); ?>"></script>
 
-	<script src="./assets/js/site.tour.min.js"></script>
+	<script src="./assets/js/site.tour.js"></script>
 
 	<!-- SEO Metadata -->
 	<meta name="robots" content="index, follow"/>
@@ -73,8 +73,7 @@
 			</table>
 		</noscript>
 		<script type="text/javascript">
-			window.onload = function ()
-			{
+			window.onload = function () {
 				<?php echo $this->tour->getKrpanoEmbedPano(); ?>
 			}
 		</script>
