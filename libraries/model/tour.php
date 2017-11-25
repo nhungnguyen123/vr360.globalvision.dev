@@ -58,7 +58,7 @@ class Vr360ModelTour extends Vr360Model
 			foreach ($files as $i => $file)
 			{
 				// Respond ajax if anything failed
-				if (!Vr360HelperTour::fileValidate($file['tmp_name']))
+				if (true !== Vr360HelperTour::fileValidate($file['tmp_name']))
 				{
 					unset($files[$i]);
 					$ajax->addDanger('Invalid scene: ' . $file['name'])->fail()->respond();
