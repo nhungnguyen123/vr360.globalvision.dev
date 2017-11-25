@@ -1,15 +1,26 @@
 <?php
 
+require_once __DIR__ . DIRECTORY_SEPARATOR . 'bootstrap.php';
+
 $hotSpotImgUrl     = base64_encode("/assets/images/hotspot.png");
 $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
-$uId               = $_GET['uId'];
+$tourId            = Vr360Factory::getInput()->getInt('uId', 0);
 $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
+
+$tour = new Vr360Tour;
+$tour->load(
+	array(
+		'id'         => $tourId,
+		'created_by' => Vr360Factory::getUser()->id
+	)
+);
+$scenes = !$tour->id ? array() : $tour->getScenes();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta name="viewport"
-	      content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+		  content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
@@ -25,7 +36,6 @@ $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 	<link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.css">
 
 	<link rel="stylesheet" href="./assets/font-awesome/css/font-awesome.css">
-
 </head>
 <body>
 <div id="button-container">
@@ -52,7 +62,13 @@ $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 </div>
 
 <div id="show_link">
-	Linked scene: <select id="selectbox"></select>
+	Linked scene: <select id="selectbox">
+		<?php if (!empty($scenes)): ?>
+			<?php foreach ($scenes as $scene): ?>
+				<option value="scene_<?php echo explode('.', $scene->file)[0] ?>"><?php echo $scene->name ?></option>
+			<?php endforeach; ?>
+		<?php endif; ?>
+	</select>
 	<button id="done_link" onclick="get_link()">Done</button>
 </div>
 
@@ -86,27 +102,13 @@ $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 		var selectbox = document.getElementById('selectbox');
 		var showlink = document.getElementById('show_link');
 
-		var i = 0;
-		var uniqname = '';
-		var scene_nums = krpano.get('scene.count');
-		var hotspotList = [];
-		var current_scene = '';
+		var i                             = 0;
+		var uniqname                      = '';
+		var scene_nums                    = krpano.get('scene.count');
+		var hotspotList                   = [];
+		var current_scene                 = '';
 		var current_vTour_hotspot_counter = 0;
-		var current_randome_val = Math.round(Math.random() * 1000000000).toString() + Math.round(Math.random() * 1000000000).toString();
-
-		$.getJSON('http://<?php echo $_SERVER['HTTP_HOST']; ?>/_/<?php echo $_GET['uId']; ?>/data.json?' + Math.random(), function (JSONdata) {
-			data = JSONdata;
-
-			$('.b1').show();
-
-			for (var ii in data.panoTitle) {
-				// console.info(data.panoList[i].des);
-				option = document.createElement('option');
-				option.value = ii;
-				option.text = data.panoTitle[ii];
-				selectbox.add(option);
-			}
-		});
+		var current_randome_val           = Math.round(Math.random() * 1000000000).toString() + Math.round(Math.random() * 1000000000).toString();
 
 		function add_hotspot_to_scene(currentHotspotData) {
 			document.getElementById('remove_hotpost').disabled = true;
@@ -195,8 +197,8 @@ $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 			for (i = 0; i < hotspot_count; i++) {
 				krpano.call("set(hotspot[" + i + "].onclick, '');");
 			}
-			console.log(hotspot_count);
-			console.info(removedHotspot);
+			/*console.log(hotspot_count);
+			console.info(removedHotspot);*/
 		}
 
 		function choose_hotSpot_type() {
@@ -339,10 +341,9 @@ $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 			var thisAlias = this;
 
 			this.sceneCount = krpano_Obj.get('scene.count');
-			this.kr = krpano_Obj;
 			this.hotspotList = {};
+			this.kr = krpano_Obj;
 			this.firstTimesSave = 0;
-
 
 			this.saveCurrentHotspotFromCurrentScene = function () {
 				// if ( thisAlias.firstTimesSave == 0 ){thisAlias.firstTimesSave = 1;}
@@ -386,18 +387,16 @@ $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 					else {
 					}
 				}
-			}
+			};
 
 			this.loadHotspotsToCurrentSceneFromSavedData = function () {
 				sceneName = this.kr.get('xml.scene');
 
 				for (var hotspotId in thisAlias.hotspotList[sceneName]) {
 					var currentHotspotData = thisAlias.hotspotList[sceneName][hotspotId];
+
 					if (thisAlias.hotspotList[sceneName][hotspotId].reRender == "true") {
 						add_hotspot_to_scene(currentHotspotData);
-					}
-					else {
-
 					}
 				}
 
@@ -409,8 +408,9 @@ $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 					else
 						removedHotspot.splice(i, 1); //remove
 				}
+
 				rotateToDefaultViewOf(sceneName);
-			}
+			};
 
 			this.getData = function () {
 				if (true) {
@@ -418,7 +418,8 @@ $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $uId . '/vtour';
 				}
 				// if(thisAlias.firstTimesSave == 0){thisAlias.saveCurrentHotspotFromCurrentScene();}
 				return thisAlias;
-			}
+			};
+
 			this.setData = function (data) {
 				thisAlias = data;
 			}
