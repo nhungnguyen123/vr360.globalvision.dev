@@ -103,7 +103,7 @@
 		 */
 		embedTour: function (el) {
 			var alias = $(el).attr("data-tour-alias");
-			var template = "<iframe width=\"800px\" height=\"400px\" src=\"/" + alias + "\" ></iframe>";
+			var template = "<iframe width=\"800px\" height=\"400px\" src=\"http://" + document.location.hostname + "/" + alias + "\" ></iframe>";
 
 			$("#vrTour .modal-title").html("<i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> Embed code");
 			$("#vrTour .modal-body .container-fluid").text(template);

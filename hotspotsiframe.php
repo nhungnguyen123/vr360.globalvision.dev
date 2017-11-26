@@ -264,30 +264,6 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		}
 
 		function hmv(currentHotspot, currentScene, i) {
-
-// 				if (typeof currentHotspot !== "object") return false;
-// 				var hotspotList = superHotspot.hotspotList;
-// 				//var sceneName = this.kr.get('xml.scene');
-// 				var sceneName = currentScene;
-// 				var currentHotspotData = {};
-// 				currentHotspotData.ath = currentHotspot.ath;
-// 				currentHotspotData.atv = currentHotspot.atv;
-// 				currentHotspotData.hotspot_type = currentHotspot.hotspot_type;
-// 				currentHotspotData.sceneName    = sceneName;
-// 				currentHotspotData.reRender     = 'true';
-
-// 				if ( typeof currentHotspot.linkedscene != 'undefined')
-// 					currentHotspotData.linkedscene = currentHotspot.linkedscene;
-// 				else if ( typeof currentHotspot.hotspot_text != 'undefined' )
-// 					currentHotspotData.hotspot_text = currentHotspot.hotspot_text;
-// 				else
-// 					console.error('no hotspot data found: ');
-
-// 				console.info (currentHotspotData);
-
-// 				current_vTour_hotspot_counter++;
-// 				hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()] = currentHotspotData;
-
 			//if hotspot just live in js var ( not live in xml yet )
 			if (currentHotspot.url == 'assets/images/hotspot.png') {
 				//hm... do nothing, it's auto re-locate itself
