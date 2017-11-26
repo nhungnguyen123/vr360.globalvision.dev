@@ -12,9 +12,9 @@
 		appendArray: function (messages) {
 			$.each(messages, function (index, value) {
 				vrLog.append(value);
-			})
+			});
 		}
-	}
+	};
 
 	vrAdmin.Log = vrLog;
 })(window, vrAdmin, jQuery);
