@@ -61,7 +61,20 @@ class Vr360AjaxResponse extends Vr360Object
 	{
 		if (!empty($type))
 		{
-			$message = '<span class="label label-' . $type . '">' . $message . '</span>';
+			$icon = 'fa-info-circle';
+
+			switch ($type)
+			{
+				case 'danger':
+					$icon = 'fa-exclamation-triangle';
+					break;
+
+				case 'success':
+					$icon = 'fa-check-circle';
+					break;
+			}
+
+			$message = '<div class="alert alert-' . $type . '" role="alert"><i class="fa ' . $icon . '"></i> ' . $message . '</span>';
 		}
 
 		$this->messages[] = $message;

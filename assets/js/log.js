@@ -2,11 +2,11 @@
 
 	var vrLog = {
 		reset: function () {
-			$('#overlay-waiting').html('');
+			$('#overlay-waiting .messages').html('');
 		},
 
 		append: function (message) {
-			$('#overlay-waiting').append('<div class="message">' + message + '</div>');
+			$('#overlay-waiting .messages').append(message);
 		},
 
 		appendArray: function (messages) {
