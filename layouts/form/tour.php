@@ -92,7 +92,7 @@ $allowedNumberOfScenes = round($postMaxsize / $uploadMaxFilesize);
 									<p class="help-block"></p>
 								</div>
 							</div>
-							<hr/>
+                            <hr />
 							<!-- Options -->
 							<div class="options">
 								<div class="form-group">
@@ -118,7 +118,7 @@ $allowedNumberOfScenes = round($postMaxsize / $uploadMaxFilesize);
 													type="checkbox"
 													id="tour_rotation"
 													name="params[rotation]"
-													value="1" size="80"/> Check for auto rotation.
+                                                    value="1" size="80" /> Check for auto rotation.
 										</label>
 									</div>
 								</div>
@@ -131,13 +131,13 @@ $allowedNumberOfScenes = round($postMaxsize / $uploadMaxFilesize);
 													id="tour_social"
 													name="params[socials]"
 													value="1"
-													size="80"/>Check for show media social button.
+                                                    size="80" />Check for show media social button.
 										</label>
 									</div>
 								</div>
 							</div>
 
-							<hr/>
+                            <hr />
 							<!-- Controls -->
 							<div class="form-group">
 								<button type="submit" id="saveTour" class="btn btn-primary btn-sm">
@@ -158,10 +158,10 @@ $allowedNumberOfScenes = round($postMaxsize / $uploadMaxFilesize);
 				</div>
 				<fieldset>
 					<?php if ($tour->id): ?>
-						<input type="hidden" name="id" value="<?php echo $tour->id; ?>"/>
+                        <input type="hidden" name="id" value="<?php echo $tour->id; ?>" />
 					<?php endif; ?>
-					<input type="hidden" name="view" value="tour"/>
-					<input type="hidden" name="task" value="ajaxSaveTour"/>
+                    <input type="hidden" name="view" value="tour" />
+                    <input type="hidden" name="task" value="ajaxSaveTour" />
 				</fieldset>
 				<script>jQuery.validate({modules: 'file, date'});</script>
 			</form>

@@ -27,7 +27,7 @@ $params       = json_decode($tour->params);
 	<include url="../../../assets/krpano/viewer/skin/tour-vtskin.xml"/>
 	<include url="../../../assets/krpano/viewer/skin/social-skin.xml"/>
 	<?php if (null !== $params && property_exists($params, 'rotation') && $params->rotation == 1): ?>
-		<autorotate enabled="true" waittime="2.0" speed="2.0" horizon="0.0"/>
+        <autorotate enabled="true" waittime="2.0" speed="2.0" horizon="0.0" />
 	<?php endif; ?>
 	<skin_settings maps="false"
 	               maps_type="google"
@@ -88,14 +88,13 @@ $params       = json_decode($tour->params);
 		<layer name="social_share" type="container" keep="true" align="left" width="50" height="200" x="20" y="0"
 		       bgcolor="0xffffff" bgalpha="0.0">
 			<layer name="face" align="righttop" x="0" y="0" url="../../../krpano/viewer/skin/images/f.jpg" zorder="90"
-			       onclick="js(shareFacebook(););"/>
+               onclick="js(shareFacebook(););" />
 			<layer name="twit" align="righttop" x="0" y="50" url="../../../krpano/viewer/skin/images/t.jpg" zorder="90"
-			       onclick="js(shareTwitter(););"/>
+               onclick="js(shareTwitter(););" />
 			<layer name="goog" align="righttop" x="0" y="100" url="../../../krpano/viewer/skin/images/g.jpg" zorder="90"
-			       onclick="js(shareGooglePlus(););"/>
-			<layer name="embed" type="image" url="../../../krpano/viewer/skin/images/embed.png" keep="true"
-			       align="lefttop"
-			       width="50" height="50" crop="0|0|50|50" onovercrop="50|0|50|50" onclick="js(toggleEmbedcode(););"/>
+               onclick="js(shareGooglePlus(););" />
+        <layer name="embed" type="image" url="../../../krpano/viewer/skin/images/embed.png" keep="true" align="lefttop"
+               width="50" height="50" crop="0|0|50|50" onovercrop="50|0|50|50" onclick="js(toggleEmbedcode(););" />
 		</layer>
 	<?php endif; ?>
 	<?php if (!empty($scenes)): ?>

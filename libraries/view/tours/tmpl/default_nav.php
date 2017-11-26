@@ -14,7 +14,10 @@ defined('_VR360_EXEC') or die;
 			</div>
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				<div class="navbar-form navbar-left">
-
+					<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+					<button type="button" class="btn btn-primary addNew">
+						<i class="fa fa-plus-square" aria-hidden="true"></i>
+						Add new</a></button>
 				</div>
 				<form action="index.php" class="navbar-form navbar-right">
 					<input type="hidden" name="view" value="user"/>

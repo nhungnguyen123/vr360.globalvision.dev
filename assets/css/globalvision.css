@@ -24,7 +24,7 @@
     left:       0;
     height:     100%;
     width:      100%;
-    background: rgba( 255, 255, 255, .8 )
+    background: rgba(0, 0, 0, .5)
     url('../images/ajax-loader.gif')
     50% 50%
     no-repeat;
@@ -45,4 +45,31 @@ body.loading .waiting {
 tr.is-valid-0
 {
     opacity: 0.5;
+}
+
+/*
+ * Docs sections
+ *
+ * Content blocks for each component or feature.
+ */
+
+/* Space things out */
+.bs-docs-section {
+    margin-bottom: 60px;
+}
+.bs-docs-section:last-child {
+    margin-bottom: 0;
+}
+
+h1[id] {
+    padding-top: 20px;
+    margin-top: 0;
+}
+
+.waiting .messages {
+    padding-top: 20px;
+}
+
+.waiting .messages .alert {
+    margin-bottom: 5px;
 }

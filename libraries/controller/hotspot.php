@@ -47,6 +47,6 @@ class Vr360ControllerHotspot extends Vr360Controller
 
 		Vr360ModelTour::getInstance()->modifyXML($tour);
 
-		$ajax->addMessage('Hot spot save success')->success()->respond();
+		$ajax->addInfo('Hot spot save success')->success()->respond();
 	}
 }

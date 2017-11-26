@@ -13,9 +13,9 @@ defined('_VR360_EXEC') or die;
 						<div class="panel-title">Scene</div>
 					</div>
 					<div class="col-md-6">
-						<button type="button" class="btn btn-danger btn-sm pull-right removeScene"><i
-									class="fa fa-remove"></i> Remove
-						</button>
+                        <button type="button" class="btn btn-danger btn-sm pull-right removeScene">
+                            <i class="fa fa-remove"></i> Remove
+                        </button>
 					</div>
 				</div>
 			</div>
@@ -48,7 +48,7 @@ defined('_VR360_EXEC') or die;
 											class="form-control input-sm"
 											size="80"
 											placeholder="Scene description"
-											value="<?php echo $scene->description ?>"/>
+                                            value="<?php echo $scene->description ?>" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -62,7 +62,7 @@ defined('_VR360_EXEC') or die;
 									</div>
 								</div>
 							</div>
-							<input type="hidden" name="sceneId[]" value="<?php echo $scene->id ?>"/>
+                            <input type="hidden" name="sceneId[]" value="<?php echo $scene->id ?>" />
 						</div>
 					</div>
 				</div>

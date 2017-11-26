@@ -41,7 +41,7 @@ class Vr360ViewTour extends Vr360View
 
 		$model = Vr360ModelTour::getInstance();
 
-		$this->tour = $model->getItemByAlias();
+		$this->tour = $model->getItem();
 
 		$html = parent::display($layout);
 		$html = $this->optimizeHtml($html);
