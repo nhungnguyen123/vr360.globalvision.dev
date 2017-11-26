@@ -12,6 +12,8 @@ class Vr360ViewTour extends Vr360View
 	 */
 	protected $name = 'tour';
 
+	public $tour;
+
 	/**
 	 * @param string $layout
 	 *

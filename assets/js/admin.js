@@ -95,7 +95,6 @@
 			});
 
 			$("#vrTour").modal("show");
-			vrAdmin.Tour.Hotspot.hooks();
 		},
 
 		/**
@@ -181,6 +180,7 @@
 		hooks: function () {
 
 			vrScene.hooks();
+			vrHotspot.hooks();
 
 			$("body").on("blur", "#form-tour input#name", function () {
 				vrTour.generateAlias();

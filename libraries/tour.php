@@ -186,7 +186,7 @@ class Vr360Tour extends Vr360TableTour
 	{
 		// @TODO Need clean file path to prevent path travel attacking
 
-		$filePath = $this->getDir() . '/' . Vr360HelperFile::clean($file);
+		$filePath = Vr360HelperFile::clean($this->getDir() . '/' . $file);
 
 		if (!Vr360HelperFile::exists($filePath))
 		{
@@ -237,7 +237,7 @@ class Vr360Tour extends Vr360TableTour
 			return false;
 		}
 
-		$tourDir = $dataDir . '/vtour';
+		$tourDir = Vr360HelperFile::clean($dataDir . '/vtour');
 
 		if (!Vr360HelperFolder::exists($tourDir))
 		{

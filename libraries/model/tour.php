@@ -27,11 +27,12 @@ class Vr360ModelTour extends Vr360Model
 	}
 
 	/**
-	 * Save and generate tour
+	 *
 	 */
 	public function ajaxSave()
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
+
 		/**
 		 * @var $tour Vr360TableTour
 		 */
@@ -39,7 +40,8 @@ class Vr360ModelTour extends Vr360Model
 		$tour->bind($_REQUEST);
 		$params       = new Vr360Object(isset($_REQUEST['params']) ? $_REQUEST['params'] : array());
 		$tour->params = $params;
-		$files        = Vr360Factory::getInput()->files->get('newSceneFile');
+
+		$files = Vr360Factory::getInput()->files->get('newSceneFile');
 
 		// Check if tour is create new. Scene Files must have.
 		if (!$tour->id && empty($files))
@@ -71,6 +73,7 @@ class Vr360ModelTour extends Vr360Model
 
 		// Make sure tour data folder exist.
 		$tourDataDir = VR360_PATH_DATA . '/' . $tour->id;
+
 		if (!Vr360HelperFolder::exists($tourDataDir))
 		{
 			Vr360HelperFolder::create($tourDataDir);
@@ -78,14 +81,17 @@ class Vr360ModelTour extends Vr360Model
 
 		// Update / delete current scenes
 		$currentScenes = $this->saveScenes($tour);
+
 		// Try to save new scenes files
-		$newScenes   = $this->saveNewScenes($tour, $files);
+		$newScenes = $this->saveNewScenes($tour, $files);
+
 		$vTourFolder = Vr360HelperFile::clean($tourDataDir . '/vtour');
 
 		// If there are new scenes or missing vtour folder. Regenerate with krpano program.
 		if ((is_array($newScenes) && !empty($newScenes)) || !Vr360HelperFolder::exists($vTourFolder))
 		{
 			$newScenes = is_array($newScenes) && !empty($newScenes) ? array_merge($newScenes, $currentScenes) : $currentScenes;
+
 			try
 			{
 				// Remove old folder vtour
@@ -93,6 +99,7 @@ class Vr360ModelTour extends Vr360Model
 				{
 					Vr360HelperFolder::delete($vTourFolder);
 				}
+
 				// And now generate tour
 				$command = '';
 				$krPano  = new Vr360Krpano(Vr360Configuration::getConfig('krPanoPath'), Vr360Configuration::getConfig('krPanoLicense'));
@@ -112,33 +119,24 @@ class Vr360ModelTour extends Vr360Model
 		$ajax->addInfo('Tour is created')->success()->respond();
 	}
 
-	public function getItem($id = null)
+	public function getItem()
 	{
-		$id    = Vr360Factory::getInput()->getInt('id', $id);
+		$id = Vr360Factory::getInput()->getInt('id');
+
 		$table = new Vr360Tour;
 
 		if ($id)
 		{
-			if ($table->load(array('id' => (int) Vr360Factory::getInput()->getInt('id'), 'created_by' => Vr360Factory::getUser()->id)))
-			{
-				return $table;
-			}
+			$table->load(
+				array
+				(
+					'id'         => (int) Vr360Factory::getInput()->getInt('id'),
+					'created_by' => Vr360Factory::getUser()->id
+				)
+			);
 		}
 
 		return $table;
-	}
-
-	public function getItemByAlias()
-	{
-		$alias = Vr360Factory::getInput()->get('alias', '', 'RAW');
-		$table = new Vr360Tour;
-
-		if ($table->load(array('alias' => $alias)))
-		{
-			return $table;
-		}
-
-		return false;
 	}
 
 	/**

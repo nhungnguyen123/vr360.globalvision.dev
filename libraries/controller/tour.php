@@ -72,7 +72,9 @@ class Vr360ControllerTour extends Vr360Controller
 	/**
 	 * Generate tour
 	 *
-	 * @return bool
+	 * @return  bool
+	 *
+	 * @throws  Exception
 	 */
 	public function ajaxGenerateTour()
 	{

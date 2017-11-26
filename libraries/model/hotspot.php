@@ -52,7 +52,7 @@ class Vr360ModelHotspot extends Vr360Model
 			$sceneName     = 'scene_' . explode('.', $scene->file)[0];
 			$scene->params = isset($defaultView[$sceneName]) && !empty($defaultView[$sceneName]) ? $defaultView[$sceneName] : array();
 
-			if (!$scene->save())
+			if ($scene->save())
 			{
 				$ajax->addMessage('Scene ' . $scene->name . ' store default view success');
 			}

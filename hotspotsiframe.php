@@ -7,14 +7,20 @@ $hotSpotInfoImgUrl = base64_encode("/assets/images/information.png");
 $tourId            = Vr360Factory::getInput()->getInt('uId', 0);
 $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $tourId . '/vtour';
 
-$tour   = Vr360ModelTour::getInstance()->getItem($tourId);
+$tour = new Vr360Tour;
+$tour->load(
+	array(
+		'id'         => $tourId,
+		'created_by' => Vr360Factory::getUser()->id
+	)
+);
 $scenes = !$tour->id ? array() : $tour->getScenes();
 ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta name="viewport"
-	      content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+		  content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
@@ -33,35 +39,26 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 </head>
 <body>
 <div id="button-container">
-	<button type="button" id="add_hotpost" class="btn btn-primary btn-sm" onclick="add_hotspot_to_scene();">Add
-		hotspot
-	</button>
-	<button type="button" id="hotpost_done" class="btn btn-primary btn-sm" onclick="choose_hotSpot_type();">Choose
-		type
-	</button>
+	<button type="button" id="add_hotpost" class="btn btn-primary" onclick="add_hotspot_to_scene();">Add hotspot</button>
+	<button type="button" id="hotpost_done" class="btn btn-primary" onclick="choose_hotSpot_type();">Choose type</button>
 
-	<button type="button" id="remove_hotpost" class="btn btn-danger btn-sm" onclick="remove_hotspot();">Remove hotspot
-	</button>
-	<button type="button" id="done_remove" class="btn btn-danger btn-sm" onclick="done_remove();">Removed done</button>
+	<button type="button" id="remove_hotpost" class="btn btn-danger" onclick="remove_hotspot();">Remove hotspot</button>
+	<button type="button" id="done_remove" class="btn btn-danger" onclick="done_remove();">Removed done</button>
 
-	<button type="button" id="set_defaultView" class="btn btn-primary btn-sm" onclick="setDefaultView();">Set default
-		view
-	</button>
+	<button type="button" id="set_defaultView" class="btn btn-primary" onclick="setDefaultView();">Set default view</button>
 
-	<button type="button" id="moveHotspot" class="btn btn-warning btn-sm" onclick="moveHotspot();">Move hotspots
-	</button>
-	<button type="button" id="moveHotspotDone" class="btn btn-warning btn-sm" onclick="moveHotspotDone();">Moved done
-	</button>
+	<button type="button" id="moveHotspot" class="btn btn-warning" onclick="moveHotspot();">Move hotspots</button>
+	<button type="button" id="moveHotspotDone" class="btn btn-warning" onclick="moveHotspotDone();">Moved done</button>
 </div>
 <div id="choose_hotSpot_type_id">
 	Choose hotspot type:
-	<button type="button" class="btn btn-default btn-sm" onclick="setHotSpotType_Text()">Text Popup</button>
-	<button type="button" class="btn btn-default btn-sm" onclick="setHotSpotType_Nomal()">Scene linking</button>
+	<button type="button" class="btn btn-default" onclick="setHotSpotType_Text()">Text Popup</button>
+	<button type="button" class="btn btn-default" onclick="setHotSpotType_Nomal()">Scene linking</button>
 </div>
 
 <div id="input_text_dialog">
 	<input id='text_input_hotspot' type="text" size="30" placeholder="Input Text for your hotspot here"/>
-	<button type="button" class="btn btn-default btn-sm" onclick="hotspot_add_text_from_input()">Finish</button>
+	<button type="button" class="btn btn-default" onclick="hotspot_add_text_from_input()">Finish</button>
 </div>
 
 <div id="show_link">
@@ -105,13 +102,13 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		var selectbox = document.getElementById('selectbox');
 		var showlink = document.getElementById('show_link');
 
-		var i = 0;
-		var uniqname = '';
-		var scene_nums = krpano.get('scene.count');
-		var hotspotList = [];
-		var current_scene = '';
+		var i                             = 0;
+		var uniqname                      = '';
+		var scene_nums                    = krpano.get('scene.count');
+		var hotspotList                   = [];
+		var current_scene                 = '';
 		var current_vTour_hotspot_counter = 0;
-		var current_randome_val = Math.round(Math.random() * 1000000000).toString() + Math.round(Math.random() * 1000000000).toString();
+		var current_randome_val           = Math.round(Math.random() * 1000000000).toString() + Math.round(Math.random() * 1000000000).toString();
 
 		function add_hotspot_to_scene(currentHotspotData) {
 			document.getElementById('remove_hotpost').disabled = true;
@@ -250,7 +247,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			defaultViewList[scene].vlookat = krpano.get('view.vlookat');
 			defaultViewList[scene].fov = krpano.get('view.fov');
 
-			alert('Applied default view hlookat: ' + defaultViewList[scene].hlookat + ' , vlookat: ' + defaultViewList[scene].vlookat + ' , fov: ' + defaultViewList[scene].fov);
+			alert ('Applied default view hlookat: ' + defaultViewList[scene].hlookat + ' , vlookat: ' + defaultViewList[scene].vlookat + ' , fov: ' + defaultViewList[scene].fov);
 		}
 
 		function rotateToDefaultViewOf(scene) {
@@ -264,6 +261,30 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		}
 
 		function hmv(currentHotspot, currentScene, i) {
+
+// 				if (typeof currentHotspot !== "object") return false;
+// 				var hotspotList = superHotspot.hotspotList;
+// 				//var sceneName = this.kr.get('xml.scene');
+// 				var sceneName = currentScene;
+// 				var currentHotspotData = {};
+// 				currentHotspotData.ath = currentHotspot.ath;
+// 				currentHotspotData.atv = currentHotspot.atv;
+// 				currentHotspotData.hotspot_type = currentHotspot.hotspot_type;
+// 				currentHotspotData.sceneName    = sceneName;
+// 				currentHotspotData.reRender     = 'true';
+
+// 				if ( typeof currentHotspot.linkedscene != 'undefined')
+// 					currentHotspotData.linkedscene = currentHotspot.linkedscene;
+// 				else if ( typeof currentHotspot.hotspot_text != 'undefined' )
+// 					currentHotspotData.hotspot_text = currentHotspot.hotspot_text;
+// 				else
+// 					console.error('no hotspot data found: ');
+
+// 				console.info (currentHotspotData);
+
+// 				current_vTour_hotspot_counter++;
+// 				hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()] = currentHotspotData;
+
 			//if hotspot just live in js var ( not live in xml yet )
 			if (currentHotspot.url == 'assets/images/hotspot.png') {
 				//hm... do nothing, it's auto re-locate itself
@@ -328,14 +349,14 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				// if ( thisAlias.firstTimesSave == 0 ){thisAlias.firstTimesSave = 1;}
 
 				sceneName = this.kr.get('xml.scene');
-				console.info('saveCurrentHotspotFromCurrentScene: ' + sceneName);
+				// console.info('saveCurrentHotspotFromCurrentScene: ' + sceneName);
 				thisAlias.hotspotList[sceneName] = {};
 				var hotspot_count = thisAlias.kr.get('hotspot.count');
 				for (var i = 0; i < hotspot_count; i++) {
-					console.log(thisAlias.kr.get('hotspot[' + i + '].url'));
+					// console.log(thisAlias.kr.get('hotspot[' + i + '].url'));
 					if (/hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url'))) {
-						console.log('collecting hotspot: ' + i);
-						console.info(thisAlias.kr.get('hotspot[' + i + ']'));
+						// console.log('collecting hotspot: ' + i);
+						// console.info(thisAlias.kr.get('hotspot[' + i + ']'));
 
 						thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()] = {
 							'ath': thisAlias.kr.get('hotspot[' + i + '].ath'),
@@ -346,7 +367,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 						}
 						if (/vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url'))) {
 							//hotspot which is aready in xml shouldnt re-render by js anymore, if not, doulicate hotspot will apperent.
-							console.log('superHotspot: xreRender: [' + i + '] ' + thisAlias.kr.get('hotspot[' + i + '].xreRender'));
+							// console.log('superHotspot: xreRender: [' + i + '] ' + thisAlias.kr.get('hotspot[' + i + '].xreRender'));
 
 							if (thisAlias.kr.get('hotspot[' + i + '].xreRender') == 'true') {
 								thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].reRender == 'true'

@@ -75,11 +75,11 @@ class Vr360Controller
 			}
 		}
 
-		$viewClassname = 'Vr360View' . ucfirst($view);
+		$viewClassName = 'Vr360View' . ucfirst($view);
 
-		if (class_exists($viewClassname))
+		if (class_exists($viewClassName))
 		{
-			$viewClass = new $viewClassname;
+			$viewClass = new $viewClassName;
 
 			$viewHtml = $viewClass->display();
 		}
