@@ -41,6 +41,31 @@ class Vr360ModelTour extends Vr360Model
 		$params       = new Vr360Object(isset($_REQUEST['params']) ? $_REQUEST['params'] : array());
 		$tour->params = $params;
 
+		$files = Vr360Factory::getInput()->files->get('newSceneFile');
+
+		// Check if tour is create new. Scene Files must have.
+		if (!$tour->id && empty($files))
+		{
+			$ajax->addDanger("Missing scenes files.")->fail()->respond();
+
+			return false;
+		}
+
+		// Need to be validate files.
+		if (!empty($files))
+		{
+			// File validate
+			foreach ($files as $i => $file)
+			{
+				// Respond ajax if anything failed
+				if (true !== Vr360HelperTour::fileValidate($file['tmp_name']))
+				{
+					unset($files[$i]);
+					$ajax->addDanger('Invalid scene: ' . $file['name'])->fail()->respond();
+				}
+			}
+		}
+
 		if ($tour->save() === false)
 		{
 			$ajax->addDanger($tour->getError())->fail()->respond();
@@ -55,10 +80,10 @@ class Vr360ModelTour extends Vr360Model
 		}
 
 		// Update / delete current scenes
-		$currentScenes = $this->saveScenes($tour, $ajax);
+		$currentScenes = $this->saveScenes($tour);
 
 		// Try to save new scenes files
-		$newScenes = $this->saveNewScenes($tour, $ajax);
+		$newScenes = $this->saveNewScenes($tour, $files);
 
 		$vTourFolder = Vr360HelperFile::clean($tourDataDir . '/vtour');
 
@@ -91,13 +116,12 @@ class Vr360ModelTour extends Vr360Model
 		$this->modifyXML($tour, $ajax);
 
 		// Save scene
-		$ajax->addInfo('Tour is created')->respond();
+		$ajax->addInfo('Tour is created')->success()->respond();
 	}
 
 	public function getItem()
 	{
-		$alias = Vr360Factory::getInput()->get('alias', '', 'RAW');
-		$id    = Vr360Factory::getInput()->getInt('id');
+		$id = Vr360Factory::getInput()->getInt('id');
 
 		$table = new Vr360Tour;
 
@@ -118,35 +142,18 @@ class Vr360ModelTour extends Vr360Model
 	/**
 	 * Method for store new scenes
 	 *
-	 * @param   Vr360Tour         $tour Tour data
-	 * @param   Vr360AjaxResponse $ajax Ajax response.
+	 * @param   Vr360Tour  $tour   Tour data
+	 * @param   array      $files  List of new scenes files.
 	 *
-	 * @return  array|false               Array of new scenes files if success. False otherwise.
+	 * @return  array|false        Array of new scenes files if success. False otherwise.
 	 *
 	 * @since   3.0.0
 	 */
-	protected function saveNewScenes($tour, $ajax)
+	protected function saveNewScenes($tour, $files)
 	{
 		$input       = Vr360Factory::getInput();
+		$ajax        = Vr360AjaxResponse::getInstance();
 		$tourDataDir = VR360_PATH_DATA . '/' . $tour->id;
-		$files       = $input->files->get('newSceneFile');
-
-		// Just check if user upload new files.
-		if (empty($files))
-		{
-			return false;
-		}
-
-		// File validate
-		foreach ($files as $i => $file)
-		{
-			// Respond ajax if anything failed
-			if (!Vr360HelperTour::fileValidate($file['tmp_name']))
-			{
-				unset($files[$i]);
-				$ajax->addDanger('Invalid scene: ' . $file['name'])->fail()->respond();
-			}
-		}
 
 		// Just check if user upload new files.
 		if (empty($files))
@@ -201,16 +208,16 @@ class Vr360ModelTour extends Vr360Model
 	/**
 	 * Method for store current scenes
 	 *
-	 * @param   Vr360Tour          $tour  Tour data
-	 * @param   Vr360AjaxResponse  $ajax  Ajax response.
+	 * @param   Vr360Tour  $tour  Tour data
 	 *
-	 * @return  array                     List of scene files.
+	 * @return  array             List of scene files.
 	 *
 	 * @since   3.0.0
 	 */
-	protected function saveScenes($tour, $ajax)
+	protected function saveScenes($tour)
 	{
 		$input = Vr360Factory::getInput();
+		$ajax  = Vr360AjaxResponse::getInstance();
 
 		$sceneNames        = $input->get('sceneName', array(), 'Array');
 		$sceneDescriptions = $input->get('sceneDescription', array(), 'Array');

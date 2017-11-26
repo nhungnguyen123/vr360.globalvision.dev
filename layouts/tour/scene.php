@@ -16,7 +16,7 @@ if (null !== $scene->params)
 }
 else
 {
-	$fov      = _DEFAULT_FOV;
+	$fov      = VR360_TOUR_SCENE_DEFAULT_FOV;
 	$hLookAt  = VR360_TOUR_SCENE_DEFAULT_HLOOKAT;
 	$vLookAt  = VR360_TOUR_SCENE_DEFAULT_HLOOKAT;
 }

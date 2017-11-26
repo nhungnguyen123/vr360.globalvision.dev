@@ -21,29 +21,31 @@ class Vr360HelperTour
 
 		$imageSize = getimagesize($filePath);
 
-		if ($imageSize)
+		if (!$imageSize)
 		{
-			$mime = $imageSize['mime'];
+			return 'Invalid file';
+		}
 
-			if (!in_array($mime, Vr360Configuration::getConfig('allowMimeTypes')))
-			{
-				return 'Invalid file mime';
-			}
+		$mime = $imageSize['mime'];
 
-			if ($imageSize[0] < Vr360Configuration::getConfig('minimumWidth'))
-			{
-				return 'Invalid image width. Minimum required: ' . Vr360Configuration::getConfig('minimumWidth');
-			}
+		if (!in_array($mime, Vr360Configuration::getConfig('allowMimeTypes')))
+		{
+			return 'Invalid file mime';
+		}
 
-			if ($imageSize[1] < Vr360Configuration::getConfig('minimumHeight'))
-			{
-				return 'Invalid image height. Minimum required: ' . Vr360Configuration::getConfig('minimumHeight');
-			}
+		if ($imageSize[0] < Vr360Configuration::getConfig('minimumWidth'))
+		{
+			return 'Invalid image width. Minimum required: ' . Vr360Configuration::getConfig('minimumWidth');
+		}
 
-			if ($imageSize[0] < 2 * $imageSize[1])
-			{
-				return 'Invalid file dimension';
-			}
+		if ($imageSize[1] < Vr360Configuration::getConfig('minimumHeight'))
+		{
+			return 'Invalid image height. Minimum required: ' . Vr360Configuration::getConfig('minimumHeight');
+		}
+
+		if ($imageSize[0] < 2 * $imageSize[1])
+		{
+			return 'Invalid file dimension';
 		}
 
 		return true;

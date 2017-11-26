@@ -31,6 +31,8 @@ class Vr360TourXml
 	 */
 	public function load($file)
 	{
+		$file = Vr360HelperFile::clean($file);
+
 		if (Vr360HelperFile::exists($file))
 		{
 			$this->dom = new DOMDocument;
@@ -60,13 +62,14 @@ class Vr360TourXml
 			case XML_TEXT_NODE:
 				$nodes = trim($node->textContent);
 				break;
+
 			case XML_ELEMENT_NODE:
 
 				foreach ($node->childNodes as $child)
 				{
 					$tmpNodes = $this->loadNodes($child);
 
-					if (isset($child->tagName))
+					if (property_exists($child, 'tagName'))
 					{
 						$tagName = $child->tagName;
 
