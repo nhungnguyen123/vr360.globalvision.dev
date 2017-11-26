@@ -1,0 +1,220 @@
+<krpano>
+	<!-- krpano 1.19.4 - Default Virtual Tour Skin -->
+
+	<layer name="main" type="container" keep="true" align="lefttop" width="100%" height="100%" x="0" y="0" zorder="10">
+		<layer name="controlbar" type="container" keep="true" align="bottom"  width="320" height="40" x="0" y="20" zorder="11">
+
+			<layer name="zoom_in"             url="buttons.png" keep="true" align="left" width="35" height="35" x="0" y="0"   crop="160|0|35|35"  zorder="12" onover="set(crop, 160|40|35|35)" onout="set(crop, 160|0|35|35)" ondown="set(fov_moveforce, -0.3); set(crop, 160|80|35|35)" onup="set(fov_moveforce, 0); set(crop, 160|40|35|35)"/>
+
+			<layer name="zoom_out"            url="buttons.png" keep="true" align="left" width="35" height="35" x="40" y="0"  crop="200|0|35|35"  zorder="12" onover="set(crop, 200|40|35|35)" onout="set(crop, 200|0|35|35)" ondown="set(fov_moveforce, +0.3); set(crop, 200|80|35|35)" onup="set(fov_moveforce, 0); set(crop, 200|40|35|35)"/>
+
+			<layer name="control_left"        url="buttons.png" keep="true" align="left" width="35" height="35" x="80" y="0"  crop="0|0|35|35"    zorder="12" onover="set(crop, 0|40|35|35)"  onout="set(crop, 0|0|35|35)"   ondown="set(hlookat_moveforce, -1); set(crop, 0|80|35|35);" onup="set(hlookat_moveforce, 0); set(crop, 0|40|35|35)"/>
+
+			<layer name="control_right"       url="buttons.png" keep="true" align="left" width="35" height="35" x="120" y="0" crop="40|0|35|35"   zorder="12" onover="set(crop, 40|40|35|35)" onout="set(crop, 40|0|35|35)"  ondown="set(hlookat_moveforce, +1); set(crop, 40|80|35|35);" onup="set(hlookat_moveforce, 0); set(crop, 40|40|35|35)"/>
+
+			<layer name="control_up"          url="buttons.png" keep="true" align="left" width="35" height="35" x="160" y="0" crop="80|0|35|35"   zorder="12" onover="set(crop, 80|40|35|35)"   onout="set(crop, 80|0|35|35)"  ondown="set(vlookat_moveforce, -1); set(crop, 80|80|35|35);" onup="set(vlookat_moveforce, 0); set(crop, 80|40|35|35);"/>
+
+			<layer name="control_down"        url="buttons.png" keep="true" align="left" width="35" height="35" x="200" y="0" crop="120|0|35|35"  zorder="12" onover="set(crop, 120|40|35|35)"  onout="set(crop, 120|0|35|35)" ondown="set(vlookat_moveforce, +1); set(crop, 120|80|35|35)" onup="set(vlookat_moveforce, 0); set(crop, 120|40|35|35)"/>
+
+			<layer name="change_mode_mouse"   url="buttons.png" keep="true" align="left" width="35" height="35" x="240" y="0" crop="400|0|35|35"  zorder="12" onover="set(crop, 400|40|35|35)" onout="set(crop, 400|0|35|35)" ondown="set(crop, 400|80|35|35); set(crop, 400|80|35|35)" onup="set(crop, 40|80|35|35); set(crop, 400|40|35|35)" visible="true" onclick="mode_mouse"/>
+
+			<layer name="change_mode_drag2d"  url="buttons.png" keep="true" align="left" width="35" height="35" x="240" y="0" crop="360|0|35|35"  zorder="12" onover="set(crop, 360|40|35|35)" onout="set(crop, 360|0|35|35)" ondown="set(crop, 360|80|35|35); set(crop, 360|80|35|35)" onup="set(crop, 360|80|35|35); set(crop, 360|40|35|35)" visible="false" onclick="mode_point"/>
+
+			<layer name="fullscreen_on"       url="buttons.png" keep="true" align="left" width="35" height="35" x="280" y="0" crop="280|0|35|35"  zorder="12" onover="set(crop, 280|40|35|35)" onout="set(crop, 280|0|35|35)" ondown="set(crop, 280|80|35|35);" onup="set(crop, 280|40|35|35);" onclick="get_open_fullscreen();" visible="true"/>
+
+			<layer name="fullscreen_off"      url="buttons.png" keep="true" align="left" width="35" height="35" x="280" y="0" crop="320|0|35|35" zorder="12" onover="set(crop, 320|40|35|35)" onout="set(crop, 320|0|35|35)" ondown="set(crop, 320|80|35|35);" onup="set(crop, 320|40|35|35);" onclick="get_close_fullscreen();" visible="false"/>
+			<layer name="skin_btn_vrs"       url="buttons2.png" keep="true" align="left" width="53" height="35" x="320" y="0" crop="0|0|46|35" onovercrop="0|40|46|35" ondown="set(crop, 0|80|46|35);" onup="set(crop, 0|0|46|35);" zorder="12" onclick="webvr.enterVR();" visible="true"/>
+
+
+
+
+		</layer>
+		<layer name='show_info_hp' type='container' keep='true' align='lefttop' x='0' y='0' width="100%" height="100%" zorder='99' bgcapture="true" handcursor="false" visible="false" bgcolor="0x000000" bgalpha="0.5" onclick="set(layer[show_info_hp].visible,false);">
+  				<layer name='bghp'  url='' x='0' y='0' align='center' handcursor="false">
+   					<layer name="title" type="container" align="lefttop" x="40" y="45" width="" height="10%" zorder="99" bgcapture="true" bgalpha="0.01" bgcolor="0x000000" onclick="" handcursor="true" onover="set(bgalpha, 0.1);" onout="set(bgalpha, 0.01);"/>
+   					<layer name="autor" type="container" align="lefttop" x="40" y="150" width="" height="10%" zorder="99" bgcapture="true" bgalpha="0.01" bgcolor="0x000000" onclick="" handcursor="true" onover="set(bgalpha, 0.1);" onout="set(bgalpha, 0.01);"/>
+  				</layer>
+			</layer>
+	</layer>
+
+	<!-- the 'tooltip' style - show tooltip textfield and update positions as long as hovering -->
+	<layer name="tooltip" keep="true"
+	       url="%SWFPATH%/plugins/textfield.swf"
+	       parent="STAGE"
+	       visible="false" alpha="0"
+	       enabled="false"
+	       align="lefttop"
+	       edge="bottom"
+	       oy="-2"
+	       width="200"
+	       autoheight="true"
+	       background="false" backgroundcolor="0xFFFFFF" backgroundalpha="1.0"
+	       border="false" bordercolor="0x000000" borderalpha="1.0"
+	       borderwidth="1.0" roundedge="0"
+	       shadow="0.0" shadowrange="4.0" shadowangle="45" shadowcolor="0x000000" shadowalpha="1.0"
+	       textshadow="1" textshadowrange="6.0" textshadowangle="90" textshadowcolor="0x000000" textshadowalpha="1.0"
+	       css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:16px;"
+	       html=""
+	       />
+	       
+	<style name="tooltip"
+	       onover="copy(layer[tooltip].html, scene[get(linkedscene)].title);
+	               set(layer[tooltip].visible, true);
+	               tween(layer[tooltip].alpha, 1.0, 0.5);
+	               asyncloop(hovering, copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );copy(rotatespeed,autorotate.speed);tween(autorotate.speed,0,0.3);"
+	       onout="tween(layer[tooltip].alpha, 0.0, 0.25, default, set(layer[tooltip].visible,false), copy(layer[tooltip].x,mouse.stagex); copy(layer[tooltip].y,mouse.stagey); );stoptween(autorotate.speed);copy(autorotate.speed,rotatespeed);"
+	       />
+
+	<style name="skin_hotspotstyle" url="hotspot_animated_user_defaultpoint51.png" visible="true"  crop="0|0|64|64" frame="0" lastframe="19" framewidth="64" frameheight="64"  distorted="false" onloaded="hotspot_animate()" zoom="true" onclick="if(linkedscene, tween(scale,0.25,0.5); tween(oy,-20,0.5); tween(alpha,0,0.5); looktohotspot(); loadscene(get(linkedscene),null,MERGE,BLEND(1);); skin_updatescroll(); ); js(setTitle(get(linkedscene)));"  height="40" width="40" />
+
+	<layer name="skin_loadingtext"  keep="true" url="%SWFPATH%/plugins/textfield.swf" align="center" x="5" y="-5" html="loading..." visible="false" autoheight="true" background="false" border="false" enabled="false" css="text-align:center; color:#FFFFFF; font-family:Arial; font-weight:bold; font-size:22px; font-style:italic;" textshadow="2" />
+
+	<action name="hotspot_animate">
+		inc(frame,1,get(lastframe),0);
+		mul(ypos,frame,frameheight);
+		txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
+		delayedcall(0.1, if(loaded, hotspot_animate() ) );
+	</action>
+
+	<!-- action show/close hotspot_info -->
+	<action name="show_img">
+		set(layer[show_info_hp].visible,true);
+		set(layer[bghp].url,%1);
+		set(layer[title].onclick,openurl(%2, '_blank'));
+		set(layer[autor].onclick,openurl(%3, '_blank'));
+		set(layer[autor].y,%4);
+		set(layer[title].width,%5);
+		set(layer[autor].width,%6);
+		set(layer[title].y,%7);
+	</action>
+	<!-- action for click fullscreen -->
+
+	<action name="get_open_fullscreen">
+		set(layer[fullscreen_on].visible, false);
+		set(layer[fullscreen_off].visible, true);
+		set(fullscreen, true);
+	</action>
+
+	<action name="get_close_fullscreen">
+		set(layer[fullscreen_on].visible, true);
+		set(layer[fullscreen_off].visible, false);
+		set(fullscreen, false);
+	</action>
+
+	<!-- action for change controlmode -->
+
+	<action name="mode_mouse">
+		set(control.mousetype, drag2d);
+		set(layer[change_mode_mouse].visible, false);
+		set(layer[change_mode_drag2d].visible, true);
+	</action>
+
+	<action name="mode_point">
+		set(control.mousetype, moveto);
+		set(layer[change_mode_mouse].visible, true);
+		set(layer[change_mode_drag2d].visible, false);
+	</action>
+
+	<action name="skin_showloading">
+		set(layer[skin_loadingtext].visible, %1);
+	</action>
+
+	<!-- context menu -->
+	<contextmenu>
+		<item caption="360° by GlobalVision Communication" onclick="openurl('http://www.globalvision.ch',_blank);" />
+		<item name="krp" caption="KRPANO"     />
+		<!-- <item name="fsc" caption="FULLSCREEN" /> -->
+		<!-- <item name="scm" caption="Change Controlmode" onclick="switch(control.mousetype, 'moveto', 'drag2d');"               separator="true"      /> -->
+		<item name="nrm" caption="Normal View"        onclick="skin_view_normal();"        showif="view.vlookatrange == 180" separator="true"      />
+		<item name="fis" caption="Fisheye View"       onclick="skin_view_fisheye();"       showif="view.vlookatrange == 180" devices="flash|webgl" />
+		<item name="ste" caption="Stereographic View" onclick="skin_view_stereographic();" showif="view.vlookatrange == 180" devices="flash|webgl" />
+		<item name="arc" caption="Architectural View" onclick="skin_view_architectural();" showif="view.vlookatrange == 180"                       />
+		<item name="pan" caption="Pannini View"       onclick="skin_view_pannini();"       showif="view.vlookatrange == 180" devices="flash|webgl" />
+		<item name="lpv" caption="Little Planet View" onclick="skin_view_littleplanet();"  showif="view.vlookatrange == 180" devices="flash|webgl" />
+		<item name="fsc" caption="FULLSCREEN" />
+	</contextmenu>
+
+
+	<!-- Skin Events -->
+
+	<!-- <events name="skin_events" keep="true"
+	        onxmlcomplete="set(events[skin_events].onxmlcomplete,null); "
+	        onnewpano="skin_showloading(true); check_type();"
+	        onremovepano="skin_showloading(true);"
+	        onloadcomplete="skin_showloading(false);"
+	        onresize=""
+	        />
+
+	<events name="skin_events" devices="fullscreensupport"
+	        onenterfullscreen="set(layer[skin_btn_fs].crop, '64|576|64|64');"
+	        onexitfullscreen="get_close_fullscreen(true);"
+	        /> -->
+
+	<action name="check_type">
+		if(device.flash,
+			set(layer[skin_btn_vrs].visible, false);
+		);
+	</action>
+
+	<action name="skin_view_normal">
+		tween(view.fovmax,       100.0, distance(179, 1.00), easeoutquad);
+		tween(view.architectural,  0.0, distance(1.0, 0.45), easeoutquad);
+		tween(view.fisheye,        0.0, distance(1.0, 0.45), easeoutquad, set(view.stereographic,false); set(view.pannini,false); set(display.flash10,on); );
+	</action>
+
+	<action name="skin_view_fisheye">
+		set(display.flash10,off);
+		tween(view.architectural, 0.0, distance(1.0, 0.30), easeoutquad);
+		tween(view.fisheye,       0.0 ,distance(1.0, 0.30), easeoutquad, set(view.stereographic,false); set(view.pannini,false); set(view.fovmax,179); tween(view.fisheye, 0.35, distance(1.0,1.25)); );
+	</action>
+
+	<action name="skin_view_architectural">
+		tween(view.fovmax,       150.0, distance(179, 1.00), easeoutquad);
+		tween(view.architectural,  1.0, distance(1.0, 0.45), easeoutquad);
+		tween(view.fisheye,        0.0, distance(1.0, 0.45), easeoutquad, set(view.stereographic,false);set(view.pannini,false);set(display.flash10,on); );
+	</action>
+
+	<action name="skin_view_stereographic">
+		set(display.flash10, off);
+		tween(view.architectural, 0.0, 0.25);
+		set(backtonormalfirst, false);
+		if(view.pannini       == true,  set(backtonormalfirst,true) );
+		if(view.stereographic == false, set(backtonormalfirst,true) );
+		if(backtonormalfirst, tween(view.fisheye, 0.0 ,distance(1.0, 0.25), easeoutquad, WAIT); );
+		set(view.pannini, false);
+		set(view.stereographic, true);
+		set(view.fovmax, 150);
+		tween(view.fisheye, 1.0, distance(1.0, 0.75), easeoutquad);
+	</action>
+
+	<action name="skin_view_pannini">
+		set(display.flash10, off);
+		tween(view.architectural, 0.0, 0.25);
+		set(backtonormalfirst, false);
+		if(view.pannini       == false, set(backtonormalfirst,true) );
+		if(view.stereographic == false, set(backtonormalfirst,true) );
+		if(backtonormalfirst, tween(view.fisheye, 0.0 ,distance(1.0, 0.25), easeoutquad, WAIT); );
+		set(view.pannini, true);
+		set(view.stereographic, true);
+		set(view.fovmax, 150);
+		tween(view.fisheye, 1.0, distance(1.0, 0.75), easeoutquad);
+	</action>
+
+
+	<action name="skin_view_littleplanet">
+		set(display.flash10,off);
+		tween(view.architectural, 0.0, 0.25);
+		tween(view.vlookat,  90, distance(179, 1.50), easeoutquad);
+		set(backtonormalfirst, false);
+		if(view.pannini       == true,  set(backtonormalfirst,true) );
+		if(view.stereographic == false, set(backtonormalfirst,true) );
+		if(backtonormalfirst, tween(view.fisheye, 0.0 ,distance(1.0, 0.25), easeoutquad, WAIT); );
+		set(view.pannini, false);
+		set(view.stereographic, true);
+		set(view.fovmax, 150);
+		tween(view.fisheye, 1.0, distance(1.0, 0.75), easeoutquad);
+		tween(view.fov,     150, distance(179, 0.75), easeoutquad);
+	</action>
+
+
+</krpano>

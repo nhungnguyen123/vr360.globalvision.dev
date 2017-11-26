@@ -30,7 +30,7 @@ class Vr360ControllerTour extends Vr360Controller
 
 	public function ajaxSaveTour()
 	{
-		$ajax  = Vr360AjaxResponse::getInstance();
+		$ajax = Vr360AjaxResponse::getInstance();
 
 		// Permission verify
 		if (!Vr360HelperAuthorize::isAuthorized())
@@ -273,7 +273,7 @@ class Vr360ControllerTour extends Vr360Controller
 	 */
 	public function ajaxSaveHotspot()
 	{
-		$ajax = Vr360AjaxResponse::getInstance();
+		$ajax  = Vr360AjaxResponse::getInstance();
 		$input = Vr360Factory::getInput();
 
 		$tour = new Vr360Tour;
@@ -288,9 +288,9 @@ class Vr360ControllerTour extends Vr360Controller
 		if ($tour)
 		{
 			// Get current json data
-			$jsonData                    = $tour->getJsonData();
+			$jsonData = $tour->getJsonData();
 
-			$hotspotsList = json_decode($input->getString('hotspotList'), true);
+			$hotspotsList     = json_decode($input->getString('hotspotList'), true);
 			$defaultViewsList = json_decode($input->getString('defaultViewList'), true);
 
 			if ($hotspotsList === null || $defaultViewsList === null)
