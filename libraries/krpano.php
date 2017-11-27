@@ -4,19 +4,36 @@ defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360Krpano
+ *
+ * @since   2.0.0
  */
 class Vr360Krpano
 {
+	/**
+	 * @var string
+	 */
 	protected $binPath;
+
+	/**
+	 * @var string
+	 */
 	protected $license;
+
+	/**
+	 * @var array
+	 */
 	protected $parameters = array();
+
+	/**
+	 * @var array
+	 */
 	protected $files = array();
 
 	/**
 	 * Vr360Krpano constructor.
 	 *
-	 * @param $binPath
-	 * @param $license
+	 * @param   string  $binPath
+	 * @param   string  $license
 	 */
 	public function __construct($binPath, $license)
 	{
@@ -24,6 +41,9 @@ class Vr360Krpano
 		$this->license = Vr360Configuration::getConfig('krPanoLicense');
 	}
 
+	/**
+	 * @param   array  $files
+	 */
 	public function addFiles($files)
 	{
 		foreach ($files as $key => $file)
@@ -64,6 +84,8 @@ class Vr360Krpano
 		$execute[] = $this->binPath . ' ' . implode(' ', $this->parameters) . ' ' . implode(' ', $this->files);
 
 		$command = implode(' && ', $execute);
+
+		Vr360AjaxResponse::getInstance()->addInfo($command);
 
 		return exec($command);
 	}

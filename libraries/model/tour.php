@@ -27,7 +27,7 @@ class Vr360ModelTour extends Vr360Model
 	}
 
 	/**
-	 *
+	 * @return boolean
 	 */
 	public function ajaxSave()
 	{
@@ -47,8 +47,6 @@ class Vr360ModelTour extends Vr360Model
 		if (!$tour->id && empty($files))
 		{
 			$ajax->addDanger("Missing scenes files.")->fail()->respond();
-
-			return false;
 		}
 
 		// Need to be validate files.
@@ -301,7 +299,7 @@ class Vr360ModelTour extends Vr360Model
 
 		if (!Vr360HelperFolder::exists($tourDataDirPath))
 		{
-			$ajax->addDanger('Missing folder Tour: ' . $tourDataDirPath)->fail()->respond();
+			$ajax->addDanger('Missing folder tour: ' . $tourDataDirPath)->fail()->respond();
 		}
 
 		$sceneFiles  = array();

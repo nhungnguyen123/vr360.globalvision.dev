@@ -22,3 +22,8 @@ body {
     color: #FFFFFF;
     background-color: #000000;
 }
+
+#pano, table {
+    width: 100%;
+    height: 100%;
+}

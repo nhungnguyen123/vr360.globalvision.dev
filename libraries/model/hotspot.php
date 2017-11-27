@@ -75,12 +75,12 @@ class Vr360ModelHotspot extends Vr360Model
 	 */
 	public function saveHotspot($scenes = array(), $hotspots = array())
 	{
+		$ajax = Vr360AjaxResponse::getInstance();
+
 		if (empty($scenes) || empty($hotspots))
 		{
-			return;
+			$ajax->addInfo('There are no hotspot');
 		}
-
-		$ajax = Vr360AjaxResponse::getInstance();
 
 		foreach ($scenes as $scene)
 		{
@@ -106,15 +106,20 @@ class Vr360ModelHotspot extends Vr360Model
 				$hotspotObj->atv     = $hotspot['atv'];
 				$hotspotObj->type    = $hotspot['hotspot_type'];
 
-				if ($hotspotObj->type == 'normal')
+				if ($hotspotObj->type == '')
 				{
-					$hotspotObj->style  = 'tooltip';
-					$hotspotObj->params = array('linkedscene' => $hotspot['linkedscene']);
+					continue;
 				}
-				elseif ($hotspotObj->type == 'text')
+
+				switch ($hotspotObj->type)
 				{
-					$hotspotObj->style  = 'textpopup';
-					$hotspotObj->params = array('hotspot_text' => $hotspot['hotspot_text']);
+					case 'normal':
+						$hotspotObj->style  = 'tooltip';
+						$hotspotObj->params = array('linkedscene' => $hotspot['linkedscene']);
+						break;
+					case 'text':
+						$hotspotObj->style  = 'textpopup';
+						$hotspotObj->params = array('hotspot_text' => $hotspot['hotspot_text']);
 				}
 
 				$hotspotObj->params = json_encode($hotspotObj->params);
@@ -125,7 +130,7 @@ class Vr360ModelHotspot extends Vr360Model
 				}
 				else
 				{
-					$ajax->addWarning('Hotspot ' . $hotspotObj->code . ' save fail');
+					$ajax->addWarning('Hotspot ' . $hotspotObj->code . ' save fail. ' . $hotspotObj->getError());
 				}
 			}
 		}

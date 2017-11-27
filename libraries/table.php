@@ -70,7 +70,8 @@ class Vr360Table extends Vr360Object
 
 			if (!$db->update($this->_table, $properties, array('id' => $properties['id'])))
 			{
-				$this->setError($db->error());
+				$errors = $db->error();
+				$this->setError(end($errors));
 
 				return false;
 			}
