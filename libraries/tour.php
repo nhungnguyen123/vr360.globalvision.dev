@@ -55,21 +55,6 @@ class Vr360Tour extends Vr360TableTour
 	}
 
 	/**
-	 * @return array|mixed
-	 */
-	public function getHotspots()
-	{
-		$jsonData = $this->getJsonData();
-
-		if (isset($jsonData['hotspotList']))
-		{
-			return $jsonData['hotspotList'];
-		}
-
-		return array();
-	}
-
-	/**
 	 * @return array
 	 */
 	public function getPanos()

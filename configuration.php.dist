@@ -4,51 +4,147 @@ defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360Configuration
+ *
+ * @since   2.0.0
  */
 class Vr360Configuration extends Vr360Object
 {
-	public $dbName = 'vr360_dev';
+	/**
+	 * @var string
+	 */
+	public $dbName = 'globalvision_vr360_v3';
+
+	/**
+	 * @var string
+	 */
 	public $dbUser = 'root';
+
+	/**
+	 * @var string
+	 */
 	public $dbPassword = 'root';
+
+	/**
+	 * @var string
+	 */
 	public $dbServer = 'localhost';
+
+	/**
+	 * @var string
+	 */
 	public $siteName = 'Vr360 - Globalvision';
 
+	/**
+	 * @var string
+	 */
 	public $allowMimeTypes = array('image/png', 'image/jpeg');
 
+	/**
+	 * @var string
+	 */
 	public $salt = '';
+
+	/**
+	 * @var string
+	 */
 	public $cookieTime = 86400;
+
+	/**
+	 * @var string
+	 */
 	public $sessionNamespace = 'VR360';
 
+	/**
+	 * @var string
+	 */
 	public $mailHost = '';
+
+	/**
+	 * @var string
+	 */
 	public $mailUsername = '';
+
+	/**
+	 * @var string
+	 */
 	public $mailPassword = '';
+
+	/**
+	 * @var string
+	 */
 	public $mailSecure = '';
+
+	/**
+	 * @var string
+	 */
 	public $mailPort = '';
+
+	/**
+	 * @var string
+	 */
 	public $mailer = 'sendmail';
 
+	/**
+	 * @var string
+	 */
 	public $siteDescription = 'Creation of high-resolution 360° images in immersive and panoramic format. Photographic services related to immersive 360° vision. Our panoramas display on all internet browsers, mobile devices and smartphones, i.e. iOS and Android.';
+
+	/**
+	 * @var string
+	 */
 	public $siteKeyword = '360°, 360 degrés, photo, photographie, photographe, panographe, prise de vue, reportage, technique, technologie, immersive, immersion, panorama, omnidirectionnel, regarder alentour, environnement, création de visite virtuelle, tour virtuel';
 
+	/**
+	 * @var string
+	 */
 	public $minimumWidth = 2000;
+
+	/**
+	 * @var string
+	 */
 	public $minimumHeight = 1080;
 
+	/**
+	 * @var string
+	 */
 	public $krPanoPath = './krpano/krpanotools';
+
+	/**
+	 * @var string
+	 */
 	public $krPanoConfigFile = './krpano/templates/vtour-normal.config';
+
+	/**
+	 * @var string
+	 */
 	public $krPanoLicense = '';
 
+	/**
+	 * @var boolean
+	 */
 	public $debug = true;
 
+	/**
+	 * @return Vr360Configuration
+	 */
 	public static function getInstance()
 	{
 		static $instance;
+
 		if (empty($instance))
 		{
-			$instance = new Vr360Configuration();
+			$instance = new static;
 		}
 
 		return $instance;
 	}
 
+	/**
+	 * @param   string  $property   Property
+	 * @param   mixed   $default    Default value
+	 *
+	 * @return  mixed
+	 */
 	public static function getConfig($property, $default = null)
 	{
 		$instance = self::getInstance();
