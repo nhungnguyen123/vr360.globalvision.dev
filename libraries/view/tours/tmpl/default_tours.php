@@ -8,33 +8,10 @@
 				</div>
 				<div class="panel-body">
 					<div class="col-md-4">
-						<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-						<button type="button" class="btn btn-primary addNew btn-sm">
-							<i class="fa fa-plus-square" aria-hidden="true"></i>
-							Add new
-						</button>
+
 					</div>
 					<div class="col-md-8 pull-right">
-						<form method="post" class="form-inline pull-right" name="search-form">
-							<div class="form-group">
-								<input
-										type="text"
-										class="form-control input-sm"
-										id="task-table-filter"
-										data-action="filter"
-										data-filters="#task-table"
-										placeholder="Enter your tour name then press enter"
-										name="keyword"
-										value="<?php echo Vr360Factory::getInput()->get('keyword'); ?>"
-								/>
-							</div>
-							<input type="button" class="btn btn-danger btn-sm" id="reset-search" value="Reset"/>
 
-							<fieldset>
-								<input type="hidden" name="view" value="tours"/>
-								<input type="hidden" name="task" value="display"/>
-							</fieldset>
-						</form>
 					</div>
 				</div>
 				<!-- Show tours -->

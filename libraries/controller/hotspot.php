@@ -41,12 +41,11 @@ class Vr360ControllerHotspot extends Vr360Controller
 		$scenes = $tour->getScenes();
 
 		$hotspotModel = Vr360ModelHotspot::getInstance();
-
 		$hotspotModel->saveDefaultView($scenes, $defaultViewsList);
 		$hotspotModel->saveHotspot($scenes, $hotspotsList);
 
 		Vr360ModelTour::getInstance()->modifyXML($tour);
 
-		$ajax->addInfo('Hot spot save success')->success()->respond();
+		$ajax->addInfo('Data saved success')->success()->respond();
 	}
 }

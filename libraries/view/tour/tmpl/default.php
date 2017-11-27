@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<?php $defaultThumbnail = $this->tour->getThumbnail(); ?>
+	<?php /* @var Vr360Tour $tour */ ?>
+	<?php $tour = $this->tour; ?>
+	<?php $thumbnail = $tour->getThumbnail(); ?>
 	<title><?php echo Vr360Configuration::getConfig('siteName'); ?> - <?php echo $this->tour->getName(); ?></title>
 
 	<link rel="shortcut icon" type="image/x-icon" href="./assets/images/globalvision.webp">
@@ -13,12 +15,8 @@
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 	<meta http-equiv="x-ua-compatible" content="IE=edge"/>
 
-	<meta name="description" content="<?php echo $this->tour->getDescription(); ?>">
-	<meta name="keywords" content="<?php echo Vr360Configuration::getConfig('siteKeyword'); ?>">
-
-	<?php if ($defaultThumbnail !== false): ?>
-		<meta itemprop="image" content="<?php echo $defaultThumbnail['url']; ?>">
-	<?php endif; ?>
+	<meta name="description" content="<?php echo $tour->getDescription(); ?>">
+	<meta name="keywords" content="<?php echo $tour->getKeyword(); ?>">
 
 	<!-- Globalvision -->
 	<link rel="stylesheet" type="text/css" href="./assets/css/tour.min.css">
@@ -31,40 +29,15 @@
 	<!-- SEO Metadata -->
 	<meta name="robots" content="index, follow"/>
 
-	<!-- Twitter -->
-	<meta name="twitter:card" content="summary"/>
-	<meta name="twitter:site" content="@GlobalVision360"/>
-	<meta name="twitter:creator" content="@GlobalVision360"/>
-	<meta name="twitter:description" content="<?php echo Vr360Configuration::getConfig('siteDescription'); ?>">
-	<!-- Twitter summary card with large image must be at least 280x150px -->
-
-	<?php if ($defaultThumbnail !== false): ?>
-		<meta name="twitter:image:src" content="<?php echo $defaultThumbnail['url']; ?>">
-	<?php endif; ?>
-
-	<!-- Opengraph -->
-	<meta property="og:url" content="<?php echo VR360_URL_FULL; ?>"/>
-	<meta property="og:type" content="website"/>
-	<meta property="og:title" content="VR360 Globalvision - <?php echo $this->tour->getName(); ?>"/>
-	<meta property="og:description" content="<?php echo $this->tour->getDescription(); ?>"/>
-	<?php if ($defaultThumbnail !== false): ?>
-		<meta property="og:image" content="<?php echo $defaultThumbnail['url']; ?>"/>
-		<meta property="og:image:alt" content="<?php echo $defaultThumbnail['alt']; ?>"/>
-		<!-- Extra og:image demension -->
-		<?php if (isset($defaultThumbnail['width']) && isset($defaultThumbnail['width'])): ?>
-			<meta property="og:image:width" content="<?php echo $defaultThumbnail['width']; ?>"/>
-			<meta property="og:image:height" content="<?php echo $defaultThumbnail['height']; ?>"/>
-			<meta property="og:image:type" content="<?php echo $defaultThumbnail['mime']; ?>"/>
-		<?php endif; ?>
-	<?php endif; ?>
+	<?php require_once __DIR__ . '/default_socials.php'; ?>
 </head>
 <body>
 <?php if (!$this->tour->isValid() || !$this->tour->isValidForRender()): ?>
 	<span class="label label-danger">Invalid tour or data broken</span>
 <?php else: ?>
-	<div id="pano" style="width:100%;height:100%;">
+	<div id="pano" style="">
 		<noscript>
-			<table style="width:100%;height:100%;">
+			<table style="">
 				<tr style="vertical-align:middle;">
 					<td>
 						<div style="text-align:center;">ERROR:<br/><br/>Javascript not activated<br/><br/></div>
@@ -73,8 +46,9 @@
 			</table>
 		</noscript>
 		<script type="text/javascript">
-			window.onload = function () {
-				<?php echo $this->tour->getKrpanoEmbedPano(); ?>
+			window.onload = function ()
+			{
+				<?php echo $tour->getKrpanoEmbedPano(); ?>
 			}
 		</script>
 	</div>

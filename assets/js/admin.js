@@ -110,13 +110,15 @@
 				beforeSend: function ()
 				{
 					$("body").addClass("loading");
-					$('#overlay-waiting .btn-log-close').hide();
+					$('#overlay-waiting .btn-log-close').addClass('hide');
 				}
 			})
 				.done(function (data, textStatus, jqXHR)
 				{
 					if (data.status)
 					{
+						$("body").removeClass("loading");
+
 						// Update title
 						$("#vrTour .modal-title").html("<i class=\"fa fa-plus-square\" aria-hidden=\"true\"></i> Add hotspot <br/>");
 
@@ -125,9 +127,13 @@
 						$("#vrTour").modal("show");
 					}
 				})
-				.complete(function ()
+				.fail(function ()
 				{
-					$('#overlay-waiting .btn-log-close').show();
+					$('#overlay-waiting .btn-log-close').removeClass('hide');
+				})
+				.always(function ()
+				{
+					$('#overlay-waiting .btn-log-close').removeClass('hide');
 				});
 		},
 
@@ -372,11 +378,29 @@
 				beforeSend: function ()
 				{
 					$("body").addClass("loading");
+					$('#overlay-waiting .btn-log-close').addClass('hide');
 				}
-			}).done(function (data, textStatus, jqXHR)
-			{
-				vrAdmin.Log.appendArray(data.messages);
-			});
+			})
+				.done(function (data, textStatus, jqXHR)
+				{
+					$('#overlay-waiting .btn-log-close').removeClass('hide');
+					if (data.status)
+					{
+					}
+					else
+					{
+
+						vrAdmin.Log.appendArray(data.messages);
+					}
+				})
+				.fail(function ()
+				{
+					$('#overlay-waiting .btn-log-close').removeClass('hide');
+				})
+				.always(function ()
+				{
+					$('#overlay-waiting .btn-log-close').removeClass('hide');
+				});
 		},
 		/*
 		 *

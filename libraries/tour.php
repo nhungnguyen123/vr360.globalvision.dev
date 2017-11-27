@@ -29,6 +29,11 @@ class Vr360Tour extends Vr360TableTour
 		return trim(mb_substr($description, 0, $truncateLength));
 	}
 
+	public function getKeyword()
+	{
+		return !empty($this->keyword) ? $this->keyword: Vr360Configuration::getConfig('siteKeyword');
+	}
+
 	/**
 	 * @param      $property
 	 * @param null $default
@@ -114,38 +119,19 @@ class Vr360Tour extends Vr360TableTour
 	 */
 	public function getThumbnail()
 	{
-		$defaultPano = $this->getDefaultPano();
+		$scenes = $this->getScenes();
+		$scene  = $scenes[0];
 
-		if ($defaultPano === false)
-		{
-			return false;
-		}
+		$pathInfo = pathinfo($scene->file);
+		$filePath = VR360_PATH_DATA . '/' . $scene->tourId . '/vtour/panos/' . $pathInfo['filename'] . '.tiles/thumb.jpg';
 
-		$panoThumbnail = $defaultPano->getThumbnail();
-
-		if ($panoThumbnail === false)
-		{
-			return false;
-		}
-
-		$thumbnail         = array();
-		$thumbnail['file'] = '/_/' . $this->id . '/vtour/panos/' . $panoThumbnail;
-		$thumbnail['url']  = VR360_URL_ROOT . $thumbnail['file'];
-		$thumbnail['alt']  = $defaultPano->title;
-
-		if (Vr360Configuration::getConfig('user_thumb_dimension', true))
-		{
-			$thumbnailFile = $this->getDir() . '/vtour/panos/' . $panoThumbnail;
-
-			// No need to cache this because we already have whole tour view caching
-			if (Vr360HelperFile::exists($thumbnailFile))
-			{
-				$imageSize           = getimagesize($thumbnailFile);
-				$thumbnail['width']  = $imageSize[0];
-				$thumbnail['height'] = $imageSize[1];
-				$thumbnail['mime']   = $imageSize['mime'];
-			}
-		}
+		$imageSize           = getimagesize($filePath);
+		$thumbnail['file']   = '/_/' . $this->id . '/vtour/panos/' . $pathInfo['filename'] . '.tiles/thumb.jpg';
+		$thumbnail['url']    = VR360_URL_ROOT . $thumbnail['file'];
+		$thumbnail['alt']    = $scene->name;
+		$thumbnail['width']  = $imageSize[0];
+		$thumbnail['height'] = $imageSize[1];
+		$thumbnail['mime']   = $imageSize['mime'];
 
 		return $thumbnail;
 	}
@@ -196,11 +182,13 @@ class Vr360Tour extends Vr360TableTour
 		return './_/' . $this->id . '/vtour/tour.swf';
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getKrpanoEmbedPano()
 	{
 		$embed      = new stdClass;
 		$embed->swf = $this->getKrpanoSwfUrl();
-		// @TODO Verify this file exists or not or use t.xml instead ( old method )
 		$embed->xml                 = '_/' . $this->id . '/vtour/tour.xml';
 		$embed->target              = 'pano';
 		$embed->html5               = Vr360Configuration::getConfig('krPanoEmbedHtml5', 'auto');
@@ -294,6 +282,7 @@ class Vr360Tour extends Vr360TableTour
 		if ($xml)
 		{
 			$nodes = $xml->getNodes();
+
 			return $nodes['@attributes']['version'];
 		}
 
