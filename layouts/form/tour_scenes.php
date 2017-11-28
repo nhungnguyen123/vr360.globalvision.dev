@@ -7,13 +7,14 @@ defined('_VR360_EXEC') or die;
  * @var  array $scenes List of scenes
  */
 ?>
-<?php if (isset($scenes) && !empty($scenes)): ?>
-	<?php foreach ($scenes as $scene): ?>
+<div id="scenes" class="scenes">
+	<?php if (isset($scenes) && !empty($scenes)): ?>
+		<?php foreach ($scenes as $scene): ?>
 		<div class="panel <?php echo $scene->default ? 'panel-primary' : 'panel-info' ?> scene">
 			<div class="panel-heading">
 				<div class="container-fluid">
 					<div class="col-md-6">
-						<div class="panel-title">Scene</div>
+						<div class="panel-title">Scene <span class="badge"><small><?php echo count($scene->getHotspots()); ?> hotspots</small></span></div>
 					</div>
 					<div class="col-md-6">
 						<button type="button" class="btn btn-danger btn-sm pull-right removeScene">
@@ -90,6 +91,7 @@ defined('_VR360_EXEC') or die;
 			})
 		</script>
 	<?php endforeach; ?>
-<?php else: ?>
-	<div class="alert alert-warning" role="alert">There is no scene please add at least one</div>
-<?php endif;
+	<?php else: ?>
+		<div class="alert alert-warning" role="alert">There is no scene please add at least one</div>
+	<?php endif; ?>
+</div>

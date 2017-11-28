@@ -4,6 +4,8 @@ defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360TableScene
+ *
+ * @since   3.0.0
  */
 class Vr360Scene extends Vr360TableScene
 {
@@ -23,16 +25,19 @@ class Vr360Scene extends Vr360TableScene
 
 		$path = VR360_PATH_DATA . '/' . $this->tourId . '/' . $this->file;
 
+		// Delete scene
 		if (!Vr360Database::getInstance()->delete('v2_scenes', array('id' => $this->id)))
 		{
 			return false;
 		}
 
+		// Delete hotspots
 		if (!Vr360Database::getInstance()->delete('hotspots', array('sceneId' => $this->id)))
 		{
 			return false;
 		}
 
+		// Finally delete physical files
 		if (!Vr360HelperFile::delete($path))
 		{
 			return false;
@@ -48,7 +53,7 @@ class Vr360Scene extends Vr360TableScene
 	 *
 	 * @since   3.0.0
 	 */
-	public function getHotspot()
+	public function getHotspots()
 	{
 		if (!$this->id)
 		{

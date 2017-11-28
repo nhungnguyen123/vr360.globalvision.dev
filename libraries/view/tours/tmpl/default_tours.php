@@ -24,6 +24,7 @@
 							<th><i class="fa fa-link" aria-hidden="true"></i> Friendly URL</th>
 							<th><i class="fa fa-calendar" aria-hidden="true"></i> Creation day</th>
 							<th><i class="fa fa-image" aria-hidden="true"></i> Scenes</th>
+							<th><i class="fa fa-image" aria-hidden="true"></i> Hotspots</th>
 							<th><i class="fa fa-cogs" aria-hidden="true"></i> Controls</th>
 							<th>ID</th>
 						</tr>
@@ -58,6 +59,23 @@
 								<td class="vtour-url"><?php echo $tour->alias; ?></td>
 								<td class="vtour-date"><?php echo $tour->created; ?></td>
 								<td class="scenes"><strong><?php echo count($tour->getScenes()) ?></strong></td>
+								<td class="hotspots">
+									<strong>
+										<?php
+										$hotspots = 0;
+										$scenes   = $tour->getScenes();
+										if ($scenes)
+										{
+
+											foreach ($scenes as $scene)
+											{
+												$hotspots = $hotspots + count($scene->getHotspots());
+											}
+										}
+										echo $hotspots;
+										?>
+									</strong>
+								</td>
 								<td class="controls">
 									<?php if ($tour->canEmbed()): ?>
 										<!-- Embed -->

@@ -21,7 +21,7 @@ else
 	$vLookAt = VR360_TOUR_SCENE_DEFAULT_HLOOKAT;
 }
 
-$hotspots = $scene->getHotspot();
+$hotspots = $scene->getHotspots();
 ?>
 <scene name="scene_<?php echo $fileName ?>" title="<?php echo $scene->name ?>"
 	   subtitle="<?php echo $scene->description ?>" onstart=""

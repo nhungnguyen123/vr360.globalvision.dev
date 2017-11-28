@@ -145,9 +145,7 @@ $isSocial = null !== $tour->params && property_exists($tour->params, 'socials') 
 
 						</div>
 						<div class="col-md-8">
-							<div id="scenes" class="scenes">
-								<?php require_once __DIR__ . '/tour_scenes.php'; ?>
-							</div>
+							<?php require_once __DIR__ . '/tour_scenes.php'; ?>
 						</div>
 					</div>
 				</div>
@@ -158,7 +156,7 @@ $isSocial = null !== $tour->params && property_exists($tour->params, 'socials') 
 					<input type="hidden" name="view" value="tour"/>
 					<input type="hidden" name="task" value="ajaxSaveTour"/>
 				</fieldset>
-				<script>jQuery.validate({modules: "file, date"});</script>
+				<script>jQuery.validate({modules: "file"});</script>
 			</form>
 		</div>
 	</div>
