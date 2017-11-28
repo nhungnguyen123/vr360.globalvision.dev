@@ -1,4 +1,10 @@
-<?php defined('_VR360_EXEC') or die; ?>
+<?php
+defined('_VR360_EXEC') or die;
+
+/**
+ * This layout used for hidden scene form
+ */
+?>
 <div class="hidden">
 	<div class="panel panel-default scene">
 		<div class="panel-heading">
@@ -23,9 +29,9 @@
 								<input
 										type="file"
 										name="newSceneFile[]"
-										data-validation="required mime size"
-										data-validation="size" data-validation-max-size="30MB"
-										data-validation-allowing="jpg, png"
+										data-validation="mime size required"
+										data-validation-allowing="jpg, png, jpeg"
+										data-validation-max-size="<?php echo ini_get('upload_max_filesize');?>"
 								/>
 							</div>
 						</div>

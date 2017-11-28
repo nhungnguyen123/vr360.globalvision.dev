@@ -1,8 +1,11 @@
 <?php
-
 defined('_VR360_EXEC') or die;
 
-/** @var  array $scenes List of scenes */
+/**
+ * This layout used for display all scenes
+ *
+ * @var  array $scenes List of scenes
+ */
 ?>
 <?php if (isset($scenes) && !empty($scenes)): ?>
 	<?php foreach ($scenes as $scene): ?>
@@ -13,9 +16,9 @@ defined('_VR360_EXEC') or die;
 						<div class="panel-title">Scene</div>
 					</div>
 					<div class="col-md-6">
-                        <button type="button" class="btn btn-danger btn-sm pull-right removeScene">
-                            <i class="fa fa-remove"></i> Remove
-                        </button>
+						<button type="button" class="btn btn-danger btn-sm pull-right removeScene">
+							<i class="fa fa-remove"></i> Remove
+						</button>
 					</div>
 				</div>
 			</div>
@@ -26,7 +29,8 @@ defined('_VR360_EXEC') or die;
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Scene file *</label>
 								<div class="col-sm-9">
-									<input type="text" value="<?php echo $scene->file ?>" class="form-control disabled" disabled="disabled" title="Scene File"/>
+									<input type="text" value="<?php echo $scene->file ?>" class="form-control disabled"
+										   disabled="disabled" title="Scene File"/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -37,9 +41,6 @@ defined('_VR360_EXEC') or die;
 											type="text"
 											class="form-control input-sm"
 											placeholder="Scene name"
-											data-validation="mime size required"
-											data-validation-allowing="jpg, png, jpeg"
-											data-validation-max-size="<?php echo ini_get('upload_max_filesize');?>"
 											value="<?php echo $scene->name ?>"
 									/>
 								</div>
@@ -78,6 +79,16 @@ defined('_VR360_EXEC') or die;
 				</div>
 			</div>
 		</div>
+		<script>
+			jQuery(document).ready(function ()
+			{
+				jQuery(function ()
+				{
+					jQuery(".scenes").sortable();
+					jQuery(".scenes").disableSelection();
+				});
+			})
+		</script>
 	<?php endforeach; ?>
 <?php else: ?>
 	<div class="alert alert-warning" role="alert">There is no scene please add at least one</div>

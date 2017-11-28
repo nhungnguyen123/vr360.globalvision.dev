@@ -46,7 +46,10 @@ $hotspots = $scene->getHotspot();
 				}
 			}
 			?>
-			<hotspot name="spot<?php echo $index ?>" dataId="<?php echo $hotspot->code ?>" style="skin_hotspotstyle"
+			<hotspot name="spot_<?php echo $hotspot->code; ?>"
+					 dataId="<?php echo $hotspot->code ?>"
+					 style="<?php echo $hotspot->style; ?>"
+					 hotspot_type="<?php echo $hotspot->type; ?>"
 					 ath="<?php echo $hotspot->ath ?>"
 					 atv="<?php echo $hotspot->atv ?>" <?php echo implode(' ', $data) ?> />
 		<?php endforeach; ?>

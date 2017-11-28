@@ -84,15 +84,18 @@ class Vr360ModelHotspot extends Vr360Model
 
 		foreach ($scenes as $scene)
 		{
-			// Delete old hotspot
-			Vr360Database::getInstance()->delete('hotspots', array('sceneId' => $scene->id));
-
 			$key = 'scene_' . explode('.', $scene->file)[0];
 
 			if (!isset($hotspots[$key]) || empty($hotspots[$key]))
 			{
 				continue;
 			}
+
+			/**
+			 * Delete old hotspot
+			 * But only for request scenes
+			 */
+			Vr360Database::getInstance()->delete('hotspots', array('sceneId' => $scene->id));
 
 			foreach ($hotspots[$key] as $code => $hotspot)
 			{
@@ -114,12 +117,16 @@ class Vr360ModelHotspot extends Vr360Model
 				switch ($hotspotObj->type)
 				{
 					case 'normal':
-						$hotspotObj->style  = 'tooltip';
+						$hotspotObj->style  = 'skin_hotspotstyle|tooltip';
 						$hotspotObj->params = array('linkedscene' => $hotspot['linkedscene']);
 						break;
 					case 'text':
-						$hotspotObj->style  = 'textpopup';
+						$hotspotObj->style  = 'skin_hotspotstyle|textpopup';
 						$hotspotObj->params = array('hotspot_text' => $hotspot['hotspot_text']);
+						break;
+					default:
+						$hotspotObj->style  = 'skin_hotspotstyle|textpopup';
+						$hotspotObj->params = array();
 				}
 
 				$hotspotObj->params = json_encode($hotspotObj->params);
