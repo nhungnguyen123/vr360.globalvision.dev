@@ -445,6 +445,11 @@
 	};
 
 	var vrHotspot = {
+		/**
+		 *
+		 * @param el
+		 * @returns {boolean}
+		 */
 		saveHotspot: function (el)
 		{
 			var tourId = $(el).data("tour-id");
@@ -475,15 +480,9 @@
 			})
 				.done(function (data, textStatus, jqXHR)
 				{
-					if (data.status)
-					{
-						location.reload();
-					}
-					else
-					{
-						// Actually we won't remove body.loading by ourself. Provide button Close / Reload to do that.
-						vrAdmin.Log.appendArray(data.messages);
-					}
+					// Actually we won't remove body.loading by ourself. Provide button Close / Reload to do that.
+					vrAdmin.Log.appendArray(data.messages);
+					vrAdmin.Waiting.stay();
 				})
 				.fail(function ()
 				{
