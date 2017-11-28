@@ -121,7 +121,6 @@
 					<div class="container-fluid">
 						<div class="alert alert-warning" role="alert">There are no vTours</div>
 					</div>
-
 				<?php endif; ?>
 			</div>
 		</div>

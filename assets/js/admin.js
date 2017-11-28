@@ -404,8 +404,10 @@
 			$("#scenes").append(sceneHtml);
 
 			$.validate({
-				modules: "file"
+				modules: "file mime"
 			});
+
+			jQuery(".scenes").sortable( "refresh" );
 		},
 
 		makeDefault: function (el)

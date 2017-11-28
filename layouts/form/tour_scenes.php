@@ -29,7 +29,8 @@ defined('_VR360_EXEC') or die;
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Scene file *</label>
 								<div class="col-sm-9">
-									<input type="text" value="<?php echo $scene->file ?>" class="form-control disabled" disabled="disabled" title="Scene File"/>
+									<input type="text" value="<?php echo $scene->file ?>" class="form-control disabled"
+										   disabled="disabled" title="Scene File"/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -78,6 +79,16 @@ defined('_VR360_EXEC') or die;
 				</div>
 			</div>
 		</div>
+		<script>
+			jQuery(document).ready(function ()
+			{
+				jQuery(function ()
+				{
+					jQuery(".scenes").sortable();
+					jQuery(".scenes").disableSelection();
+				});
+			})
+		</script>
 	<?php endforeach; ?>
 <?php else: ?>
 	<div class="alert alert-warning" role="alert">There is no scene please add at least one</div>
