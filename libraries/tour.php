@@ -31,7 +31,7 @@ class Vr360Tour extends Vr360TableTour
 
 	public function getKeyword()
 	{
-		return !empty($this->keyword) ? $this->keyword: Vr360Configuration::getConfig('siteKeyword');
+		return !empty($this->keyword) ? $this->keyword : Vr360Configuration::getConfig('siteKeyword');
 	}
 
 	/**
@@ -125,15 +125,20 @@ class Vr360Tour extends Vr360TableTour
 		$pathInfo = pathinfo($scene->file);
 		$filePath = VR360_PATH_DATA . '/' . $scene->tourId . '/vtour/panos/' . $pathInfo['filename'] . '.tiles/thumb.jpg';
 
-		$imageSize           = getimagesize($filePath);
-		$thumbnail['file']   = '/_/' . $this->id . '/vtour/panos/' . $pathInfo['filename'] . '.tiles/thumb.jpg';
-		$thumbnail['url']    = VR360_URL_ROOT . $thumbnail['file'];
-		$thumbnail['alt']    = $scene->name;
-		$thumbnail['width']  = $imageSize[0];
-		$thumbnail['height'] = $imageSize[1];
-		$thumbnail['mime']   = $imageSize['mime'];
+		if (Vr360HelperFile::exists($filePath))
+		{
+			$imageSize           = getimagesize($filePath);
+			$thumbnail['file']   = '/_/' . $this->id . '/vtour/panos/' . $pathInfo['filename'] . '.tiles/thumb.jpg';
+			$thumbnail['url']    = VR360_URL_ROOT . $thumbnail['file'];
+			$thumbnail['alt']    = $scene->name;
+			$thumbnail['width']  = $imageSize[0];
+			$thumbnail['height'] = $imageSize[1];
+			$thumbnail['mime']   = $imageSize['mime'];
 
-		return $thumbnail;
+			return $thumbnail;
+		}
+
+		return false;
 	}
 
 	/**
@@ -187,8 +192,8 @@ class Vr360Tour extends Vr360TableTour
 	 */
 	public function getKrpanoEmbedPano()
 	{
-		$embed      = new stdClass;
-		$embed->swf = $this->getKrpanoSwfUrl();
+		$embed                      = new stdClass;
+		$embed->swf                 = $this->getKrpanoSwfUrl();
 		$embed->xml                 = '_/' . $this->id . '/vtour/tour.xml';
 		$embed->target              = 'pano';
 		$embed->html5               = Vr360Configuration::getConfig('krPanoEmbedHtml5', 'auto');
@@ -225,20 +230,25 @@ class Vr360Tour extends Vr360TableTour
 	 */
 	public function isValidForRender()
 	{
-		if (!Vr360HelperFile::exists(Vr360HelperFile::clean($this->getDir() . '/vtour/skin/vtourskin.xml')))
+		if (!Vr360HelperFile::exists(Vr360HelperFile::clean($this->getDir() . '/vtour/tour.xml')))
 		{
 			return false;
 		}
 
-		/*if (!Vr360HelperFile::exists(Vr360HelperFile::clean($this->getDir() . '/vtour/skin/tour-vtskin.xml')))
+		if (!Vr360HelperKrpano::checkFile('viewer/skin/vtourskin.xml'))
 		{
 			return false;
 		}
 
-		if (!Vr360HelperFile::exists(Vr360HelperFile::clean($this->getDir() . '/vtour/skin/social-skin.xml')))
+		if (!Vr360HelperKrpano::checkFile('viewer/skin/tour-vtskin.xml'))
 		{
 			return false;
-		}*/
+		}
+
+		if (!Vr360HelperKrpano::checkFile('viewer/skin/social-skin.xml'))
+		{
+			return false;
+		}
 
 		return true;
 	}

@@ -1,3 +1,4 @@
+<?php defined('_VR360_EXEC') or die; ?>
 <div class="hidden">
 	<div class="panel panel-default scene">
 		<div class="panel-heading">

@@ -26,12 +26,15 @@
 	<link rel="stylesheet" href="./assets/vendor/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" href="./assets/vendor/font-awesome/css/font-awesome.css">
 	<!-- Validator -->
-	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+	<script type="text/javascript"
+			src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
 
 	<!-- Globalvision -->
 	<link rel="stylesheet" type="text/css" href="./assets/css/globalvision.min.css">
 	<?php if (Vr360HelperAuthorize::isAuthorized()): ?>
 		<script type="text/javascript" src="./assets/js/admin.min.js"></script>
+		<script type="text/javascript" src="./assets/js/admin/modal.min.js"></script>
+		<script type="text/javascript" src="./assets/js/admin/waiting.min.js"></script>
 	<?php endif; ?>
 	<script type="text/javascript" src="./assets/js/log.min.js"></script>
 </head>
@@ -58,7 +61,7 @@
 					<div class="col-md-6">
 						<div class="header">
 							<a href="http://globalvision.ch" target="_blank" class="logo">
-								<img id="logo" src="./assets/images/logo.png"/>
+								<!--<img id="logo" src="./assets/images/logo.png"/>-->
 							</a>
 						</div>
 					</div>

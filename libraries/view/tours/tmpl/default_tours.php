@@ -34,8 +34,13 @@
 							<tr id='vtour-<?php echo $tour->id; ?>' data-tour='<?php echo $tour->toJson(); ?>'
 								class="is-valid-<?php echo (int) $tour->isValid(); ?>">
 								<td>
-									<input id="checkBox" type="checkbox" name="id[]" value="<?php echo $tour->id ?>"
-										   title="<?php echo $tour->name ?>"/>
+									<input
+											id="checkBox"
+											type="checkbox"
+											name="id[]"
+											value="<?php echo $tour->id ?>"
+											title="<?php echo $tour->name ?>"
+									/>
 								</td>
 								<?php $tooltip = !$tour->isValid() ? 'Missing data files' : ''; ?>
 								<td class="vtour-name" data-toggle="tooltip" data-placement="left"
@@ -57,7 +62,7 @@
 									<?php if ($tour->canEmbed()): ?>
 										<!-- Embed -->
 										<button type="button" class="btn btn-default btn-sm embedCode"
-												data-tour-alias="<?php echo $tour->alias ?>">
+												data-tour-id="<?php echo $tour->id ?>">
 											<i class="fa fa-code" aria-hidden="true"></i> Embed
 										</button>
 									<?php endif; ?>
