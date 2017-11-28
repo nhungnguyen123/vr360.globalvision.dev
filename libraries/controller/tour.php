@@ -101,6 +101,31 @@ class Vr360ControllerTour extends Vr360Controller
 		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
 	}
 
+	/**
+	 *
+	 */
+	public function ajaxGetTourEmbedHtml()
+	{
+		$input = Vr360Factory::getInput();
+
+		$tour = new Vr360Tour;
+		$tour->load(
+			array
+			(
+				'id'         => (int) $input->getInt('id'),
+				'created_by' => Vr360Factory::getUser()->id
+			)
+		);
+
+		// Try to migrate tour
+		if ($tour !== false)
+		{
+			$html = Vr360Layout::getInstance()->fetch('tour.embed', array('tour' => $tour));
+		}
+
+		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
+	}
+
 	public function ajaxDeleteTour()
 	{
 		$ajax  = Vr360AjaxResponse::getInstance();
@@ -210,5 +235,35 @@ class Vr360ControllerTour extends Vr360Controller
 		}
 
 		$ajax->success()->respond();
+	}
+
+	/**
+	 *
+	 */
+	public function ajaxValidateAlias()
+	{
+		$ajax = Vr360AjaxResponse::getInstance();
+
+		$input = Vr360Factory::getInput();
+		$alias = $input->getString('alias');
+		$id    = $input->getInt('id', 0);
+
+		$tour = new Vr360Tour;
+
+		$condition = array(
+			'alias' => $alias
+		);
+
+		if ($id)
+		{
+			$condition['id[!]'] = (int) $id;
+		}
+
+		$tour->load($condition);
+
+		if ($tour->id)
+		{
+			$ajax->addData('text','Duplicated alias. Please use another tour name or manual change alias')->fail()->respond();
+		}
 	}
 }

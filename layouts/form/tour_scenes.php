@@ -26,17 +26,22 @@ defined('_VR360_EXEC') or die;
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Scene file *</label>
 								<div class="col-sm-9">
-									<input type="text" value="<?php echo $scene->file ?>" class="form-control disabled"
-									       disabled="disabled" title="Scene File"/>
+									<input type="text" value="<?php echo $scene->file ?>" class="form-control disabled" disabled="disabled" title="Scene File"/>
 								</div>
 							</div>
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Name *</label>
 								<div class="col-sm-9">
-									<input name="sceneName[<?php echo $scene->id ?>]" type="text"
-									       class="form-control input-sm"
-									       placeholder="Scene name" data-validation="required"
-									       value="<?php echo $scene->name ?>"/>
+									<input
+											name="sceneName[<?php echo $scene->id ?>]"
+											type="text"
+											class="form-control input-sm"
+											placeholder="Scene name"
+											data-validation="mime size required"
+											data-validation-allowing="jpg, png, jpeg"
+											data-validation-max-size="<?php echo ini_get('upload_max_filesize');?>"
+											value="<?php echo $scene->name ?>"
+									/>
 								</div>
 							</div>
 							<div class="form-group">
@@ -48,21 +53,26 @@ defined('_VR360_EXEC') or die;
 											class="form-control input-sm"
 											size="80"
 											placeholder="Scene description"
-                                            value="<?php echo $scene->description ?>" />
+											value="<?php echo $scene->description ?>"
+									/>
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="col-sm-offset-3 col-sm-9">
 									<div class="checkbox">
 										<label>
-											<input name="sceneDefault" type="checkbox"
-											       value="<?php echo $scene->id ?>" <?php echo $scene->default ? 'checked' : '' ?> />
-											Default
+											<input
+													name="sceneDefault"
+													type="radio"
+													value="<?php echo $scene->id ?>"
+												<?php echo $scene->default ? 'checked' : '' ?>
+											/>
+											Set as default scene
 										</label>
 									</div>
 								</div>
 							</div>
-                            <input type="hidden" name="sceneId[]" value="<?php echo $scene->id ?>" />
+							<input type="hidden" name="sceneId[]" value="<?php echo $scene->id ?>"/>
 						</div>
 					</div>
 				</div>

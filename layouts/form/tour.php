@@ -5,30 +5,24 @@ defined('_VR360_EXEC') or die;
 /** @var Vr360Tour $tour */
 
 // Skins
-$skins = Vr360HelperFolder::files(VR360_PATH_ASSETS . '/vendor/krpano/skins');
+$skins = Vr360HelperKrpano::getListOfSkins();
 
 // Scenes
-$scenes                = $tour->getScenes();
-$uploadMaxFilesize     = floatval(ini_get('upload_max_filesize'));
-$postMaxsize           = floatval(ini_get('post_max_size'));
-$allowedNumberOfScenes = round($postMaxsize / $uploadMaxFilesize);
-$isRotate              = null !== $tour->params && property_exists($tour->params, 'rotation') ? (boolean) $tour->params->rotation : false;
-$isSocial              = null !== $tour->params && property_exists($tour->params, 'socials') ? (boolean) $tour->params->socials : false;
-?>
+$scenes = $tour->getScenes();
 
+$isRotate = null !== $tour->params && property_exists($tour->params, 'rotation') ? (boolean) $tour->params->rotation : false;
+$isSocial = null !== $tour->params && property_exists($tour->params, 'socials') ? (boolean) $tour->params->socials : false;
+?>
 <div class="col-md-12">
 	<div class="row">
 		<div class="container-fluid">
+			<!-- Hidden scene form -->
 			<?php require_once __DIR__ . '/tour_scene.php'; ?>
 			<!-- Create new tour form -->
 			<form method="post" id="form-tour" class="form-horizontal" enctype="multipart/form-data">
 				<div class="col-md-12">
 					<div class="row">
-						<div class="well well-sm">
-							<span class="label label-default">PHP upload_max_filesize: <?php echo $uploadMaxFilesize; ?></span>
-							<span class="label label-default">PHP post_max_size: <?php echo $postMaxsize; ?></span>
-							<span class="label label-info">Number of scenes allowed: <?php echo $allowedNumberOfScenes; ?></span>
-						</div>
+						<?php require_once __DIR__ . '/tour_information.php'; ?>
 						<div class="col-md-4 form-horizontal">
 							<!-- Name -->
 							<div class="form-group">
@@ -41,11 +35,10 @@ $isSocial              = null !== $tour->params && property_exists($tour->params
 											name="name"
 											placeholder="Name of this tour"
 											value="<?php echo $tour->get('name'); ?>"
-											title="Please fill your tour name"
+											title="Name of tour. Will use as site title"
 											data-validation="required"
 									/>
 								</div>
-								<p class="help-block"></p>
 							</div>
 							<!-- Alias -->
 							<div class="form-group">
@@ -58,9 +51,9 @@ $isSocial              = null !== $tour->params && property_exists($tour->params
 											name="alias"
 											placeholder="URL friendly of this tour"
 											value="<?php echo $tour->get('alias'); ?>"
+											title="Friendly URL of tour"
 											data-validation="required"
 									/>
-									<p class="help-block"></p>
 								</div>
 							</div>
 							<!-- Description -->
@@ -73,9 +66,9 @@ $isSocial              = null !== $tour->params && property_exists($tour->params
 											id="description"
 											name="description"
 											placeholder=""
+											title="Tour description. Will use as site description for SEO"
 											value="<?php echo $tour->get('description'); ?>"
 									/>
-									<p class="help-block"></p>
 								</div>
 							</div>
 							<!-- Keyword -->
@@ -88,9 +81,9 @@ $isSocial              = null !== $tour->params && property_exists($tour->params
 											id="keyword"
 											name="keyword"
 											placeholder=""
+											title="Tour keyword. Will use as keyword for SEO"
 											value="<?php echo $tour->get('keyword'); ?>"
 									/>
-									<p class="help-block"></p>
 								</div>
 							</div>
 							<hr/>
@@ -100,7 +93,6 @@ $isSocial              = null !== $tour->params && property_exists($tour->params
 									<span class="col-sm-2 control-label label label-primary">
                                         <i class="fa fa-cogs" aria-hidden="true"></i> Options</span>
 								</div>
-
 								<div class="form-group">
 									<label class="col-sm-2 control-label">Skins</label>
 									<div class="col-sm-10">
@@ -154,7 +146,7 @@ $isSocial              = null !== $tour->params && property_exists($tour->params
 						</div>
 						<div class="col-md-8">
 							<div id="scenes" class="scenes">
-								<?php require_once __DIR__ . '/tour_panos.php'; ?>
+								<?php require_once __DIR__ . '/tour_scenes.php'; ?>
 							</div>
 						</div>
 					</div>

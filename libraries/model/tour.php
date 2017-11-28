@@ -137,6 +137,25 @@ class Vr360ModelTour extends Vr360Model
 		return $table;
 	}
 
+	public function getItemFromAlias()
+	{
+		$alias = Vr360Factory::getInput()->getString('alias');
+
+		$table = new Vr360Tour;
+
+		if ($alias)
+		{
+			$table->load(
+				array
+				(
+					'alias' => $alias
+				)
+			);
+		}
+
+		return $table;
+	}
+
 	/**
 	 * Method for store new scenes
 	 *
