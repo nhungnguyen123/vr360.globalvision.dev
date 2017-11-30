@@ -38,7 +38,7 @@ class NewTourCest
     public function preview(NewTourSteps $I)
     {
         $I->login($this->userName, $this->pass);
-        $I->preview($this->nameTour, $this->url, $this->title, $this->description);
+//        $I->preview($this->nameTour, $this->url, $this->title, $this->description);
     }
     public function editTour(NewTourSteps $I)
     {
