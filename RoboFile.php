@@ -45,9 +45,6 @@ class RoboFile extends \Robo\Tasks
      */
     public function __construct()
     {
-        $this->cmsPath = $this->getCmsPath();
-        // Set default timezone (so no warnings are generated if it is not set)
-        date_default_timezone_set('UTC');
     }
 
 
@@ -102,9 +99,6 @@ class RoboFile extends \Robo\Tasks
 
         // Make sure to Run the Build Command to Generate AcceptanceTester
         $this->_exec("vendor/bin/codecept build");
-
-
-        $pathToTestFile = './' . $opts['suite'] . '/' . $opts['test'];
 
         $this->taskCodecept()
             ->arg('--steps')
@@ -236,28 +230,6 @@ class RoboFile extends \Robo\Tasks
     private function isWindows()
     {
         return strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
-    }
-
-    /**
-     * Get the correct CMS root path
-     *
-     * @return string
-     */
-    private function getCmsPath()
-    {
-        if (empty($this->configuration->cmsPath))
-        {
-            return 'joomla-cms3';
-        }
-
-        if (!file_exists(dirname($this->configuration->cmsPath)))
-        {
-            $this->say("Cms path written in local configuration does not exists or is not readable");
-
-            return 'joomla-cms3';
-        }
-
-        return $this->configuration->cmsPath;
     }
 
 

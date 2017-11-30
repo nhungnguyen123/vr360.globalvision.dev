@@ -6,7 +6,7 @@ class ManagePage
 
     public static $btnLogout = ['xpath' => '//button[contains(text(), \'Logout\')]'];
 
-    public static $btnAddNew = ['xpath' => '//button[contains(text(), \'Add new\')]'];
+    public static $btnAddNew = ['xpath' => './/*[@id=\'bs-example-navbar-collapse-1\']/ul[1]/li/form/button'];
     
     public static $searchId = ['id' => 'task-table-filter'];
     
@@ -20,9 +20,9 @@ class ManagePage
 
     public static $btnHostPot = ['xpath' => '//tr//td[@class=\'controls\']//button[@class=\'btn btn-primary btn-sm editTourHotspot\']'];
 
-    public static $btnPreview = ['xpath' => '//tr//td[@class=\'controls\']//button[@class=\'btn btn-info btn-sm previewTour\']'];
+    public static $btnPreview = ['xpath' => './/*[@id=\'vtour-40\']/td[7]/a'];
 
-    public static $btnRemove = ['xpath' =>'//tr//td[@class=\'controls\']//button[@class=\'btn btn-danger btn-sm removeTour\']'];
+    public static $btnRemove = ['xpath' =>'.//*[@id=\'vtour-40\']/td[7]/button[4]'];
 
     public static $pano = ['xpath' =>' //tr//td[@class=\'controls\']//div/span[1]'];
 

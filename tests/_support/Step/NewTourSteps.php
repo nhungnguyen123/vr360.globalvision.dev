@@ -19,31 +19,37 @@ class NewTourSteps extends ManageSteps
         $I = $this;
         $I->click(ManagePage::$btnAddNew);
         $I->waitForElement(NewTourPage::$fieldName,30);
-        $I->switchToIFrame();
         $I->comment('Fill Name Text Field');
-        $I->wait(3);
+        $I->wait(1);
         $I->fillField(NewTourPage::$fieldName, $name);
+        $I->wait(1);
         $I->comment('Fill URL Text Field');
         $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
 
-        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
-        $I->wait(3);
+        $I->click(NewTourPage::$btnAddPano);
+        $usePage = new NewTourPage();
 
-        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
-        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
+        $I->waitForElement($usePage->nameField(2), 30);
+        $I->waitForElement($usePage->nameField(2),30);
 
-        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
+        $I->fillField($usePage->nameField(2),$title);
+        $I->fillField($usePage->descriptionField(2),$description);
+
+        
+        $I->attachFile($usePage->imageInput(2),NewTourPage::$imageFirst );
 
         $I->comment('I click Create button');
         $I->click(NewTourPage::$btnCreate);
+
         $I->wait(500);
-        $I->waitForElement(ManagePage::$btnLogout,60);
         $I->waitForElement(ManagePage::$searchId,30);
         $I->fillField(ManagePage::$searchId,$name);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
         $I->waitForElement(ManagePage::$urlValue,30);
         $I->see($url,ManagePage::$urlValue);
-        $I->comment('I see Administrator Control Panel');
+        $I->waitForElement(ManagePage::$btnLogout,60);
+        $I->click(ManagePage::$btnLogout);
+        
     }
 
     public function createWithURLReady($name, $url, $title, $description)
