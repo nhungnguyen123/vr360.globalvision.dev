@@ -8,8 +8,8 @@ class NewTourCest
     public function __construct()
     {
         $this->faker = Faker\Factory::create();
-        $this->userName = 'designteam';
-        $this->pass = 'nQ-yQ?3ba';
+        $this->userName = 'test';
+        $this->pass = 'test';
 
 
         $this->nameTour = $this->faker->bothify('nametour?##?');
