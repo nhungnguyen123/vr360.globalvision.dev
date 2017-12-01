@@ -288,13 +288,13 @@ class NewTourSteps extends ManageSteps
         $I->wait(10);
 //        $I->waitForElement(ManagePage::$titlePreview,30);
 //        $I->waitForText($firstTitle, 30 , ManagePage::$titlePreview);
-        $I->waitForElement(ManagePage::$buttonFacePreview, 30);
-        $I->waitForElement(ManagePage::$buttonGGPreview, 30);
-        $I->waitForElement(ManagePage::$buttonTwPreview, 30);
-        $I->waitForElement(ManagePage::$buttonShowImage, 30);
-        $I->click(ManagePage::$buttonShowImage);
-        $I->wait(2);
-        $I->waitForElement(ManagePage::$fistImagePreview, 30);
+//        $I->waitForElement(ManagePage::$buttonFacePreview, 30);
+//        $I->waitForElement(ManagePage::$buttonGGPreview, 30);
+//        $I->waitForElement(ManagePage::$buttonTwPreview, 30);
+//        $I->waitForElement(ManagePage::$buttonShowImage, 30);
+//        $I->click(ManagePage::$buttonShowImage);
+//        $I->wait(2);
+//        $I->waitForElement(ManagePage::$fistImagePreview, 30);
     }
     
     public function hostPot($name)
