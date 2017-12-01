@@ -13,6 +13,8 @@ class ManagePage
     public static $urlValue = ['xpath' => '//tr//td[@class=\'vtour-url\']'];
     
     public static $nameTour = ['xpath' =>'(//tr//td[@class=\'vtour-name\'])'];
+    
+    public static $noResults  = ['xpath' => 'html/body/div/div/div[4]/div[2]/div/div/div/div[3]/div'];
 
     public static $btnEmbedfirst = ['xpath' => '//tr//td[@class=\'controls\']//button[@class=\'btn btn-default btn-sm embedCode\']'];
 

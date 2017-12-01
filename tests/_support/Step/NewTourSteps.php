@@ -86,8 +86,7 @@ class NewTourSteps extends ManageSteps
         $I->waitForElement(ManagePage::$searchId,30);
         $I->fillField(ManagePage::$searchId,$name);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-        $I->waitForElement(ManagePage::$urlValue,30);
-        $I->dontSee($url,ManagePage::$urlValue);
+        $I->waitForElement(ManagePage::$noResults,30);
     }
     public function checkMissing($name, $url, $title, $description)
     {
