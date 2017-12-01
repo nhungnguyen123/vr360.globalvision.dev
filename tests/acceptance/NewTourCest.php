@@ -29,17 +29,18 @@ class NewTourCest
         $I->login($this->userName, $this->pass);
         $I->create($this->nameTour, $this->url, $this->title, $this->description);
     }
+    public function preview(NewTourSteps $I)
+    {
+        $I->login($this->userName, $this->pass);
+        $I->preview($this->nameTour, $this->url, $this->title);
+    }
 
     public function createReady(NewTourSteps $I)
     {
         $I->login($this->userName, $this->pass);
         $I->createWithURLReady($this->nameTourAlreday, $this->url,$this->title, $this->description);
     }
-    public function preview(NewTourSteps $I)
-    {
-        $I->login($this->userName, $this->pass);
-        $I->preview($this->nameTour, $this->url, $this->title, $this->description);
-    }
+   
     public function editTour(NewTourSteps $I)
     {
         $I->login($this->userName, $this->pass);

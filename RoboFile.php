@@ -46,8 +46,6 @@ class RoboFile extends \Robo\Tasks
     public function __construct()
     {
     }
-
-
     /**
      * Downloads and prepares a Joomla CMS site for testing
      *

@@ -270,7 +270,7 @@ class NewTourSteps extends ManageSteps
         $I->fillField(NewTourPage::$fieldDescriptionFirst,"");
     }
 
-    public function preview($name, $url, $firstTitle, $firstDescription)
+    public function preview($name, $url, $firstTitle)
     {
         $I = $this;
         $I->comment('Check preview page ');
@@ -285,7 +285,7 @@ class NewTourSteps extends ManageSteps
         $I->switchToNextTab();
         $use = new ManagePage();
         $I->amOnUrl($use->returnURL($url));
-        $I->wait(5);
+        $I->wait(10);
         $I->waitForElement(ManagePage::$titlePreview,30);
         $I->waitForText($firstTitle, 30 , ManagePage::$titlePreview);
         $I->waitForElement(ManagePage::$buttonFacePreview, 30);
