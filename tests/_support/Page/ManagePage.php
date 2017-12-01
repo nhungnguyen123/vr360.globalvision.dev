@@ -20,13 +20,17 @@ class ManagePage
 
     public static $btnHostPot = ['xpath' => '//tr//td[@class=\'controls\']//button[@class=\'btn btn-primary btn-sm editTourHotspot\']'];
 
-    public static $btnPreview = ['xpath' => './/*[@id=\'vtour-40\']/td[7]/a'];
+    public static $btnPreview = ['xpath' => '//td[7]/a'];
 
-    public static $btnRemove = ['xpath' =>'.//*[@id=\'vtour-40\']/td[7]/button[4]'];
+    public static $btnRemove = ['xpath' =>'//td[7]/button[4]'];
 
     public static $pano = ['xpath' =>' //tr//td[@class=\'controls\']//div/span[1]'];
 
     public static $hostpot = ['xpath' =>'//tr//td[@class=\'controls\']//div/span[2]'];
+
+    public static $checkBoxSocical = ['xpath' => '//input[@id=\'tour_social\']'];
+
+    public static $checkboxAutoRation = ['xpath' => '//input[@id=\'tour_rotation\']'];
     
     //edit page 
     public static $contentEditXpath = ['xpath' => '(//h4[@id=\'myModalLabel\'])[2]'];
@@ -34,10 +38,26 @@ class ManagePage
 
     //preview page
      public static $titlePreview = ['xpath' => '//div[@id=\'pano\']/div/div[1]/div[2]/div[10]//div//div/div/div'];
+    
+    public static $buttonFacePreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[13]/div[1]'];
+    
+    public static $buttonTwPreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[13]/div[2]'];
+
+    public static $buttonGGPreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[13]/div[3]'];
+
+    public static $buttonShowImage = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[5]/div[3]/div/div[2]'];
+
+    public static $fistImagePreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[5]/div[1]/div/div[2]/div[1]/div[4]/div'];
 
     //content
     public static $contentEdit = 'Edit tour';
 
+    //already 
+    public static $buttonCloseAlready = ['xpath' => './/*[@id=\'overlay-waiting\']/div/div[2]/div/button'];
+
+    public static $xPathMessage  = ['xpath' => './/*[@id=\'overlay-waiting\']/div/div[1]/div/div'];
+
+    public static $buttonClosePopup= ['xpath' => './/*[@id=\'vrTour\']/div/div/div[3]/button'];
     //hotpot
     public static $addHotsPotContent = 'Add hotspot';
 
@@ -48,9 +68,5 @@ class ManagePage
         $urlShow = 'http://dev.globalvision.ch/'.$url;
         return $urlShow;
     }
-
-    
-
-
     
 }
