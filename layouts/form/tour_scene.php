@@ -31,15 +31,20 @@ defined('_VR360_EXEC') or die;
 										name="newSceneFile[]"
 										data-validation="mime size required"
 										data-validation-allowing="jpg, png, jpeg"
-										data-validation-max-size="<?php echo ini_get('upload_max_filesize');?>"
+										data-validation-max-size="<?php echo ini_get('upload_max_filesize'); ?>"
 								/>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Name *</label>
 							<div class="col-sm-9">
-								<input name="newSceneName[]" type="text" class="form-control input-sm"
-								       placeholder="Scene name" data-validation="required"/>
+								<input
+										name="newSceneName[]"
+										type="text"
+										class="form-control input-sm"
+										placeholder="Scene name"
+										data-validation="required"
+								/>
 							</div>
 						</div>
 						<div class="form-group">

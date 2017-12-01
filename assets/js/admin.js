@@ -135,6 +135,45 @@
 				});
 		},
 
+		editProfile: function (el)
+		{
+			$.ajax({
+				url: "index.php",
+				type: "POST",
+				data: {
+					view: "user",
+					task: "ajaxGetUserHtml"
+				},
+				async: true,
+				cache: false,
+				beforeSend: function ()
+				{
+					vrAdmin.Waiting.waiting();
+				}
+			})
+				.done(function (data, textStatus, jqXHR)
+				{
+					if (data.status)
+					{
+						vrAdmin.Modal.showModal('<i class="fa fa-user-circle" aria-hidden="true"></i> Edit profile', data.data.html);
+						vrAdmin.Waiting.success();
+					}
+					else
+					{
+						vrAdmin.Log.appendArray(data.messages);
+						vrAdmin.Waiting.stay();
+					}
+				})
+				.fail(function ()
+				{
+					vrAdmin.Waiting.stay();
+				})
+				.always(function ()
+				{
+					vrAdmin.Waiting.stay();
+				});
+		},
+
 		/**
 		 * Show embed form
 		 * @param el
@@ -250,6 +289,58 @@
 				vrAdmin.editTourHotspot(this);
 			});
 
+			// Edit profile
+			$("body").on("click", "a.navbar-brand", function ()
+			{
+				vrAdmin.editProfile(this);
+			});
+
+			// Save profile
+			$("body").on("submit", "form#form-user", function (event)
+			{
+				event.preventDefault();
+				var formData = new FormData(this);
+
+				$.ajax({
+					url: "index.php",
+					type: "POST",
+					data: formData,
+					async: true,
+					cache: false,
+					processData: false,
+					contentType: false,
+					/**
+					 *
+					 */
+					beforeSend: function ()
+					{
+						vrAdmin.Waiting.waiting();
+					}
+				})
+					.done(function (data, textStatus, jqXHR)
+					{
+						vrAdmin.Log.appendArray(data.messages);
+
+						if (data.status)
+						{
+							window.location = window.location.href;
+						}
+						else
+						{
+							// Actually we won't remove body.loading by ourself. Provide button Close / Reload to do that.
+							vrAdmin.Log.appendArray(data.messages);
+						}
+					})
+					.fail(function ()
+					{
+						vrAdmin.Waiting.stay();
+					})
+					.always(function ()
+					{
+						vrAdmin.Waiting.stay();
+					});
+			});
+
 			$("body").on("click", ".embedCode", function ()
 			{
 				vrAdmin.embedTour(this);
@@ -306,7 +397,8 @@
 				vrTour.generateAlias();
 			});
 
-			$('body').on('blur', '#form-tour input#alias', function(){
+			$('body').on('blur', '#form-tour input#alias', function ()
+			{
 				var tourId = $('#form-tour input[name="id"]');
 				var alias = $('#form-tour input#alias').val();
 
@@ -371,7 +463,7 @@
 					{
 						if (data.status)
 						{
-							location.reload();
+							window.location = window.location.href;
 						}
 						else
 						{
@@ -407,7 +499,7 @@
 				modules: "file"
 			});
 
-			jQuery(".scenes").sortable( "refresh" );
+			jQuery(".scenes").sortable("refresh");
 		},
 
 		makeDefault: function (el)

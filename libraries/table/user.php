@@ -4,12 +4,10 @@ defined('_VR360_EXEC') or die;
 
 class Vr360TableUser extends Vr360Table
 {
-
 	/**
 	 * @var null
 	 */
 	public $id = null;
-	public $isAdmin = null;
 	public $username = null;
 	public $name = null;
 	public $password = null;

@@ -24,7 +24,7 @@
 	<!-- Krpano -->
 	<script src="<?php echo $this->tour->getKrpanoJsUrl(); ?>"></script>
 
-	<script src="./assets/js/site.tour.js"></script>
+	<script src="./assets/js/site/tour.js"></script>
 
 	<!-- SEO Metadata -->
 	<meta name="robots" content="index, follow"/>

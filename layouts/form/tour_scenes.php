@@ -14,7 +14,8 @@ defined('_VR360_EXEC') or die;
 			<div class="panel-heading">
 				<div class="container-fluid">
 					<div class="col-md-6">
-						<div class="panel-title">Scene <span class="badge"><small><?php echo count($scene->getHotspots()); ?> hotspots</small></span></div>
+						<div class="panel-title">Scene <span class="badge"><small><?php echo count($scene->getHotspots()); ?>
+									hotspots</small></span></div>
 					</div>
 					<div class="col-md-6">
 						<button type="button" class="btn btn-danger btn-sm pull-right removeScene">
@@ -60,18 +61,22 @@ defined('_VR360_EXEC') or die;
 								</div>
 							</div>
 							<div class="form-group">
-								<div class="col-sm-offset-3 col-sm-9">
-									<div class="checkbox">
-										<label>
-											<input
-													name="sceneDefault"
-													type="radio"
-													value="<?php echo $scene->id ?>"
-												<?php echo $scene->default ? 'checked' : '' ?>
-											/>
-											Set as default scene
-										</label>
+								<div class="col-md-12">
+									<div class="col-md-offset-3 col-md-12">
+										<div class="checkbox">
+											<label>
+												<input
+														name="sceneDefault"
+														type="radio"
+														value="<?php echo $scene->id ?>"
+													<?php echo $scene->default ? 'checked' : '' ?>
+												/>
+												Set as default scene
+											</label>
+										</div>
 									</div>
+								</div>
+								<div class="col-md-12">
 								</div>
 							</div>
 							<input type="hidden" name="sceneId[]" value="<?php echo $scene->id ?>"/>

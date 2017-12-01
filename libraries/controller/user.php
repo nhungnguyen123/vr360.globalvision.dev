@@ -35,4 +35,22 @@ class Vr360ControllerUser extends Vr360Controller
 
 		header("Location: " . 'index.php');
 	}
+
+	/**
+	 *
+	 */
+	public function ajaxGetUserHtml()
+	{
+		$html = Vr360Layout::getInstance()->fetch('user.profile');
+
+		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
+	}
+
+	/**
+	 *
+	 */
+	public function ajaxSaveProfile()
+	{
+		Vr360ModelUser::getInstance()->ajaxSaveProfile();
+	}
 }

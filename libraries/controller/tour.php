@@ -238,7 +238,9 @@ class Vr360ControllerTour extends Vr360Controller
 	}
 
 	/**
+	 * @return  void
 	 *
+	 * @since   3.0.0
 	 */
 	public function ajaxValidateAlias()
 	{
@@ -263,7 +265,9 @@ class Vr360ControllerTour extends Vr360Controller
 
 		if ($tour->id)
 		{
-			$ajax->addData('text','Duplicated alias. Please use another tour name or manual change alias')->fail()->respond();
+			$ajax->addData('text', 'Duplicated alias. Please use another tour name or manual change alias')->fail()->respond();
 		}
+
+		$ajax->success()->respond();
 	}
 }

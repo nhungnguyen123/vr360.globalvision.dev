@@ -33,18 +33,11 @@ class Vr360ModelTours extends Vr360Model
 	 */
 	public function getList()
 	{
-		$user  = Vr360Factory::getUser();
 		$input = Vr360Factory::getInput();
 
 		$offset    = $input->getInt('page', 0) * 20;
 		$limit     = 20;
 		$condition = array();
-
-		// Show all tours for administrator
-		if ($user->isAdmin !== 1)
-		{
-			$condition = array('v2_tours.created_by' => (int) $user->id);
-		}
 
 		$condition = array_merge(
 			$condition,

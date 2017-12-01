@@ -104,32 +104,39 @@ $isSocial = null !== $tour->params && property_exists($tour->params, 'socials') 
 									</div>
 								</div>
 
-								<div class="form-group">
-									<div class="checkbox">
-										<label>
-											<input
-													type="checkbox"
-													id="tour_rotation"
-													name="params[rotation]"
-												<?php echo ($isRotate) ? 'checked="checked"' : '' ?>
-													value="1" size="80"/> Check for auto rotation.
-										</label>
+								<div class="col-md-12">
+									<div class="well well-sm">
+										<div class="container-fluid">
+											<div class="form-group">
+												<div class="checkbox">
+													<label>
+														<input
+																type="checkbox"
+																id="tour_rotation"
+																name="params[rotation]"
+															<?php echo ($isRotate) ? 'checked="checked"' : '' ?>
+																value="1" size="80"/> Check for auto rotation.
+													</label>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<div class="checkbox">
+													<label>
+														<input
+																type="checkbox"
+																id="tour_social"
+																name="params[socials]"
+																value="1"
+															<?php echo ($isSocial) ? 'checked="checked"' : '' ?>
+																size="80"/>Check for show media social button.
+													</label>
+												</div>
+											</div>
+										</div>
 									</div>
 								</div>
 
-								<div class="form-group">
-									<div class="checkbox">
-										<label>
-											<input
-													type="checkbox"
-													id="tour_social"
-													name="params[socials]"
-													value="1"
-												<?php echo ($isSocial) ? 'checked="checked"' : '' ?>
-													size="80"/>Check for show media social button.
-										</label>
-									</div>
-								</div>
 							</div>
 
 							<hr/>

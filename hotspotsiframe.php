@@ -376,6 +376,9 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				}
 			};
 
+			/**
+			 * Add hotspots into scene
+			 */
 			this.loadHotspotsToCurrentSceneFromSavedData = function () {
 				sceneName = this.kr.get('xml.scene');
 
@@ -415,5 +418,6 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		var superHotspot = new superHotspotObj(krpano);
 	</script>
 </div>
+
 </body>
 </html>

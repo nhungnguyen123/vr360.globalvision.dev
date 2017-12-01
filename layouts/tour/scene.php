@@ -23,12 +23,26 @@ else
 
 $hotspots = $scene->getHotspots();
 ?>
-<scene name="scene_<?php echo $fileName ?>" title="<?php echo $scene->name ?>"
-	   subtitle="<?php echo $scene->description ?>" onstart=""
-	   thumburl="panos/<?php echo $fileName ?>.tiles/thumb.jpg" lat="" lng="" heading="">
-	<view hlookat="<?= $hLookAt ?>" vlookat="<?= $vLookAt ?>" fovtype="MFOV" fov="<?= $fov ?>" maxpixelzoom="2.0"
-		  fovmin="70" fovmax="140"
-		  limitview="auto"/>
+<scene
+		name="scene_<?php echo $fileName ?>"
+		title="<?php echo $scene->name ?>"
+		subtitle="<?php echo $scene->description ?>"
+		onstart=""
+		thumburl="panos/<?php echo $fileName ?>.tiles/thumb.jpg"
+		lat=""
+		lng=""
+		heading=""
+>
+	<view
+			hlookat="<?php echo $hLookAt; ?>"
+			vlookat="<?php echo $vLookAt; ?>"
+			fovtype="MFOV"
+			fov="<?php echo $fov; ?>"
+			maxpixelzoom="2.0"
+			fovmin="70"
+			fovmax="140"
+			limitview="auto"
+	/>
 	<preview url="panos/<?php echo $fileName ?>.tiles/preview.jpg"/>
 	<image>
 		<cube url="panos/<?php echo $fileName ?>.tiles/pano_%s.jpg"/>
@@ -46,7 +60,7 @@ $hotspots = $scene->getHotspots();
 				}
 			}
 			?>
-			<hotspot name="spot_<?php echo $hotspot->code; ?>"
+			<hotspot name="spot<?php echo $hotspot->code; ?>"
 					 dataId="<?php echo $hotspot->code ?>"
 					 style="<?php echo $hotspot->style; ?>"
 					 hotspot_type="<?php echo $hotspot->type; ?>"
