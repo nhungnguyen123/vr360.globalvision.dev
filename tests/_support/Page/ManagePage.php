@@ -39,7 +39,7 @@ class ManagePage
 
 
     //preview page
-     public static $titlePreview = ['xpath' => '//div[@id=\'pano\']/div/div[1]/div[2]/div[10]//div//div/div/div'];
+     public static $titlePreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[10]/div/div/div/div'];
     
     public static $buttonFacePreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[13]/div[1]'];
     
