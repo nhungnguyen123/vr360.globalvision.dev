@@ -51,7 +51,6 @@ class NewTourSteps extends ManageSteps
         $I->click(ManagePage::$btnEditFrirst);
         $I->wait(5);
         $I->seeInField(NewTourPage::$fieldName, $name);
-        $I->seeInField($usePage->nameField(2),$title);
     }
 
     public function createWithURLReady($name, $url, $title, $description)
