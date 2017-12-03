@@ -20,9 +20,9 @@
 						<thead>
 						<tr>
 							<th>#</th>
-							<th><i class="fa fa-window-maximize" aria-hidden="true"></i> vTour name</th>
-							<th><i class="fa fa-link" aria-hidden="true"></i> Friendly URL</th>
-							<th><i class="fa fa-calendar" aria-hidden="true"></i> Creation day</th>
+							<th><i class="fa fa-window-maximize" aria-hidden="true"></i> Name</th>
+							<th><i class="fa fa-link" aria-hidden="true"></i> Alias</th>
+							<th><i class="fa fa-calendar" aria-hidden="true"></i> Created</th>
 							<th><i class="fa fa-image" aria-hidden="true"></i> Scenes</th>
 							<th><i class="fa fa-image" aria-hidden="true"></i> Hotspots</th>
 							<th><i class="fa fa-cogs" aria-hidden="true"></i> Controls</th>
@@ -33,7 +33,7 @@
 						<?php foreach ($this->tours as $tour): ?>
 							<?php /** @var Vr360Tour $tour */ ?>
 							<tr id='vtour-<?php echo $tour->id; ?>' data-tour='<?php echo $tour->toJson(); ?>'
-								class="is-valid-<?php echo (int) $tour->isValid(); ?>">
+							    class="is-valid-<?php echo (int) $tour->isValid(); ?>">
 								<td>
 									<input
 											id="checkBox"
@@ -45,7 +45,7 @@
 								</td>
 								<?php $tooltip = !$tour->isValid() ? 'Missing data files' : ''; ?>
 								<td class="vtour-name" data-toggle="tooltip" data-placement="left"
-									title="<?php echo $tooltip; ?>">
+								    title="<?php echo $tooltip; ?>">
 									<?php echo $tour->getName(); ?>
 									<div>
 										<small><?php echo '_/' . $tour->id . '/vtour/tour.xml'; ?></small>
@@ -62,17 +62,7 @@
 								<td class="hotspots">
 									<strong>
 										<?php
-										$hotspots = 0;
-										$scenes   = $tour->getScenes();
-										if ($scenes)
-										{
-
-											foreach ($scenes as $scene)
-											{
-												$hotspots = $hotspots + count($scene->getHotspots());
-											}
-										}
-										echo $hotspots;
+										echo $tour->getHotspots();
 										?>
 									</strong>
 								</td>
@@ -80,7 +70,7 @@
 									<?php if ($tour->canEmbed()): ?>
 										<!-- Embed -->
 										<button type="button" class="btn btn-default btn-sm embedCode"
-												data-tour-id="<?php echo $tour->id ?>">
+										        data-tour-id="<?php echo $tour->id ?>">
 											<i class="fa fa-code" aria-hidden="true"></i> Embed
 										</button>
 									<?php endif; ?>
@@ -88,7 +78,7 @@
 									<?php if ($tour->canEdit()): ?>
 										<!-- Edit -->
 										<button type="button" class="btn btn-primary btn-sm editTour"
-												data-tour-id="<?php echo $tour->id ?>">
+										        data-tour-id="<?php echo $tour->id ?>">
 											<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
 										</button>
 									<?php endif; ?>
@@ -96,7 +86,7 @@
 									<?php if ($tour->canEditHotspot()): ?>
 										<!-- Hotspot -->
 										<button type="button" class="btn btn-primary btn-sm editTourHotspot"
-												data-tour-id="<?php echo $tour->id ?>">
+										        data-tour-id="<?php echo $tour->id ?>">
 											<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hotspot
 										</button>
 									<?php endif; ?>
@@ -110,7 +100,7 @@
 									<?php endif; ?>
 
 									<button type="button" class="btn btn-danger btn-sm removeTour"
-											data-tour-id="<?php echo $tour->id ?>">
+									        data-tour-id="<?php echo $tour->id ?>">
 										<i class="fa fa-eraser" aria-hidden="true"></i> Remove
 									</button>
 								</td>

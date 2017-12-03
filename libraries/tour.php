@@ -341,6 +341,30 @@ class Vr360Tour extends Vr360TableTour
 		return $items;
 	}
 
+	/**
+	 * @return int
+	 */
+	public function getHotspots()
+	{
+		$scenes = $this->getScenes();
+
+		$count = 0;
+
+		foreach ($scenes as $scene)
+		{
+			$hotspots = $scene->getHotspots();
+
+			if (!$hotspots)
+			{
+				continue;
+			}
+
+			$count = $count + count($hotspots);
+		}
+
+		return $count;
+	}
+
 	public function getXml()
 	{
 		$tourXml = $this->getFile('vtour/tour.xml');

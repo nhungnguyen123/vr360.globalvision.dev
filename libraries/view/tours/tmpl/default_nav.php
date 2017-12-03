@@ -1,12 +1,13 @@
 <?php defined('_VR360_EXEC') or die; ?>
-
+<?php $user = Vr360Factory::getUser(); ?>
 <div class="col-md-12">
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">
-					<i class="fa fa-user-circle-o" aria-hidden="true"></i> <?php echo Vr360Factory::getUser()->name; ?>
+					<img src="<?php echo Vr360HelperUser::getGravatar($user->email); ?>" class="img-circle" style="display: inline-block;"/>
+					<span class=""><?php echo $user->name; ?></span>
 				</a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->

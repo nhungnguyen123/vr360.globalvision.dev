@@ -18,7 +18,7 @@ $user = Vr360Factory::getUser();
 								<div class="col-md-4">
 									<input
 											id="textinput" name="email" placeholder="input your email"
-											class="form-control input-md" type="text"
+											class="form-control input-sm" type="text"
 											data-validation="required email"
 											value="<?php echo $user->email; ?>">
 								</div>
@@ -28,7 +28,7 @@ $user = Vr360Factory::getUser();
 								<label class="col-md-4 control-label" for="textinput">Name</label>
 								<div class="col-md-4">
 									<input id="textinput" name="name" placeholder="input your name"
-										   class="form-control input-md" data-validation="required" type="text"
+										   class="form-control input-sm" data-validation="required" type="text"
 										   value="<?php echo $user->name; ?>">
 
 								</div>
@@ -38,7 +38,7 @@ $user = Vr360Factory::getUser();
 								<label class="col-md-4 control-label" for="textinput">Password</label>
 								<div class="col-md-4">
 									<input id="textinput" name="password" placeholder="Change your password"
-										   class="form-control input-md" type="password">
+										   class="form-control input-sm" type="password">
 
 								</div>
 							</div>
@@ -47,7 +47,7 @@ $user = Vr360Factory::getUser();
 								<label class="col-md-4 control-label" for="textinput">Confirm password</label>
 								<div class="col-md-4">
 									<input id="textinput" name="confirmpassword" placeholder="Confirm your password"
-										   class="form-control input-md" type="password">
+										   class="form-control input-sm" type="password">
 
 								</div>
 							</div>
