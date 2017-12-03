@@ -30,12 +30,29 @@ class NewTourPage
 
     public static $btnRemovePano = ['xpath' => '//div[@id=\'tour-panos\']/div/div[1]/button'];
 
-    public static $btnCreate = ['xpath' => '//button[@id=\'createTour\']'];
+    public static $btnCreate = ['xpath' => './/*[@id=\'saveTour\']'];
 
-    public static $btnAddPano = ['xpath' => '//button[@id=\'addPano\']'];
+    public static $btnAddPano = ['xpath' => './/*[@id=\'addScene\']'];
+    
     
     //image 
     public static $imageFirst = '1.jpg';
+    
+    public function nameField($value)
+    {
+        $xpath = '(//input[@name=\'newSceneName[]\'])['.$value.']';
+        return $xpath;
+    }
 
+    public function descriptionField($value)
+    {
+        $xpath = '(//input[@name=\'newSceneDescription[]\'])['.$value.']';
+        return $xpath;
+    }
 
+    public function imageInput($value)
+    {
+        $xpath = '(//input[@name=\'newSceneFile[]\'])['.$value.']';
+       return $xpath;
+    }
 }

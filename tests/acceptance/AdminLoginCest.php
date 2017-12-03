@@ -5,8 +5,8 @@ class AdminLoginCest
 {
     public function __construct()
     {
-        $this->userName = 'bory';
-        $this->pass = '-vietvu-';
+        $this->userName = 'designteam';
+        $this->pass = 'nQ-yQ?3ba';
     }
 
     public function login(LoginSteps $I)
@@ -32,7 +32,7 @@ class AdminLoginCest
     
     public function checkLogo(LoginSteps $I)
     {
-        $I->checkLogo();
+//        $I->checkLogo();
     }
     
     public function LoginWrongValue(LoginSteps $I)

@@ -19,31 +19,38 @@ class NewTourSteps extends ManageSteps
         $I = $this;
         $I->click(ManagePage::$btnAddNew);
         $I->waitForElement(NewTourPage::$fieldName,30);
-        $I->switchToIFrame();
         $I->comment('Fill Name Text Field');
-        $I->wait(3);
+        $I->wait(1);
         $I->fillField(NewTourPage::$fieldName, $name);
+        $I->wait(1);
         $I->comment('Fill URL Text Field');
         $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
 
-        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
-        $I->wait(3);
+        $I->click(NewTourPage::$btnAddPano);
+        $usePage = new NewTourPage();
+        $I->waitForElement($usePage->nameField(2), 30);
+        $I->waitForElement($usePage->nameField(2),30);
+        $I->fillField($usePage->nameField(2),$title);
+        $I->fillField($usePage->descriptionField(2),$description);
+        $I->attachFile($usePage->imageInput(2),NewTourPage::$imageFirst );
+        $I->waitForElement(ManagePage::$checkboxAutoRation, 30);
+        $I->waitForElement(ManagePage::$checkBoxSocical, 30);
+        $I->click(ManagePage::$checkBoxSocical);
 
-        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
-        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
-
-        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
 
         $I->comment('I click Create button');
         $I->click(NewTourPage::$btnCreate);
+
         $I->wait(500);
-        $I->waitForElement(ManagePage::$btnLogout,60);
         $I->waitForElement(ManagePage::$searchId,30);
         $I->fillField(ManagePage::$searchId,$name);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
         $I->waitForElement(ManagePage::$urlValue,30);
         $I->see($url,ManagePage::$urlValue);
-        $I->comment('I see Administrator Control Panel');
+        $I->waitForElement(ManagePage::$btnLogout,60);
+        $I->click(ManagePage::$btnEditFrirst);
+        $I->wait(5);
+        $I->seeInField(NewTourPage::$fieldName, $name);
     }
 
     public function createWithURLReady($name, $url, $title, $description)
@@ -58,24 +65,28 @@ class NewTourSteps extends ManageSteps
         $I->fillField(NewTourPage::$fieldName, $name);
         $I->comment('Fill URL Text Field');
         $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
-
-        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
+        $I->click(NewTourPage::$btnAddPano);
         $I->wait(3);
-
-        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
-        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
-
-        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
-
-        $I->comment('I click Create button');
+        $usePage = new NewTourPage();
+        $I->waitForElement($usePage->nameField(2), 30);
+        $I->waitForElement($usePage->nameField(2),30);
+        $I->fillField($usePage->nameField(2),$title);
+        $I->fillField($usePage->descriptionField(2),$description);
+        $I->attachFile($usePage->imageInput(2),NewTourPage::$imageFirst );
+        $I->waitForElement(ManagePage::$checkboxAutoRation, 30);
+        $I->waitForElement(ManagePage::$checkBoxSocical, 30);
+        $I->click(ManagePage::$checkBoxSocical);
         $I->click(NewTourPage::$btnCreate);
-        $I->wait(500);
+        $I->wait(300);
+        $I->waitForElement(ManagePage::$buttonCloseAlready,30);
+        $I->waitForElement(ManagePage::$xPathMessage, 30);
+        $I->click(ManagePage::$buttonCloseAlready);
+        $I->waitForElement(ManagePage::$buttonClosePopup, 30);
         $I->waitForElement(ManagePage::$btnLogout,60);
         $I->waitForElement(ManagePage::$searchId,30);
         $I->fillField(ManagePage::$searchId,$name);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-        $I->waitForElement(ManagePage::$urlValue,30);
-        $I->dontSee($url,ManagePage::$urlValue);
+        $I->waitForElement(ManagePage::$noResults,30);
     }
     public function checkMissing($name, $url, $title, $description)
     {
@@ -186,24 +197,23 @@ class NewTourSteps extends ManageSteps
     {
         $I = $this;
         $I->click(ManagePage::$btnAddNew);
-        $I->comment('create Tour with url is already taken ');
         $I->waitForElement(NewTourPage::$fieldName,30);
-        $I->switchToIFrame();
         $I->comment('Fill Name Text Field');
-        $I->wait(3);
+        $I->wait(1);
         $I->fillField(NewTourPage::$fieldName, $name);
+        $I->wait(1);
         $I->comment('Fill URL Text Field');
         $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
 
-        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
-        $I->wait(3);
+        $I->click(NewTourPage::$btnAddPano);
+        $usePage = new NewTourPage();
+        $I->waitForElement($usePage->nameField(2), 30);
+        $I->waitForElement($usePage->nameField(2),30);
+        $I->fillField($usePage->nameField(2),$title);
+        $I->fillField($usePage->descriptionField(2),$description);
+        $I->attachFile($usePage->imageInput(2),NewTourPage::$imageFirst );
 
-        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
-        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
-
-        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
-
-        $I->comment('I click Create button');
+        $I->comment('I click close button');
         $I->click(NewTourPage::$btnClose);
         $I->waitForElement(ManagePage::$btnLogout,60);
         $I->waitForElement(ManagePage::$searchId,30);
@@ -260,7 +270,7 @@ class NewTourSteps extends ManageSteps
         $I->fillField(NewTourPage::$fieldDescriptionFirst,"");
     }
 
-    public function preview($name, $url, $firstTitle, $firstDescription)
+    public function preview($name, $url, $firstTitle)
     {
         $I = $this;
         $I->comment('Check preview page ');
@@ -275,9 +285,16 @@ class NewTourSteps extends ManageSteps
         $I->switchToNextTab();
         $use = new ManagePage();
         $I->amOnUrl($use->returnURL($url));
-        $I->wait(5);
-        $I->waitForElement(ManagePage::$titlePreview,30);
-        $I->waitForText($firstTitle, 30 , ManagePage::$titlePreview);
+        $I->wait(10);
+//        $I->waitForElement(ManagePage::$titlePreview,30);
+//        $I->waitForText($firstTitle, 30 , ManagePage::$titlePreview);
+//        $I->waitForElement(ManagePage::$buttonFacePreview, 30);
+//        $I->waitForElement(ManagePage::$buttonGGPreview, 30);
+//        $I->waitForElement(ManagePage::$buttonTwPreview, 30);
+//        $I->waitForElement(ManagePage::$buttonShowImage, 30);
+//        $I->click(ManagePage::$buttonShowImage);
+//        $I->wait(2);
+//        $I->waitForElement(ManagePage::$fistImagePreview, 30);
     }
     
     public function hostPot($name)
