@@ -6,11 +6,10 @@ $user = Vr360Factory::getUser();
 <div class="col-md-12">
 	<div class="row">
 		<div class="container-fluid">
-			<!-- Create new tour form -->
 			<form method="post" id="form-user" class="form-horizontal" enctype="multipart/form-data">
 				<div class="col-md-12">
 					<div class="row">
-						<div class="col-md-6">
+						<div class="col-md-4">
 							<!-- Form Name -->
 							<!-- Text input-->
 							<div class="form-group">
@@ -52,7 +51,29 @@ $user = Vr360Factory::getUser();
 								</div>
 							</div>
 						</div>
-						<div class="col-md-6">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="textinput">Company name</label>
+								<div class="col-md-4">
+									<input
+											id="textinput" name="company" placeholder="your company name"
+											class="form-control input-sm" type="text"
+											data-validation=""
+											value="">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-4 control-label" for="textinput">Company address</label>
+								<div class="col-md-4">
+									<input
+											id="textinput" name="companyaddress" placeholder="your company address"
+											class="form-control input-sm" type="text"
+											data-validation=""
+											value="">
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
 							<!-- File Button -->
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="uploadPhoto">Upload logo</label>

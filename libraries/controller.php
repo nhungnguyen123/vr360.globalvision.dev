@@ -37,7 +37,7 @@ class Vr360Controller
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function execute()
 	{

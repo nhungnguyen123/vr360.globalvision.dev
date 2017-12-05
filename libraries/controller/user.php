@@ -2,10 +2,15 @@
 
 defined('_VR360_EXEC') or die;
 
+/**
+ * Class Vr360ControllerUser
+ *
+ * @since  2.0.0
+ */
 class Vr360ControllerUser extends Vr360Controller
 {
 	/**
-	 * Login
+	 * @return  void
 	 */
 	public function login()
 	{
@@ -27,6 +32,8 @@ class Vr360ControllerUser extends Vr360Controller
 	/**
 	 * Logout by clear session
 	 *
+	 * @return  void
+	 *
 	 * @since  2.0.0
 	 */
 	public function logout()
@@ -37,7 +44,7 @@ class Vr360ControllerUser extends Vr360Controller
 	}
 
 	/**
-	 *
+	 * @return  void
 	 */
 	public function ajaxGetUserHtml()
 	{
@@ -47,7 +54,7 @@ class Vr360ControllerUser extends Vr360Controller
 	}
 
 	/**
-	 *
+	 * @return  void
 	 */
 	public function ajaxSaveProfile()
 	{

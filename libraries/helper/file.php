@@ -4,10 +4,18 @@ defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360HelperFolder
+ *
+ * @since  2.0.0
  */
 class Vr360HelperFile
 {
 
+	/**
+	 * @param $src
+	 * @param $dest
+	 *
+	 * @return boolean
+	 */
 	public static function copy($src, $dest)
 	{
 		if (!self::exists($src))
@@ -31,7 +39,7 @@ class Vr360HelperFile
 	/**
 	 * @param $filePath
 	 *
-	 * @return bool|string
+	 * @return boolean|string
 	 */
 	public static function read($filePath)
 	{

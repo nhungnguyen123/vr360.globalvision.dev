@@ -5,7 +5,7 @@ defined('_VR360_EXEC') or die;
 /**
  * Class Vr360ModelHotspot
  *
- * @since  3.0.0
+ * @since  2.1.0
  */
 class Vr360ModelHotspot extends Vr360Model
 {
@@ -34,7 +34,7 @@ class Vr360ModelHotspot extends Vr360Model
 	 *
 	 * @return  void
 	 *
-	 * @since   3.0.0
+	 * @since   2.1.0
 	 */
 	public function saveDefaultView($scenes = array(), $defaultView = array())
 	{
@@ -50,7 +50,7 @@ class Vr360ModelHotspot extends Vr360Model
 			/** @var Vr360Scene $scene */
 
 			$sceneName     = 'scene_' . explode('.', $scene->file)[0];
-			$scene->params = isset($defaultView[$sceneName]) && !empty($defaultView[$sceneName]) ? $defaultView[$sceneName] : array();
+			$scene->setParam('defaultview', isset($defaultView[$sceneName]) && !empty($defaultView[$sceneName]) ? $defaultView[$sceneName] : array());
 
 			if ($scene->save())
 			{
@@ -71,7 +71,7 @@ class Vr360ModelHotspot extends Vr360Model
 	 *
 	 * @return  void
 	 *
-	 * @since   3.0.0
+	 * @since   2.1.0
 	 */
 	public function saveHotspot($scenes = array(), $hotspots = array())
 	{
@@ -95,7 +95,9 @@ class Vr360ModelHotspot extends Vr360Model
 			 * Delete old hotspot
 			 * But only for request scenes
 			 */
-			Vr360Database::getInstance()->delete('hotspots', array('sceneId' => $scene->id));
+			$this->deleteHotspotBySceneId($scene->id);
+
+			$hotspotPrefix = 'skin_hotspotstyle|';
 
 			foreach ($hotspots[$key] as $code => $hotspot)
 			{
@@ -117,19 +119,17 @@ class Vr360ModelHotspot extends Vr360Model
 				switch ($hotspotObj->type)
 				{
 					case 'normal':
-						$hotspotObj->style  = 'skin_hotspotstyle|tooltip';
+						$hotspotObj->style  = $hotspotPrefix . 'tooltip';
 						$hotspotObj->params = array('linkedscene' => $hotspot['linkedscene']);
 						break;
 					case 'text':
-						$hotspotObj->style  = 'skin_hotspotstyle|textpopup';
+						$hotspotObj->style  = $hotspotPrefix . 'textpopup';
 						$hotspotObj->params = array('hotspot_text' => $hotspot['hotspot_text']);
 						break;
 					default:
-						$hotspotObj->style  = 'skin_hotspotstyle|textpopup';
+						$hotspotObj->style  = $hotspotPrefix . 'skin_hotspotstyle|textpopup';
 						$hotspotObj->params = array();
 				}
-
-				$hotspotObj->params = json_encode($hotspotObj->params);
 
 				if ($hotspotObj->save())
 				{
@@ -141,5 +141,15 @@ class Vr360ModelHotspot extends Vr360Model
 				}
 			}
 		}
+	}
+
+	/**
+	 * @param   int  $id
+	 *
+	 * @return boolean|PDOStatement
+	 */
+	public function deleteHotspotBySceneId($id)
+	{
+		return Vr360Database::getInstance()->delete('hotspots', array('sceneId' => (int) $id));
 	}
 }

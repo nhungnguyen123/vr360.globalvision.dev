@@ -10,24 +10,52 @@ defined('_VR360_EXEC') or die;
 class Vr360TableTour extends Vr360Table
 {
 	/**
-	 * @var null
+	 * @var string
 	 */
 	public $name = null;
+
+	/**
+	 * @var string
+	 */
 	public $alias = null;
+
+	/**
+	 * @var string
+	 */
 	public $description = null;
+
+	/**
+	 * @var string
+	 */
 	public $keyword = null;
+
+	/**
+	 * @var string
+	 */
 	public $ordering  = null;
+
+	/**
+	 * @var string
+	 */
 	public $created  = null;
+
+	/**
+	 * @var integer
+	 */
 	public $created_by  = null;
+
+	/**
+	 * @var string
+	 */
 	public $status  = null;
 
 	/**
 	 * @var string
 	 */
-	protected $_table = 'v2_tours';
+	protected $_table = 'tours';
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function check()
 	{

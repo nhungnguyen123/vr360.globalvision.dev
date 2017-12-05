@@ -27,6 +27,11 @@ class Vr360Session extends Vr360Object
 
 	protected $namespace = null;
 
+	/**
+	 * Vr360Session constructor.
+	 *
+	 * @param   array  $properties  Properties
+	 */
 	public function __construct($properties = null)
 	{
 		parent::__construct($properties);
@@ -38,7 +43,7 @@ class Vr360Session extends Vr360Object
 	}
 
 	/**
-	 *
+	 * @return  void
 	 */
 	public function start()
 	{
@@ -51,6 +56,9 @@ class Vr360Session extends Vr360Object
 		$this->id     = session_id();
 	}
 
+	/**
+	 * @return static
+	 */
 	public static function getInstance()
 	{
 		static $instance;
@@ -60,7 +68,7 @@ class Vr360Session extends Vr360Object
 			return $instance;
 		}
 
-		$instance = new static();
+		$instance = new static;
 
 		return $instance;
 	}
@@ -87,13 +95,19 @@ class Vr360Session extends Vr360Object
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	protected function isValid()
 	{
 		return $this->status == PHP_SESSION_ACTIVE;
 	}
 
+	/**
+	 * @param string $property
+	 * @param mixed  $value
+	 *
+	 * @return null|void
+	 */
 	public function set($property, $value)
 	{
 		if ($this->isValid())
@@ -102,6 +116,9 @@ class Vr360Session extends Vr360Object
 		}
 	}
 
+	/**
+	 * @return  string
+	 */
 	public function getMessages()
 	{
 		$messages = $this->get('messages', array());
@@ -111,6 +128,9 @@ class Vr360Session extends Vr360Object
 		return $messages;
 	}
 
+	/**
+	 * @return  void
+	 */
 	public function reset()
 	{
 		session_unset();

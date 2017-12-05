@@ -14,8 +14,12 @@ defined('_VR360_EXEC') or die;
 			<div class="panel-heading">
 				<div class="container-fluid">
 					<div class="col-md-6">
-						<div class="panel-title">Scene <span class="badge"><small><?php echo count($scene->getHotspots()); ?>
-									hotspots</small></span></div>
+						<div
+								class="panel-title">Scene
+							<span class="badge">
+								<small><?php echo $scene->getHotspots() ? count($scene->getHotspots()) : 0; ?> hotspots</small>
+							</span>
+						</div>
 					</div>
 					<div class="col-md-6">
 						<button type="button" class="btn btn-danger btn-sm pull-right removeScene">
@@ -27,7 +31,7 @@ defined('_VR360_EXEC') or die;
 			<div class="panel-body">
 				<div class="container-fluid">
 					<div class="col-md-12">
-						<div id="sceneWrap form-horizontal">
+						<div class="sceneWrap form-horizontal">
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Scene file *</label>
 								<div class="col-sm-9">
@@ -76,25 +80,82 @@ defined('_VR360_EXEC') or die;
 										</div>
 									</div>
 								</div>
-								<div class="col-md-12">
-								</div>
 							</div>
 							<input type="hidden" name="sceneId[]" value="<?php echo $scene->id ?>"/>
 						</div>
 					</div>
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-2">
+								<div class="form-group">
+									<label class="control-label">FOVtype</label>
+									<input
+											type="text"
+											class="form-control"
+											name="sceneParams[<?php echo $scene->id ?>][fovtype]"
+											value="<?php echo $scene->getParam('fovtype', 'MFOV');?>"
+									/>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label class="control-label">FOV</label>
+									<input
+											type="text"
+											class="form-control"
+											name="sceneParams[<?php echo $scene->id ?>][fov]"
+											value="<?php echo $scene->getParam('fov', VR360_TOUR_SCENE_DEFAULT_FOV);?>"
+									/>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label class="control-label">Maxpixelzoom</label>
+									<input
+											type="text"
+											class="form-control"
+											name="sceneParams[<?php echo $scene->id ?>][maxpixelzoom]"
+											value="<?php echo $scene->getParam('maxpixelzoom', '2.0');?>"
+									/>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label class="control-label">Fovmin</label>
+									<input
+											type="text"
+											class="form-control"
+											name="sceneParams[<?php echo $scene->id ?>][fovmin]"
+											value="<?php echo $scene->getParam('fovmin', '70');?>"
+									/>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label class="control-label">Fovmax</label>
+									<input
+											type="text"
+											class="form-control"
+											name="sceneParams[<?php echo $scene->id ?>][fovmax]"
+											value="<?php echo $scene->getParam('fovmax', '170');?>"
+									/>
+								</div>
+							</div>
+							<div class="col-md-2">
+								<div class="form-group">
+									<label class="control-label">Limitview</label>
+									<input
+											type="text"
+											class="form-control"
+											name="sceneParams[<?php echo $scene->id ?>][limitview]"
+											value="<?php echo $scene->getParam('limitview', 'auto');?>"
+									/>
+								</div>
+							</div>
+						</div>
 				</div>
 			</div>
 		</div>
-		<script>
-			jQuery(document).ready(function ()
-			{
-				jQuery(function ()
-				{
-					jQuery(".scenes").sortable();
-					jQuery(".scenes").disableSelection();
-				});
-			})
-		</script>
 	<?php endforeach; ?>
 	<?php else: ?>
 		<div class="alert alert-warning" role="alert">There is no scene please add at least one</div>

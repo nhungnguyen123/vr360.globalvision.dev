@@ -2,10 +2,17 @@
 
 defined('_VR360_EXEC') or die;
 
+/**
+ * Class Vr360Database
+ *
+ * @since   2.0.0
+ */
 class Vr360Database extends \Medoo\Medoo
 {
 	/**
 	 * Vr360Database constructor.
+	 *
+	 * @param   array  $options  Database options
 	 */
 	public function __construct($options = null)
 	{
@@ -45,10 +52,10 @@ class Vr360Database extends \Medoo\Medoo
 	/**
 	 * Load a record
 	 *
-	 * @param $table
-	 * @param $condition
+	 * @param   string  $table      Table name
+	 * @param   array   $condition  Condition
 	 *
-	 * @return array|bool|mixed
+	 * @return  array|boolean|mixed
 	 */
 	public function load($table, $condition)
 	{
@@ -60,11 +67,11 @@ class Vr360Database extends \Medoo\Medoo
 	/**
 	 * Update a record
 	 *
-	 * @param $table
-	 * @param $data
-	 * @param $where
+	 * @param   string  $table  Table name
+	 * @param   array   $data   Data
+	 * @param   array   $where  Condition
 	 *
-	 * @return bool|PDOStatement
+	 * @return boolean|PDOStatement
 	 */
 	public function update($table, $data, $where = null)
 	{

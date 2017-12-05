@@ -4,6 +4,8 @@ defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360HelperFolder
+ *
+ * @since  2.0.0
  */
 class Vr360HelperFolder
 {
@@ -65,7 +67,5 @@ class Vr360HelperFolder
 		}
 
 		return false;
-
 	}
-
 }

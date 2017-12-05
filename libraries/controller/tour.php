@@ -17,7 +17,7 @@ class Vr360ControllerTour extends Vr360Controller
 		if (!empty($alias))
 		{
 			// Set input with tour ID for use in view
-			$tourId = Vr360Database::getInstance()->select('v2_tours', array('id'), array('alias' => $alias));
+			$tourId = Vr360Database::getInstance()->select('tours', array('id'), array('alias' => $alias));
 
 			if (!empty($tourId))
 			{
@@ -29,7 +29,7 @@ class Vr360ControllerTour extends Vr360Controller
 	}
 
 	/**
-	 *
+	 * @return  void
 	 */
 	public function ajaxSaveTour()
 	{
@@ -72,7 +72,7 @@ class Vr360ControllerTour extends Vr360Controller
 	/**
 	 * Method for load create/edit tour html form
 	 *
-	 * @since   3.0.0
+	 * @since   2.1.0
 	 */
 	public function ajaxGetTourHtml()
 	{
@@ -240,7 +240,7 @@ class Vr360ControllerTour extends Vr360Controller
 	/**
 	 * @return  void
 	 *
-	 * @since   3.0.0
+	 * @since   2.1.0
 	 */
 	public function ajaxValidateAlias()
 	{

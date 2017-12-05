@@ -20,6 +20,7 @@ foreach ($scenes as $index => $scene)
 }
 
 $layoutHelper = Vr360Layout::getInstance();
+
 $params       = json_decode($tour->params);
 $skin         = isset($params->skin) ? $params->skin : 'default.xml';
 $assetsPath = '../../../assets';

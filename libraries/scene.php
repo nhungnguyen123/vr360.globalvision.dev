@@ -5,7 +5,7 @@ defined('_VR360_EXEC') or die;
 /**
  * Class Vr360TableScene
  *
- * @since   3.0.0
+ * @since   2.1.0
  */
 class Vr360Scene extends Vr360TableScene
 {
@@ -14,7 +14,7 @@ class Vr360Scene extends Vr360TableScene
 	 *
 	 * @return  boolean
 	 *
-	 * @since   3.0.0
+	 * @since   2.1.0
 	 */
 	public function delete()
 	{
@@ -26,7 +26,7 @@ class Vr360Scene extends Vr360TableScene
 		$path = VR360_PATH_DATA . '/' . $this->tourId . '/' . $this->file;
 
 		// Delete scene
-		if (!Vr360Database::getInstance()->delete('v2_scenes', array('id' => $this->id)))
+		if (!Vr360Database::getInstance()->delete('scenes', array('id' => $this->id)))
 		{
 			return false;
 		}
@@ -51,7 +51,7 @@ class Vr360Scene extends Vr360TableScene
 	 *
 	 * @return  array|false  Array of hotspots. False otherwise.
 	 *
-	 * @since   3.0.0
+	 * @since   2.1.0
 	 */
 	public function getHotspots()
 	{
@@ -67,7 +67,7 @@ class Vr360Scene extends Vr360TableScene
 			),
 			array(
 				'sceneId' => $this->id,
-				'ORDER'  => array('id' => 'ASC')
+				'ORDER'   => array('id' => 'ASC')
 			)
 		);
 
@@ -80,7 +80,7 @@ class Vr360Scene extends Vr360TableScene
 		{
 			$scene = new Vr360Hotspot;
 
-			$item['params'] = json_decode($item['params']);
+			$item['params'] = new Vr360Object(json_decode($item['params']));
 			$scene->bind($item);
 			$items[$key] = $scene;
 		}

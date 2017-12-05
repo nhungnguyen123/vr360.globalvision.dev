@@ -12,7 +12,9 @@ class Vr360Email extends PHPMailer\PHPMailer\PHPMailer
 	/**
 	 * Vr360Email constructor.
 	 *
-	 * @param   null $exceptions
+	 * @param null $exceptions
+	 *
+	 * @throws \PHPMailer\PHPMailer\Exception
 	 */
 	public function __construct($exceptions = null)
 	{
@@ -20,12 +22,12 @@ class Vr360Email extends PHPMailer\PHPMailer\PHPMailer
 
 		$configuration    = Vr360Configuration::getInstance();
 		$this->SMTPDebug  = 2;
-		$this->Mailer     = $configuration->mailer;                                  // Set mailer to use SMTP
-		$this->Host       = $configuration->mailHost;  // Specify main and backup SMTP servers
-		$this->SMTPAuth   = true;                               // Enable SMTP authentication
-		$this->Username   = $configuration->mailUsername;                 // SMTP username
-		$this->Password   = $configuration->mailPassword;                           // SMTP password
-		$this->SMTPSecure = $configuration->mailSecure;                            // Enable TLS encryption, `ssl` also accepted
+		$this->Mailer     = $configuration->mailer;
+		$this->Host       = $configuration->mailHost;
+		$this->SMTPAuth   = true;
+		$this->Username   = $configuration->mailUsername;
+		$this->Password   = $configuration->mailPassword;
+		$this->SMTPSecure = $configuration->mailSecure;
 		$this->Port       = $configuration->mailPort;
 
 		// Send mail from

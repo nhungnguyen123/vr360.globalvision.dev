@@ -9,15 +9,15 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 
 // Scenes
 $scenes = $tour->getScenes();
-
-$isRotate = null !== $tour->params && property_exists($tour->params, 'rotation') ? (boolean) $tour->params->rotation : false;
-$isSocial = null !== $tour->params && property_exists($tour->params, 'socials') ? (boolean) $tour->params->socials : false;
+$isRotate = $tour->params->get('rotation', false);
+$isSocial = $tour->params->get('socials', false);
 ?>
 <div class="col-md-12">
 	<div class="row">
 		<div class="container-fluid">
 			<!-- Hidden scene form -->
 			<?php require_once __DIR__ . '/tour_scene.php'; ?>
+
 			<!-- Create new tour form -->
 			<form method="post" id="form-tour" class="form-horizontal" enctype="multipart/form-data">
 				<div class="col-md-12">
@@ -36,8 +36,7 @@ $isSocial = null !== $tour->params && property_exists($tour->params, 'socials') 
 											placeholder="Name of this tour"
 											value="<?php echo $tour->get('name'); ?>"
 											title="Name of tour. Will use as site title"
-											data-validation="required"
-									/>
+											data-validation="required"/>
 								</div>
 							</div>
 							<!-- Alias -->
@@ -88,57 +87,7 @@ $isSocial = null !== $tour->params && property_exists($tour->params, 'socials') 
 							</div>
 							<hr/>
 							<!-- Options -->
-							<div class="options">
-								<div class="form-group">
-									<span class="col-sm-2 control-label label label-primary">
-                                        <i class="fa fa-cogs" aria-hidden="true"></i> Options</span>
-								</div>
-								<div class="form-group">
-									<label class="col-sm-2 control-label">Skins</label>
-									<div class="col-sm-10">
-										<select class="form-control input-sm" title="skin" name="params[skin]">
-											<?php foreach ($skins as $skin): ?>
-												<option value="<?php echo $skin; ?>"><?php echo $skin; ?></option>
-											<?php endforeach; ?>
-										</select>
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<div class="well well-sm">
-										<div class="container-fluid">
-											<div class="form-group">
-												<div class="checkbox">
-													<label>
-														<input
-																type="checkbox"
-																id="tour_rotation"
-																name="params[rotation]"
-															<?php echo ($isRotate) ? 'checked="checked"' : '' ?>
-																value="1" size="80"/> Check for auto rotation.
-													</label>
-												</div>
-											</div>
-
-											<div class="form-group">
-												<div class="checkbox">
-													<label>
-														<input
-																type="checkbox"
-																id="tour_social"
-																name="params[socials]"
-																value="1"
-															<?php echo ($isSocial) ? 'checked="checked"' : '' ?>
-																size="80"/>Check for show media social button.
-													</label>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-
+							<?php require_once __DIR__ . '/tour_options.php'; ?>
 							<hr/>
 							<!-- Controls -->
 							<div class="form-group">

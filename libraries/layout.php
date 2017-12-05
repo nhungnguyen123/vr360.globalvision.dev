@@ -15,7 +15,7 @@ class Vr360Layout
 	protected $layoutBase;
 
 	/**
-	 * @var
+	 * @var  string
 	 */
 	protected $layout;
 
@@ -52,8 +52,10 @@ class Vr360Layout
 	}
 
 	/**
-	 * @param       $layout
-	 * @param array $data
+	 * @param   string  $layout  Layout file
+	 * @param   array   $data    Data
+	 *
+	 * @return  void
 	 */
 	public function load($layout, $data = array())
 	{
@@ -64,10 +66,10 @@ class Vr360Layout
 	}
 
 	/**
-	 * @param       $layout
-	 * @param array $data
+	 * @param   string  $layout  Layout file
+	 * @param   array   $data    Data
 	 *
-	 * @return string
+	 * @return  string
 	 */
 	public function fetch($layout, $data = array())
 	{

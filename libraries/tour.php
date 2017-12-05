@@ -18,7 +18,7 @@ class Vr360Tour extends Vr360TableTour
 	}
 
 	/**
-	 * @param   int $truncateLength
+	 * @param   integer  $truncateLength  Truncate length
 	 *
 	 * @return  string
 	 */
@@ -29,93 +29,16 @@ class Vr360Tour extends Vr360TableTour
 		return trim(mb_substr($description, 0, $truncateLength));
 	}
 
+	/**
+	 * @return  string|null
+	 */
 	public function getKeyword()
 	{
 		return !empty($this->keyword) ? $this->keyword : Vr360Configuration::getConfig('siteKeyword');
 	}
 
 	/**
-	 * @param      $property
-	 * @param null $default
-	 *
-	 * @return null
-	 */
-	public function getParam($property, $default = null)
-	{
-		if (!is_object($this->params) || !isset($this->params->$property))
-		{
-			return $default;
-		}
-
-		return $this->params->$property;
-	}
-
-	/**
-	 * @param $property
-	 * @param $value
-	 */
-	public function setParam($property, $value)
-	{
-		$this->params->{$property} = $value;
-	}
-
-	/**
-	 * @return array
-	 */
-	public function getPanos()
-	{
-		static $panos;
-
-		if (!isset($panos))
-		{
-			$panos = $this->getParam('panos', array());
-
-			if (!is_array($panos) || empty($panos))
-			{
-				return array();
-			}
-
-			foreach ($panos as $index => $pano)
-			{
-				$panos[$index] = new Vr360Pano($pano);
-			}
-		}
-
-		return $panos;
-	}
-
-	/**
-	 * @return bool|mixed
-	 */
-	public function getDefaultPano()
-	{
-		$panos = $this->getPanos();
-
-		// There are no panos
-		if (empty($panos))
-		{
-			return false;
-		}
-
-		$defaultPano = $this->getParam('defaultPano', false);
-
-		if ($defaultPano)
-		{
-			foreach ($panos as $pano)
-			{
-				if ($pano->file === $defaultPano)
-				{
-					return $pano;
-				}
-			}
-		}
-
-		// By default return first pano
-		return $panos[0];
-	}
-
-	/**
-	 * @return array
+	 * @return array|boolean
 	 */
 	public function getThumbnail()
 	{
@@ -142,26 +65,12 @@ class Vr360Tour extends Vr360TableTour
 	}
 
 	/**
-	 * @return bool|array
+	 * @param $file
+	 *
+	 * @return boolean|string
 	 */
-	public function getJsonData()
-	{
-		$filePath = $this->getFile('data.json');
-
-		if ($filePath === false)
-		{
-			return false;
-		}
-
-		$jsonContent = Vr360HelperFile::read($filePath);
-
-		return json_decode($jsonContent, true);
-	}
-
 	public function getFile($file)
 	{
-		// @TODO Need clean file path to prevent path travel attacking
-
 		$filePath = Vr360HelperFile::clean($this->getDir() . '/' . $file);
 
 		if (!Vr360HelperFile::exists($filePath))
@@ -226,7 +135,7 @@ class Vr360Tour extends Vr360TableTour
 	}
 
 	/**
-	 * @return bool
+	 * @return boolean
 	 */
 	public function isValidForRender()
 	{
@@ -285,6 +194,9 @@ class Vr360Tour extends Vr360TableTour
 		return $this->isValid();
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getKrpanoVersion()
 	{
 		$xml = $this->getXml();
@@ -314,7 +226,7 @@ class Vr360Tour extends Vr360TableTour
 		}
 
 		$items = Vr360Database::getInstance()->select(
-			'v2_scenes',
+			'scenes',
 			array(
 				'id', 'tourId', 'name', 'description', 'file', 'ordering', 'status', 'default', 'params'
 			),
@@ -330,10 +242,11 @@ class Vr360Tour extends Vr360TableTour
 			return false;
 		}
 
+
 		foreach ($items as $key => $item)
 		{
 			$scene          = new Vr360Scene;
-			$item['params'] = json_decode($item['params']);
+			$item['params'] = new Vr360Object(json_decode($item['params']));
 			$scene->bind($item);
 			$items[$key] = $scene;
 		}
@@ -342,7 +255,7 @@ class Vr360Tour extends Vr360TableTour
 	}
 
 	/**
-	 * @return int
+	 * @return integer
 	 */
 	public function getHotspots()
 	{
@@ -365,6 +278,9 @@ class Vr360Tour extends Vr360TableTour
 		return $count;
 	}
 
+	/**
+	 * @return boolean|Vr360TourXml
+	 */
 	public function getXml()
 	{
 		$tourXml = $this->getFile('vtour/tour.xml');
@@ -385,7 +301,7 @@ class Vr360Tour extends Vr360TableTour
 	 *
 	 * @return  boolean
 	 *
-	 * @since   3.0.0
+	 * @since   2.1.0
 	 */
 	public function delete()
 	{
@@ -394,7 +310,7 @@ class Vr360Tour extends Vr360TableTour
 			return false;
 		}
 
-		if (!Vr360Database::getInstance()->delete('v2_tours', array('id' => $this->id)))
+		if (!Vr360Database::getInstance()->delete('tours', array('id' => $this->id)))
 		{
 			return false;
 		}

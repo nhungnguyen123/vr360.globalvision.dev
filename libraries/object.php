@@ -9,6 +9,9 @@ defined('_VR360_EXEC') or die;
  */
 class Vr360Object
 {
+	/**
+	 * @var array
+	 */
 	protected $_errors = array();
 
 	/**
@@ -24,6 +27,19 @@ class Vr360Object
 		}
 	}
 
+	/**
+	 * @return string
+	 */
+	public function __toString()
+	{
+		return get_class($this);
+	}
+
+	/**
+	 * @param   array  $properties  Properties
+	 *
+	 * @return  void
+	 */
 	public function bind($properties)
 	{
 		$classProperties = get_class_vars($this);
@@ -73,14 +89,6 @@ class Vr360Object
 	}
 
 	/**
-	 * @return string
-	 */
-	public function __toString()
-	{
-		return get_class($this);
-	}
-
-	/**
 	 * @param   string $property Property
 	 * @param   mixed  $default  Default value
 	 *
@@ -93,6 +101,12 @@ class Vr360Object
 		return $this->set($property, $value);
 	}
 
+	/**
+	 * @param   string  $property   Property
+	 * @param   null    $default    Default value
+	 *
+	 * @return  null
+	 */
 	public function get($property, $default = null)
 	{
 		if (isset($this->$property))
@@ -112,9 +126,9 @@ class Vr360Object
 	}
 
 	/**
-	 * @param  bool $public
+	 * @param   boolean  $public  Get public properties
 	 *
-	 * @return array
+	 * @return  array
 	 */
 	public function getProperties($public = true)
 	{
@@ -134,28 +148,83 @@ class Vr360Object
 		return $vars;
 	}
 
+	/**
+	 * @param   string  $error
+	 */
 	public function setError($error)
 	{
 		$this->_errors[] = $error;
 	}
 
+	/**
+	 * @return   string
+	 */
 	public function getError()
 	{
 		return array_pop($this->_errors);
 	}
 
+	/**
+	 * @return array
+	 */
 	public function getErrors()
 	{
 		return $this->_errors;
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function hasError()
 	{
 		return !empty($this->_errors);
 	}
 
+	/**
+	 * @return   void
+	 */
 	public function resetErrors()
 	{
 		$this->_errors = array();
+	}
+
+	/**
+	 * @param      $property
+	 * @param null $default
+	 *
+	 * @return null
+	 */
+	public function getParam($property, $default = null)
+	{
+		if (empty($this->params))
+		{
+			$this->params = new Vr360Object;
+		}
+
+		if (is_string($this->params))
+		{
+			$this->params = new Vr360Object(json_decode($this->params));
+		}
+
+		if (!is_object($this->params) || !isset($this->params->$property))
+		{
+			return $default;
+		}
+
+		return $this->params->get($property, $default);
+	}
+
+	/**
+	 * @param $property
+	 * @param $value
+	 */
+	public function setParam($property, $value)
+	{
+		if (empty($this->params))
+		{
+			$this->params = new Vr360Object;
+		}
+
+		$this->params->{$property} = $value;
 	}
 }

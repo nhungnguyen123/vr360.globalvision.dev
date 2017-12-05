@@ -1,5 +1,9 @@
 <?php
-$url = VR360_URL_ROOT . '/' . $tour->alias; ?>
+
+defined('_VR360_EXEC') or die;
+
+$url = VR360_URL_ROOT . '/' . $tour->alias;
+?>
 <iframe
 		name="<?php echo $tour->name; ?>"
 		width="800px"

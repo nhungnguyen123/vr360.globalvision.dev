@@ -2,6 +2,11 @@
 
 defined('_VR360_EXEC') or die;
 
+/**
+ * Class Vr360HelperUser
+ *
+ * @since  2.1.0
+ */
 class Vr360HelperUser
 {
 	/**

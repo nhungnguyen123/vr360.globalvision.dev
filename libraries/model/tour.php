@@ -27,7 +27,7 @@ class Vr360ModelTour extends Vr360Model
 	}
 
 	/**
-	 * @return boolean
+	 * @return  void
 	 */
 	public function ajaxSave()
 	{
@@ -113,19 +113,30 @@ class Vr360ModelTour extends Vr360Model
 
 		$this->modifyXML($tour, $ajax);
 
-		// Save scene
-		$ajax->addInfo('Tour is created')->success()->respond();
+		if (Vr360Factory::getInput()->getInt('id'))
+		{
+			// Save scene
+			$ajax->addInfo('Tour is updated')->success()->respond();
+		}
+		else
+		{
+			// Save scene
+			$ajax->addInfo('Tour is created')->success()->respond();
+		}
 	}
 
+	/**
+	 * @return Vr360Tour
+	 */
 	public function getItem()
 	{
 		$id = Vr360Factory::getInput()->getInt('id');
 
-		$table = new Vr360Tour;
+		$tour = new Vr360Tour;
 
 		if ($id)
 		{
-			$table->load(
+			$tour->load(
 				array
 				(
 					'id'         => (int) Vr360Factory::getInput()->getInt('id'),
@@ -134,9 +145,12 @@ class Vr360ModelTour extends Vr360Model
 			);
 		}
 
-		return $table;
+		return $tour;
 	}
 
+	/**
+	 * @return Vr360Tour
+	 */
 	public function getItemFromAlias()
 	{
 		$alias = Vr360Factory::getInput()->getString('alias');
@@ -159,12 +173,12 @@ class Vr360ModelTour extends Vr360Model
 	/**
 	 * Method for store new scenes
 	 *
-	 * @param   Vr360Tour  $tour   Tour data
-	 * @param   array      $files  List of new scenes files.
+	 * @param   Vr360Tour $tour  Tour data
+	 * @param   array     $files List of new scenes files.
 	 *
 	 * @return  array|false        Array of new scenes files if success. False otherwise.
 	 *
-	 * @since   3.0.0
+	 * @since   2.1.0
 	 */
 	protected function saveNewScenes($tour, $files)
 	{
@@ -185,6 +199,7 @@ class Vr360ModelTour extends Vr360Model
 			// Okay now we can process
 			$sceneNames        = $input->get('newSceneName', array(), 'Array');
 			$sceneDescriptions = $input->get('newSceneDescription', array(), 'Array');
+			$sceneParams       = $input->get('sceneParams', array(), 'Array');
 
 			foreach ($files as $index => $file)
 			{
@@ -203,6 +218,7 @@ class Vr360ModelTour extends Vr360Model
 				$scene->set('name', $sceneNames[$index]);
 				$scene->set('description', $sceneDescriptions[$index]);
 				$scene->set('file', $fileName);
+				$scene->set('params', $sceneParams);
 
 				if (!$scene->save())
 				{
@@ -225,11 +241,11 @@ class Vr360ModelTour extends Vr360Model
 	/**
 	 * Method for store current scenes
 	 *
-	 * @param   Vr360Tour  $tour  Tour data
+	 * @param   Vr360Tour $tour Tour data
 	 *
 	 * @return  array             List of scene files.
 	 *
-	 * @since   3.0.0
+	 * @since   2.1.0
 	 */
 	protected function saveScenes($tour)
 	{
@@ -238,6 +254,7 @@ class Vr360ModelTour extends Vr360Model
 
 		$sceneNames        = $input->get('sceneName', array(), 'Array');
 		$sceneDescriptions = $input->get('sceneDescription', array(), 'Array');
+		$sceneParams       = $input->get('sceneParams', array(), 'Array');
 		$sceneDefault      = $input->getInt('sceneDefault');
 		$sceneIds          = $input->get('sceneId', array(), 'Array');
 
@@ -245,7 +262,7 @@ class Vr360ModelTour extends Vr360Model
 
 		// Clean up current default
 		Vr360Database::getInstance()->update(
-			'v2_scenes',
+			'scenes',
 			array('default' => 0),
 			array('tourId' => $tour->id)
 		);
@@ -280,6 +297,14 @@ class Vr360ModelTour extends Vr360Model
 			$currentScene->name        = $sceneNames[$currentScene->id];
 			$currentScene->description = $sceneDescriptions[$currentScene->id];
 
+			/**
+			 * Because since params can include extra params. We need manual update each one instead overwrite all
+			 */
+			foreach ($sceneParams[$currentScene->id] as $key => $value)
+			{
+				$currentScene->setParam($key, $value);
+			}
+
 			if ($currentScene->id == $sceneDefault)
 			{
 				$currentScene->default = 1;
@@ -303,12 +328,12 @@ class Vr360ModelTour extends Vr360Model
 	/**
 	 * Method for modify XML file with new data.
 	 *
-	 * @param   Vr360Tour          $tour    Tour data
-	 * @param   Vr360AjaxResponse  $ajax    Ajax response.
+	 * @param   Vr360Tour         $tour Tour data
+	 * @param   Vr360AjaxResponse $ajax Ajax response.
 	 *
 	 * @return  array                     List of scene files.
 	 *
-	 * @since   3.0.0
+	 * @since   2.1.0
 	 */
 	public function modifyXML($tour, $ajax = null)
 	{

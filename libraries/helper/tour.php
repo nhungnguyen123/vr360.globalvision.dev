@@ -8,9 +8,9 @@ defined('_VR360_EXEC') or die;
 class Vr360HelperTour
 {
 	/**
-	 * @param $filePath
+	 * @param   string  $filePath
 	 *
-	 * @return bool
+	 * @return  boolean|string
 	 */
 	public static function fileValidate($filePath)
 	{

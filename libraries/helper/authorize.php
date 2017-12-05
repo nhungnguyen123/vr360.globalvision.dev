@@ -2,8 +2,16 @@
 
 defined('_VR360_EXEC') or die;
 
+/**
+ * Class Vr360HelperAuthorize
+ *
+ * @since   2.0.0
+ */
 class Vr360HelperAuthorize
 {
+	/**
+	 * @return boolean
+	 */
 	public static function isAuthorized()
 	{
 		$session = Vr360Session::getInstance();
@@ -16,6 +24,12 @@ class Vr360HelperAuthorize
 		return false;
 	}
 
+	/**
+	 * @param $userName
+	 * @param $password
+	 *
+	 * @return boolean
+	 */
 	public static function authorize($userName, $password)
 	{
 		if (empty($userName))

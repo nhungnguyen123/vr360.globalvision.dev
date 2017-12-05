@@ -32,8 +32,8 @@ class Vr360Krpano
 	/**
 	 * Vr360Krpano constructor.
 	 *
-	 * @param   string  $binPath
-	 * @param   string  $license
+	 * @param   string  $binPath    Binary path
+	 * @param   string  $license    License
 	 */
 	public function __construct($binPath, $license)
 	{
@@ -42,7 +42,9 @@ class Vr360Krpano
 	}
 
 	/**
-	 * @param   array  $files
+	 * @param   array  $files   Files
+	 *
+	 * @return  void
 	 */
 	public function addFiles($files)
 	{
@@ -54,20 +56,30 @@ class Vr360Krpano
 		$this->files = $files;
 	}
 
+	/**
+	 * @param   string  $file   Configuration file path
+	 *
+	 * @return  void
+	 */
 	public function useConfigFile($file)
 	{
 		$this->addParameter('-config=' . Vr360HelperFile::clean($file));
 	}
 
+	/**
+	 * @param   string  $parameter  Parameter
+	 *
+	 * @return  void
+	 */
 	public function addParameter($parameter)
 	{
 		$this->parameters[] = $parameter;
 	}
 
 	/**
-	 * @param  $command
+	 * @param   string  $command  Command
 	 *
-	 * @return bool|string
+	 * @return  boolean|string
 	 */
 	public function makePano(&$command)
 	{
@@ -76,7 +88,10 @@ class Vr360Krpano
 			return false;
 		}
 
-		$execute[] = $this->binPath . ' register ' . $this->license;
+		if (!empty($this->license))
+		{
+			$execute[] = $this->binPath . ' register ' . $this->license;
+		}
 
 		// Make pano
 		array_unshift($this->parameters, 'makepano');
@@ -90,6 +105,9 @@ class Vr360Krpano
 		return exec($command);
 	}
 
+	/**
+	 * @return boolean
+	 */
 	protected function validate()
 	{
 		if (empty($this->files))

@@ -26,8 +26,10 @@
 	<link rel="stylesheet" href="./assets/vendor/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" href="./assets/vendor/font-awesome/css/font-awesome.css">
 	<!-- Validator -->
-	<script type="text/javascript"
-			src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+	<script
+			type="text/javascript"
+			src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js">
+	</script>
 
 	<!-- Globalvision -->
 	<link rel="stylesheet" type="text/css" href="./assets/css/globalvision.min.css">

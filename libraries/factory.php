@@ -9,6 +9,9 @@ defined('_VR360_EXEC') or die;
  */
 class Vr360Factory
 {
+	/**
+	 * @return \Joomla\Input\Input
+	 */
 	public static function getInput()
 	{
 		static $instance;
@@ -23,6 +26,9 @@ class Vr360Factory
 		return $instance;
 	}
 
+	/**
+	 * @return \Joomla\Session\Session
+	 */
 	public static function getSession()
 	{
 		static $instance;

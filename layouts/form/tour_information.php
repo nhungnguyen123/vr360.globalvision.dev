@@ -1,8 +1,9 @@
 <?php
 
 defined('_VR360_EXEC') or die;
-$uploadMaxFilesize     = floatval(ini_get('upload_max_filesize'));
-$postMaxsize           = floatval(ini_get('post_max_size'));
+
+$uploadMaxFilesize = floatval(ini_get('upload_max_filesize'));
+$postMaxsize       = floatval(ini_get('post_max_size'));
 ?>
 <div class="well well-sm">
 	<span class="label label-default">PHP upload_max_filesize: <?php echo $uploadMaxFilesize; ?></span>

@@ -2,10 +2,15 @@
 
 defined('_VR360_EXEC') or die;
 
+/**
+ * Class Vr360Table
+ *
+ * @since   2.0.0
+ */
 class Vr360Table extends Vr360Object
 {
 	/**
-	 * @var   int
+	 * @var   integer
 	 */
 	public $id = null;
 
@@ -14,8 +19,16 @@ class Vr360Table extends Vr360Object
 	 */
 	public $params = null;
 
+	/**
+	 * @var   string
+	 */
 	protected $_table = null;
 
+	/**
+	 * @param   array  $condition  Condition
+	 *
+	 * @return  $this
+	 */
 	public function load($condition)
 	{
 		$db  = Vr360Database::getInstance();
@@ -28,14 +41,35 @@ class Vr360Table extends Vr360Object
 		}
 		else
 		{
-			$this->params = new Vr360Object();
+			$this->params = new Vr360Object;
 		}
 
 		return $this;
 	}
 
 	/**
-	 * @return   bool|PDOStatement
+	 * Basic checking
+	 *
+	 * @return boolean
+	 */
+	protected function check()
+	{
+		if ($this->_table === null)
+		{
+			return false;
+		}
+
+		// Convert params to json before saving
+		if (is_object($this->params) || is_array($this->params))
+		{
+			$this->params = json_encode($this->params);
+		}
+
+		return true;
+	}
+
+	/**
+	 * @return   boolean|PDOStatement
 	 */
 	public function save()
 	{
@@ -75,27 +109,6 @@ class Vr360Table extends Vr360Object
 
 				return false;
 			}
-		}
-
-		return true;
-	}
-
-	/**
-	 * Basic checking
-	 *
-	 * @return boolean
-	 */
-	protected function check()
-	{
-		if ($this->_table === null)
-		{
-			return false;
-		}
-
-		// Convert params to json before saving
-		if (is_object($this->params) || is_array($this->params))
-		{
-			$this->params = json_encode($this->params);
 		}
 
 		return true;

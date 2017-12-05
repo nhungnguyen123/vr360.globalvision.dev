@@ -27,9 +27,7 @@ class Vr360ModelTours extends Vr360Model
 	}
 
 	/**
-	 * @param null $userId
-	 *
-	 * @return array|bool
+	 * @return array|boolean
 	 */
 	public function getList()
 	{
@@ -42,9 +40,10 @@ class Vr360ModelTours extends Vr360Model
 		$condition = array_merge(
 			$condition,
 			array(
-				'v2_tours.status[!]' => VR360_TOUR_STATUS_UNPUBLISHED,
-				'ORDER'              => array('v2_tours.id' => 'DESC'),
-				'LIMIT'              => array($offset, $limit)
+				'tours.created_by' => Vr360Factory::getUser()->id,
+				'tours.status[!]'  => VR360_TOUR_STATUS_UNPUBLISHED,
+				'ORDER'            => array('tours.id' => 'DESC'),
+				'LIMIT'            => array($offset, $limit)
 			)
 		);
 
@@ -53,20 +52,20 @@ class Vr360ModelTours extends Vr360Model
 
 		if ($keyword)
 		{
-			$condition['v2_tours.name[~]'] = $keyword;
+			$condition['tours.name[~]'] = $keyword;
 		}
 
 		$rows = Vr360Database::getInstance()->select(
-			'v2_tours',
+			'tours',
 			array(
-				'v2_tours.id',
-				'v2_tours.name',
-				'v2_tours.description',
-				'v2_tours.alias',
-				'v2_tours.created',
-				'v2_tours.created_by',
-				'v2_tours.status',
-				'v2_tours.params'
+				'tours.id',
+				'tours.name',
+				'tours.description',
+				'tours.alias',
+				'tours.created',
+				'tours.created_by',
+				'tours.status',
+				'tours.params'
 			),
 			$condition
 		);
@@ -90,6 +89,11 @@ class Vr360ModelTours extends Vr360Model
 		return $data;
 	}
 
+	/**
+	 * @param   int  $userId
+	 *
+	 * @return  array
+	 */
 	public function getPagination($userId = null)
 	{
 		if ($userId === null)
@@ -122,6 +126,7 @@ class Vr360ModelTours extends Vr360Model
 		);
 
 		$input = Vr360Factory::getInput();
+
 		if (!empty($rows))
 		{
 			return array(

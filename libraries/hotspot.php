@@ -4,6 +4,8 @@ defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360Hotspot
+ *
+ * @since   2.1.0
  */
 class Vr360Hotspot extends Vr360TableHotspot
 {
@@ -12,7 +14,7 @@ class Vr360Hotspot extends Vr360TableHotspot
 	 *
 	 * @return  boolean
 	 *
-	 * @since   3.0.0
+	 * @since   2.1.0
 	 */
 	public function delete()
 	{

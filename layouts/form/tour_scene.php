@@ -22,7 +22,7 @@ defined('_VR360_EXEC') or die;
 		<div class="panel-body">
 			<div class="container-fluid">
 				<div class="col-md-12">
-					<div id="sceneWrap form-horizontal">
+					<div class="sceneWrap form-horizontal">
 						<div class="form-group">
 							<label class="col-sm-3 control-label">Scene file *</label>
 							<div class="col-sm-9">

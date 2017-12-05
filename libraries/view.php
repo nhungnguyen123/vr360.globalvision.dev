@@ -22,22 +22,27 @@ class Vr360View extends Vr360Layout
 	/**
 	 * Vr360View constructor.
 	 *
-	 * @param null $baseDir
+	 * @param   null  $baseDir
 	 */
 	public function __construct($baseDir = null)
 	{
 		parent::__construct(__DIR__ . '/view/' . $this->name . '/tmpl/');
 	}
 
+	/**
+	 * @param   string  $layout
+	 *
+	 * @return  string
+	 */
 	public function display($layout = 'default')
 	{
 		return $this->fetch($layout, array('data' => $this));
 	}
 
 	/**
-	 * @param $text
+	 * @param   string  $text
 	 *
-	 * @return mixed
+	 * @return  null|string|string[]
 	 */
 	public function optimizeHtml($text)
 	{

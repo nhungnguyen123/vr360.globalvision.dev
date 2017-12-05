@@ -5,18 +5,21 @@ defined('_VR360_EXEC') or die;
 /**
  * Hotspot controller class
  *
- * @since   3.0.0
+ * @since   2.1.0
  */
 class Vr360ControllerHotspot extends Vr360Controller
 {
 	/**
+	 * @return  void
 	 *
+	 * @since   2.1.0
 	 */
 	public function ajaxSaveHotspot()
 	{
 		$ajax  = Vr360AjaxResponse::getInstance();
 		$input = Vr360Factory::getInput();
 
+		// Get tour by ID
 		$tour = new Vr360Tour;
 		$tour->load(
 			array(
@@ -25,12 +28,16 @@ class Vr360ControllerHotspot extends Vr360Controller
 			)
 		);
 
+		// Tour not found
 		if (!$tour->id)
 		{
-			$ajax->addDanger('Tour not available')->fail()->respond();
+			$ajax->addDanger('Tour is not available')->fail()->respond();
 		}
 
+		// Hotspots
 		$hotspotsList     = json_decode($input->getString('hotspotList'), true);
+
+		// Default view
 		$defaultViewsList = json_decode($input->getString('defaultViewList'), true);
 
 		if ($hotspotsList === null || $defaultViewsList === null)
@@ -38,6 +45,7 @@ class Vr360ControllerHotspot extends Vr360Controller
 			$ajax->addWarning('Invalid data')->fail()->respond();
 		}
 
+		// Get all scenes of current tour
 		$scenes = $tour->getScenes();
 
 		$hotspotModel = Vr360ModelHotspot::getInstance();

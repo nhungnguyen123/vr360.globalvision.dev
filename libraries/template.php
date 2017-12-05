@@ -9,6 +9,9 @@ defined('_VR360_EXEC') or die;
  */
 class Vr360Template
 {
+	/**
+	 * @return static
+	 */
 	public static function getInstance()
 	{
 		static $instance;
@@ -23,6 +26,11 @@ class Vr360Template
 		return $instance;
 	}
 
+	/**
+	 * @param   string  $templateName
+	 *
+	 * @return  string
+	 */
 	public function fetch($templateName = 'default')
 	{
 		ob_start();
