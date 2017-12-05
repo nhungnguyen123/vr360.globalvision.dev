@@ -20,6 +20,7 @@
 								<th><i class="fa fa-image" aria-hidden="true"></i> Scenes</th>
 								<th><i class="fa fa-image" aria-hidden="true"></i> Hotspots</th>
 								<th><i class="fa fa-cogs" aria-hidden="true"></i> Controls</th>
+
 								<th>ID</th>
 							</tr>
 							</thead>
@@ -49,11 +50,7 @@
 									<td class="vtour-date"><?php echo $tour->created; ?></td>
 									<td class="scenes"><strong><?php echo count($tour->getScenes()) ?></strong></td>
 									<td class="hotspots">
-										<strong>
-											<?php
-											echo $tour->getHotspots();
-											?>
-										</strong>
+										<strong><?php echo $tour->getHotspots(); ?></strong>
 									</td>
 									<td class="controls">
 										<?php if ($tour->canEmbed()): ?>

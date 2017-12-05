@@ -330,4 +330,10 @@ class Vr360Tour extends Vr360TableTour
 
 		return true;
 	}
+
+	public function hit()
+	{
+		$hits = $this->hit + 1;
+		Vr360Database::getInstance()->update('tours', array('hits' => $hits), array('id' => $this->id));
+	}
 }

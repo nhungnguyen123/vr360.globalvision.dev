@@ -1,3 +1,7 @@
+<?php
+
+defined('_VR360_EXEC') or die;
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -46,7 +50,7 @@
 			</table>
 		</noscript>
 		<script type="text/javascript">
-			window.onload = function ()
+			window.onload = function()
 			{
 				<?php echo $tour->getKrpanoEmbedPano(); ?>
 			}

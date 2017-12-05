@@ -2,7 +2,7 @@
 
 defined('_VR360_EXEC') or die;
 ?>
-<div class="options">
+<div class="tour-options">
 	<div class="form-group">
 		<span class="col-sm-2 control-label label label-primary">
 			<i class="fa fa-cogs" aria-hidden="true"></i> Options
@@ -32,7 +32,6 @@ defined('_VR360_EXEC') or die;
 					</label>
 				</div>
 			</div>
-
 			<div class="form-group">
 				<div class="checkbox">
 					<label>

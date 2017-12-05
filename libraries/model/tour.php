@@ -113,6 +113,11 @@ class Vr360ModelTour extends Vr360Model
 
 		$this->modifyXML($tour, $ajax);
 
+		if (Vr360HelperCache::deleteItem('vtour/' . $tour->alias))
+		{
+			$ajax->addSuccess('Cache is deleted');
+		}
+
 		if (Vr360Factory::getInput()->getInt('id'))
 		{
 			// Save scene

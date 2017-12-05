@@ -44,16 +44,14 @@
 <div class="container-fluid">
 	<div class="row" style="margin-top: 15px">
 		<div id="overlay-waiting" class="waiting">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="messages col-md-6 col-md-offset-3">
-					</div>
+			<div class="row">
+				<div class="messages col-md-6 col-md-offset-3">
 				</div>
-				<div class="row">
-					<div class="col-md-2 col-md-offset-3">
-						<button class="btn btn-primary btn-block btn-log-close"><i class="fa fa-close"></i> Close
-						</button>
-					</div>
+			</div>
+			<div class="row">
+				<div class="col-md-2 col-md-offset-3">
+					<button class="btn btn-primary btn-block btn-log-close"><i class="fa fa-close"></i> Close
+					</button>
 				</div>
 			</div>
 		</div>
@@ -69,15 +67,15 @@
 					</div>
 					<div class="col-md-6">
 						<div class="text-center center-block">
-							<a href="//www.facebook.com/globalvision360/" target="_blank">
+							<a href="<?php echo Vr360Configuration::getConfig('socials')['facebook']; ?>" target="_blank">
 								<i id="social-fb" class="fa fa-facebook-square fa-3x social"></i>
 							</a>
-							<a href="//twitter.com/GlobalVision360" target="_blank">
+							<a href="<?php echo Vr360Configuration::getConfig('socials')['twitter']; ?>" target="_blank">
 								<i id="social-tw" class="fa fa-twitter-square fa-3x social"></i>
 							</a>
-							<a href="//plus.google.com/+GlobalVisionSwitzerland" target="_blank">
+							<a href="<?php echo Vr360Configuration::getConfig('socials')['google+']; ?>" target="_blank">
 								<i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
-							<a href="mailto:info@globalvision.ch">
+							<a href="<?php echo Vr360Configuration::getConfig('socials')['mail']; ?>">
 								<i id="social-em" class="fa fa-envelope-square fa-3x social"></i>
 							</a>
 						</div>

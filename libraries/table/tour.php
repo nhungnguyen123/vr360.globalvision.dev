@@ -30,6 +30,11 @@ class Vr360TableTour extends Vr360Table
 	public $keyword = null;
 
 	/**
+	 * @var  integer
+	 */
+	public $hits = null;
+
+	/**
 	 * @var string
 	 */
 	public $ordering  = null;

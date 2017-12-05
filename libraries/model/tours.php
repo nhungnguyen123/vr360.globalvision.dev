@@ -60,8 +60,10 @@ class Vr360ModelTours extends Vr360Model
 			array(
 				'tours.id',
 				'tours.name',
-				'tours.description',
 				'tours.alias',
+				'tours.description',
+				'tours.keyword',
+				'tours.hits',
 				'tours.created',
 				'tours.created_by',
 				'tours.status',
