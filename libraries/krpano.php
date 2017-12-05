@@ -100,8 +100,6 @@ class Vr360Krpano
 
 		$command = implode(' && ', $execute);
 
-		Vr360AjaxResponse::getInstance()->addInfo($command);
-
 		return exec($command);
 	}
 
