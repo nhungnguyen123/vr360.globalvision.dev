@@ -31,7 +31,6 @@ class Vr360ViewTour extends Vr360View
 		// Has cached
 		if (!$item->isMiss())
 		{
-			echo 'xxx';
 			return $item->get();
 		}
 

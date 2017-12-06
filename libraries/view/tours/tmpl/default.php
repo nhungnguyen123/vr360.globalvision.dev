@@ -21,7 +21,7 @@ defined('_VR360_EXEC') or die;
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal" id="modal-close">Close</button>
 			</div>
 		</div>
 	</div>

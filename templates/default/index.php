@@ -63,7 +63,7 @@
 					<div class="col-md-6">
 						<div class="header">
 							<a href="http://globalvision.ch" target="_blank" class="logo">
-								<!--<img id="logo" src="./assets/images/logo.png"/>-->
+								<img id="logo" src="./assets/images/logo.png"/>
 							</a>
 						</div>
 					</div>

@@ -57,7 +57,11 @@ class Vr360TableHotspot extends Vr360Table
 		// SceneId must be provided
 		if ($this->sceneId === null)
 		{
+			$this->setError('Missing sceneId');
+
 			return false;
 		}
+
+		return parent::check();
 	}
 }

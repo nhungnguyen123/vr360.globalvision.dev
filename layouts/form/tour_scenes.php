@@ -21,7 +21,7 @@ defined('_VR360_EXEC') or die;
 						</div>
 					</div>
 					<div class="col-md-6">
-						<button type="button" class="btn btn-danger btn-sm pull-right removeScene">
+						<button type="button" id="removeScene" class="btn btn-danger btn-sm pull-right removeScene">
 							<i class="fa fa-remove"></i> Remove
 						</button>
 					</div>
