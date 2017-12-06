@@ -153,7 +153,6 @@ class Vr360ControllerTour extends Vr360Controller
 		$ajax->addSuccess('Delete tour: ' . (int) $input->getInt('id') . ' success')->success()->respond();
 	}
 
-
 	public function ajaxGetHotspotEditorHtml()
 	{
 		$input = Vr360Factory::getInput();
