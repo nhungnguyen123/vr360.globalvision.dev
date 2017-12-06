@@ -14,7 +14,7 @@ $user = Vr360Factory::getUser();
 							<!-- Text input-->
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Email</label>
-								<div class="col-md-4">
+								<div class="col-md-8">
 									<input
 											id="textinput" name="email" placeholder="input your email"
 											class="form-control input-sm" type="text"
@@ -25,7 +25,7 @@ $user = Vr360Factory::getUser();
 							<!-- Text input-->
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Name</label>
-								<div class="col-md-4">
+								<div class="col-md-8">
 									<input id="textinput" name="name" placeholder="input your name"
 										   class="form-control input-sm" data-validation="required" type="text"
 										   value="<?php echo $user->name; ?>">
@@ -35,7 +35,7 @@ $user = Vr360Factory::getUser();
 							<!-- Text input-->
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Password</label>
-								<div class="col-md-4">
+								<div class="col-md-8">
 									<input id="textinput" name="password" placeholder="Change your password"
 										   class="form-control input-sm" type="password">
 
@@ -44,7 +44,7 @@ $user = Vr360Factory::getUser();
 							<!-- Text input-->
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Confirm password</label>
-								<div class="col-md-4">
+								<div class="col-md-8">
 									<input id="textinput" name="confirmpassword" placeholder="Confirm your password"
 										   class="form-control input-sm" type="password">
 
@@ -54,7 +54,7 @@ $user = Vr360Factory::getUser();
 						<div class="col-md-4">
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Company name</label>
-								<div class="col-md-4">
+								<div class="col-md-8">
 									<input
 											id="textinput" name="company" placeholder="your company name"
 											class="form-control input-sm" type="text"
@@ -64,7 +64,7 @@ $user = Vr360Factory::getUser();
 							</div>
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Company address</label>
-								<div class="col-md-4">
+								<div class="col-md-8">
 									<input
 											id="textinput" name="companyaddress" placeholder="your company address"
 											class="form-control input-sm" type="text"
@@ -77,7 +77,7 @@ $user = Vr360Factory::getUser();
 							<!-- File Button -->
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="uploadPhoto">Upload logo</label>
-								<div class="col-md-4">
+								<div class="col-md-8">
 									<input id="uploadPhoto" name="logo" class="input-file" type="file">
 								</div>
 							</div>

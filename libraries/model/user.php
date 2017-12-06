@@ -9,7 +9,6 @@ defined('_VR360_EXEC') or die;
  */
 class Vr360ModelUser extends Vr360Model
 {
-
 	/**
 	 * @return static
 	 */

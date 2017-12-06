@@ -50,7 +50,9 @@
 			</div>
 			<div class="row">
 				<div class="col-md-2 col-md-offset-3">
-					<button class="btn btn-primary btn-block btn-log-close"><i class="fa fa-close"></i> Close
+					<button
+							class="btn btn-primary btn-block btn-log-close"
+							onclick=""><i class="fa fa-close"></i> Close
 					</button>
 				</div>
 			</div>
@@ -67,13 +69,16 @@
 					</div>
 					<div class="col-md-6">
 						<div class="text-center center-block">
-							<a href="<?php echo Vr360Configuration::getConfig('socials')['facebook']; ?>" target="_blank">
+							<a href="<?php echo Vr360Configuration::getConfig('socials')['facebook']; ?>"
+							   target="_blank">
 								<i id="social-fb" class="fa fa-facebook-square fa-3x social"></i>
 							</a>
-							<a href="<?php echo Vr360Configuration::getConfig('socials')['twitter']; ?>" target="_blank">
+							<a href="<?php echo Vr360Configuration::getConfig('socials')['twitter']; ?>"
+							   target="_blank">
 								<i id="social-tw" class="fa fa-twitter-square fa-3x social"></i>
 							</a>
-							<a href="<?php echo Vr360Configuration::getConfig('socials')['google+']; ?>" target="_blank">
+							<a href="<?php echo Vr360Configuration::getConfig('socials')['google+']; ?>"
+							   target="_blank">
 								<i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
 							<a href="<?php echo Vr360Configuration::getConfig('socials')['mail']; ?>">
 								<i id="social-em" class="fa fa-envelope-square fa-3x social"></i>
