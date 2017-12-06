@@ -55,8 +55,11 @@
 									<td class="controls">
 										<?php if ($tour->canEmbed()): ?>
 											<!-- Embed -->
-											<button type="button" class="btn btn-default embedCode"
-											        data-tour-id="<?php echo $tour->id ?>">
+											<button
+													type="button"
+													class="btn btn-default embedCode"
+													data-tour-id="<?php echo $tour->id ?>"
+											>
 												<i class="fa fa-code" aria-hidden="true"></i> Embed
 											</button>
 										<?php endif; ?>

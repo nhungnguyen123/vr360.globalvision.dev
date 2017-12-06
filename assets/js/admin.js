@@ -336,6 +336,10 @@
 				if (tourId.length == 1) {
 					tourId = $(tourId).val();
 				}
+				else
+				{
+					tourId = 0;
+				}
 
 				$.ajax({
 					url: "index.php",
