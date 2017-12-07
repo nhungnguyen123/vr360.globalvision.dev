@@ -78,12 +78,8 @@ class NewTourSteps extends ManageSteps
         $I->click(ManagePage::$checkBoxSocical);
         $I->click(NewTourPage::$btnCreate);
         $I->wait(300);
-        $I->waitForElement(ManagePage::$buttonCloseAlready,30);
-        $I->waitForElement(ManagePage::$xPathMessage, 30);
-        $I->click(ManagePage::$buttonCloseAlready);
-        $I->waitForElement(ManagePage::$buttonClosePopup, 30);
-        $I->waitForElement(ManagePage::$btnLogout,60);
-        $I->waitForElement(ManagePage::$searchId,30);
+        $I->waitForElement(NewTourPage::$btnClose,30);
+        $I->click(NewTourPage::$btnClose, 30);
         $I->fillField(ManagePage::$searchId,$name);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
         $I->waitForElement(ManagePage::$noResults,30);

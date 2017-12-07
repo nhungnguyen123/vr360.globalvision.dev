@@ -15,6 +15,8 @@ class LoginSteps extends ManageSteps
         $I->fillField(LoginPage::$passfield, $pass);
         $I->comment('I click Login button');
         $I->click(LoginPage::$btnLogin);
+
+        
         $I->waitForElement(ManagePage::$btnLogout,30);
         $I->comment('I see Administrator Control Panel');
     }

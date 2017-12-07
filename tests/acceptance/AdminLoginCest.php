@@ -6,7 +6,7 @@ class AdminLoginCest
     public function __construct()
     {
         $this->userName = 'designteam';
-        $this->pass = 'nQ-yQ?3ba';
+        $this->pass = '123';
     }
 
     public function login(LoginSteps $I)
