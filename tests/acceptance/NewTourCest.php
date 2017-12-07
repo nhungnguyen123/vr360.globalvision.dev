@@ -14,7 +14,7 @@ class NewTourCest
 
         $this->nameTour = $this->faker->bothify('nametour?##???');
         $this->nameTourAlreday = $this->faker->bothify('nametour?##???');
-        $this->url = $this->faker->bothify('URLFace?test??');
+        $this->url = $this->faker->bothify('URLFace?#######??');
         $this->title = $this->faker->bothify('Title?##?');
         $this->description = $this->faker->bothify('Description?##?');
         
