@@ -36,12 +36,10 @@ class NewTourSteps extends ManageSteps
         $I->waitForElement(ManagePage::$checkboxAutoRation, 30);
         $I->waitForElement(ManagePage::$checkBoxSocical, 30);
         $I->click(ManagePage::$checkBoxSocical);
-
-
+        
         $I->comment('I click Create button');
         $I->click(NewTourPage::$btnCreate);
-        $I->wait(500);
-        $I->pauseExecution();
+        $I->wait(150);
         $I->waitForElement(ManagePage::$createSuccessXpath, 30);
         $I->waitForElement(ManagePage::$closeButtonSuccess, 30);
         $I->click(ManagePage::$closeButtonSuccess);
@@ -56,7 +54,6 @@ class NewTourSteps extends ManageSteps
         $I->waitForElement(ManagePage::$btnLogout,60);
         $I->click(ManagePage::$btnEditFrirst);
         $I->wait(5);
-        $I->pauseExecution();
         $I->seeInField(NewTourPage::$fieldName, $name);
     }
 
@@ -94,7 +91,7 @@ class NewTourSteps extends ManageSteps
         $I->waitForElement(ManagePage::$checkBoxSocical, 30);
         $I->click(ManagePage::$checkBoxSocical);
         $I->click(NewTourPage::$btnCreate);
-        $I->wait(300);
+        $I->wait(100);
         $I->waitForElement(NewTourPage::$btnClose,30);
         $I->click(NewTourPage::$btnClose, 30);
         $I->fillField(ManagePage::$searchId,$name);

@@ -12,9 +12,9 @@ class NewTourCest
         $this->pass = '123';
 
 
-        $this->nameTour = $this->faker->bothify('nametour?##?');
-        $this->nameTourAlreday = $this->faker->bothify('nametour?##?');
-        $this->url = $this->faker->bothify('URLFace?####??');
+        $this->nameTour = $this->faker->bothify('nametour?##???');
+        $this->nameTourAlreday = $this->faker->bothify('nametour?##???');
+        $this->url = $this->faker->bothify('URLFace?test??');
         $this->title = $this->faker->bothify('Title?##?');
         $this->description = $this->faker->bothify('Description?##?');
         
@@ -32,6 +32,7 @@ class NewTourCest
 //        $I->pauseExecution();
 //
 //    }
+
     public function createNew(NewTourSteps $I)
     {
         $I->login($this->userName, $this->pass);
@@ -43,11 +44,11 @@ class NewTourCest
         $I->preview($this->nameTour, $this->url, $this->title);
     }
 
-//    public function createReady(NewTourSteps $I)
-//    {
-//        $I->login($this->userName, $this->pass);
-//        $I->createWithURLReady($this->nameTourAlreday, $this->url,$this->title, $this->description);
-//    }
+    public function createReady(NewTourSteps $I)
+    {
+        $I->login($this->userName, $this->pass);
+        $I->createWithURLReady($this->nameTourAlreday, $this->url,$this->title, $this->description);
+    }
    
     public function editTour(NewTourSteps $I)
     {
