@@ -25,6 +25,13 @@ class NewTourCest
 
     }
 
+//    public function checkValue(NewTourSteps $I)
+//    {
+//        $I->login($this->userName, $this->pass);
+//        $I->checkURL('nametourh45uedit' , 'nametourh45uedit');
+//        $I->pauseExecution();
+//
+//    }
     public function createNew(NewTourSteps $I)
     {
         $I->login($this->userName, $this->pass);

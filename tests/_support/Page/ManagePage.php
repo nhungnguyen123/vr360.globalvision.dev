@@ -7,7 +7,7 @@ class ManagePage
     public static $btnLogout = ['id' => 'logout'];
 
     public static $btnAddNew = ['id' => 'addTour'];
-    
+
     public static $searchId = ['id' => 'task-table-filter'];
     
     public static $urlValue = ['xpath' => '//tr//td[@class=\'vtour-url\']'];
@@ -15,6 +15,12 @@ class ManagePage
     public static $nameTour = ['xpath' =>'(//tr//td[@class=\'vtour-name\'])'];
     
     public static $noResults  = ['xpath' => '//div[@class=\'alert alert-warning\']'];
+
+    public static $createSuccessXpath = ['xpath' => '//div[@class=\'alert alert-info\']'];
+    
+    public static $closeButtonSuccess = ['xpath' => '//button[@class=\'btn btn-primary btn-block btn-log-close\']'];
+
+    public static $messageSaveSuccess =  'Tour is created';
 
     public static $btnEmbedfirst = ['xpath' => '//button[@class=\'btn btn-default embedCode\']'];
 
