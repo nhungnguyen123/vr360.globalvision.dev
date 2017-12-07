@@ -20,15 +20,17 @@
 								<th><i class="fa fa-image" aria-hidden="true"></i> Scenes</th>
 								<th><i class="fa fa-image" aria-hidden="true"></i> Hotspots</th>
 								<th><i class="fa fa-cogs" aria-hidden="true"></i> Controls</th>
-
 								<th>ID</th>
 							</tr>
 							</thead>
 							<tbody>
 							<?php foreach ($this->tours as $tour): ?>
 								<?php /** @var Vr360Tour $tour */ ?>
-								<tr id='vtour-<?php echo $tour->id; ?>' data-tour='<?php echo $tour->toJson(); ?>'
-								    class="is-valid-<?php echo (int) $tour->isValid(); ?>">
+								<tr
+										id='vtour-<?php echo $tour->id; ?>'
+										data-tour='<?php echo $tour->toJson(); ?>'
+										class="is-valid-<?php echo (int) $tour->isValid(); ?>"
+								>
 									<td>
 										<input
 												id="checkBox"
@@ -98,10 +100,10 @@
 							<?php endforeach; ?>
 							</tbody>
 						</table>
-						<!-- Pagination -->
-						<div class="col-md-12">
-							<div class="row">
-
+						<?php if ($this->pagination['total'] > 0): ?>
+							<!-- Pagination -->
+							<div class="col-md-12">
+								<div class="row">
 									<nav aria-label="...">
 										<ul class="pagination">
 											<?php for ($index = 0; $index <= $this->pagination['total']; $index++): ?>
@@ -111,9 +113,9 @@
 											<?php endfor; ?>
 										</ul>
 									</nav>
-
+								</div>
 							</div>
-						</div>
+						<?php endif; ?>
 					<?php else: ?>
 						<div class="container-fluid">
 							<div class="alert alert-warning" role="alert">There are no vTours</div>
