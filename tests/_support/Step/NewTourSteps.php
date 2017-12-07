@@ -64,7 +64,7 @@ class NewTourSteps extends ManageSteps
         $I->fillField(ManagePage::$searchId,$name);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
         $I->waitForElement(ManagePage::$urlValue,30);
-        $I->see($url);
+        $I->dontSee($url);
        
     }
     public function createWithURLReady($name, $url, $title, $description)
@@ -196,11 +196,11 @@ class NewTourSteps extends ManageSteps
         $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
         $I->fillField(NewTourPage::$fieldTitleFirst,$title);
         $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
-        $I->wait(100);
-        $I->waitForElement(ManagePage::$searchId,30);
-        $I->fillField(ManagePage::$searchId,$name);
-        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-        $I->dontSee($url,ManagePage::$urlValue);
+        $I->wait(500);
+//        $I->waitForElement(ManagePage::$searchId,30);
+//        $I->fillField(ManagePage::$searchId,$name);
+//        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+//        $I->dontSee($url,ManagePage::$urlValue);
     }
 
     public function createWithClose($name, $url, $title, $description)
@@ -250,8 +250,11 @@ class NewTourSteps extends ManageSteps
         $I->fillField(ManagePage::$searchId,$nameEdit);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
         $I->waitForElement(ManagePage::$nameTour,30);
-        $I->see($nameEdit);
-        $I->comment('I see Administrator Control Panel');
+        $I->see($url);
+        $I->waitForElement(ManagePage::$btnLogout,60);
+        $I->click(ManagePage::$btnEditFrirst);
+        $I->wait(5);
+        $I->seeInField(NewTourPage::$fieldName, $nameEdit);
     }
     
     public function delete($name)

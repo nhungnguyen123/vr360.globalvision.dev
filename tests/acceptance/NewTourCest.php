@@ -50,6 +50,11 @@ class NewTourCest
         $I->createWithURLReady($this->nameTourAlreday, $this->url,$this->title, $this->description);
     }
    
+    public function checkURLForAlready(NewTourSteps $I)
+    {
+        $I->login($this->userName, $this->pass);
+        $I->checkURL($this->nameTourAlreday, $this->url);
+    }
     public function editTour(NewTourSteps $I)
     {
         $I->login($this->userName, $this->pass);
