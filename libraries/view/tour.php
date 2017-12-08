@@ -14,6 +14,9 @@ class Vr360ViewTour extends Vr360View
 	 */
 	protected $name = 'tour';
 
+	/**
+	 * @var  Vr360Tour
+	 */
 	public $tour;
 
 	/**
@@ -29,7 +32,6 @@ class Vr360ViewTour extends Vr360View
 		{
 			Vr360Factory::getInput()->set('id', $this->tour->get('id'));
 		}
-
 
 		$html = parent::display($layout);
 		$html = $this->optimizeHtml($html);
