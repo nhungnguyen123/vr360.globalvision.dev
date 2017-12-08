@@ -25,14 +25,6 @@ class NewTourCest
 
     }
 
-//    public function checkValue(NewTourSteps $I)
-//    {
-//        $I->login($this->userName, $this->pass);
-//        $I->checkURL('nametourh45uedit' , 'nametourh45uedit');
-//        $I->pauseExecution();
-//
-//    }
-
     public function createNew(NewTourSteps $I)
     {
         $I->login($this->userName, $this->pass);
@@ -44,24 +36,30 @@ class NewTourCest
         $I->preview($this->nameTour, $this->url, $this->title);
     }
 
-    public function createReady(NewTourSteps $I)
-    {
-        $I->login($this->userName, $this->pass);
-        $I->createWithURLReady($this->nameTourAlreday, $this->url,$this->title, $this->description);
-    }
+//    public function createReady(NewTourSteps $I)
+//    {
+//        $I->login($this->userName, $this->pass);
+//        $I->createWithURLReady($this->nameTourAlreday, $this->url,$this->title, $this->description);
+//    }
    
-    public function checkURLForAlready(NewTourSteps $I)
-    {
-        $I->login($this->userName, $this->pass);
-        $I->checkURL($this->nameTourAlreday, $this->url);
-    }
+//    public function checkURLForAlready(NewTourSteps $I)
+//    {
+//        $I->login($this->userName, $this->pass);
+//        $I->checkURL($this->nameTourAlreday, $this->url);
+//    }
     public function editTour(NewTourSteps $I)
     {
         $I->login($this->userName, $this->pass);
         $I->editTour($this->nameTour,$this->nameTourEdit,$this->url);
+
+    }
+
+    public function delete(NewTourSteps $I)
+    {
+        $I->login($this->userName, $this->pass);
         $I->delete($this->nameTourEdit);
-        $I->wantTo('Check Close button ');
-        $I->createWithClose($this->nameTour, $this->url, $this->title, $this->description);
+//        $I->wantTo('Check Close button ');
+//        $I->createWithClose($this->nameTour, $this->url, $this->title, $this->description);
     }
 
 }

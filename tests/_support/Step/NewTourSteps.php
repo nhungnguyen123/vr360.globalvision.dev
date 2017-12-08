@@ -92,11 +92,11 @@ class NewTourSteps extends ManageSteps
         $I->click(ManagePage::$checkBoxSocical);
         $I->click(NewTourPage::$btnCreate);
         $I->wait(100);
-        $I->waitForElement(NewTourPage::$btnClose,30);
-        $I->click(NewTourPage::$btnClose, 30);
-        $I->fillField(ManagePage::$searchId,$name);
-        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-        $I->waitForElement(ManagePage::$noResults,30);
+//        $I->waitForElement(NewTourPage::$btnClose,30);
+//        $I->click(NewTourPage::$btnClose, 30);
+//        $I->fillField(ManagePage::$searchId,$name);
+//        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+//        $I->waitForElement(ManagePage::$noResults,30);
     }
     public function checkMissing($name, $url, $title, $description)
     {
@@ -245,7 +245,7 @@ class NewTourSteps extends ManageSteps
         $I->waitForElement(NewTourPage::$fieldName,30);
         $I->fillField(NewTourPage::$fieldName, $nameEdit);
         $I->click(NewTourPage::$btnCreate);
-        $I->wait(30);
+        $I->wait(150);
         $I->waitForElement(ManagePage::$searchId,30);
         $I->fillField(ManagePage::$searchId,$nameEdit);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
