@@ -59,7 +59,7 @@
 						<form action="index.php" class="navbar-form navbar-right">
 							<input type="hidden" name="view" value="user"/>
 							<input type="hidden" name="task" value="logout"/>
-							<button type="submit" id="logout" class="btn btn-danger">Logout</button>
+							<button type="submit" id="logout" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
 						</form>
 					</li>
 				</ul>

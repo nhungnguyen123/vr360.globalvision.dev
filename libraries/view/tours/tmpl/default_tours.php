@@ -5,7 +5,8 @@
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-						vTours <?php echo ($this->tours) ? '' : '<span class="label label-info">Use "Add new" to create new vTour</span>'; ?></h3>
+						<i class="fas fa-th-list"></i> vTours <?php echo ($this->tours) ? '' : '<span class="label label-info">Use "Add new" to create new vTour</span>'; ?>
+					</h3>
 				</div>
 				<div class="panel-body">
 					<!-- Show tours -->
