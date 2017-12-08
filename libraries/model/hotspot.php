@@ -10,23 +10,6 @@ defined('_VR360_EXEC') or die;
 class Vr360ModelHotspot extends Vr360Model
 {
 	/**
-	 * @return static
-	 */
-	public static function getInstance()
-	{
-		static $instance;
-
-		if (isset($instance))
-		{
-			return $instance;
-		}
-
-		$instance = new static;
-
-		return $instance;
-	}
-
-	/**
 	 * Method for store default view of scenes
 	 *
 	 * @param   array $scenes      List of available scenes
@@ -52,13 +35,13 @@ class Vr360ModelHotspot extends Vr360Model
 			$sceneName     = 'scene_' . explode('.', $scene->file)[0];
 			$scene->setParam('defaultview', isset($defaultView[$sceneName]) && !empty($defaultView[$sceneName]) ? $defaultView[$sceneName] : array());
 
-			if ($scene->save())
+			if ($scene->store())
 			{
-				$ajax->addMessage('Scene ' . $scene->name . ' store default view success');
+				$ajax->addMessage('Scene ' . $scene->name . ' store default view successed');
 			}
 			else
 			{
-				$ajax->addWarning('Scene ' . $scene->name . ' store default view fail');
+				$ajax->addWarning('Scene ' . $scene->name . ' store default view failed');
 			}
 		}
 	}
@@ -95,7 +78,10 @@ class Vr360ModelHotspot extends Vr360Model
 			 * Delete old hotspot
 			 * But only for request scenes
 			 */
-			$this->deleteHotspotBySceneId($scene->id);
+			if (!Vr360ModelHotspots::getInstance()->deleteBySceneId($scene->id))
+			{
+				$ajax->addWarning('Can not delete hotspots')->fail()->respond();
+			}
 
 			$hotspotPrefix = 'skin_hotspotstyle|';
 
@@ -131,7 +117,7 @@ class Vr360ModelHotspot extends Vr360Model
 						$hotspotObj->params = array();
 				}
 
-				if ($hotspotObj->save())
+				if ($hotspotObj->store())
 				{
 					$ajax->addSuccess('Hotspot ' . $hotspotObj->code . ' save successful');
 				}
@@ -141,15 +127,5 @@ class Vr360ModelHotspot extends Vr360Model
 				}
 			}
 		}
-	}
-
-	/**
-	 * @param   int  $id
-	 *
-	 * @return boolean|PDOStatement
-	 */
-	public function deleteHotspotBySceneId($id)
-	{
-		return Vr360Database::getInstance()->delete('hotspots', array('sceneId' => (int) $id));
 	}
 }

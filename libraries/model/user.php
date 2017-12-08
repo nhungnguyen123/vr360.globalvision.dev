@@ -10,20 +10,31 @@ defined('_VR360_EXEC') or die;
 class Vr360ModelUser extends Vr360Model
 {
 	/**
-	 * @return static
+	 * @param   string  $userName
+	 *
+	 * @return  boolean|Vr360TableUser
 	 */
-	public static function getInstance()
+	public function getItem($userName)
 	{
-		static $instance;
+		$db = Vr360Factory::getDbo();
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('users'))
+			->where($db->quoteName('username') . ' = ' . $db->quote($userName), 'OR')
+			->where($db->quoteName('email') . ' = ' . $db->quote($userName));
 
-		if (isset($instance))
+		$row = $db->setQuery($query)->loadObject();
+
+		if (!$row)
 		{
-			return $instance;
+			return false;
 		}
 
-		$instance = new static;
+		$row->params = !(empty($row->params)) ? new Vr360Object(json_decode($row->params)) : new Vr360Object;
+		$user = new Vr360TableUser;
+		$user->bind($row);
 
-		return $instance;
+		return $user;
 	}
 
 	/**
@@ -34,9 +45,9 @@ class Vr360ModelUser extends Vr360Model
 	 */
 	public function authorize($userName, $password)
 	{
-		$user = $this->getByUsername($userName);
+		$user = $this->getItem($userName);
 
-		if ($user === false)
+		if (!$user)
 		{
 			return false;
 		}
@@ -44,9 +55,8 @@ class Vr360ModelUser extends Vr360Model
 		/**
 		 * @TODO    Need improve password encryption
 		 */
-		if (
-			$user->password === md5($password) ||
-			$user->password === md5(Vr360Configuration::getConfig('salt') . $password)
+		if ($user->password === md5($password)
+			|| $user->password === md5(Vr360Configuration::getConfig('salt') . $password)
 		)
 		{
 			$session = Vr360Session::getInstance();
@@ -55,37 +65,6 @@ class Vr360ModelUser extends Vr360Model
 
 			return true;
 		}
-	}
-
-	/**
-	 * @param   string $userName
-	 *
-	 * @return  boolean|Vr360TableUser
-	 */
-	public function getByUsername($userName)
-	{
-		$db = Vr360Database::getInstance();
-
-		$row = $db->load('users',
-			array(
-				'OR' =>
-					array
-					(
-						'username' => $userName,
-						'email'    => $userName
-					)
-			)
-		);
-
-		if ($row === false)
-		{
-			return false;
-		}
-
-		$user = new Vr360TableUser;
-		$user->bind($row);
-
-		return $user;
 	}
 
 	/**
@@ -102,17 +81,17 @@ class Vr360ModelUser extends Vr360Model
 		$password        = $input->getString('password');
 		$confirmpassword = $input->getString('confirmpassword');
 
-		$table = new Vr360TableUser;
-		$table->load(array('id' => $user->id));
+		$tableUser = new Vr360TableUser;
+		$tableUser->load(array('id' => $user->id));
 
-		if ($table->id)
+		if ($tableUser->id)
 		{
-			$table->email = $input->getString('email');
-			$table->name  = $input->getString('name');
+			$tableUser->email = $input->getString('email');
+			$tableUser->name  = $input->getString('name');
 
 			if ($password && !empty($password) && $password == $confirmpassword)
 			{
-				$table->password = md5($password);
+				$tableUser->password = md5($password);
 			}
 			else
 			{
@@ -124,8 +103,8 @@ class Vr360ModelUser extends Vr360Model
 
 			$file = Vr360Factory::getInput()->files->get('logo');
 
-			$table->params->company        = $input->getString('company');
-			$table->params->companyaddress = $input->getString('companyaddress');
+			$tableUser->params->company        = $input->getString('company');
+			$tableUser->params->companyaddress = $input->getString('companyaddress');
 
 			if ($file && !empty($file) && !empty($file['name']))
 			{
@@ -141,13 +120,13 @@ class Vr360ModelUser extends Vr360Model
 					$ajax->addDanger('Can not upload logo')->fail()->respond();
 				}
 
-				$table->params->logo = 'logo.png';
+				$tableUser->params->logo = 'logo.png';
 			}
 
-			if ($table->save())
+			if ($tableUser->store())
 			{
 				$session = Vr360Session::getInstance();
-				$session->set('user', $table);
+				$session->set('user', $tableUser);
 
 				$ajax->addSuccess('User profile is updated')->success()->respond();
 			}

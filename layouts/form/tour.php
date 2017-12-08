@@ -3,20 +3,9 @@
 defined('_VR360_EXEC') or die;
 
 /** @var Vr360Tour $tour */
-
-// Skins
-$skins = Vr360HelperKrpano::getListOfSkins();
-
-// Scenes
-$scenes   = $tour->getScenes();
-$isRotate = $tour->params->get('rotation', false);
-$isSocial = $tour->params->get('socials', false);
 ?>
-
-
 <!-- Hidden scene form -->
 <?php require_once __DIR__ . '/tour_scene.php'; ?>
-
 <!-- Create new tour form -->
 <form method="post" id="form-tour" class="form-horizontal" enctype="multipart/form-data">
 	<div class="col-md-12">

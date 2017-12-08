@@ -10,27 +10,6 @@ class Vr360ControllerTour extends Vr360Controller
 	/**
 	 * @return  void
 	 */
-	public function display()
-	{
-		$alias = Vr360Factory::getInput()->getString('alias');
-
-		if (!empty($alias))
-		{
-			// Set input with tour ID for use in view
-			$tourId = Vr360Database::getInstance()->select('tours', array('id'), array('alias' => $alias));
-
-			if (!empty($tourId))
-			{
-				Vr360Factory::getInput()->set('id', $tourId[0]['id']);
-			}
-		}
-
-		parent::display();
-	}
-
-	/**
-	 * @return  void
-	 */
 	public function ajaxSaveTour()
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
@@ -44,103 +23,54 @@ class Vr360ControllerTour extends Vr360Controller
 		Vr360ModelTour::getInstance()->ajaxSave();
 	}
 
-	public function ajaxRemoveTour()
-	{
-		$ajax  = Vr360AjaxResponse::getInstance();
-		$input = Vr360Factory::getInput();
-
-		$tour = new Vr360Tour;
-		$tour->load(
-			array
-			(
-				'id'         => (int) $input->getInt('id'),
-				'created_by' => Vr360Factory::getUser()->id
-			)
-		);
-
-		$tour->status = VR360_TOUR_STATUS_UNPUBLISHED;
-
-		if ($tour->save() !== false)
-		{
-			$ajax->addData('id', $tour->id);
-			$ajax->addSuccess('Tour unpublished')->success()->respond();
-		}
-
-		$ajax->addWarning('Something wrong')->fail()->respond();
-	}
-
 	/**
 	 * Method for load create/edit tour html form
 	 *
 	 * @since   2.1.0
+	 *
+	 * @return  void
 	 */
 	public function ajaxGetTourHtml()
 	{
-		$input = Vr360Factory::getInput();
+		$tour = Vr360ModelTour::getInstance()->getItem();
 
-		$tour = new Vr360Tour;
-		$tour->load(
-			array
-			(
-				'id'         => (int) $input->getInt('id'),
-				'created_by' => Vr360Factory::getUser()->id
-			)
-		);
-
-		// Try to migrate tour
-		if ($tour !== false)
+		if ($tour)
 		{
 			$html = Vr360Layout::getInstance()->fetch('form.tour', array('tour' => $tour));
 		}
-
 		else
 		{
-			$html = Vr360Layout::getInstance()->fetch('form.tour');
+			$html = Vr360Layout::getInstance()->fetch('form.tour', array('tour' => new Vr360Tour));
 		}
 
 		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
 	}
 
 	/**
-	 *
+	 * @return  void
 	 */
 	public function ajaxGetTourEmbedHtml()
 	{
-		$input = Vr360Factory::getInput();
+		$tour = Vr360ModelTour::getInstance()->getItem();
 
-		$tour = new Vr360Tour;
-		$tour->load(
-			array
-			(
-				'id'         => (int) $input->getInt('id'),
-				'created_by' => Vr360Factory::getUser()->id
-			)
-		);
-
-		// Try to migrate tour
-		if ($tour !== false)
+		if ($tour)
 		{
 			$html = Vr360Layout::getInstance()->fetch('tour.embed', array('tour' => $tour));
+			Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
 		}
-
-		Vr360AjaxResponse::getInstance()->addData('html', $html)->success()->respond();
 	}
 
+	/**
+	 * @return  void
+	 */
 	public function ajaxDeleteTour()
 	{
 		$ajax  = Vr360AjaxResponse::getInstance();
 		$input = Vr360Factory::getInput();
 
-		$tour = new Vr360Tour;
-		$tour->load(
-			array
-			(
-				'id'         => (int) $input->getInt('id'),
-				'created_by' => Vr360Factory::getUser()->id
-			)
-		);
+		$tour = Vr360ModelTour::getInstance()->getItem();
 
-		if (!$tour->id)
+		if (!$tour)
 		{
 			$ajax->addDanger('Tour is not available.')->fail()->respond();
 		}
@@ -245,26 +175,11 @@ class Vr360ControllerTour extends Vr360Controller
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
 
-		$input = Vr360Factory::getInput();
-		$alias = $input->getString('alias');
-		$id    = $input->getInt('id', 0);
+		$result = Vr360ModelTour::getInstance()->validateAlias();
 
-		$tour = new Vr360Tour;
-
-		$condition = array(
-			'alias' => $alias
-		);
-
-		if ($id)
+		if ($result)
 		{
-			$condition['id[!]'] = (int) $id;
-		}
-
-		$tour->load($condition);
-
-		if ($tour->id)
-		{
-			$ajax->addData('text', 'Duplicated alias. Please use another tour name or manual change alias')->fail()->respond();
+			$ajax->addDanger('Duplicated alias. Please use another tour name or manual change alias')->fail()->respond();
 		}
 
 		$ajax->success()->respond();

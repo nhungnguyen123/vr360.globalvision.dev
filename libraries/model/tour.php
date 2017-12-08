@@ -10,20 +10,68 @@ defined('_VR360_EXEC') or die;
 class Vr360ModelTour extends Vr360Model
 {
 	/**
-	 * @return static
+	 * @param null $id
+	 *
+	 * @return boolean|Vr360Tour
 	 */
-	public static function getInstance()
+	public function getItem($id = null)
 	{
-		static $instance;
+		$id = Vr360Factory::getInput()->getInt('id', $id);
 
-		if (isset($instance))
+		if ($id)
 		{
-			return $instance;
+			$table = new Vr360TableTour;
+
+			if (!$table->load(array('id' => $id, 'created_by' => Vr360Factory::getUser()->id)))
+			{
+				return false;
+			}
+
+			$tour = new Vr360Tour;
+			$tour->bind($table);
+
+			return $tour;
 		}
 
-		$instance = new static;
+		return false;
+	}
 
-		return $instance;
+	/**
+	 * @param null $alias
+	 *
+	 * @return boolean|Vr360Tour
+	 */
+	public function getItemByAlias($alias = null)
+	{
+		$alias = Vr360Factory::getInput()->getString('alias', $alias);
+
+		if ($alias)
+		{
+			$table = new Vr360TableTour;
+
+			if (!$table->load(array('alias' => $alias, 'created_by' => Vr360Factory::getUser()->id)))
+			{
+				return false;
+			}
+
+			$tour = new Vr360Tour;
+			$tour->bind($table);
+
+			return $tour;
+		}
+
+		return false;
+	}
+
+	/**
+	 * @param     $tourId
+	 * @param int $publish
+	 *
+	 * @return boolean|array
+	 */
+	public function getScenes($tourId, $publish = 1)
+	{
+		return Vr360ModelScenes::getInstance()->getList($tourId, $publish);
 	}
 
 	/**
@@ -32,14 +80,20 @@ class Vr360ModelTour extends Vr360Model
 	public function ajaxSave()
 	{
 		$ajax = Vr360AjaxResponse::getInstance();
+		$input = Vr360Factory::getInput();
 
 		/**
 		 * @var $tour Vr360TableTour
 		 */
 		$tour = $this->getItem();
-		$tour->bind($_REQUEST);
-		$params       = new Vr360Object(isset($_REQUEST['params']) ? $_REQUEST['params'] : array());
-		$tour->params = $params;
+
+		if (!$tour)
+		{
+			$tour = new Vr360Tour;
+		}
+
+		$tour->bind($input->post->getArray());
+		$tour->params = new Vr360Object($tour->params);
 
 		$files = Vr360Factory::getInput()->files->get('newSceneFile');
 
@@ -64,9 +118,22 @@ class Vr360ModelTour extends Vr360Model
 			}
 		}
 
-		if ($tour->save() === false)
+		if (!$tour->store())
 		{
 			$ajax->addDanger($tour->getError())->fail()->respond();
+		}
+
+		$tour->params = new Vr360Object(json_decode($tour->params));
+
+		if ($input->getInt('id'))
+		{
+			// Save scene
+			$ajax->addInfo('Tour is updated')->success();
+		}
+		else
+		{
+			// Save scene
+			$ajax->addInfo('Tour is created')->success();
 		}
 
 		// Make sure tour data folder exist.
@@ -118,61 +185,14 @@ class Vr360ModelTour extends Vr360Model
 			$ajax->addSuccess('Cache is deleted');
 		}
 
-		if (Vr360Factory::getInput()->getInt('id'))
-		{
-			// Save scene
-			$ajax->addInfo('Tour is updated')->success()->respond();
-		}
-		else
-		{
-			// Save scene
-			$ajax->addInfo('Tour is created')->success()->respond();
-		}
-	}
+		$scenes = $tour->getScenes();
 
-	/**
-	 * @return Vr360Tour
-	 */
-	public function getItem()
-	{
-		$id = Vr360Factory::getInput()->getInt('id');
-
-		$tour = new Vr360Tour;
-
-		if ($id)
+		if (!$scenes)
 		{
-			$tour->load(
-				array
-				(
-					'id'         => (int) Vr360Factory::getInput()->getInt('id'),
-					'created_by' => Vr360Factory::getUser()->id
-				)
-			);
+			$ajax->addWarning('No scenes provided');
 		}
 
-		return $tour;
-	}
-
-	/**
-	 * @return Vr360Tour
-	 */
-	public function getItemFromAlias()
-	{
-		$alias = Vr360Factory::getInput()->getString('alias');
-
-		$table = new Vr360Tour;
-
-		if ($alias)
-		{
-			$table->load(
-				array
-				(
-					'alias' => $alias
-				)
-			);
-		}
-
-		return $table;
+		$ajax->respond();
 	}
 
 	/**
@@ -219,19 +239,19 @@ class Vr360ModelTour extends Vr360Model
 
 				$scene = new Vr360Scene;
 
-				$scene->set('tourId', $tour->id);
+				$scene->set('tourId', (int) $tour->id);
 				$scene->set('name', $sceneNames[$index]);
 				$scene->set('description', $sceneDescriptions[$index]);
 				$scene->set('file', $fileName);
 				$scene->set('params', $sceneParams);
 
-				if (!$scene->save())
+				if (!$scene->store())
 				{
 					$ajax->addDanger('Can not save scene: ' . $sceneNames[$index]);
 				}
 				else
 				{
-					$ajax->addSuccess('Save scene: ' . $sceneNames[$index] . ' successed');
+					$ajax->addSuccess('Added new scene: ' . $sceneNames[$index] . ' successed');
 				}
 			}
 		}
@@ -266,14 +286,10 @@ class Vr360ModelTour extends Vr360Model
 		$files = array();
 
 		// Clean up current default
-		Vr360Database::getInstance()->update(
-			'scenes',
-			array('default' => 0),
-			array('tourId' => $tour->id)
-		);
+		$this->resetDefaultScene($tour->get('id'));
 
 		// Get current scenes of tour
-		$currentScenes = $tour->getScenes();
+		$currentScenes = $this->getScenes($tour->get('id'));
 
 		if (empty($currentScenes))
 		{
@@ -303,7 +319,7 @@ class Vr360ModelTour extends Vr360Model
 			$currentScene->description = $sceneDescriptions[$currentScene->id];
 
 			/**
-			 * Because since params can include extra params. We need manual update each one instead overwrite all
+			 * Because scene params can include extra params. We need manual update each one instead overwrite all
 			 */
 			foreach ($sceneParams[$currentScene->id] as $key => $value)
 			{
@@ -315,7 +331,7 @@ class Vr360ModelTour extends Vr360Model
 				$currentScene->default = 1;
 			}
 
-			if (!$currentScene->save())
+			if (!$currentScene->store())
 			{
 				$ajax->addWarning('Can not update Scene: ' . $currentScene->name . ' [' . $currentScene->id . ']');
 			}
@@ -353,7 +369,7 @@ class Vr360ModelTour extends Vr360Model
 
 		$sceneFiles  = array();
 		$panoFolders = array();
-		$scenes      = $tour->getScenes();
+		$scenes      = $this->getScenes($tour->get('id'));
 
 		// Clean up folder
 		if (!empty($scenes))
@@ -393,6 +409,56 @@ class Vr360ModelTour extends Vr360Model
 		$xmlData = Vr360Layout::getInstance()->fetch('tour.tour', array('tour' => $tour, 'scenes' => $scenes));
 		$xmlData = simplexml_load_string($xmlData);
 
-		return $xmlData->asXML($tourDataDirPath . '/tour.xml');
+		$dom = new DOMDocument('1.0');
+		$dom->preserveWhiteSpace = false;
+		$dom->formatOutput = true;
+		$dom->loadXML($xmlData->asXML());
+		$xml = new SimpleXMLElement($dom->saveXML());
+
+		return $xml->saveXML($tourDataDirPath . '/tour.xml');
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function validateAlias()
+	{
+		$input = Vr360Factory::getInput();
+		$alias = $input->getString('alias');
+		$id    = $input->getInt('id');
+
+		$db = Vr360Factory::getDbo();
+		$query = $db->getQuery(true)
+			->select($db->quoteName('id'))
+			->from($db->quoteName('tours'))
+			->where($db->quoteName('alias') . ' = ' . $db->quote($alias))
+			->where($db->quoteName('id') . ' != ' . (int) $id);
+
+		return $db->setQuery($query)->loadResult();
+	}
+
+	/**
+	 * @param   integer  $tourId  Tour ID
+	 *
+	 * @return  boolean
+	 */
+	public function resetDefaultScene($tourId)
+	{
+		$db    = Vr360Factory::getDbo();
+		$query = $db->getQuery(true)
+			->update($db->quoteName('scenes'))
+			->set($db->quoteName('default') . ' = 0')
+			->where($db->quoteName('tourId') . ' = ' . (int) $tourId);
+
+		try
+		{
+			$db->setQuery($query)->execute();
+		}
+		catch (Exception $exception)
+		{
+			return false;
+		}
+
+		return true;
 	}
 }

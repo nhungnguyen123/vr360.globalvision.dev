@@ -16,9 +16,9 @@
 								<th>#</th>
 								<th><i class="fa fa-window-maximize" aria-hidden="true"></i> Name</th>
 								<th><i class="fa fa-link" aria-hidden="true"></i> Alias</th>
-								<th><i class="fa fa-calendar" aria-hidden="true"></i> Created</th>
-								<th><i class="fa fa-image" aria-hidden="true"></i> Scenes</th>
-								<th><i class="fa fa-image" aria-hidden="true"></i> Hotspots</th>
+								<th><i class="far fa-calendar-alt"></i> Created</th>
+								<th><i class="fas fa-eye"></i> Scenes</th>
+								<th><i class="fas fa-street-view"></i> Hotspots</th>
 								<th><i class="fa fa-cogs" aria-hidden="true"></i> Controls</th>
 								<th>ID</th>
 							</tr>
@@ -40,12 +40,18 @@
 												title="<?php echo $tour->name ?>"
 										/>
 									</td>
-									<?php $tooltip = !$tour->isValid() ? 'Missing data files' : ''; ?>
-									<td class="vtour-name" data-toggle="tooltip" data-placement="left"
-									    title="<?php echo $tooltip; ?>">
+									<td class="vtour-name hasTooltip" data-toggle="tooltip" data-placement="top"
+									    title="<?php echo $tour->getDescription(); ?>">
 										<?php echo $tour->getName(); ?>
 										<div>
-											<small><?php echo '_/' . $tour->id . '/vtour/tour.xml'; ?></small>
+											<small>
+												<a
+														href="<?php echo VR360_URL_ROOT . '/_/' . $tour->id . '/vtour/tour.xml'; ?>"
+														target="_blank"
+												>
+													<?php echo VR360_URL_ROOT . '_/' . $tour->id . '/vtour/tour.xml'; ?>
+												</a>
+											</small>
 										</div>
 									</td>
 									<td class="vtour-url"><?php echo $tour->alias; ?></td>
@@ -70,7 +76,7 @@
 											<!-- Edit -->
 											<button type="button" class="btn btn-primary editTour"
 											        data-tour-id="<?php echo $tour->id ?>">
-												<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+												<i class="fas fa-edit"></i> Edit
 											</button>
 										<?php endif; ?>
 
@@ -78,7 +84,7 @@
 											<!-- Hotspot -->
 											<button type="button" class="btn btn-primary editTourHotspot"
 											        data-tour-id="<?php echo $tour->id ?>">
-												<i class="fa fa-pencil-square-o" aria-hidden="true"></i> Hotspot
+												<i class="fas fa-street-view"></i> Hotspot
 											</button>
 										<?php endif; ?>
 
@@ -86,13 +92,13 @@
 											<!-- Preview -->
 											<a type="button" class="btn btn-info previewTour" target="_blank"
 											   href="/<?php echo $tour->alias ?>">
-												<i class="fa fa-external-link" aria-hidden="true"></i> Preview
+												<i class="fas fa-desktop"></i> Preview
 											</a>
 										<?php endif; ?>
 
 										<button type="button" class="btn btn-danger removeTour"
 										        data-tour-id="<?php echo $tour->id ?>">
-											<i class="fa fa-eraser" aria-hidden="true"></i> Remove
+											<i class="fas fa-minus"></i> Remove
 										</button>
 									</td>
 									<td class="vtour-id"><?php echo $tour->id; ?></td>

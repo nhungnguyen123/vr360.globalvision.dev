@@ -13,15 +13,13 @@
 					task: "ajaxGetTourHtml"
 				},
 				dataType: 'json',
-				async: true,
-				cache: false,
 				beforeSend: function () {
 					vrAdmin.Waiting.waiting();
 				}
 			})
 				.done(function (data, textStatus, jqXHR) {
 					if (data.status) {
-						vrAdmin.Modal.showModal('<i class="fa fa-plus-square" aria-hidden="true"></i> New tour', data.data.html);
+						vrAdmin.Modal.showModal('<i class="fas fa-plus"></i> New tour', data.data.html);
 						vrAdmin.Waiting.success();
 					}
 					else {
@@ -29,7 +27,8 @@
 						vrAdmin.Waiting.stay();
 					}
 				})
-				.fail(function () {
+				.fail(function (jqXHR, textStatus, errorThrown) {
+					alert('Ajax failed');
 					vrAdmin.Waiting.stay();
 				})
 				.always(function () {
@@ -51,15 +50,14 @@
 					view: "tour",
 					task: "ajaxGetTourHtml"
 				},
-				async: true,
-				cache: false,
+				dataType: 'json',
 				beforeSend: function () {
 					vrAdmin.Waiting.waiting();
 				}
 			})
 				.done(function (data, textStatus, jqXHR) {
 					if (data.status) {
-						vrAdmin.Modal.showModal('<i class="fa fa-plus-square" aria-hidden="true"></i> Edit tour', data.data.html);
+						vrAdmin.Modal.showModal('<i class="fas fa-edit"></i> Edit tour', data.data.html);
 						vrAdmin.Waiting.success();
 					}
 					else {
@@ -67,10 +65,11 @@
 						vrAdmin.Waiting.stay();
 					}
 				})
-				.fail(function () {
+				.fail(function (jqXHR, textStatus, errorThrown) {
+					alert('Ajax failed');
 					vrAdmin.Waiting.stay();
 				})
-				.always(function () {
+				.always(function( jqXHR, textStatus, jqXHR ) {
 					vrAdmin.Waiting.stay();
 				});
 		},
@@ -98,7 +97,7 @@
 			})
 				.done(function (data, textStatus, jqXHR) {
 					if (data.status) {
-						vrAdmin.Modal.showModal('<i class="fa fa-plus-square" aria-hidden="true"></i> Add hotspot', data.data.html);
+						vrAdmin.Modal.showModal('<i class="fas fa-edit"></i> Hotspots management', data.data.html);
 						vrAdmin.Waiting.success();
 					}
 					else {
@@ -169,7 +168,7 @@
 			})
 				.done(function (data, textStatus, jqXHR) {
 					if (data.status) {
-						vrAdmin.Modal.showModalWithText('<i class="fa fa-plus-square" aria-hidden="true"></i> Embed code', data.data.html);
+						vrAdmin.Modal.showModalWithText('<i class="fa fa-code" aria-hidden="true"></i> Embed code', data.data.html);
 						vrAdmin.Waiting.success();
 					}
 					else {
@@ -229,7 +228,6 @@
 				$('input[name="keyword"]').val('');
 				$('form[name="search-form"]').submit();
 			})
-
 
 			$("body").on("click", ".addNew", function () {
 				vrAdmin.addTour();
@@ -336,8 +334,7 @@
 				if (tourId.length == 1) {
 					tourId = $(tourId).val();
 				}
-				else
-				{
+				else {
 					tourId = 0;
 				}
 
@@ -350,19 +347,30 @@
 						view: "tour",
 						task: "ajaxValidateAlias"
 					},
-					async: true,
-					cache: false
-					// We are doing this in background so no need to show waiting
+					dataType: 'json',
+					/**
+					 *
+					 */
+					beforeSend: function () {
+						vrAdmin.Waiting.waiting();
+					}
 				})
 					.done(function (data, textStatus, jqXHR) {
 						if (data.status == true) {
-							$('input#alias').removeClass('error');
-							$('#saveTour').removeAttr("disabled");
+							vrAdmin.Waiting.success();
 						}
 						else {
-							$('#saveTour').attr("disabled", "disabled");
+							vrAdmin.Log.appendArray(data.messages);
+							vrAdmin.Waiting.stay();
 						}
 					})
+					.fail(function (jqXHR, textStatus, errorThrown) {
+						alert('Ajax failed');
+						vrAdmin.Waiting.stay();
+					})
+					.always(function( jqXHR, textStatus, jqXHR ) {
+						vrAdmin.Waiting.stay();
+					});
 			})
 
 			/**

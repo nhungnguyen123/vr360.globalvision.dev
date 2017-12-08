@@ -22,7 +22,7 @@
 						<form action="index.php" class="navbar-form navbar-right">
 							<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 							<button type="button" class="btn btn-primary addNew" id="addTour">
-								<i class="fa fa-plus-square" aria-hidden="true"></i>
+								<i class="fas fa-plus"></i>
 								Add new
 							</button>
 						</form>
@@ -34,7 +34,7 @@
 							<div class="form-group">
 								<div class="input-group">
 									<span class="input-group-btn">
-										<button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+										<button type="button" class="btn btn-danger" id="reset-search" value="Reset"><i class="fas fa-sync"></i></button>
 									</span>
 									<input
 											type="text"
@@ -48,8 +48,7 @@
 									/>
 								</div>
 							</div>
-							<input type="button" class="btn btn-danger" id="reset-search" value="Reset"/>
-
+							<button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
 							<fieldset>
 								<input type="hidden" name="view" value="tours"/>
 								<input type="hidden" name="task" value="display"/>

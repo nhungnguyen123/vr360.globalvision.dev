@@ -38,7 +38,7 @@ class Vr360Object
 	/**
 	 * @param   array  $properties  Properties
 	 *
-	 * @return  void
+	 * @return  boolean
 	 */
 	public function bind($properties)
 	{
@@ -51,6 +51,8 @@ class Vr360Object
 				$this->$key = $property;
 			}
 		}
+
+		return true;
 	}
 
 	/**
@@ -226,5 +228,18 @@ class Vr360Object
 		}
 
 		$this->params->{$property} = $value;
+	}
+
+	/**
+	 *
+	 */
+	public function reset()
+	{
+		$properties = $this->getProperties();
+
+		foreach ($properties as $key => $value)
+		{
+			$this->{$key} = null;
+		}
 	}
 }

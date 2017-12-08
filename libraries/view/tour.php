@@ -23,26 +23,16 @@ class Vr360ViewTour extends Vr360View
 	 */
 	public function display($layout = 'default')
 	{
-		$alias = Vr360Factory::getInput()->getString('alias');
+		$this->tour = Vr360ModelTour::getInstance()->getItemByAlias();
 
-		// New Items will get and store their data using the same Driver.
-		$item = Vr360HelperCache::getItem('vtour/' . $alias);
-
-		// Has cached
-		if (!$item->isMiss())
+		if ($this->tour)
 		{
-			return $item->get();
+			Vr360Factory::getInput()->set('id', $this->tour->get('id'));
 		}
 
-		$model = Vr360ModelTour::getInstance();
-
-		$this->tour = $model->getItemFromAlias();
 
 		$html = parent::display($layout);
 		$html = $this->optimizeHtml($html);
-
-		// Store the expensive to generate data.
-		Vr360HelperCache::setItem($item->set($html));
 
 		return $html;
 	}

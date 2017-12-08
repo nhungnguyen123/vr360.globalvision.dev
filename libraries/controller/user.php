@@ -16,7 +16,7 @@ class Vr360ControllerUser extends Vr360Controller
 	{
 		$input = Vr360Factory::getInput();
 
-		if (Vr360HelperAuthorize::authorize($input->getString('username'), $input->get('password', '', 'RAW')))
+		if (Vr360HelperAuthorize::authorize($input->getString('username'), $input->getString('password')))
 		{
 			$input->set('view', 'tours');
 			$this->display();

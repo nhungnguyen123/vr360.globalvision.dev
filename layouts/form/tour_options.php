@@ -1,6 +1,10 @@
 <?php
 
 defined('_VR360_EXEC') or die;
+
+// Skins
+$skins = Vr360HelperKrpano::getListOfSkins();
+
 ?>
 <div class="tour-options">
 	<div class="form-group">
@@ -27,7 +31,7 @@ defined('_VR360_EXEC') or die;
 								type="checkbox"
 								id="tour_rotation"
 								name="params[rotation]"
-							<?php echo ($isRotate) ? 'checked="checked"' : '' ?>
+							<?php echo ($tour->params->get('rotation', false)) ? 'checked="checked"' : '' ?>
 								value="1" size="80"/> Check for auto rotation.
 					</label>
 				</div>
@@ -40,7 +44,7 @@ defined('_VR360_EXEC') or die;
 								id="tour_social"
 								name="params[socials]"
 								value="1"
-							<?php echo ($isSocial) ? 'checked="checked"' : '' ?>
+							<?php echo ($tour->params->get('socials', false)) ? 'checked="checked"' : '' ?>
 								size="80"/>Check for show media social button.
 					</label>
 				</div>

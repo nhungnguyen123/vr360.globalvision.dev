@@ -9,6 +9,100 @@ defined('_VR360_EXEC') or die;
  */
 class Vr360Tour extends Vr360TableTour
 {
+
+	/**
+	 * Vr360Tour constructor.
+	 *
+	 * @param array|null $properties
+	 */
+	public function __construct(array $properties = null)
+	{
+		parent::__construct($properties);
+
+		$this->params = new Vr360Object;
+	}
+
+	/**
+	 * Method for get all scenes of tour
+	 *
+	 * @return   array|false  Array of scenes. False otherwise.
+	 *
+	 * @since  3.0.0
+	 */
+	public function getScenes()
+	{
+		if (!$this->id)
+		{
+			return false;
+		}
+
+		return Vr360ModelTour::getInstance()->getScenes($this->get('id'));
+	}
+
+	/**
+	 * @return integer
+	 */
+	public function getHotspots()
+	{
+		$scenes = $this->getScenes();
+
+		if (!$scenes)
+		{
+			return 0;
+		}
+
+		$count = 0;
+
+		foreach ($scenes as $scene)
+		{
+			$hotspots = $scene->getHotspots();
+
+			if (!$hotspots)
+			{
+				continue;
+			}
+
+			$count = $count + count($hotspots);
+		}
+
+		return $count;
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getKrpanoVersion()
+	{
+		$xml = $this->getXml();
+
+		if ($xml)
+		{
+			$nodes = $xml->getNodes();
+
+			return $nodes['@attributes']['version'];
+		}
+
+		return 'Invalid';
+	}
+
+	/**
+	 * @return boolean|Vr360TourXml
+	 */
+	public function getXml()
+	{
+		$tourXml = $this->getFile('vtour/tour.xml');
+
+		if (!Vr360HelperFile::exists($tourXml))
+		{
+			return false;
+		}
+
+		$xml = new Vr360TourXml;
+		$xml->load($tourXml);
+
+		return $xml;
+	}
+
 	/**
 	 * @return string
 	 */
@@ -81,16 +175,25 @@ class Vr360Tour extends Vr360TableTour
 		return $filePath;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getDir()
 	{
 		return VR360_PATH_DATA . '/' . $this->id;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getKrpanoJsUrl()
 	{
 		return './_/' . $this->id . '/vtour/tour.js';
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getKrpanoSwfUrl()
 	{
 		return './_/' . $this->id . '/vtour/tour.swf';
@@ -195,108 +298,6 @@ class Vr360Tour extends Vr360TableTour
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getKrpanoVersion()
-	{
-		$xml = $this->getXml();
-
-		if ($xml)
-		{
-			$nodes = $xml->getNodes();
-
-			return $nodes['@attributes']['version'];
-		}
-
-		return 'Invalid';
-	}
-
-	/**
-	 * Method for get all scenes of tour
-	 *
-	 * @return   array|false  Array of scenes. False otherwise.
-	 *
-	 * @since  3.0.0
-	 */
-	public function getScenes()
-	{
-		if (!$this->id)
-		{
-			return false;
-		}
-
-		$items = Vr360Database::getInstance()->select(
-			'scenes',
-			array(
-				'id', 'tourId', 'name', 'description', 'file', 'ordering', 'status', 'default', 'params'
-			),
-			array(
-				'status[!]' => VR360_TOUR_STATUS_UNPUBLISHED,
-				'tourId'    => $this->id,
-				'ORDER'     => array('ordering' => 'ASC')
-			)
-		);
-
-		if (empty($items))
-		{
-			return false;
-		}
-
-
-		foreach ($items as $key => $item)
-		{
-			$scene          = new Vr360Scene;
-			$item['params'] = new Vr360Object(json_decode($item['params']));
-			$scene->bind($item);
-			$items[$key] = $scene;
-		}
-
-		return $items;
-	}
-
-	/**
-	 * @return integer
-	 */
-	public function getHotspots()
-	{
-		$scenes = $this->getScenes();
-
-		$count = 0;
-
-		foreach ($scenes as $scene)
-		{
-			$hotspots = $scene->getHotspots();
-
-			if (!$hotspots)
-			{
-				continue;
-			}
-
-			$count = $count + count($hotspots);
-		}
-
-		return $count;
-	}
-
-	/**
-	 * @return boolean|Vr360TourXml
-	 */
-	public function getXml()
-	{
-		$tourXml = $this->getFile('vtour/tour.xml');
-
-		if (Vr360HelperFile::exists($tourXml))
-		{
-			$xml = new Vr360TourXml;
-			$xml->load($tourXml);
-
-			return $xml;
-		}
-
-		return false;
-	}
-
-	/**
 	 * Delete tour
 	 *
 	 * @return  boolean
@@ -306,11 +307,6 @@ class Vr360Tour extends Vr360TableTour
 	public function delete()
 	{
 		if (!$this->id)
-		{
-			return false;
-		}
-
-		if (!Vr360Database::getInstance()->delete('tours', array('id' => $this->id)))
 		{
 			return false;
 		}
@@ -326,14 +322,38 @@ class Vr360Tour extends Vr360TableTour
 			}
 		}
 
+		// Delete tour directory
 		Vr360HelperFolder::delete(Vr360HelperFile::clean(VR360_PATH_DATA . '/' . $this->id));
+
+		// Delete tour record
+		if (!parent::delete())
+		{
+			return false;
+		}
 
 		return true;
 	}
 
+	/**
+	 * @return boolean
+	 */
 	public function hit()
 	{
-		$hits = $this->hit + 1;
-		Vr360Database::getInstance()->update('tours', array('hits' => $hits), array('id' => $this->id));
+		if (!$this->id)
+		{
+			return false;
+		}
+
+		$db = Vr360Factory::getDbo();
+		$query = $db->getQuery(true)
+			->update($this->_table)
+			->set($db->quoteName('hits') . ' = (' . $db->quoteName('hits') . ' + 1)')
+			->where($db->quoteName('id') . ' = ' . (int) $this->get('id'));
+
+		$db->setQuery($query)->execute();
+
+		$this->hits++;
+
+		return true;
 	}
 }

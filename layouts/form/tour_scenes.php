@@ -6,6 +6,7 @@ defined('_VR360_EXEC') or die;
  *
  * @var  array $scenes List of scenes
  */
+$scenes   = $tour->getScenes();
 ?>
 <div id="scenes" class="scenes">
 	<?php if (isset($scenes) && !empty($scenes)): ?>
@@ -14,7 +15,7 @@ defined('_VR360_EXEC') or die;
 			<div class="panel-heading">
 				<div class="container-fluid">
 					<div class="col-md-6">
-						<div class="panel-title">Scene
+						<div class="panel-title"><i class="fas fa-eye"></i> Scene
 							<span class="badge">
 								<small><?php echo $scene->getHotspots() ? count($scene->getHotspots()) : 0; ?> hotspots</small>
 							</span>
@@ -22,7 +23,7 @@ defined('_VR360_EXEC') or die;
 					</div>
 					<div class="col-md-6">
 						<button type="button" id="removeScene" class="btn btn-danger btn-sm pull-right removeScene">
-							<i class="fa fa-remove"></i> Remove
+							<i class="far fa-minus-square"></i> Remove
 						</button>
 					</div>
 				</div>

@@ -24,7 +24,7 @@
 	<!-- Bootstrap -->
 	<script type="text/javascript" src="./assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="./assets/vendor/bootstrap/css/bootstrap.css">
-	<link rel="stylesheet" href="./assets/vendor/font-awesome/css/font-awesome.css">
+	<link rel="stylesheet" href="./assets/vendor/fontawesome-5.0.0/web-fonts-with-css/css/fontawesome-all.min.css">
 	<!-- Validator -->
 	<script
 			type="text/javascript"
@@ -63,7 +63,7 @@
 					<div class="col-md-6">
 						<div class="header">
 							<a href="http://globalvision.ch" target="_blank" class="logo">
-								<img id="logo" src="./assets/images/logo.png"/>
+								<!-- <img id="logo" src="./assets/images/logo.png"/>-->
 							</a>
 						</div>
 					</div>
@@ -71,17 +71,17 @@
 						<div class="text-center center-block">
 							<a href="<?php echo Vr360Configuration::getConfig('socials')['facebook']; ?>"
 							   target="_blank">
-								<i id="social-fb" class="fa fa-facebook-square fa-3x social"></i>
+								<i class="fab fa-facebook-square fa-3x"></i></i>
 							</a>
 							<a href="<?php echo Vr360Configuration::getConfig('socials')['twitter']; ?>"
 							   target="_blank">
-								<i id="social-tw" class="fa fa-twitter-square fa-3x social"></i>
+								<i class="fab fa-twitter-square fa-3x"></i>
 							</a>
 							<a href="<?php echo Vr360Configuration::getConfig('socials')['google+']; ?>"
 							   target="_blank">
-								<i id="social-gp" class="fa fa-google-plus-square fa-3x social"></i></a>
+								<i class="fab fa-google-plus-square fa-3x"></i></a>
 							<a href="<?php echo Vr360Configuration::getConfig('socials')['mail']; ?>">
-								<i id="social-em" class="fa fa-envelope-square fa-3x social"></i>
+								<i class="fas fa-envelope-square fa-3x"></i>
 							</a>
 						</div>
 					</div>
