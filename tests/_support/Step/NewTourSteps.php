@@ -36,23 +36,37 @@ class NewTourSteps extends ManageSteps
         $I->waitForElement(ManagePage::$checkboxAutoRation, 30);
         $I->waitForElement(ManagePage::$checkBoxSocical, 30);
         $I->click(ManagePage::$checkBoxSocical);
-
-
+        
         $I->comment('I click Create button');
         $I->click(NewTourPage::$btnCreate);
-
-        $I->wait(500);
+        $I->wait(150);
+        $I->waitForElement(ManagePage::$createSuccessXpath, 30);
+        $I->waitForElement(ManagePage::$closeButtonSuccess, 30);
+        $I->click(ManagePage::$closeButtonSuccess);
+        $I->waitForElement(ManagePage::$buttonClosePopup);
+        $I->waitForElement(NewTourPage::$btnClose, 30);
+        $I->click(NewTourPage::$btnClose);
         $I->waitForElement(ManagePage::$searchId,30);
         $I->fillField(ManagePage::$searchId,$name);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
         $I->waitForElement(ManagePage::$urlValue,30);
-        $I->see($url,ManagePage::$urlValue);
+        $I->see($url);
         $I->waitForElement(ManagePage::$btnLogout,60);
         $I->click(ManagePage::$btnEditFrirst);
         $I->wait(5);
         $I->seeInField(NewTourPage::$fieldName, $name);
     }
 
+    public function checkURL($name , $url)
+    {
+        $I = $this;
+        $I->waitForElement(ManagePage::$searchId,30);
+        $I->fillField(ManagePage::$searchId,$name);
+        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+        $I->waitForElement(ManagePage::$urlValue,30);
+        $I->dontSee($url);
+       
+    }
     public function createWithURLReady($name, $url, $title, $description)
     {
         $I = $this;
@@ -77,16 +91,12 @@ class NewTourSteps extends ManageSteps
         $I->waitForElement(ManagePage::$checkBoxSocical, 30);
         $I->click(ManagePage::$checkBoxSocical);
         $I->click(NewTourPage::$btnCreate);
-        $I->wait(300);
-        $I->waitForElement(ManagePage::$buttonCloseAlready,30);
-        $I->waitForElement(ManagePage::$xPathMessage, 30);
-        $I->click(ManagePage::$buttonCloseAlready);
-        $I->waitForElement(ManagePage::$buttonClosePopup, 30);
-        $I->waitForElement(ManagePage::$btnLogout,60);
-        $I->waitForElement(ManagePage::$searchId,30);
-        $I->fillField(ManagePage::$searchId,$name);
-        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-        $I->waitForElement(ManagePage::$noResults,30);
+        $I->wait(100);
+//        $I->waitForElement(NewTourPage::$btnClose,30);
+//        $I->click(NewTourPage::$btnClose, 30);
+//        $I->fillField(ManagePage::$searchId,$name);
+//        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+//        $I->waitForElement(ManagePage::$noResults,30);
     }
     public function checkMissing($name, $url, $title, $description)
     {
@@ -186,11 +196,11 @@ class NewTourSteps extends ManageSteps
         $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
         $I->fillField(NewTourPage::$fieldTitleFirst,$title);
         $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
-        $I->wait(100);
-        $I->waitForElement(ManagePage::$searchId,30);
-        $I->fillField(ManagePage::$searchId,$name);
-        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-        $I->dontSee($url,ManagePage::$urlValue);
+        $I->wait(500);
+//        $I->waitForElement(ManagePage::$searchId,30);
+//        $I->fillField(ManagePage::$searchId,$name);
+//        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+//        $I->dontSee($url,ManagePage::$urlValue);
     }
 
     public function createWithClose($name, $url, $title, $description)
@@ -235,13 +245,13 @@ class NewTourSteps extends ManageSteps
         $I->waitForElement(NewTourPage::$fieldName,30);
         $I->fillField(NewTourPage::$fieldName, $nameEdit);
         $I->click(NewTourPage::$btnCreate);
-        $I->wait(30);
+        $I->wait(150);
         $I->waitForElement(ManagePage::$searchId,30);
         $I->fillField(ManagePage::$searchId,$nameEdit);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
         $I->waitForElement(ManagePage::$nameTour,30);
-        $I->see($nameEdit,ManagePage::$nameTour);
-        $I->comment('I see Administrator Control Panel');
+        $I->see($url);
+        $I->waitForElement(ManagePage::$btnLogout,60);
     }
     
     public function delete($name)

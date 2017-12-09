@@ -4,25 +4,31 @@ namespace Page;
 class ManagePage
 {
 
-    public static $btnLogout = ['xpath' => '//button[contains(text(), \'Logout\')]'];
+    public static $btnLogout = ['id' => 'logout'];
 
-    public static $btnAddNew = ['xpath' => './/*[@id=\'bs-example-navbar-collapse-1\']/ul[1]/li/form/button'];
-    
+    public static $btnAddNew = ['id' => 'addTour'];
+
     public static $searchId = ['id' => 'task-table-filter'];
     
     public static $urlValue = ['xpath' => '//tr//td[@class=\'vtour-url\']'];
     
     public static $nameTour = ['xpath' =>'(//tr//td[@class=\'vtour-name\'])'];
     
-    public static $noResults  = ['xpath' => 'html/body/div/div/div[4]/div[2]/div/div/div/div[3]/div'];
+    public static $noResults  = ['xpath' => '//div[@class=\'alert alert-warning\']'];
 
-    public static $btnEmbedfirst = ['xpath' => '//tr//td[@class=\'controls\']//button[@class=\'btn btn-default btn-sm embedCode\']'];
+    public static $createSuccessXpath = ['xpath' => '//div[@class=\'alert alert-info\']'];
+    
+    public static $closeButtonSuccess = ['xpath' => '//button[@class=\'btn btn-primary btn-block btn-log-close\']'];
 
-    public static $btnEditFrirst = ['xpath' =>'//tr//td[@class=\'controls\']//button[@class=\'btn btn-primary btn-sm editTour\'] '];
+    public static $messageSaveSuccess =  'Tour is created';
 
-    public static $btnHostPot = ['xpath' => '//tr//td[@class=\'controls\']//button[@class=\'btn btn-primary btn-sm editTourHotspot\']'];
+    public static $btnEmbedfirst = ['xpath' => '//button[@class=\'btn btn-default embedCode\']'];
 
-    public static $btnPreview = ['xpath' => '//td[7]/a'];
+    public static $btnEditFrirst = ['xpath' =>'//button[@class=\'btn btn-primary editTour\']'];
+
+    public static $btnHostPot = ['xpath' => '//button[@class=\'btn btn-primary editTourHotspot\']'];
+
+    public static $btnPreview = ['xpath' => '//a[@class=\'btn btn-info previewTour\']'];
 
     public static $btnRemove = ['xpath' =>'//td[7]/button[4]'];
 
