@@ -28,12 +28,14 @@ class NewTourPage
 
     public static $btnClose = ['xpath' => '//div[@id=\'vrTour\']/div/div/div[3]/button'];
 
+    public static $buttonRemove = ['xpath' =>  '//button[@class=\'btn btn-danger btn-sm pull-right removeScene\']'];
+
     public static $btnRemovePano = ['xpath' => '//div[@id=\'tour-panos\']/div/div[1]/button'];
 
     public static $btnCreate = ['xpath' => './/*[@id=\'saveTour\']'];
 
     public static $btnAddPano = ['xpath' => './/*[@id=\'addScene\']'];
-    
+
     
     //image 
     public static $imageFirst = '1.jpg';

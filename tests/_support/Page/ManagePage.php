@@ -4,11 +4,13 @@ namespace Page;
 class ManagePage
 {
 
-    public static $btnLogout = ['xpath' => '//button[contains(text(), \'Logout\')]'];
+    public static $btnLogout = ['xpath' => '//button[@id=\'logout\']'];
 
     public static $btnAddNew = ['xpath' => './/*[@id=\'bs-example-navbar-collapse-1\']/ul[1]/li/form/button'];
     
     public static $searchId = ['id' => 'task-table-filter'];
+
+    public static $buttonReset = ['xpath' => '//button[@id=\'reset-search\']'];
     
     public static $urlValue = ['xpath' => '//tr//td[@class=\'vtour-url\']'];
     
@@ -37,6 +39,9 @@ class ManagePage
     //edit page 
     public static $contentEditXpath = ['xpath' => '(//h4[@id=\'myModalLabel\'])[2]'];
 
+
+    //profile view
+     public static $profileImg = ['xpath' => '//img[@id=\'avatar\']'];
 
     //preview page
      public static $titlePreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[10]/div/div/div/div'];
