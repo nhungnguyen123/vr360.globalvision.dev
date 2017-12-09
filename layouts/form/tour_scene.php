@@ -29,6 +29,7 @@ defined('_VR360_EXEC') or die;
 								<input
 										type="file"
 										name="newSceneFile[]"
+										class="scene-file"
 										data-validation="mime size required"
 										data-validation-allowing="jpg, png, jpeg"
 										data-validation-max-size="<?php echo ini_get('upload_max_filesize'); ?>"
@@ -41,7 +42,7 @@ defined('_VR360_EXEC') or die;
 								<input
 										name="newSceneName[]"
 										type="text"
-										class="form-control input-sm"
+										class="form-control input-sm scene-name"
 										placeholder="Scene name"
 										data-validation="required"
 								/>
@@ -53,7 +54,7 @@ defined('_VR360_EXEC') or die;
 								<input
 										name="newSceneDescription[]"
 										type="text"
-										class="form-control input-sm"
+										class="form-control input-sm scene-description"
 										size="80"
 										placeholder="Scene description"
 								/>

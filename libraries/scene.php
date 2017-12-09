@@ -23,22 +23,29 @@ class Vr360Scene extends Vr360TableScene
 			return false;
 		}
 
-		$path = VR360_PATH_DATA . '/' . $this->tourId . '/' . $this->file;
+		// Delete hotspots
+		if (!Vr360ModelHotspots::getInstance()->deleteBySceneId($this->get('id')))
+		{
+			return false;
+		}
 
 		// Delete scene
-		if (!Vr360Database::getInstance()->delete('scenes', array('id' => $this->id)))
+		if (!parent::delete())
 		{
 			return false;
 		}
 
-		// Delete hotspots
-		if (!Vr360Database::getInstance()->delete('hotspots', array('sceneId' => $this->id)))
-		{
-			return false;
-		}
+		$pathInfo = pathinfo($this->file);
+		$path = VR360_PATH_DATA . '/' . $this->tourId . '/' . $this->file;
+		$scenePath = VR360_PATH_DATA . '/' . $this->tourId . '/vtour/panos/' . $pathInfo['filename'];
 
-		// Finally delete physical files
+		// Finally delete physical file
 		if (!Vr360HelperFile::delete($path))
+		{
+			return false;
+		}
+
+		if (!Vr360HelperFile::delete($scenePath))
 		{
 			return false;
 		}
@@ -60,31 +67,6 @@ class Vr360Scene extends Vr360TableScene
 			return false;
 		}
 
-		$items = Vr360Database::getInstance()->select(
-			'hotspots',
-			array(
-				'id', 'sceneId', 'code', 'ath', 'atv', 'style', 'type', 'params'
-			),
-			array(
-				'sceneId' => $this->id,
-				'ORDER'   => array('id' => 'ASC')
-			)
-		);
-
-		if (empty($items))
-		{
-			return false;
-		}
-
-		foreach ($items as $key => $item)
-		{
-			$scene = new Vr360Hotspot;
-
-			$item['params'] = new Vr360Object(json_decode($item['params']));
-			$scene->bind($item);
-			$items[$key] = $scene;
-		}
-
-		return $items;
+		return Vr360ModelHotspots::getInstance()->getList($this->get('id'));
 	}
 }

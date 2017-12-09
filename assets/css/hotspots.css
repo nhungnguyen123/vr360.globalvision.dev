@@ -1,8 +1,8 @@
 #button-container {
     position: absolute;
     z-index: 9999;
-    top: 40px;
-    right: 50px;
+    top: 25px;
+    right: 25px;
     background-color: gray;
     padding: 10px;
     opacity: 0.95;
@@ -16,12 +16,13 @@
 #choose_hotSpot_type_id, #input_text_dialog, #show_link {
     position: absolute;
     z-index: 9999;
-    top: 40%;
-    left: 10px;
+    top: 85px;
+    right: 25px;
     display: none;
     background-color: gray;
     padding: 10px;
-    opacity: 0.95;
+    opacity: .95;
+    border-radius: 5px;
 }
 
 #pano {

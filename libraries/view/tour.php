@@ -4,6 +4,8 @@ defined('_VR360_EXEC') or die;
 
 /**
  * Class Vr360ViewTour
+ *
+ * @since  2.0.0
  */
 class Vr360ViewTour extends Vr360View
 {
@@ -12,18 +14,24 @@ class Vr360ViewTour extends Vr360View
 	 */
 	protected $name = 'tour';
 
+	/**
+	 * @var  Vr360Tour
+	 */
 	public $tour;
 
 	/**
-	 * @param string $layout
+	 * @param   string  $layout  Default layout
 	 *
-	 * @return bool|string
+	 * @return mixed|null|string|string[]
 	 */
 	public function display($layout = 'default')
 	{
-		$model = Vr360ModelTour::getInstance();
+		$this->tour = Vr360ModelTour::getInstance()->getItemByAlias();
 
-		$this->tour = $model->getItemFromAlias();
+		if ($this->tour)
+		{
+			Vr360Factory::getInput()->set('id', $this->tour->get('id'));
+		}
 
 		$html = parent::display($layout);
 		$html = $this->optimizeHtml($html);

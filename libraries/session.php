@@ -135,5 +135,7 @@ class Vr360Session extends Vr360Object
 	{
 		session_unset();
 		session_destroy();
+
+		parent::reset();
 	}
 }

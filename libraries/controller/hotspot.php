@@ -20,16 +20,10 @@ class Vr360ControllerHotspot extends Vr360Controller
 		$input = Vr360Factory::getInput();
 
 		// Get tour by ID
-		$tour = new Vr360Tour;
-		$tour->load(
-			array(
-				'id'         => (int) $input->getInt('id'),
-				'created_by' => Vr360Factory::getUser()->id
-			)
-		);
+		$tour = Vr360ModelTour::getInstance()->getItem();
 
 		// Tour not found
-		if (!$tour->id)
+		if (!$tour)
 		{
 			$ajax->addDanger('Tour is not available')->fail()->respond();
 		}

@@ -20,7 +20,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 <html>
 <head>
 	<meta name="viewport"
-		  content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+	      content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
@@ -37,16 +37,35 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 </head>
 <body>
 <div id="button-container">
-	<button type="button" id="add_hotpost" class="btn btn-primary btn-sm" onclick="addHotspot();">Add hotspot</button>
-	<button type="button" id="hotpost_done" class="btn btn-primary btn-sm" onclick="choose_hotSpot_type();">Choose type</button>
+	<div class="container-fluid">
 
-	<button type="button" id="remove_hotpost" class="btn btn-danger btn-sm" onclick="remove_hotspot();">Remove hotspot</button>
-	<button type="button" id="done_remove" class="btn btn-danger btn-sm" onclick="done_remove();">Removed done</button>
+			<div class="button-group" role="group">
+				<button type="button" id="add_hotpost" class="btn btn-primary btn-sm" onclick="addHotspot();">Add hotspot
+				</button>
+				<button type="button" id="hotpost_done" class="btn btn-primary btn-sm" onclick="choose_hotSpot_type();">Choose
+					type
+				</button>
 
-	<button type="button" id="set_defaultView" class="btn btn-primary btn-sm" onclick="setDefaultView();">Set default view</button>
+				<button type="button" id="remove_hotpost" class="btn btn-danger btn-sm" onclick="remove_hotspot();">Remove
+					hotspot
+				</button>
+				<button type="button" id="done_remove" class="btn btn-danger btn-sm" onclick="done_remove();">Removed done
+				</button>
+				<button type="button" id="moveHotspot" class="btn btn-warning btn-sm" onclick="moveHotspot();">Move hotspots
+				</button>
+				<button type="button" id="moveHotspotDone" class="btn btn-warning btn-sm" onclick="moveHotspotDone();">Moved
+					done
+				</button>
+			</div>
 
-	<button type="button" id="moveHotspot" class="btn btn-warning btn-sm" onclick="moveHotspot();">Move hotspots</button>
-	<button type="button" id="moveHotspotDone" class="btn btn-warning btn-sm" onclick="moveHotspotDone();">Moved done</button>
+			<div class="button-group" role="group" style="margin-top: 5px">
+				<button type="button" id="set_defaultView" class="btn btn-primary btn-sm" onclick="setDefaultView();">Set
+					default
+					view
+				</button>
+			</div>
+
+	</div>
 </div>
 <div id="choose_hotSpot_type_id">
 	Choose hotspot type:
@@ -54,9 +73,21 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	<button type="button" class="btn btn-default btn-sm" onclick="setHotSpotType_Nomal()">Scene linking</button>
 </div>
 
-<div id="input_text_dialog">
-	<input id='text_input_hotspot' type="text" size="30" placeholder="Input Text for your hotspot here"/>
-	<button type="button" class="btn btn-default" onclick="hotspot_add_text_from_input()">Finish</button>
+<div id="input_text_dialog" class="form-inline">
+	<div class="form-group">
+		<input
+				id='text_input_hotspot'
+				type="text"
+				size="30"
+				placeholder="Input Text for your hotspot here"
+				class="form-control"
+		/>
+		<button
+				type="button"
+				class="btn btn-default"
+				onclick="hotspot_add_text_from_input();">Finish
+		</button>
+	</div>
 </div>
 
 <div id="show_link">
@@ -87,18 +118,47 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		var selectbox = document.getElementById('selectbox');
 		var showlink = document.getElementById('show_link');
 
-		var i                             = 0;
-		var uniqname                      = '';
-		var scene_nums                    = krpano.get('scene.count');
-		var hotspotList                   = [];
-		var current_scene                 = '';
+		var i = 0;
+		var uniqname = '';
+		var scene_nums = krpano.get('scene.count');
+		var hotspotList = [];
+		var current_scene = '';
 		var current_vTour_hotspot_counter = 0;
-		var current_randome_val           = Math.round(Math.random() * 1000000000).toString() + Math.round(Math.random() * 1000000000).toString();
+		var current_randome_val = Math.round(Math.random() * 1000000000).toString() + Math.round(Math.random() * 1000000000).toString();
+
+		function disableButton(elements) {
+			if (jQuery.isArray(elements)) {
+				jQuery.each(elements, function (index, element) {
+					jQuery(element).attr('disabled', 'disabled');
+					jQuery(element).hide();
+				})
+			}
+			else {
+				jQuery(elements).attr('disabled', 'disabled');
+				jQuery(elements).hide();
+			}
+		}
+
+		function enableButton(elements) {
+			if (jQuery.isArray(elements)) {
+				jQuery.each(elements, function (index, element) {
+					jQuery(element).removeAttr('disabled');
+					jQuery(element).show();
+				})
+			}
+			else {
+				jQuery(element).removeAttr('disabled');
+				jQuery(element).show();
+			}
+		}
+
+		function getHotspotsCount() {
+			return krpano.get('hotspot.count');
+		}
 
 		function addHotspot(currentHotspotData) {
+			disableButton(['#remove_hotpost', '#moveHotspot', '#set_defaultView']);
 
-			document.getElementById('remove_hotpost').disabled = true;
-			document.getElementById('moveHotspot').disabled = true;
 			document.getElementById('add_hotpost').style.display = 'none';
 
 			i += 1;
@@ -160,12 +220,15 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		}
 
 		function remove_hotspot() {
+
+			alert('Click on any hotspot to remove it');
+
 			document.getElementById('done_remove').style.display = 'inline-block';
-			document.getElementById('remove_hotpost').style.display = 'none';
-			document.getElementById('moveHotspot').disabled = true;
+
+			disableButton(['#add_hotpost', '#remove_hotpost', '#moveHotspot', '#set_defaultView'])
 
 			add_hotpost.disabled = true;
-			var hotspot_count = krpano.get('hotspot.count');
+			var hotspot_count = getHotspotsCount();
 			for (i = 0; i < hotspot_count; i++) {
 				//krpano.call("set(hotspot[" + i + "].onclick, 'removehotspot(get(name));');");
 				krpano.call("set(hotspot[" + i + "].onclick, 'removehotspot(get(name)); js(addRemovedHotspot(get(name)));');");
@@ -173,17 +236,15 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		}
 
 		function done_remove() {
+
+			enableButton(['add_hotpost', '#remove_hotpost', '#moveHotspot', '#set_defaultView'])
 			document.getElementById('done_remove').style.display = 'none';
-			document.getElementById('remove_hotpost').style.display = 'inline-block';
-			document.getElementById('moveHotspot').disabled = false;
 
 			add_hotpost.disabled = false;
-			var hotspot_count = krpano.get('hotspot.count');
+			var hotspot_count = getHotspotsCount();
 			for (i = 0; i < hotspot_count; i++) {
 				krpano.call("set(hotspot[" + i + "].onclick, '');");
 			}
-			/*console.log(hotspot_count);
-			console.info(removedHotspot);*/
 		}
 
 		function choose_hotSpot_type() {
@@ -220,8 +281,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			$('#input_text_dialog').hide();
 			$('#show_link').hide();
 			add_hotpost.disabled = false;
-			document.getElementById('remove_hotpost').disabled = false;
-			document.getElementById('moveHotspot').disabled = false;
+
+			enableButton(['#remove_hotpost', '#moveHotspot', '#set_defaultView']);
 		}
 
 		var defaultViewList = {};
@@ -234,7 +295,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			defaultViewList[scene].vlookat = krpano.get('view.vlookat');
 			defaultViewList[scene].fov = krpano.get('view.fov');
 
-			alert ('Applied default view hlookat: ' + defaultViewList[scene].hlookat + ' , vlookat: ' + defaultViewList[scene].vlookat + ' , fov: ' + defaultViewList[scene].fov);
+			alert('Applied default view hlookat: ' + defaultViewList[scene].hlookat + ' , vlookat: ' + defaultViewList[scene].vlookat + ' , fov: ' + defaultViewList[scene].fov);
 		}
 
 		function rotateToDefaultViewOf(scene) {
@@ -286,22 +347,21 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		}
 
 		function moveHotspot() {
-			document.getElementById('add_hotpost').disabled = true;
-			document.getElementById('remove_hotpost').disabled = true;
+			disableButton(['#add_hotpost', '#remove_hotpost', '#set_defaultView'])
 
-			var hotspot_count = krpano.get('hotspot.count');
+			var hotspot_count = getHotspotsCount();
 			for (var i = 0; i < hotspot_count; i++) {
 				krpano.call("set(hotspot[" + i + "].ondown, 'draghotspot(); js(hmv(get(hotspot[" + i + "]), get(xml.scene), " + i + ") );')");
 			}
+
 			$("#moveHotspot").hide();
 			$("#moveHotspotDone").show();
 		}
 
 		function moveHotspotDone() {
-			document.getElementById('add_hotpost').disabled = false;
-			document.getElementById('remove_hotpost').disabled = false;
+			enableButton(['add_hotpost', '#remove_hotpost', '#set_defaultView'])
 
-			var hotspot_count = krpano.get('hotspot.count');
+			var hotspot_count = getHotspotsCount();
 			for (var i = 0; i < hotspot_count; i++) {
 				krpano.call("set(hotspot[" + i + "].ondown, '');");
 			}

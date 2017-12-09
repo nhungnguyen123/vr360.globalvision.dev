@@ -10,120 +10,50 @@ defined('_VR360_EXEC') or die;
 class Vr360ModelTours extends Vr360Model
 {
 	/**
-	 * @return static
+	 * @return array|boolean
 	 */
-	public static function getInstance()
+	public function getList()
 	{
-		static $instance;
 
-		if (isset($instance))
+		$input  = Vr360Factory::getInput();
+		$offset = $input->getInt('page', 0) * 20;
+		$limit  = 20;
+
+		$db    = Vr360Factory::getDbo();
+		$query = $this->buildQuery();
+
+		$rows = $db->setQuery($query, $offset, $limit)->loadObjectList();
+
+		if (!$rows || empty($rows))
 		{
-			return $instance;
+			return false;
 		}
 
-		$instance = new static;
+		$tours = array();
 
-		return $instance;
+		// Assign to tour object
+		foreach ($rows as $row)
+		{
+			$row->params = !empty($row->params) ? new Vr360Object(json_decode($row->params)) : new Vr360Object();
+			$tour        = new Vr360Tour;
+			$tour->bind($row);
+			$tours[] = $tour;
+		}
+
+		return $tours;
 	}
 
 	/**
 	 * @return array|boolean
 	 */
-	public function getList()
+	public function getPagination()
 	{
-		$input = Vr360Factory::getInput();
-
-		$offset    = $input->getInt('page', 0) * 20;
-		$limit     = 20;
-		$condition = array();
-
-		$condition = array_merge(
-			$condition,
-			array(
-				'tours.created_by' => Vr360Factory::getUser()->id,
-				'tours.status[!]'  => VR360_TOUR_STATUS_UNPUBLISHED,
-				'ORDER'            => array('tours.id' => 'DESC'),
-				'LIMIT'            => array($offset, $limit)
-			)
-		);
-
-		// Filter by keyword
-		$keyword = $input->getString('keyword');
-
-		if ($keyword)
-		{
-			$condition['tours.name[~]'] = $keyword;
-		}
-
-		$rows = Vr360Database::getInstance()->select(
-			'tours',
-			array(
-				'tours.id',
-				'tours.name',
-				'tours.description',
-				'tours.alias',
-				'tours.created',
-				'tours.created_by',
-				'tours.status',
-				'tours.params'
-			),
-			$condition
-		);
-
-		if (empty($rows))
-		{
-			return false;
-		}
-
-		$data = array();
-
-		// Assign to tour object
-		foreach ($rows as $row)
-		{
-			$tour          = new Vr360Tour;
-			$row['params'] = json_decode($row['params']);
-			$tour->bind($row);
-			$data[] = $tour;
-		}
-
-		return $data;
-	}
-
-	/**
-	 * @param   int  $userId
-	 *
-	 * @return  array
-	 */
-	public function getPagination($userId = null)
-	{
-		if ($userId === null)
-		{
-			$userId = Vr360Factory::getUser()->id;
-		}
-
 		$limit = 20;
 
-		$db   = Vr360Database::getInstance();
-		$rows = $db->select(
-			'tours',
-			[
-				'tours.id',
-				'tours.name',
-				'tours.description',
-				'tours.alias',
-				'tours.created',
-				'tours.created_by',
-				'tours.dir',
-				'tours.status'
-			],
-			[
-				'tours.created_by' => (int) $userId,
-				'tours.status[!]'  => VR360_TOUR_STATUS_UNPUBLISHED,
-				'ORDER'            => [
-					'tours.id' => 'DESC'
-				],
-			]
-		);
+		$db    = Vr360Factory::getDbo();
+		$query = $this->buildQuery();
+
+		$rows = $db->setQuery($query)->loadObjectList();
 
 		$input = Vr360Factory::getInput();
 
@@ -134,5 +64,38 @@ class Vr360ModelTours extends Vr360Model
 				'total'   => round(count($rows) / $limit) - 1
 			);
 		}
+
+		return false;
+	}
+
+	/**
+	 * @return \Joomla\Database\DatabaseQuery
+	 */
+	protected function buildQuery()
+	{
+		$db    = Vr360Factory::getDbo();
+		$input = Vr360Factory::getInput();
+
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('tours'))
+			->where($db->quoteName('status') . ' = ' . VR360_TOUR_STATUS_PUBLISHED_READY)
+			->where($db->quoteName('created_by') . ' = ' . Vr360Factory::getUser()->id)
+			->order($db->quoteName('id') . ' DESC');
+
+		// Filter by keyword
+		$keyword = $input->getString('keyword');
+
+		if ($keyword)
+		{
+			$query->where(
+				$db->quoteName('name') . ' LIKE ' . $db->quote('%' . $keyword . '%')
+				. ' OR ' . $db->quoteName('alias') . ' LIKE ' . $db->quote('%' . $keyword . '%')
+				. ' OR ' . $db->quoteName('description') . ' LIKE ' . $db->quote('%' . $keyword . '%')
+				. ' OR ' . $db->quoteName('keyword') . ' LIKE ' . $db->quote('%' . $keyword . '%')
+			);
+		}
+
+		return $query;
 	}
 }

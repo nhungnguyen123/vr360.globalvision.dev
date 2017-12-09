@@ -26,7 +26,7 @@ class NewTourPage
 
     public static $btnAddImageFirst = ['xpath' => '(//div[@id=\'panoWrap\']/div[1]/input)[2]'];
 
-    public static $btnClose = ['xpath' => '//div[@id=\'vrTour\']/div/div/div[3]/button'];
+    public static $btnClose = ['id' => 'modal-close'];
 
     public static $buttonRemove = ['xpath' =>  '//button[@class=\'btn btn-danger btn-sm pull-right removeScene\']'];
 
