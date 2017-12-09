@@ -10,7 +10,7 @@ defined('_VR360_EXEC') or die;
 <form method="post" id="form-tour" class="form-horizontal" enctype="multipart/form-data">
 	<div class="col-md-12">
 		<?php require_once __DIR__ . '/tour_information.php'; ?>
-		<div class="col-md-4 form-horizontal">
+		<div class="col-md-6 form-horizontal">
 			<!-- Name -->
 			<div class="form-group">
 				<label for="name" class="col-sm-2 control-label">Name *</label>
@@ -86,7 +86,7 @@ defined('_VR360_EXEC') or die;
 				</button>
 			</div>
 		</div>
-		<div class="col-md-8">
+		<div class="col-md-6">
 			<?php require_once __DIR__ . '/tour_scenes.php'; ?>
 		</div>
 	</div>

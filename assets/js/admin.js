@@ -69,7 +69,7 @@
 					alert('Ajax failed');
 					vrAdmin.Waiting.stay();
 				})
-				.always(function( jqXHR, textStatus, jqXHR ) {
+				.always(function (jqXHR, textStatus, jqXHR) {
 					vrAdmin.Waiting.stay();
 				});
 		},
@@ -113,6 +113,10 @@
 				});
 		},
 
+		/**
+		 *
+		 * @param el
+		 */
 		editProfile: function (el) {
 			$.ajax({
 				url: "index.php",
@@ -297,6 +301,17 @@
 				$("body").removeClass("loading");
 			});
 
+			$('body').on('change', 'input.check-all', function (event) {
+				isChecked = $('input.check-all').attr('checked') ? true : false;
+
+				if (isChecked) {
+					jQuery('input.check-tour').prop("checked", true);
+				}
+				else {
+					jQuery('input.check-tour').prop("checked", false);
+				}
+			})
+
 			// Call hooks for each tour
 			vrTour.hooks();
 		}
@@ -368,7 +383,7 @@
 						alert('Ajax failed');
 						vrAdmin.Waiting.stay();
 					})
-					.always(function( jqXHR, textStatus, jqXHR ) {
+					.always(function (jqXHR, textStatus, jqXHR) {
 						vrAdmin.Waiting.stay();
 					});
 			})
@@ -399,11 +414,12 @@
 						vrAdmin.Log.appendArray(data.messages);
 						vrAdmin.Waiting.stay();
 					})
-					.fail(function () {
-						$('#overlay-waiting .btn-log-close').removeClass('hide');
+					.fail(function (jqXHR, textStatus, errorThrown) {
+						alert('Ajax failed');
+						vrAdmin.Waiting.stay();
 					})
-					.always(function () {
-						$('#overlay-waiting .btn-log-close').removeClass('hide');
+					.always(function (jqXHR, textStatus, jqXHR) {
+						vrAdmin.Waiting.stay();
 					});
 			});
 

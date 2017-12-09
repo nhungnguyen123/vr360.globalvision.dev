@@ -1,4 +1,4 @@
-<?php
+	<?php
 
 defined('_VR360_EXEC') or die;
 
@@ -68,5 +68,15 @@ class Vr360Scene extends Vr360TableScene
 		}
 
 		return Vr360ModelHotspots::getInstance()->getList($this->get('id'));
+	}
+
+	public function getFile()
+	{
+		return VR360_PATH_DATA . '/' . $this->tourId . '/' . $this->file;
+	}
+
+	public function isValid()
+	{
+		return Vr360HelperFile::exists($this->getFile());
 	}
 }

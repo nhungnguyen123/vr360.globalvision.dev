@@ -15,10 +15,16 @@ $scenes   = $tour->getScenes();
 			<div class="panel-heading">
 				<div class="container-fluid">
 					<div class="col-md-6">
-						<div class="panel-title"><i class="fas fa-eye"></i> Scene
+						<div class="panel-title">
+							<i class="fas fa-eye"></i> Scene
 							<span class="badge">
 								<small><?php echo $scene->getHotspots() ? count($scene->getHotspots()) : 0; ?> hotspots</small>
 							</span>
+							<?php if (!$scene->isValid()): ?>
+							<span class="label label-danger">
+								<small>Invalid</small>
+							</span>
+							<?php endif; ?>
 						</div>
 					</div>
 					<div class="col-md-6">

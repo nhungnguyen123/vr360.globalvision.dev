@@ -13,8 +13,11 @@ defined('_VR360_EXEC') or die;
 					<div class="panel-title">New Scene</div>
 				</div>
 				<div class="col-md-6">
-					<button type="button" class="btn btn-danger btn-sm pull-right removeScene"><i
-								class="fa fa-remove"></i> Remove
+					<button
+							type="button"
+							class="btn btn-danger btn-sm pull-right removeScene"
+					>
+						<i class="fa fa-remove"></i> Remove
 					</button>
 				</div>
 			</div>

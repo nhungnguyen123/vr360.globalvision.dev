@@ -37,8 +37,9 @@
 		<script type="text/javascript" src="./assets/js/admin.min.js"></script>
 		<script type="text/javascript" src="./assets/js/admin/modal.min.js"></script>
 		<script type="text/javascript" src="./assets/js/admin/waiting.min.js"></script>
+		<script type="text/javascript" src="./assets/js/log.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 	<?php endif; ?>
-	<script type="text/javascript" src="./assets/js/log.min.js"></script>
 </head>
 <body>
 <div class="container-fluid">
@@ -51,7 +52,7 @@
 			<div class="row">
 				<div class="col-md-2 col-md-offset-3">
 					<button
-							class="btn btn-primary btn-block btn-log-close"
+							class="btn btn-primary btn-block btn-log-close ajax-close"
 							onclick=""><i class="fa fa-close"></i> Close
 					</button>
 				</div>
@@ -69,25 +70,24 @@
 					</div>
 					<div class="col-md-6">
 						<div class="text-center center-block">
-							<a href="<?php echo Vr360Configuration::getConfig('socials')['facebook']; ?>"
+							<a class="social-facebook" href="<?php echo Vr360Configuration::getConfig('socials')['facebook']; ?>"
 							   target="_blank">
 								<i class="fab fa-facebook-square fa-3x"></i></i>
 							</a>
-							<a href="<?php echo Vr360Configuration::getConfig('socials')['twitter']; ?>"
+							<a class="social-twitter" href="<?php echo Vr360Configuration::getConfig('socials')['twitter']; ?>"
 							   target="_blank">
 								<i class="fab fa-twitter-square fa-3x"></i>
 							</a>
-							<a href="<?php echo Vr360Configuration::getConfig('socials')['google+']; ?>"
+							<a class="social-googleplus" href="<?php echo Vr360Configuration::getConfig('socials')['google+']; ?>"
 							   target="_blank">
 								<i class="fab fa-google-plus-square fa-3x"></i></a>
-							<a href="<?php echo Vr360Configuration::getConfig('socials')['mail']; ?>">
+							<a class="social-email" href="<?php echo Vr360Configuration::getConfig('socials')['mail']; ?>">
 								<i class="fas fa-envelope-square fa-3x"></i>
 							</a>
 						</div>
 					</div>
 				</div>
 			</div>
-
 		</div>
 		<div class="col-md-12">
 			<div class="container-fluid">

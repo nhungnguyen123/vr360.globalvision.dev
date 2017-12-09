@@ -17,24 +17,25 @@
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li class="">
-						<form action="index.php" class="navbar-form navbar-right">
+				<form action="index.php" class="navbar-form navbar-left">
+					<ul class="nav navbar-nav">
+						<li class="">
 							<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
 							<button type="button" class="btn btn-primary addNew" id="addTour">
 								<i class="fas fa-plus"></i>
 								Add new
 							</button>
-						</form>
-					</li>
-				</ul>
+						</li>
+					</ul>
+				</form>
 				<ul class="nav navbar-nav navbar-right">
 					<li>
 						<form method="post" class="navbar-form navbar-left form-inline pull-right" name="search-form">
 							<div class="form-group">
 								<div class="input-group">
 									<span class="input-group-btn">
-										<button type="button" class="btn btn-danger" id="reset-search" value="Reset"><i class="fas fa-sync"></i></button>
+										<button type="button" class="btn btn-danger" id="reset-search" value="Reset"><i
+													class="fas fa-sync"></i></button>
 									</span>
 									<input
 											type="text"
@@ -48,7 +49,8 @@
 									/>
 								</div>
 							</div>
-							<button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+							<button class="btn btn-default" type="submit"><i class="fa fa-search"
+							                                                 aria-hidden="true"></i></button>
 							<fieldset>
 								<input type="hidden" name="view" value="tours"/>
 								<input type="hidden" name="task" value="display"/>
@@ -59,7 +61,9 @@
 						<form action="index.php" class="navbar-form navbar-right">
 							<input type="hidden" name="view" value="user"/>
 							<input type="hidden" name="task" value="logout"/>
-							<button type="submit" id="logout" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
+							<button type="submit" id="logout" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i>
+								Logout
+							</button>
 						</form>
 					</li>
 				</ul>
