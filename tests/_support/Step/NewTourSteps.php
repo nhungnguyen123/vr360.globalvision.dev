@@ -27,6 +27,7 @@ class NewTourSteps extends ManageSteps
         $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
 
         $I->click(NewTourPage::$btnAddPano);
+        $I->wait(5);
         $usePage = new NewTourPage();
         $I->waitForElement($usePage->nameField(2), 30);
         $I->waitForElement($usePage->nameField(2),30);
@@ -120,20 +121,22 @@ class NewTourSteps extends ManageSteps
         $I = $this;
         $I->click(ManagePage::$btnAddNew);
         $I->waitForElement(NewTourPage::$fieldName,30);
-        $I->switchToIFrame();
-        $I->wait(3);
-
-        $I->comment('Missing attach image value');
+        $I->comment('Fill Name Text Field');
+        $I->wait(1);
         $I->fillField(NewTourPage::$fieldName, $name);
+        $I->wait(1);
         $I->comment('Fill URL Text Field');
         $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
+
         $I->click(NewTourPage::$btnAddPano);
-        $I->wait(4);
+        $I->wait(5);
         $usePage = new NewTourPage();
         $I->waitForElement($usePage->nameField(2), 30);
         $I->waitForElement($usePage->nameField(2),30);
         $I->fillField($usePage->nameField(2),$title);
         $I->fillField($usePage->descriptionField(2),$description);
+
+
         $I->click(NewTourPage::$btnCreate);
         $I->waitForElement(NewTourPage::$missingField, 30);
         $I->see(NewTourPage::$messageMissingField);
