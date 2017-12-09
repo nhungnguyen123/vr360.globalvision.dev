@@ -25,11 +25,25 @@ class NewTourCest
 
     }
 
+//    public function createWithoutAnyScreen(NewTourSteps $I)
+//    {
+//        $I->login($this->userName, $this->pass);
+//        $I->createWithoutAnyScreen($this->nameTour);
+//    }
+
+    public function checkMissing(NewTourSteps $I)
+    {
+        $I->login($this->userName, $this->pass);
+        $I->checkMissing($this->nameTour, $this->url, $this->title, $this->description);
+    }
+
     public function createNew(NewTourSteps $I)
     {
         $I->login($this->userName, $this->pass);
         $I->create($this->nameTour, $this->url, $this->title, $this->description);
     }
+
+
     public function preview(NewTourSteps $I)
     {
         $I->login($this->userName, $this->pass);

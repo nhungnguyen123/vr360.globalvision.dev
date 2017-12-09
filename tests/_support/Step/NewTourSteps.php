@@ -57,6 +57,22 @@ class NewTourSteps extends ManageSteps
         $I->seeInField(NewTourPage::$fieldName, $name);
     }
 
+    public function createWithoutAnyScreen($name)
+    {
+        $I = $this;
+        $I->click(ManagePage::$btnAddNew);
+        $I->waitForElement(NewTourPage::$fieldName,30);
+        $I->comment('Fill Name Text Field');
+        $I->wait(1);
+        $I->fillField(NewTourPage::$fieldName, $name);
+        $I->fillField(NewTourPage::$fieldFriendlyURL, $name);
+        $I->wait(1);
+        $I->click(NewTourPage::$btnCreate);
+        $I->wait(20);
+        $I->waitForElement(ManagePage::$buttonCloseDuplicate, 30);
+        
+    }
+    
     public function checkURL($name , $url)
     {
         $I = $this;
@@ -111,96 +127,37 @@ class NewTourSteps extends ManageSteps
         $I->fillField(NewTourPage::$fieldName, $name);
         $I->comment('Fill URL Text Field');
         $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
-
-        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
-        $I->wait(3);
-
-        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
-        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
-        $I->comment('I click Create button');
+        $I->click(NewTourPage::$btnAddPano);
+        $I->wait(4);
+        $usePage = new NewTourPage();
+        $I->waitForElement($usePage->nameField(2), 30);
+        $I->waitForElement($usePage->nameField(2),30);
+        $I->fillField($usePage->nameField(2),$title);
+        $I->fillField($usePage->descriptionField(2),$description);
         $I->click(NewTourPage::$btnCreate);
-        $I->wait(300);
-        $I->waitForElement(ManagePage::$searchId,30);
-        $I->fillField(ManagePage::$searchId,$name);
-        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-        $I->dontSee($url,ManagePage::$urlValue);
+        $I->waitForElement(NewTourPage::$missingField, 30);
+        $I->see(NewTourPage::$messageMissingField);
 
-
-        $I->comment('Missing field name');
-        $I->click(ManagePage::$btnAddNew);
-        $I->waitForElement(NewTourPage::$fieldName,30);
-        $I->switchToIFrame();
-        $I->wait(3);
-        $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
-        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
-        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
-        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
-        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
-        $I->comment('I click Create button');
+        $I->comment('Check missing name');
+        $I->fillField(NewTourPage::$fieldName,'');
+        $I->attachFile($usePage->imageInput(2),NewTourPage::$imageFirst );
         $I->click(NewTourPage::$btnCreate);
-        $I->wait(300);
-        $I->waitForElement(ManagePage::$searchId,30);
-        $I->fillField(ManagePage::$searchId,$name);
-        $I->wait(10);
-        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-        $I->dontSee($url,ManagePage::$urlValue);
+        $I->waitForElement(NewTourPage::$missingField, 30);
+        $I->see(NewTourPage::$messageMissingField);
 
-        $I->comment('Missing field URL ');
-        $I->click(ManagePage::$btnAddNew);
-        $I->waitForElement(NewTourPage::$fieldName,30);
-        $I->switchToIFrame();
-        $I->wait(3);
+        $I->comment('Check missing url');
         $I->fillField(NewTourPage::$fieldName, $name);
-        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
-        $I->wait(3);
-        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
-        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
-        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
-
-        $I->comment('I click Create button');
+        $I->fillField(NewTourPage::$fieldFriendlyURL,'');
         $I->click(NewTourPage::$btnCreate);
-        $I->wait(100);
-        $I->waitForElement(ManagePage::$searchId,30);
-        $I->fillField(ManagePage::$searchId,$name);
-        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-        $I->dontSee($url,ManagePage::$urlValue);
+        $I->waitForElement(NewTourPage::$missingField, 30);
+        $I->see(NewTourPage::$messageMissingField);
 
-
-        $I->comment('Missing Title of first');
-        $I->click(ManagePage::$btnAddNew);
-        $I->waitForElement(NewTourPage::$fieldName,30);
-        $I->switchToIFrame();
-        $I->wait(3);
-        $I->fillField(NewTourPage::$fieldName, $name);
-        $I->comment('Fill URL Text Field');
+        $I->comment('Creat with missing title for pano');
         $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
-        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
-        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
-        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
-        $I->wait(100);
-        $I->waitForElement(ManagePage::$searchId,30);
-        $I->fillField(ManagePage::$searchId,$name);
-        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-        $I->dontSee($url,ManagePage::$urlValue);
-
-
-        $I->comment('Missing Description of first ');
-        $I->click(ManagePage::$btnAddNew);
-        $I->waitForElement(NewTourPage::$fieldName,30);
-        $I->switchToIFrame();
-        $I->wait(3);
-        $I->fillField(NewTourPage::$fieldName, $name);
-        $I->comment('Fill URL Text Field');
-        $I->fillField(NewTourPage::$fieldFriendlyURL, $url);
-
-        $I->waitForElement(NewTourPage::$fieldTitleFirst,30);
-        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
-        $I->attachFile(NewTourPage::$btnAddImageFirst,NewTourPage::$imageFirst );
-        $I->wait(500);
-//        $I->waitForElement(ManagePage::$searchId,30);
-//        $I->fillField(ManagePage::$searchId,$name);
-//        $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-//        $I->dontSee($url,ManagePage::$urlValue);
+        $I->fillField($usePage->nameField(2), '');
+        $I->click(NewTourPage::$btnCreate);
+        $I->waitForElement(NewTourPage::$missingField, 30);
+        $I->see(NewTourPage::$messageMissingField);
     }
 
     public function createWithClose($name, $url, $title, $description)
@@ -231,7 +188,7 @@ class NewTourSteps extends ManageSteps
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
         $I->dontSee($url,ManagePage::$urlValue);
     }
-    
+   
     public function editTour($name, $nameEdit, $url)
     {
         $I = $this;

@@ -36,6 +36,10 @@ class NewTourPage
 
     public static $btnAddPano = ['xpath' => './/*[@id=\'addScene\']'];
 
+    public static $missingField = ['xpath'=> '//span[@class=\'help-block form-error\']'];
+
+    public static $messageMissingField = 'This is a required field';
+
     
     //image 
     public static $imageFirst = '1.jpg';

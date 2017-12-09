@@ -45,6 +45,11 @@ class ManagePage
     //edit page 
     public static $contentEditXpath = ['xpath' => '(//h4[@id=\'myModalLabel\'])[2]'];
 
+        public static $alteDuplicate = ['xpath' => '//div[@class=\'alert alert-danger\']'];
+        
+
+     public static $buttonCloseDuplicate = ['xpath' => '//button[@class=\'btn btn-primary btn-block btn-log-close\']'];
+
 
     //profile view
      public static $profileImg = ['xpath' => '//img[@id=\'avatar\']'];
