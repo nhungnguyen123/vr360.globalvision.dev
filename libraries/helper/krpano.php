@@ -20,4 +20,11 @@ class Vr360HelperKrpano
 
 		return Vr360HelperFile::exists($filePath);
 	}
+
+	public static function getIncludes()
+	{
+		$includes = array('vtourskin.xml', 'tour-vtskin.xml');
+
+		return $includes;
+	}
 }

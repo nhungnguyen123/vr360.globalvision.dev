@@ -30,24 +30,29 @@ class Vr360TableTour extends Vr360Table
 	public $keyword = null;
 
 	/**
-	 * @var string
+	 * @var  integer
 	 */
-	public $ordering  = null;
+	public $hits = null;
 
 	/**
 	 * @var string
 	 */
-	public $created  = null;
+	public $ordering = null;
+
+	/**
+	 * @var string
+	 */
+	public $created = null;
 
 	/**
 	 * @var integer
 	 */
-	public $created_by  = null;
+	public $created_by = null;
 
 	/**
 	 * @var string
 	 */
-	public $status  = null;
+	public $status = null;
 
 	/**
 	 * @var string
@@ -59,29 +64,21 @@ class Vr360TableTour extends Vr360Table
 	 */
 	protected function check()
 	{
-		$db    = Vr360Database::getInstance();
+		$db    = Vr360Factory::getDbo();
+		$query = $db->getQuery(true);
 
-		$condition = array('alias' => $this->alias);
+		$query->select($db->quoteName('id'))
+			->from($db->quoteName('tours'))
+			->where($db->quoteName('id') . ' !=' . (int) $this->get('id'))
+			->where($db->quoteName('alias') . ' = ' . $db->quote($this->alias));
 
-		if ($this->id)
+		$duplicatedAlias = $db->setQuery($query)->loadObjectList();
+
+		if ($duplicatedAlias !== false && count($duplicatedAlias) > 0)
 		{
-			$condition['id[!]'] = $this->get('id');
-		}
+			$this->setError('Duplicated alias');
 
-		$tours = $db->select(
-			$this->_table,
-			'*',
-			$condition
-		);
-
-		if ($tours !== false && count($tours) > 0)
-		{
-			if ($tours[0]['id'] == $this->get('id'))
-			{
-				$this->setError('Duplicated alias');
-
-				return false;
-			}
+			return false;
 		}
 
 		if (empty($this->name) || empty($this->alias))

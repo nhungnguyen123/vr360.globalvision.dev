@@ -20,6 +20,12 @@ spl_autoload_register(function ($className) {
 	}
 });
 
+if (!file_exists(VR360_PATH_ROOT . DIRECTORY_SEPARATOR . 'configuration.php'))
+{
+	echo 'Configuration file is not ready to use';
+	die;
+}
+
 require_once VR360_PATH_ROOT . DIRECTORY_SEPARATOR . 'configuration.php';
 require_once VR360_PATH_VENDOR . DIRECTORY_SEPARATOR . 'autoload.php';
 

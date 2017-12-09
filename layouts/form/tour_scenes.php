@@ -6,6 +6,7 @@ defined('_VR360_EXEC') or die;
  *
  * @var  array $scenes List of scenes
  */
+$scenes   = $tour->getScenes();
 ?>
 <div id="scenes" class="scenes">
 	<?php if (isset($scenes) && !empty($scenes)): ?>
@@ -14,16 +15,15 @@ defined('_VR360_EXEC') or die;
 			<div class="panel-heading">
 				<div class="container-fluid">
 					<div class="col-md-6">
-						<div
-								class="panel-title">Scene
+						<div class="panel-title"><i class="fas fa-eye"></i> Scene
 							<span class="badge">
 								<small><?php echo $scene->getHotspots() ? count($scene->getHotspots()) : 0; ?> hotspots</small>
 							</span>
 						</div>
 					</div>
 					<div class="col-md-6">
-						<button type="button" class="btn btn-danger btn-sm pull-right removeScene">
-							<i class="fa fa-remove"></i> Remove
+						<button type="button" id="removeScene" class="btn btn-danger btn-sm pull-right removeScene">
+							<i class="far fa-minus-square"></i> Remove
 						</button>
 					</div>
 				</div>
@@ -35,8 +35,12 @@ defined('_VR360_EXEC') or die;
 							<div class="form-group">
 								<label class="col-sm-3 control-label">Scene file *</label>
 								<div class="col-sm-9">
-									<input type="text" value="<?php echo $scene->file ?>" class="form-control disabled"
-										   disabled="disabled" title="Scene File"/>
+									<input
+											type="text"
+											value="<?php echo $scene->file ?>"
+											class="form-control disabled"
+											disabled="disabled" title="Scene File"
+									/>
 								</div>
 							</div>
 							<div class="form-group">
