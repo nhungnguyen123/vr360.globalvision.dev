@@ -29,10 +29,10 @@ class NewTourSteps extends ManageSteps
         $I->click(NewTourPage::$btnAddPano);
         $I->wait(5);
         $usePage = new NewTourPage();
-        $I->waitForElement($usePage->nameField(2), 30);
-        $I->waitForElement($usePage->nameField(2),30);
-        $I->fillField($usePage->nameField(2),$title);
-        $I->fillField($usePage->descriptionField(2),$description);
+        $I->waitForElement(NewTourPage::$fieldTitleFirst, 30);
+        $I->waitForElement(NewTourPage::$fieldDescriptionFirst,30);
+        $I->fillField(NewTourPage::$fieldTitleFirst,$title);
+        $I->fillField(NewTourPage::$fieldDescriptionFirst,$description);
         $I->attachFile($usePage->imageInput(2),NewTourPage::$imageFirst );
         $I->waitForElement(ManagePage::$checkboxAutoRation, 30);
         $I->waitForElement(ManagePage::$checkBoxSocical, 30);

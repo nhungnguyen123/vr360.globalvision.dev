@@ -20,9 +20,9 @@ class NewTourPage
 
     public static $checkShowMedia = ['xpath' => '//input[@id=\'tour_social\']' ];
 
-    public static $fieldTitleFirst = ['xpath' => '(//div[@id=\'panoWrap\']/div[2]/input)[2]'];
+    public static $fieldTitleFirst = ['xpath' => '(//input[@name=\'newSceneName[]\'])'];
 
-    public static $fieldDescriptionFirst = ['xpath' => '(//div[@id=\'panoWrap\']/div[3]/input)[2]'];
+    public static $fieldDescriptionFirst = ['xpath' => '(//input[@name=\'newSceneDescription[][]\'])'];
 
     public static $btnAddImageFirst = ['xpath' => '(//div[@id=\'panoWrap\']/div[1]/input)[2]'];
 
