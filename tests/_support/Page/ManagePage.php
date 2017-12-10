@@ -1,90 +1,93 @@
 <?php
 
 namespace Page;
+
 class ManagePage
 {
+	public static $btnLogout = ['id' => 'logout'];
 
-    public static $btnLogout = ['id' => 'logout'];
+	public static $btnAddNew = ['id' => 'addTour'];
 
-    public static $btnAddNew = ['id' => 'addTour'];
+	public static $searchId = ['id' => 'task-table-filter'];
 
-    public static $searchId = ['id' => 'task-table-filter'];
+	public static $buttonReset = ['xpath' => '//button[@id=\'reset-search\']'];
 
-    public static $buttonReset = ['xpath' => '//button[@id=\'reset-search\']'];
-    
-    public static $urlValue = ['xpath' => '//tr//td[@class=\'vtour-url\']'];
-    
-    public static $nameTour = ['xpath' =>'(//tr//td[@class=\'vtour-name\'])'];
-    
-    public static $noResults  = ['xpath' => '//div[@class=\'alert alert-warning\']'];
+	public static $urlValue = ['xpath' => '//tr//td[@class=\'vtour-url\']'];
 
-    public static $createSuccessXpath = ['xpath' => '//div[@class=\'alert alert-info\']'];
-    
-    public static $closeButtonSuccess = ['xpath' => '//button[@class=\'btn btn-primary btn-block btn-log-close\']'];
+	public static $nameTour = ['xpath' => '(//tr//td[@class=\'vtour-name\'])'];
 
-    public static $messageSaveSuccess =  'Tour is created';
+	public static $noResults = ['xpath' => '//div[@class=\'alert alert-warning\']'];
 
-    public static $btnEmbedfirst = ['xpath' => '//button[@class=\'btn btn-default embedCode\']'];
+	public static $createSuccessXpath = ['xpath' => '//div[@class=\'alert alert-info\']'];
 
-    public static $btnEditFrirst = ['xpath' =>'//button[@class=\'btn btn-primary editTour\']'];
+	public static $closeButtonSuccess = ['xpath' => '//button[@class=\'btn btn-primary btn-block btn-log-close\']'];
 
-    public static $btnHostPot = ['xpath' => '//button[@class=\'btn btn-primary editTourHotspot\']'];
+	public static $messageSaveSuccess = 'Tour is created';
 
-    public static $btnPreview = ['xpath' => '//a[@class=\'btn btn-info previewTour\']'];
+	public static $btnEmbedfirst = ['xpath' => '//button[@class=\'btn btn-default embedCode\']'];
 
-    public static $btnRemove = ['xpath' =>'//td[7]/button[4]'];
+	public static $btnEditFrirst = ['xpath' => '//button[@class=\'btn btn-primary editTour\']'];
 
-    public static $pano = ['xpath' =>' //tr//td[@class=\'controls\']//div/span[1]'];
+	public static $btnHostPot = ['xpath' => '//button[@class=\'btn btn-primary editTourHotspot\']'];
 
-    public static $hostpot = ['xpath' =>'//tr//td[@class=\'controls\']//div/span[2]'];
+	public static $btnPreview = ['xpath' => '//a[@class=\'btn btn-info previewTour\']'];
 
-    public static $checkBoxSocical = ['xpath' => '//input[@id=\'tour_social\']'];
+	public static $btnRemove = ['xpath' => '//td[7]/button[4]'];
 
-    public static $checkboxAutoRation = ['xpath' => '//input[@id=\'tour_rotation\']'];
-    
-    //edit page 
-    public static $contentEditXpath = ['xpath' => '(//h4[@id=\'myModalLabel\'])[2]'];
+	public static $pano = ['xpath' => ' //tr//td[@class=\'controls\']//div/span[1]'];
 
-        public static $alteDuplicate = ['xpath' => '//div[@class=\'alert alert-danger\']'];
-        
+	public static $hostpot = ['xpath' => '//tr//td[@class=\'controls\']//div/span[2]'];
 
-     public static $buttonCloseDuplicate = ['xpath' => '//button[@class=\'btn btn-primary btn-block btn-log-close\']'];
+	public static $checkBoxSocical = ['xpath' => '//input[@id=\'tour_social\']'];
 
+	public static $checkboxAutoRation = ['xpath' => '//input[@id=\'tour_rotation\']'];
 
-    //profile view
-     public static $profileImg = ['xpath' => '//img[@id=\'avatar\']'];
+	//edit page
+	public static $contentEditXpath = ['xpath' => '(//h4[@id=\'myModalLabel\'])[2]'];
 
-    //preview page
-     public static $titlePreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[10]/div/div/div/div'];
-    
-    public static $buttonFacePreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[13]/div[1]'];
-    
-    public static $buttonTwPreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[13]/div[2]'];
+	public static $alteDuplicate = ['xpath' => '//div[@class=\'alert alert-danger\']'];
 
-    public static $buttonGGPreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[13]/div[3]'];
+	public static $buttonCloseDuplicate = ['xpath' => '//button[@class=\'btn btn-primary btn-block btn-log-close\']'];
 
-    public static $buttonShowImage = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[5]/div[3]/div/div[2]'];
+	//profile view
+	public static $profileImg = ['xpath' => '//img[@id=\'avatar\']'];
 
-    public static $fistImagePreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[5]/div[1]/div/div[2]/div[1]/div[4]/div'];
+	//preview page
+	public static $titlePreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[10]/div/div/div/div'];
 
-    //content
-    public static $contentEdit = 'Edit tour';
+	public static $buttonFacePreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[13]/div[1]'];
 
-    //already 
-    public static $buttonCloseAlready = ['xpath' => './/*[@id=\'overlay-waiting\']/div/div[2]/div/button'];
+	public static $buttonTwPreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[13]/div[2]'];
 
-    public static $xPathMessage  = ['xpath' => './/*[@id=\'overlay-waiting\']/div/div[1]/div/div'];
+	public static $buttonGGPreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[13]/div[3]'];
 
-    public static $buttonClosePopup= ['xpath' => './/*[@id=\'vrTour\']/div/div/div[3]/button'];
-    //hotpot
-    public static $addHotsPotContent = 'Add hotspot';
+	public static $buttonShowImage = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[5]/div[3]/div/div[2]'];
 
-    public static $addHotsPotXpath = ['id' => 'myModalLabel'];
+	public static $fistImagePreview = ['xpath' => './/*[@id=\'krpanoSWFObject\']/div[1]/div[2]/div[5]/div[1]/div/div[2]/div[1]/div[4]/div'];
 
-    public function returnURL($url)
-    {
-        $urlShow = 'http://dev.globalvision.ch/'.$url;
-        return $urlShow;
-    }
-    
+	//content
+	public static $contentEdit = 'Edit tour';
+
+	//already
+	public static $buttonCloseAlready = ['xpath' => './/*[@id=\'overlay-waiting\']/div/div[2]/div/button'];
+
+	public static $xPathMessage = ['xpath' => './/*[@id=\'overlay-waiting\']/div/div[1]/div/div'];
+
+	public static $buttonClosePopup = ['xpath' => './/*[@id=\'vrTour\']/div/div/div[3]/button'];
+	//hotpot
+	public static $addHotsPotContent = 'Add hotspot';
+
+	public static $addHotsPotXpath = ['id' => 'myModalLabel'];
+
+	/**
+	 * @param   string  $url
+	 *
+	 * @return  string
+	 */
+	public function returnURL($url)
+	{
+		$urlShow = 'http://dev.globalvision.ch/' . $url;
+
+		return $urlShow;
+	}
 }

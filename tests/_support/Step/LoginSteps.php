@@ -12,6 +12,10 @@ use Page\ManagePage as ManagePage;
 class LoginSteps extends ManageSteps
 {
 
+	/**
+	 * @param   string  $username
+	 * @param   string  $pass
+	 */
 	public function login($username, $pass)
 	{
 		$I = $this;

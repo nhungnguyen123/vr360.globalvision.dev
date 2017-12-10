@@ -8,57 +8,102 @@
 
 namespace Page;
 
-
+/**
+ * Class NewTourPage
+ *
+ * @uses    For most of input please use @name instead ID because it's constant
+ * @uses    To use class, make sure use unique class only not all class
+ *
+ * @package Page
+ */
 class NewTourPage
 {
+	/**
+	 * @var array
+	 */
+	public static $fieldName = ['xpath' => './/input[@name=\'name\']'];
 
-    public static $fieldName  = ['xpath' => './/*[@id=\'name\']'];
+	/**
+	 * @var array
+	 */
+	public static $fieldFriendlyURL = ['xpath' => '//input[@name=\'alias\']'];
 
-    public static $fieldFriendlyURL = ['xpath' => '//input[@id=\'alias\']'];
+	/**
+	 * @var array
+	 */
+	public static $inputTourDescription = ['xpath' => '//input[@name=\'description\']'];
 
-    public static $checkAutoRation = ['xpath' => '//input[@id=\'tour_rotation\']'];
+	/**
+	 * @var array
+	 */
+	public static $inputTourKeyword = ['xpath' => '//input[@name=\'keyword\']'];
 
-    public static $checkShowMedia = ['xpath' => '//input[@id=\'tour_social\']' ];
+	/**
+	 * @var array
+	 */
+	public static $checkAutoRation = ['xpath' => '//input[@id=\'tour_rotation\']'];
 
-    public static $fieldTitleFirst = ['xpath' => '(//div[@id=\'panoWrap\']/div[2]/input)[2]'];
+	/**
+	 * @var array
+	 */
+	public static $checkShowMedia = ['xpath' => '//input[@id=\'tour_social\']'];
 
-    public static $fieldDescriptionFirst = ['xpath' => '(//div[@id=\'panoWrap\']/div[3]/input)[2]'];
+	public static $fieldTitleFirst = ['xpath' => '(//div[@id=\'panoWrap\']/div[2]/input)[2]'];
 
-    public static $btnAddImageFirst = ['xpath' => '(//div[@id=\'panoWrap\']/div[1]/input)[2]'];
+	public static $fieldDescriptionFirst = ['xpath' => '(//div[@id=\'panoWrap\']/div[3]/input)[2]'];
 
-    public static $btnClose = ['id' => 'modal-close'];
+	public static $btnAddImageFirst = ['xpath' => '(//div[@id=\'panoWrap\']/div[1]/input)[2]'];
 
-    public static $buttonRemove = ['xpath' =>  '//button[@class=\'btn btn-danger btn-sm pull-right removeScene\']'];
+	public static $btnClose = ['id' => 'modal-close'];
 
-    public static $btnRemovePano = ['xpath' => '//div[@id=\'tour-panos\']/div/div[1]/button'];
+	/**
+	 * @uses    Only get xpath for required class NOT whole class
+	 * @uses    And this button must be inside parent "scenes"
+	 *
+	 * @var array
+	 */
+	public static $buttonRemove = ['xpath' => '//*[@id="scenes"]//*/button[contains(concat(\' \', @class, \' \'), \' removeScene \')]'];
 
-    public static $btnCreate = ['xpath' => './/*[@id=\'saveTour\']'];
+	public static $btnRemovePano = ['xpath' => '//div[@id=\'tour-panos\']/div/div[1]/button'];
 
-    public static $btnAddPano = ['xpath' => './/*[@id=\'addScene\']'];
+	/**
+	 * @var array
+	 */
+	public static $btnCreate = ['xpath' => '//button[@id=\'saveTour\']'];
 
-    public static $missingField = ['xpath'=> '//span[@class=\'help-block form-error\']'];
+	/**
+	 * @var array
+	 */
+	public static $btnAddPano = ['xpath' => '//button[@id=\'addScene\']'];
 
-    public static $messageMissingField = 'This is a required field';
+	public static $missingField = ['xpath' => '//span[@class=\'help-block form-error\']'];
 
-    
-    //image 
-    public static $imageFirst = '1.jpg';
-    
-    public function nameField($value)
-    {
-        $xpath = '(//input[@name=\'newSceneName[]\'])['.$value.']';
-        return $xpath;
-    }
+	/**
+	 * @var string
+	 */
+	public static $messageMissingField = 'This is a required field';
 
-    public function descriptionField($value)
-    {
-        $xpath = '(//input[@name=\'newSceneDescription[]\'])['.$value.']';
-        return $xpath;
-    }
+	//image
+	public static $imageFirst = '1.jpg';
 
-    public function imageInput($value)
-    {
-        $xpath = '(//input[@name=\'newSceneFile[]\'])['.$value.']';
-       return $xpath;
-    }
+	public function nameField($value)
+	{
+		$xpath = '(//input[@name=\'newSceneName[]\'])[' . $value . ']';
+
+		return $xpath;
+	}
+
+	public function descriptionField($value)
+	{
+		$xpath = '(//input[@name=\'newSceneDescription[]\'])[' . $value . ']';
+
+		return $xpath;
+	}
+
+	public function imageInput($value)
+	{
+		$xpath = '(//input[@name=\'newSceneFile[]\'])[' . $value . ']';
+
+		return $xpath;
+	}
 }
