@@ -63,22 +63,31 @@
 					<div class="col-md-6">
 						<div class="header">
 							<a href="http://globalvision.ch" target="_blank" class="logo">
-								<!-- <img id="logo" src="./assets/images/logo.png"/>-->
+								<img id="logo" src="./assets/images/logo.png"/>
 							</a>
 						</div>
 					</div>
 					<div class="col-md-6">
 						<div class="text-center center-block">
-							<a href="<?php echo Vr360Configuration::getConfig('socials')['facebook']; ?>"
-							   target="_blank">
+							<a
+									href="<?php echo Vr360Configuration::getConfig('socials')['facebook']; ?>"
+									target="_blank"
+									id="social-facebook"
+							>
 								<i class="fab fa-facebook-square fa-3x"></i></i>
 							</a>
-							<a href="<?php echo Vr360Configuration::getConfig('socials')['twitter']; ?>"
-							   target="_blank">
+							<a
+									href="<?php echo Vr360Configuration::getConfig('socials')['twitter']; ?>"
+									target="_blank"
+									id="social-twitter"
+							>
 								<i class="fab fa-twitter-square fa-3x"></i>
 							</a>
-							<a href="<?php echo Vr360Configuration::getConfig('socials')['google+']; ?>"
-							   target="_blank">
+							<a
+									href="<?php echo Vr360Configuration::getConfig('socials')['google+']; ?>"
+									target="_blank"
+									id="social-googleplus"
+							>
 								<i class="fab fa-google-plus-square fa-3x"></i></a>
 							<a href="<?php echo Vr360Configuration::getConfig('socials')['mail']; ?>">
 								<i class="fas fa-envelope-square fa-3x"></i>
