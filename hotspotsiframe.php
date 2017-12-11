@@ -203,6 +203,8 @@ $scenes = $tour->id ? array() : $tour->getScenes();
 			krpano.call("set(hotspot[" + uniqname + "].sceneName, " + current_scene + ");");
 			krpano.call("set(hotspot[" + uniqname + "].atv, " + currentHotspotData.atv + ");");
 			krpano.call("set(hotspot[" + uniqname + "].hotspot_type, " + currentHotspotData.hotspot_type + ");");
+
+			// Hotspot arrow image
 			krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
 		}
 
