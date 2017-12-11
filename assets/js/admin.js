@@ -521,11 +521,12 @@
 					vrAdmin.Log.appendArray(data.messages);
 					vrAdmin.Waiting.stay();
 				})
-				.fail(function () {
-					$('#overlay-waiting .btn-log-close').removeClass('hide');
+				.fail(function (jqXHR, textStatus, errorThrown) {
+					alert('Ajax failed');
+					vrAdmin.Waiting.stay();
 				})
-				.always(function () {
-					$('#overlay-waiting .btn-log-close').removeClass('hide');
+				.always(function (jqXHR, textStatus, jqXHR) {
+					vrAdmin.Waiting.stay();
 				});
 		},
 		/*

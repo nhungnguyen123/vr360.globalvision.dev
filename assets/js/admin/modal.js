@@ -28,14 +28,32 @@
 
 		addButton: function(html)
 		{
-			$(html).insertBefore(vrModal._elements.modal + '.modal-footer #modal-close');
+			$(html).insertBefore(vrModal._elements.modal + ' .modal-footer #modal-close');
 		},
 
 		hideModal: function ()
 		{
 			$(vrModal.getModal()).modal('hide');
+		},
+
+		reload: function()
+		{
+			window.location = window.location.href
+		},
+
+		hooks: function()
+		{
+			$('body').on('click', vrModal._elements.modal + ' .modal-footer #modal-close', function()
+			{
+				vrModal.reload();
+			})
 		}
 	}
 
 	w.vrAdmin.Modal = vrModal;
+
+	$(document).ready(function(){
+		vrModal.hooks();
+	})
+
 })(window, jQuery);
