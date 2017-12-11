@@ -65,19 +65,14 @@ class Vr360Factory
 	 */
 	public static function getDbo()
 	{
-		static $db ;
-
-		if (!isset($db))
-		{
-			$factory = new \Joomla\Database\DatabaseFactory;
-			$db = $factory->getDriver('mysqli', array(
-				'host'=>  Vr360Configuration::getConfig('dbServer'),
-				'user' => Vr360Configuration::getConfig('dbUser'),
-				'password' => Vr360Configuration::getConfig('dbPassword'),
-				'database' => Vr360Configuration::getConfig('dbName'),
-				'utf8mb4' => true
-			));
-		}
+		$factory = new \Joomla\Database\DatabaseFactory;
+		$db      = $factory->getDriver('mysqli', array(
+			'host'     => Vr360Configuration::getConfig('dbServer'),
+			'user'     => Vr360Configuration::getConfig('dbUser'),
+			'password' => Vr360Configuration::getConfig('dbPassword'),
+			'database' => Vr360Configuration::getConfig('dbName'),
+			'utf8mb4'  => true
+		));
 
 		return $db;
 	}

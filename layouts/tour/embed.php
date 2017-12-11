@@ -5,7 +5,7 @@ defined('_VR360_EXEC') or die;
 $url = VR360_URL_ROOT . '/' . $tour->alias;
 ?>
 <iframe
-		name="embed-tour-<?php echo $tour->id; ?>"
+		name="tour-embed-<?php echo $tour->id; ?>"
 		width="800px"
 		height="400px"
 		src="<?php echo $url; ?>"

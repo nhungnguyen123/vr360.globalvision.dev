@@ -19,8 +19,9 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 <!DOCTYPE html>
 <html>
 <head>
-	<meta name="viewport"
-	      content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+	<meta
+			name="viewport"
+			content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
@@ -33,37 +34,37 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	<!-- Bootstrap -->
 	<script type="text/javascript" src="./assets/vendor/bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="./assets/vendor/bootstrap/css/bootstrap.css">
-	<link rel="stylesheet" href="./assets/vendor/font-awesome/css/font-awesome.css">
+	<link rel="stylesheet" href="./assets/vendor/fontawesome-5.0.0/web-fonts-with-css/css/fontawesome-all.css">
 </head>
 <body>
 <div id="button-container">
 	<div class="container-fluid">
 
-			<div class="button-group" role="group">
-				<button type="button" id="add_hotpost" class="btn btn-primary btn-sm" onclick="addHotspot();">Add hotspot
-				</button>
-				<button type="button" id="hotpost_done" class="btn btn-primary btn-sm" onclick="choose_hotSpot_type();">Choose
-					type
-				</button>
+		<div class="button-group" role="group">
+			<button type="button" id="add_hotpost" class="btn btn-primary btn-sm" onclick="addHotspot();">Add hotspot
+			</button>
+			<button type="button" id="hotpost_done" class="btn btn-primary btn-sm" onclick="choose_hotSpot_type();">Choose
+				type
+			</button>
 
-				<button type="button" id="remove_hotpost" class="btn btn-danger btn-sm" onclick="remove_hotspot();">Remove
-					hotspot
-				</button>
-				<button type="button" id="done_remove" class="btn btn-danger btn-sm" onclick="done_remove();">Removed done
-				</button>
-				<button type="button" id="moveHotspot" class="btn btn-warning btn-sm" onclick="moveHotspot();">Move hotspots
-				</button>
-				<button type="button" id="moveHotspotDone" class="btn btn-warning btn-sm" onclick="moveHotspotDone();">Moved
-					done
-				</button>
-			</div>
+			<button type="button" id="remove_hotpost" class="btn btn-danger btn-sm" onclick="remove_hotspot();">Remove
+				hotspot
+			</button>
+			<button type="button" id="done_remove" class="btn btn-danger btn-sm" onclick="done_remove();">Removed done
+			</button>
+			<button type="button" id="moveHotspot" class="btn btn-warning btn-sm" onclick="moveHotspot();">Move hotspots
+			</button>
+			<button type="button" id="moveHotspotDone" class="btn btn-warning btn-sm" onclick="moveHotspotDone();">Moved
+				done
+			</button>
+		</div>
 
-			<div class="button-group" role="group" style="margin-top: 5px">
-				<button type="button" id="set_defaultView" class="btn btn-primary btn-sm" onclick="setDefaultView();">Set
-					default
-					view
-				</button>
-			</div>
+		<div class="button-group" role="group" style="margin-top: 5px">
+			<button type="button" id="set_defaultView" class="btn btn-primary btn-sm" onclick="setDefaultView();">Set
+				default
+				view
+			</button>
+		</div>
 
 	</div>
 </div>

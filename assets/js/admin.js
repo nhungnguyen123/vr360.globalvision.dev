@@ -180,7 +180,8 @@
 						vrAdmin.Waiting.stay();
 					}
 				})
-				.fail(function () {
+				.fail(function (jqXHR, textStatus, errorThrown) {
+					alert('Ajax failed');
 					vrAdmin.Waiting.stay();
 				})
 				.always(function () {
@@ -214,7 +215,8 @@
 						vrAdmin.Waiting.success();
 					}
 				})
-				.fail(function () {
+				.fail(function (jqXHR, textStatus, errorThrown) {
+					alert('Ajax failed');
 					vrAdmin.Waiting.stay();
 				})
 				.always(function () {
@@ -227,31 +229,31 @@
 		 */
 		hooks: function () {
 			// Reset search
-			$('body').on('click', '#reset-search', function (event) {
+			$('body').on('click', '#search-reset', function (event) {
 				event.preventDefault();
 				$('input[name="keyword"]').val('');
 				$('form[name="search-form"]').submit();
 			})
 
-			$("body").on("click", ".addNew", function () {
+			$("body").on("click", "#tour-add", function () {
 				vrAdmin.addTour();
 			});
 
-			$("body").on("click", ".editTour", function () {
+			$("body").on("click", ".tour-edit", function () {
 				vrAdmin.editTour(this);
 			});
 
-			$("body").on("click", ".editTourHotspot", function () {
+			$("body").on("click", ".tour-edit-hotspots", function () {
 				vrAdmin.editTourHotspot(this);
 			});
 
 			// Edit profile
-			$("body").on("click", "a.navbar-brand", function () {
+			$("body").on("click", "a.user-avatar", function () {
 				vrAdmin.editProfile(this);
 			});
 
 			// Save profile
-			$("body").on("submit", "form#form-user", function (event) {
+			$("body").on("submit", "form#user-form", function (event) {
 				event.preventDefault();
 				var formData = new FormData(this);
 
@@ -274,7 +276,8 @@
 						vrAdmin.Log.appendArray(data.messages);
 						vrAdmin.Waiting.stay();
 					})
-					.fail(function () {
+					.fail(function (jqXHR, textStatus, errorThrown) {
+						alert('Ajax failed');
 						vrAdmin.Waiting.stay();
 					})
 					.always(function () {
@@ -282,11 +285,11 @@
 					});
 			});
 
-			$("body").on("click", ".embedCode", function () {
+			$("body").on("click", ".tour-embed", function () {
 				vrAdmin.embedTour(this);
 			});
 
-			$("body").on("click", "button.removeTour", function (event) {
+			$("body").on("click", ".tour-delete", function (event) {
 				event.preventDefault();
 
 				if (confirm("Confirm delete a tour")) {
@@ -324,27 +327,64 @@
 		 */
 		generateAlias: function () {
 			// Prepare
-			var alias = $("#form-tour input#name").val();
+			var alias = $("#tour-form input#name").val();
 
 			alias = alias.toLowerCase().replace(/\s+/g, "-")           // Replace spaces with -
 				.replace(/[^\w\-]+/g, "")       // Remove all non-word chars
 				.replace(/\-\-+/g, "-")         // Replace multiple - with single -
 				.replace(/^-+/, "")             // Trim - from start of text
 				.replace(/-+$/, "");            // Trim - from end of text
-			$("#form-tour input#alias").val(alias);
+			$("#tour-form input#alias").val(alias);
+		},
+
+		validateAlias: function(tourId, alias)
+		{
+			$.ajax({
+				url: "index.php",
+				type: "POST",
+				data: {
+					id: tourId,
+					alias: alias,
+					view: "tour",
+					task: "ajaxValidateAlias"
+				},
+				dataType: 'json',
+				/**
+				 *
+				 */
+				beforeSend: function () {
+					vrAdmin.Waiting.waiting();
+				}
+			})
+				.done(function (data, textStatus, jqXHR) {
+					if (data.status == true) {
+						vrAdmin.Waiting.success();
+					}
+					else {
+						vrAdmin.Log.appendArray(data.messages);
+						vrAdmin.Waiting.stay();
+					}
+				})
+				.fail(function (jqXHR, textStatus, errorThrown) {
+					alert('Ajax failed');
+					vrAdmin.Waiting.stay();
+				})
+				.always(function (jqXHR, textStatus, jqXHR) {
+					vrAdmin.Waiting.stay();
+				});
 		},
 
 		/**
 		 * Hook events
 		 */
 		hooks: function () {
-			$("body").on("blur", "#form-tour input#name", function () {
+			$("body").on("blur", "#tour-form input#name", function () {
 				vrTour.generateAlias();
 			});
 
-			$('body').on('blur', '#form-tour input#alias', function () {
-				var tourId = $('#form-tour input[name="id"]');
-				var alias = $('#form-tour input#alias').val();
+			$('body').on('blur', '#tour-form input#alias', function () {
+				var tourId = $('#tour-form input[name="id"]');
+				var alias = $('#tour-form input#alias').val();
 
 				if (tourId.length == 1) {
 					tourId = $(tourId).val();
@@ -353,45 +393,13 @@
 					tourId = 0;
 				}
 
-				$.ajax({
-					url: "index.php",
-					type: "POST",
-					data: {
-						id: tourId,
-						alias: alias,
-						view: "tour",
-						task: "ajaxValidateAlias"
-					},
-					dataType: 'json',
-					/**
-					 *
-					 */
-					beforeSend: function () {
-						vrAdmin.Waiting.waiting();
-					}
-				})
-					.done(function (data, textStatus, jqXHR) {
-						if (data.status == true) {
-							vrAdmin.Waiting.success();
-						}
-						else {
-							vrAdmin.Log.appendArray(data.messages);
-							vrAdmin.Waiting.stay();
-						}
-					})
-					.fail(function (jqXHR, textStatus, errorThrown) {
-						alert('Ajax failed');
-						vrAdmin.Waiting.stay();
-					})
-					.always(function (jqXHR, textStatus, jqXHR) {
-						vrAdmin.Waiting.stay();
-					});
+				vrTour.validateAlias(tourId, alias);
 			})
 
 			/**
 			 * Main function to submit save tour
 			 */
-			$("body").on("submit", "form#form-tour", function (event) {
+			$("body").on("submit", "form#tour-form", function (event) {
 				event.preventDefault();
 
 				var formData = new FormData(this);
@@ -405,6 +413,7 @@
 					cache: false,
 					processData: false,
 					contentType: false,
+					dataType: "json",
 					beforeSend: function () {
 						$("body").addClass("loading");
 						$('#overlay-waiting .btn-log-close').addClass('hide');
@@ -442,7 +451,7 @@
 		},
 
 		makeDefault: function (el) {
-			$("#form-tour input[type='checkbox'][name='sceneDefault']:checked").prop("checked", false);
+			$("#tour-form input[type='checkbox'][name='sceneDefault']:checked").prop("checked", false);
 			$(el).prop("checked", true);
 		},
 
@@ -454,17 +463,22 @@
 		 *
 		 */
 		hooks: function () {
-			$("body").on("click", "button#addScene", function () {
+			/**
+			 * Add scene
+			 */
+			$("body").on("click", "button#tour-scene-add", function () {
 				vrScene.addNew();
 			});
 
-			// Remove a scene
-			$("body").on("click", "#form-tour button.removeScene", function (event) {
+			/**
+			 * Remove scene
+			 */
+			$("body").on("click", "#tour-form button.tour-scene-remove", function (event) {
 				var el = event.target || event.currentTarget;
 				vrScene.remove(el);
 			});
 
-			$("body").on("change", "#form-tour input[type='checkbox'][name='sceneDefault']", function (event) {
+			$("body").on("change", "#tour-form input[type='checkbox'][name='sceneDefault']", function (event) {
 				var el = event.target || event.currentTarget;
 				vrScene.makeDefault(el);
 			});
@@ -518,7 +532,7 @@
 		 *
 		 */
 		hooks: function () {
-			$("body").on("click", "button#saveHotspots", function (event) {
+			$("body").on("click", "button#hotspots-save", function (event) {
 				event.preventDefault();
 				vrAdmin.Tour.Hotspot.saveHotspot(this);
 			});

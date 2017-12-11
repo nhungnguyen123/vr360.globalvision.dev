@@ -1,5 +1,4 @@
 <?php defined('_VR360_EXEC') or die; ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +42,8 @@
 </head>
 <body>
 <div class="container-fluid">
-	<div class="row" style="margin-top: 15px">
+	<div class="row mainWrapper">
+		<!-- Waiting layer -->
 		<div id="overlay-waiting" class="waiting">
 			<div class="row">
 				<div class="messages col-md-6 col-md-offset-3">
@@ -59,48 +59,56 @@
 			</div>
 		</div>
 		<div class="col-md-12">
-			<div class="container-fluid">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="header">
-							<a href="http://globalvision.ch" target="_blank" class="logo">
-								<!-- <img id="logo" src="./assets/images/logo.png"/>-->
-							</a>
-						</div>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="header">
+						<a href="http://globalvision.ch" target="_blank" class="logo">
+							<img id="logo" src="./assets/images/logo.png"/>
+						</a>
 					</div>
-					<div class="col-md-6">
-						<div class="text-center center-block">
-							<a class="social-facebook" href="<?php echo Vr360Configuration::getConfig('socials')['facebook']; ?>"
-							   target="_blank">
-								<i class="fab fa-facebook-square fa-3x"></i></i>
-							</a>
-							<a class="social-twitter" href="<?php echo Vr360Configuration::getConfig('socials')['twitter']; ?>"
-							   target="_blank">
-								<i class="fab fa-twitter-square fa-3x"></i>
-							</a>
-							<a class="social-googleplus" href="<?php echo Vr360Configuration::getConfig('socials')['google+']; ?>"
-							   target="_blank">
-								<i class="fab fa-google-plus-square fa-3x"></i></a>
-							<a class="social-email" href="<?php echo Vr360Configuration::getConfig('socials')['mail']; ?>">
-								<i class="fas fa-envelope-square fa-3x"></i>
-							</a>
-						</div>
+				</div>
+				<div class="col-md-6">
+					<div class="text-center center-block">
+						<a
+								class="social-facebook"
+								href="<?php echo Vr360Configuration::getConfig('socials')['facebook']; ?>"
+								target="_blank"
+						>
+							<i class="fab fa-facebook-square fa-3x"></i></i>
+						</a>
+						<a
+								class="social-twitter"
+								href="<?php echo Vr360Configuration::getConfig('socials')['twitter']; ?>"
+								target="_blank"
+						>
+							<i class="fab fa-twitter-square fa-3x"></i>
+						</a>
+						<a
+								class="social-googleplus"
+								href="<?php echo Vr360Configuration::getConfig('socials')['google+']; ?>"
+								target="_blank"
+						>
+							<i class="fab fa-google-plus-square fa-3x"></i></a>
+						<a
+								class="social-email"
+								href="<?php echo Vr360Configuration::getConfig('socials')['mail']; ?>"
+						>
+							<i class="fas fa-envelope-square fa-3x"></i>
+						</a>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-md-12">
-			<div class="container-fluid">
-				<div class="messages">
-					<?php $messages = Vr360Session::getInstance()->getMessages(); ?>
-					<?php if (!empty($messages)): ?>
-						<?php foreach ($messages as $key => $type): ?>
-							<?php foreach ($type as $message): ?>
-								<div class="label label-<?php echo $key; ?>"><?php echo $message; ?></div>
-							<?php endforeach; ?>
+			<div class="messages">
+				<?php $messages = Vr360Session::getInstance()->getMessages(); ?>
+				<?php if (!empty($messages)): ?>
+					<?php foreach ($messages as $key => $type): ?>
+						<?php foreach ($type as $message): ?>
+							<div class="label label-<?php echo $key; ?>"><?php echo $message; ?></div>
 						<?php endforeach; ?>
-					<?php endif; ?>
-				</div>
+					<?php endforeach; ?>
+				<?php endif; ?>
 			</div>
 			<hr/>
 		</div>

@@ -6,7 +6,7 @@ $user = Vr360Factory::getUser();
 <div class="col-md-12">
 	<div class="row">
 		<div class="container-fluid">
-			<form method="post" id="form-user" class="form-horizontal" enctype="multipart/form-data">
+			<form method="post" id="user-form" class="form-horizontal" enctype="multipart/form-data">
 				<div class="col-md-12">
 					<div class="row">
 						<div class="col-md-4">

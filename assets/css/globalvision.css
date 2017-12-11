@@ -1,7 +1,5 @@
-
-
-#logo {
-    margin: 54px;
+.mainWrapper {
+    margin-top: 15px;
 }
 
 #footer {
@@ -10,24 +8,20 @@
     background-color: #fcf8e3
 }
 
-
 /* Start by setting display:none to make this hidden.
    Then we position it in relation to the viewport window
    with position:fixed. Width, height, top and left speak
    for themselves. Background we set to 80% white with
    our animation centered, and no-repeating */
 .waiting {
-    display:    none;
-    position:   fixed;
-    z-index:    1100;
-    top:        0;
-    left:       0;
-    height:     100%;
-    width:      100%;
-    background: rgba(0, 0, 0, .5)
-    url('../images/ajax-loader.gif')
-    50% 50%
-    no-repeat;
+    display: none;
+    position: fixed;
+    z-index: 1100;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, .5) url('../images/ajax-loader.gif') 50% 50% no-repeat;
 }
 
 /* When the body has the loading class, we turn
@@ -42,8 +36,7 @@ body.loading .waiting {
     display: block;
 }
 
-tr.is-valid-0
-{
+tr.is-valid-0 {
     opacity: 0.5;
 }
 
@@ -57,6 +50,7 @@ tr.is-valid-0
 .bs-docs-section {
     margin-bottom: 60px;
 }
+
 .bs-docs-section:last-child {
     margin-bottom: 0;
 }
@@ -74,6 +68,6 @@ h1[id] {
     margin-bottom: 5px;
 }
 
-.modal form label.control-label{
-    text-align:left;
+.modal form label.control-label {
+    text-align: left;
 }

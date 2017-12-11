@@ -12,7 +12,7 @@ class Vr360Configuration extends Vr360Object
 	/**
 	 * @var string
 	 */
-	public $dbName = 'globalvision_vr360_v3';
+	public $dbName = 'globalvision_vr360';
 
 	/**
 	 * @var string

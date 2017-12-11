@@ -28,6 +28,11 @@ class Vr360ViewTour extends Vr360View
 	{
 		$this->tour = Vr360ModelTour::getInstance()->getItemByAlias();
 
+		if (!$this->tour)
+		{
+			echo 'Tour not found'; exit();
+		}
+
 		if ($this->tour)
 		{
 			Vr360Factory::getInput()->set('id', $this->tour->get('id'));

@@ -15,7 +15,7 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 	<div class="form-group">
 		<label class="col-sm-2 control-label">Skins</label>
 		<div class="col-sm-10">
-			<select class="form-control input-sm" title="skin" name="params[skin]">
+			<select class="form-control input-sm tour-skins" title="skin" name="params[skin]">
 				<?php foreach ($skins as $skin): ?>
 					<option value="<?php echo $skin; ?>"><?php echo $skin; ?></option>
 				<?php endforeach; ?>
@@ -29,7 +29,8 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 					<label>
 						<input
 								type="checkbox"
-								id="tour_rotation"
+								id="tour-param-rotation"
+								class="tour-params"
 								name="params[rotation]"
 							<?php echo ($tour->params->get('rotation', false)) ? 'checked="checked"' : '' ?>
 								value="1" size="80"/> Check for auto rotation.
@@ -41,7 +42,8 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 					<label>
 						<input
 								type="checkbox"
-								id="tour_social"
+								id="tour-param-socials"
+								class="tour-params"
 								name="params[socials]"
 								value="1"
 							<?php echo ($tour->params->get('socials', false)) ? 'checked="checked"' : '' ?>

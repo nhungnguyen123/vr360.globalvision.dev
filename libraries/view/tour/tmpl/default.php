@@ -1,20 +1,18 @@
-<?php
-
-defined('_VR360_EXEC') or die;
-?>
+<?php defined('_VR360_EXEC') or die; ?>
 <!DOCTYPE html>
 <html>
 <head>
 	<?php /* @var Vr360Tour $tour */ ?>
 	<?php $tour = $this->tour; ?>
 	<?php $thumbnail = $tour->getThumbnail(); ?>
-	<title><?php echo Vr360Configuration::getConfig('siteName'); ?> - <?php echo $this->tour->getName(); ?></title>
+	<title><?php echo Vr360Configuration::getConfig('siteName'); ?> - <?php echo $tour->getName(); ?></title>
 
 	<link rel="shortcut icon" type="image/x-icon" href="./assets/images/globalvision.webp">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
 
 	<meta name="apple-mobile-web-app-capable" content="yes"/>
 	<meta name="apple-mobile-web-app-status-bar-style" content="black"/>
+
 	<!-- Charset -->
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 	<meta http-equiv="x-ua-compatible" content="IE=edge"/>
@@ -26,7 +24,7 @@ defined('_VR360_EXEC') or die;
 	<link rel="stylesheet" type="text/css" href="./assets/css/tour.min.css">
 
 	<!-- Krpano -->
-	<script src="<?php echo $this->tour->getKrpanoJsUrl(); ?>"></script>
+	<script src="<?php echo $tour->getKrpanoJsUrl(); ?>"></script>
 
 	<script src="./assets/js/site/tour.js"></script>
 
