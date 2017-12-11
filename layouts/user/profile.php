@@ -16,7 +16,7 @@ $user = Vr360Factory::getUser();
 								<label class="col-md-4 control-label" for="textinput">Email</label>
 								<div class="col-md-8">
 									<input
-											id="textinput" name="email" placeholder="input your email"
+											id="user-email" name="email" placeholder="input your email"
 											class="form-control input-sm" type="text"
 											data-validation="required email"
 											value="<?php echo $user->email; ?>">
@@ -26,7 +26,7 @@ $user = Vr360Factory::getUser();
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Name</label>
 								<div class="col-md-8">
-									<input id="textinput" name="name" placeholder="input your name"
+									<input id="user-name" name="name" placeholder="input your name"
 										   class="form-control input-sm" data-validation="required" type="text"
 										   value="<?php echo $user->name; ?>">
 
@@ -34,9 +34,22 @@ $user = Vr360Factory::getUser();
 							</div>
 							<!-- Text input-->
 							<div class="form-group">
+								<label class="col-md-4 control-label" for="textinput">Current password</label>
+								<div class="col-md-8">
+									<input
+											id="user-current-password"
+											name="currentpassword"
+											placeholder="Enter your current password"
+											class="form-control input-sm"
+											type="password"
+									>
+								</div>
+							</div>
+							<!-- Text input-->
+							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Password</label>
 								<div class="col-md-8">
-									<input id="textinput" name="password" placeholder="Change your password"
+									<input id="user-password" name="password" placeholder="Change your password"
 										   class="form-control input-sm" type="password">
 
 								</div>
@@ -45,7 +58,7 @@ $user = Vr360Factory::getUser();
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="textinput">Confirm password</label>
 								<div class="col-md-8">
-									<input id="textinput" name="confirmpassword" placeholder="Confirm your password"
+									<input id="user-confirm-password" name="confirmpassword" placeholder="Confirm your password"
 										   class="form-control input-sm" type="password">
 
 								</div>
@@ -56,7 +69,7 @@ $user = Vr360Factory::getUser();
 								<label class="col-md-4 control-label" for="textinput">Company name</label>
 								<div class="col-md-8">
 									<input
-											id="textinput" name="company" placeholder="your company name"
+											id="user-company" name="company" placeholder="your company name"
 											class="form-control input-sm" type="text"
 											data-validation=""
 											value="">
@@ -66,7 +79,7 @@ $user = Vr360Factory::getUser();
 								<label class="col-md-4 control-label" for="textinput">Company address</label>
 								<div class="col-md-8">
 									<input
-											id="textinput" name="companyaddress" placeholder="your company address"
+											id="user-company-address" name="companyaddress" placeholder="your company address"
 											class="form-control input-sm" type="text"
 											data-validation=""
 											value="">
@@ -78,14 +91,14 @@ $user = Vr360Factory::getUser();
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="uploadPhoto">Upload logo</label>
 								<div class="col-md-8">
-									<input id="uploadPhoto" name="logo" class="input-file" type="file">
+									<input id="user-logo" name="logo" class="input-file" type="file">
 								</div>
 							</div>
 							<!-- Button (Double) -->
 							<div class="form-group">
 								<label class="col-md-4 control-label" for="save"></label>
 								<div class="col-md-8">
-									<button id="saveprofile" name="saveprofile" class="btn btn-primary btn-sm">Save
+									<button id="user-save-profile" name="saveprofile" class="btn btn-primary btn-sm">Save
 									</button>
 								</div>
 							</div>

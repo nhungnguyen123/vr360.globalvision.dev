@@ -82,7 +82,7 @@ class Vr360ModelUser extends Vr360Model
 		$confirmpassword = $input->getString('confirmpassword');
 
 		$tableUser = new Vr360TableUser;
-		$tableUser->load(array('id' => $user->id));
+		$tableUser->load(array('id' => $user->id, 'password' => md5($input->getString('currentpassword'))));
 
 		if ($tableUser->id)
 		{

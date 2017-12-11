@@ -25,10 +25,10 @@ class Vr360HelperAuthorize
 	}
 
 	/**
-	 * @param $userName
-	 * @param $password
+	 * @param   string  $userName
+	 * @param   string  $password
 	 *
-	 * @return boolean
+	 * @return  boolean
 	 */
 	public static function authorize($userName, $password)
 	{
