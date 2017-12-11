@@ -18,8 +18,8 @@ class NewTourCest
 		/**
 		 * @TODO Move these value to defines
 		 */
-		$this->userName = 'designteam';
-		$this->pass     = '123';
+		$this->userName = 'develop';
+		$this->pass     = 'develop';
 
 		/**
 		 * @TODO    Create name over than 255 character
@@ -36,15 +36,19 @@ class NewTourCest
 		$this->urlEdit      = $this->url . 'edit';
 	}
 
-	/**
-	 * @param NewTourSteps $I
-	 * create new tour without any screen
-	 */
-    public function createWithoutAnyScreen(NewTourSteps $I)
-    {
-        $I->login($this->userName, $this->pass);
-        $I->createWithoutAnyScreen($this->nameTour);
-    }
+	public function _before(NewTourSteps $I)
+	{
+		$I->login($this->userName, $this->pass);
+	}
+//	/**
+//	 * @param NewTourSteps $I
+//	 * create new tour without any screen
+//	 */
+//    public function createWithoutAnyScreen(NewTourSteps $I)
+//    {
+//        $I->login($this->userName, $this->pass);
+//        $I->createWithoutAnyScreen($this->nameTour);
+//    }
 
 	/**
 	 * @param NewTourSteps $I
@@ -52,7 +56,6 @@ class NewTourCest
 	 */
 	public function checkMissing(NewTourSteps $I)
 	{
-		$I->login($this->userName, $this->pass);
 		$I->checkMissing($this->nameTour, $this->url, $this->title, $this->description);
 	}
 
@@ -62,7 +65,6 @@ class NewTourCest
 	 */
 	public function createNew(NewTourSteps $I)
 	{
-		$I->login($this->userName, $this->pass);
 		$I->create($this->nameTour, $this->url, $this->title, $this->description);
 	}
 
@@ -72,7 +74,6 @@ class NewTourCest
 	 */
 	public function preview(NewTourSteps $I)
 	{
-		$I->login($this->userName, $this->pass);
 		$I->preview($this->nameTour, $this->url, $this->title);
 	}
 
@@ -82,7 +83,6 @@ class NewTourCest
 	 */
 	public function editTour(NewTourSteps $I)
 	{
-		$I->login($this->userName, $this->pass);
 		$I->editTour($this->nameTour, $this->nameTourEdit, $this->url);
 	}
 
@@ -92,7 +92,6 @@ class NewTourCest
 	 */
 	public function createReady(NewTourSteps $I)
 	{
-		$I->login($this->userName, $this->pass);
 		$I->createWithURLReady($this->nameTourAlreday, $this->url);
 	}
 
@@ -102,7 +101,6 @@ class NewTourCest
 	 */
 	public function delete(NewTourSteps $I)
 	{
-		$I->login($this->userName, $this->pass);
 		$I->delete($this->nameTourEdit);
 //        $I->wantTo('Check Close button ');
 //        $I->createWithClose($this->nameTour, $this->url, $this->title, $this->description);

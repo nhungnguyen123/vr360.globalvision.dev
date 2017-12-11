@@ -22,7 +22,7 @@ class LoginPage
     /**
      * @var array
      */
-	public static $btnLogin = ['xpath' => ' //input[@name=\'submit\']'];
+	public static $btnLogin = ['id' => 'user-login'];
 
     /**
      * @var array

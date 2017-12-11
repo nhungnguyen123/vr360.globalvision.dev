@@ -21,23 +21,23 @@ class NewTourPage
 	/**
 	 * @var array
 	 */
-	public static $fieldName = ['xpath' => '//input[@name=\'name\']'];
+	public static $fieldName = ['id' => 'name'];
 
 	/**
 	 * @var array
 	 */
-	public static $fieldFriendlyURL = ['xpath' => '//input[@name=\'alias\']'];
+	public static $fieldFriendlyURL = ['id' => 'alias'];
 
 
 	/**
 	 * @var array
 	 */
-	public static $checkAutoRation = ['xpath' => '//input[@id=\'tour_rotation\']'];
+	public static $checkAutoRation = ['id' => 'tour-param-rotation'];
 
 	/**
 	 * @var array
 	 */
-	public static $checkShowMedia = ['xpath' => '//input[@id=\'tour_social\']'];
+	public static $checkShowMedia = ['id' => 'tour-param-socials'];
 
     
 	/**
@@ -46,18 +46,18 @@ class NewTourPage
 	 *
 	 * @var array
 	 */
-	public static $buttonRemoveScene = ['xpath' => '//button[contains(concat(\' \', @class, \' \'), \' removeScene \')]'];
+	public static $buttonRemoveScene = ['xpath' => '//button[contains(concat(\' \', @class, \' \'), \'tour-scene-remove\')]'];
 
 
 	/**
 	 * @var array
 	 */
-	public static $btnCreate = ['xpath' => '//button[@id=\'saveTour\']'];
+	public static $btnCreate = ['id' => 'tour-save'];
 
 	/**
 	 * @var array
 	 */
-	public static $btnAddPano = ['xpath' => '//button[@id=\'addScene\']'];
+	public static $btnAddPano = ['id' => 'tour-scene-add'];
 
     /**
      * @var array
