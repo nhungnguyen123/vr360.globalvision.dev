@@ -13,8 +13,11 @@ defined('_VR360_EXEC') or die;
 					<div class="panel-title">New Scene</div>
 				</div>
 				<div class="col-md-6">
-					<button type="button" class="btn btn-danger btn-sm pull-right removeScene"><i
-								class="fa fa-remove"></i> Remove
+					<button
+							type="button"
+							class="btn btn-danger btn-sm pull-right tour-scene-remove"
+					>
+						<i class="fas fa-minus"></i> Remove
 					</button>
 				</div>
 			</div>
@@ -29,7 +32,7 @@ defined('_VR360_EXEC') or die;
 								<input
 										type="file"
 										name="newSceneFile[]"
-										class="scene-file"
+										class="tour-scene-file"
 										data-validation="mime size required"
 										data-validation-allowing="jpg, png, jpeg"
 										data-validation-max-size="<?php echo ini_get('upload_max_filesize'); ?>"
@@ -42,7 +45,7 @@ defined('_VR360_EXEC') or die;
 								<input
 										name="newSceneName[]"
 										type="text"
-										class="form-control input-sm scene-name"
+										class="form-control input-sm tour-scene-name"
 										placeholder="Scene name"
 										data-validation="required"
 								/>
@@ -54,7 +57,7 @@ defined('_VR360_EXEC') or die;
 								<input
 										name="newSceneDescription[]"
 										type="text"
-										class="form-control input-sm scene-description"
+										class="form-control input-sm tour-scene-description"
 										size="80"
 										placeholder="Scene description"
 								/>

@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=ENCRYPT XML droplet
-Exec="/home/soulevil/www/vr360.globalvision.dev/krpano/krpanotools" encrypt -h5 -z %F
-Path=/home/soulevil/www/vr360.globalvision.dev/krpano/
-Icon=/home/soulevil/www/vr360.globalvision.dev/krpano/.encrypticon
-Terminal=true
-Type=Application
-Categories=Application;Graphics;
-StartupNotify=false

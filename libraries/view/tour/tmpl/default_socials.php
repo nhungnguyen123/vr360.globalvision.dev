@@ -1,7 +1,4 @@
-<?php
-
-defined('_VR360_EXEC') or die;
-?>
+<?php defined('_VR360_EXEC') or die; ?>
 
 <?php if ($thumbnail !== false): ?>
 	<meta itemprop="image" content="<?php echo $thumbnail['url']; ?>">
@@ -11,7 +8,7 @@ defined('_VR360_EXEC') or die;
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:site" content="@GlobalVision360"/>
 <meta name="twitter:creator" content="@GlobalVision360"/>
-<meta name="twitter:description" content="<?php echo Vr360Configuration::getConfig('siteDescription'); ?>">
+<meta name="twitter:description" content="<?php echo $tour->getDescription(); ?>">
 <!-- Twitter summary card with large image must be at least 280x150px -->
 
 <?php if ($thumbnail !== false): ?>
@@ -21,8 +18,8 @@ defined('_VR360_EXEC') or die;
 <!-- Opengraph -->
 <meta property="og:url" content="<?php echo VR360_URL_FULL; ?>"/>
 <meta property="og:type" content="website"/>
-<meta property="og:title" content="VR360 Globalvision - <?php echo $this->tour->getName(); ?>"/>
-<meta property="og:description" content="<?php echo $this->tour->getDescription(); ?>"/>
+<meta property="og:title" content="VR360 Globalvision - <?php echo $tour->getName(); ?>"/>
+<meta property="og:description" content="<?php echo $tour->getDescription();; ?>"/>
 <?php if ($thumbnail !== false): ?>
 	<meta property="og:image" content="<?php echo $thumbnail['url']; ?>"/>
 	<meta property="og:image:alt" content="<?php echo $thumbnail['alt']; ?>"/>
