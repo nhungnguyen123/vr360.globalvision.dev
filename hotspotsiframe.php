@@ -8,7 +8,7 @@ $tourId            = Vr360Factory::getInput()->getInt('uId', 0);
 $tourUrl           = '//' . $_SERVER['HTTP_HOST'] . '/_/' . $tourId . '/vtour';
 
 $tour   = Vr360ModelTour::getInstance()->getItem($tourId);
-$scenes = $tour->id ? array() : $tour->getScenes();
+$scenes = $tour->id ? $tour->getScenes() : array();
 ?>
 <!DOCTYPE html>
 <html>
@@ -72,7 +72,7 @@ $scenes = $tour->id ? array() : $tour->getScenes();
 	</button>
 	<?php if (!empty($scenes)): ?>
 		<button type="button" class="btn btn-default btn-sm" onclick="setHotSpotType_Nomal()">
-			<i class="fas fa-link"></i>Scene linking
+			<i class="fas fa-link"></i> Scene linking
 		</button>
 	<?php endif; ?>
 </div>
