@@ -5,7 +5,7 @@
 		<div class="container-fluid">
 			<!-- Brand and toggle get grouped for better mobile display -->
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">
+				<a class="navbar-brand user-avatar" href="#">
 					<img
 							src="<?php echo Vr360HelperUser::getGravatar($user->email); ?>"
 							class="img-circle"
@@ -17,38 +17,56 @@
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-				<ul class="nav navbar-nav">
-					<li class="">
-						<form action="index.php" class="navbar-form navbar-right">
+				<div class="navbar-form navbar-left">
+					<ul class="nav navbar-nav">
+						<li class="">
 							<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-							<button type="button" class="btn btn-primary addNew" id="addTour">
+							<button type="button" class="btn btn-primary tour-add" id="tour-add">
 								<i class="fas fa-plus"></i>
 								Add new
 							</button>
-						</form>
-					</li>
-				</ul>
+						</li>
+					</ul>
+				</div>
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<form method="post" class="navbar-form navbar-left form-inline pull-right" name="search-form">
+						<!-- Search form -->
+						<form
+								method="post"
+								class="navbar-form navbar-left form-inline pull-right"
+								name="search-form"
+						>
 							<div class="form-group">
 								<div class="input-group">
 									<span class="input-group-btn">
-										<button type="button" class="btn btn-danger" id="reset-search" value="Reset"><i class="fas fa-sync"></i></button>
+										<button
+												type="button"
+												class="btn btn-danger"
+												id="search-reset"
+												value="Reset"
+										>
+											<i class="fas fa-sync"></i>
+										</button>
 									</span>
 									<input
 											type="text"
 											class="form-control"
-											id="task-table-filter"
+											id="search-keyword"
 											data-action="filter"
 											data-filters="#task-table"
-											placeholder="Enter your tour name then press enter"
+											placeholder="Enter keyword for searching"
 											name="keyword"
 											value="<?php echo Vr360Factory::getInput()->get('keyword'); ?>"
 									/>
 								</div>
 							</div>
-							<button class="btn btn-default" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+							<button
+									class="btn btn-default"
+									type="submit"
+									id="search-submit"
+							>
+								<i class="fa fa-search" aria-hidden="true"></i>
+							</button>
 							<fieldset>
 								<input type="hidden" name="view" value="tours"/>
 								<input type="hidden" name="task" value="display"/>
@@ -56,10 +74,17 @@
 						</form>
 					</li>
 					<li>
+						<!-- Logout form -->
 						<form action="index.php" class="navbar-form navbar-right">
 							<input type="hidden" name="view" value="user"/>
 							<input type="hidden" name="task" value="logout"/>
-							<button type="submit" id="logout" class="btn btn-danger"><i class="fas fa-sign-out-alt"></i> Logout</button>
+							<button
+									type="submit"
+									id="user-logout"
+									class="btn btn-danger">
+								<i class="fas fa-sign-out-alt"></i>
+								Logout
+							</button>
 						</form>
 					</li>
 				</ul>

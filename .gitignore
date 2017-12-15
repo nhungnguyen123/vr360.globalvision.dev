@@ -1,10 +1,11 @@
 _/*
 _backup/*
 .idea/*
-/krpano/docu/*
-/krpano/templates/*
 
-configuration.php
+# Krpano
+/krpano/*
+
+/configuration.php
 
 # Created by https://www.gitignore.io/api/phpstorm
 

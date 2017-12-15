@@ -15,14 +15,20 @@ $scenes   = $tour->getScenes();
 			<div class="panel-heading">
 				<div class="container-fluid">
 					<div class="col-md-6">
-						<div class="panel-title"><i class="fas fa-eye"></i> Scene
+						<div class="panel-title">
+							<i class="fas fa-eye"></i> Scene
 							<span class="badge">
-								<small><?php echo $scene->getHotspots() ? count($scene->getHotspots()) : 0; ?> hotspots</small>
+								<small class="scene-hotspots-count"><?php echo $scene->getHotspots() ? count($scene->getHotspots()) : 0; ?> hotspots</small>
 							</span>
+							<?php if (!$scene->isValid()): ?>
+							<span class="label label-danger">
+								<small>Invalid</small>
+							</span>
+							<?php endif; ?>
 						</div>
 					</div>
 					<div class="col-md-6">
-						<button type="button" id="removeScene" class="btn btn-danger btn-sm pull-right removeScene">
+						<button type="button" id="removeScene" class="btn btn-danger btn-sm pull-right tour-scene-remove">
 							<i class="far fa-minus-square"></i> Remove
 						</button>
 					</div>
@@ -38,7 +44,7 @@ $scenes   = $tour->getScenes();
 									<input
 											type="text"
 											value="<?php echo $scene->file ?>"
-											class="form-control disabled"
+											class="form-control disabled tour-scene-file"
 											disabled="disabled" title="Scene File"
 									/>
 								</div>
@@ -49,7 +55,7 @@ $scenes   = $tour->getScenes();
 									<input
 											name="sceneName[<?php echo $scene->id ?>]"
 											type="text"
-											class="form-control input-sm"
+											class="form-control input-sm tour-scene-name"
 											placeholder="Scene name"
 											value="<?php echo $scene->name ?>"
 									/>
@@ -61,7 +67,7 @@ $scenes   = $tour->getScenes();
 									<input
 											name="sceneDescription[<?php echo $scene->id ?>]"
 											type="text"
-											class="form-control input-sm"
+											class="form-control input-sm tour-scene-description"
 											size="80"
 											placeholder="Scene description"
 											value="<?php echo $scene->description ?>"
@@ -76,6 +82,7 @@ $scenes   = $tour->getScenes();
 												<input
 														name="sceneDefault"
 														type="radio"
+														class="tour-scene-default"
 														value="<?php echo $scene->id ?>"
 													<?php echo $scene->default ? 'checked' : '' ?>
 												/>
@@ -85,7 +92,7 @@ $scenes   = $tour->getScenes();
 									</div>
 								</div>
 							</div>
-							<input type="hidden" name="sceneId[]" value="<?php echo $scene->id ?>"/>
+							<input type="hidden" class="scene-id" name="sceneId[]" value="<?php echo $scene->id ?>"/>
 						</div>
 					</div>
 					<div class="col-md-12">
@@ -95,7 +102,7 @@ $scenes   = $tour->getScenes();
 									<label class="control-label">FOVtype</label>
 									<input
 											type="text"
-											class="form-control"
+											class="form-control tour-scene-options"
 											name="sceneParams[<?php echo $scene->id ?>][fovtype]"
 											value="<?php echo $scene->getParam('fovtype', 'MFOV');?>"
 									/>
@@ -106,7 +113,7 @@ $scenes   = $tour->getScenes();
 									<label class="control-label">FOV</label>
 									<input
 											type="text"
-											class="form-control"
+											class="form-control tour-scene-options"
 											name="sceneParams[<?php echo $scene->id ?>][fov]"
 											value="<?php echo $scene->getParam('fov', VR360_TOUR_SCENE_DEFAULT_FOV);?>"
 									/>
@@ -117,7 +124,7 @@ $scenes   = $tour->getScenes();
 									<label class="control-label">Maxpixelzoom</label>
 									<input
 											type="text"
-											class="form-control"
+											class="form-control tour-scene-options"
 											name="sceneParams[<?php echo $scene->id ?>][maxpixelzoom]"
 											value="<?php echo $scene->getParam('maxpixelzoom', '2.0');?>"
 									/>
@@ -128,7 +135,7 @@ $scenes   = $tour->getScenes();
 									<label class="control-label">Fovmin</label>
 									<input
 											type="text"
-											class="form-control"
+											class="form-control tour-scene-options"
 											name="sceneParams[<?php echo $scene->id ?>][fovmin]"
 											value="<?php echo $scene->getParam('fovmin', '70');?>"
 									/>
@@ -139,7 +146,7 @@ $scenes   = $tour->getScenes();
 									<label class="control-label">Fovmax</label>
 									<input
 											type="text"
-											class="form-control"
+											class="form-control tour-scene-options"
 											name="sceneParams[<?php echo $scene->id ?>][fovmax]"
 											value="<?php echo $scene->getParam('fovmax', '170');?>"
 									/>
@@ -150,7 +157,7 @@ $scenes   = $tour->getScenes();
 									<label class="control-label">Limitview</label>
 									<input
 											type="text"
-											class="form-control"
+											class="form-control tour-scene-options"
 											name="sceneParams[<?php echo $scene->id ?>][limitview]"
 											value="<?php echo $scene->getParam('limitview', 'auto');?>"
 									/>
@@ -160,8 +167,74 @@ $scenes   = $tour->getScenes();
 				</div>
 			</div>
 		</div>
+		</div>
 	<?php endforeach; ?>
 	<?php else: ?>
-		<div class="alert alert-warning" role="alert">There is no scene please add at least one</div>
+		<div class="panel panel-default scene">
+			<div class="panel-heading">
+				<div class="container-fluid">
+					<div class="col-md-6">
+						<div class="panel-title">New Scene</div>
+					</div>
+					<div class="col-md-6">
+						<button
+								type="button"
+								class="btn btn-danger btn-sm pull-right tour-scene-remove"
+						>
+							<i class="fas fa-minus"></i> Remove
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="panel-body">
+				<div class="container-fluid">
+					<div class="col-md-12">
+						<div class="sceneWrap form-horizontal">
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Scene file *</label>
+								<div class="col-sm-9">
+									<input
+											type="file"
+											name="newSceneFile[]"
+											class="tour-scene-file"
+											data-validation="mime size required"
+											data-validation-allowing="jpg, png, jpeg"
+											data-validation-max-size="<?php echo ini_get('upload_max_filesize'); ?>"
+									/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Name *</label>
+								<div class="col-sm-9">
+									<input
+											name="newSceneName[]"
+											type="text"
+											class="form-control input-sm tour-scene-name"
+											placeholder="Scene name"
+											data-validation="required"
+									/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">Description</label>
+								<div class="col-sm-9">
+									<input
+											name="newSceneDescription[]"
+											type="text"
+											class="form-control input-sm tour-scene-description"
+											size="80"
+											placeholder="Scene description"
+									/>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	<?php endif; ?>
 </div>
+
+<button type="button" id="tour-scene-add" class="btn btn-info btn-sm">
+	<i class="fa fa-plus-square" aria-hidden="true"></i> Add scene
+</button>

@@ -49,7 +49,7 @@ class Vr360ModelTour extends Vr360Model
 		{
 			$table = new Vr360TableTour;
 
-			if (!$table->load(array('alias' => $alias, 'created_by' => Vr360Factory::getUser()->id)))
+			if (!$table->load(array('alias' => $alias)))
 			{
 				return false;
 			}

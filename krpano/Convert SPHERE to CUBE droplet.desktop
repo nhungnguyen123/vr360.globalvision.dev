@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Convert SPHERE to CUBE droplet
-Exec="/home/soulevil/www/vr360.globalvision.dev/krpano/krpanotools" sphere2cube -config=templates/convertdroplets.config %F
-Path=/home/soulevil/www/vr360.globalvision.dev/krpano/
-Icon=/home/soulevil/www/vr360.globalvision.dev/krpano/.converticon
-Terminal=true
-Type=Application
-Categories=Application;Graphics;
-StartupNotify=false

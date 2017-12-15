@@ -111,6 +111,13 @@ class Vr360ModelHotspot extends Vr360Model
 					case 'text':
 						$hotspotObj->style  = $hotspotPrefix . 'textpopup';
 						$hotspotObj->params = array('hotspot_text' => $hotspot['hotspot_text']);
+
+						if (empty($hotspot['hotspot_text']))
+						{
+							$ajax->addWarning('Can not save hotspot . ' . $hotspotObj->code . ' because empty content');
+
+							continue;
+						}
 						break;
 					default:
 						$hotspotObj->style  = $hotspotPrefix . 'skin_hotspotstyle|textpopup';
