@@ -186,6 +186,7 @@ class NewTourSteps extends ManageSteps
 		$I->see($url);
 		$I->click(ManagePage::$btnEditFrirst);
 		$I->wait(5);
+		
 		$I->waitForElement(NewTourPage::$fieldName, 30);
 		$I->fillField(NewTourPage::$fieldName, $nameEdit);
 		$I->click(NewTourPage::$btnCreate);

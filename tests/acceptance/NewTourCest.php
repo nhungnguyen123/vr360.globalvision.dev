@@ -40,6 +40,7 @@ class NewTourCest
 	{
 		$I->login($this->userName, $this->pass);
 	}
+	
 //	/**
 //	 * @param NewTourSteps $I
 //	 * create new tour without any screen
