@@ -34,7 +34,7 @@ class ManagePage
 
 	public static $btnPreview = ['xpath' => '//a[contains(concat(\' \', @class, \' \'), \'tour-preview \')]'];
 
-	public static $btnRemove = ['xpath' => '//button[contains(concat(\' \', @class, \' \'), \'tour-delete \')]'];
+	public static $btnRemove = ['xpath' => '//button[contains(concat(\' \', @class, \' \'), \'btn-danger tour-delete \')]'];
 
 
 	public static $checkBoxSocial = ['id' => 'tour-param-socials'];
