@@ -41,11 +41,11 @@ class NewTourSteps extends ManageSteps
         $I->waitForElement(ManagePage::$searchId,30);
         $I->fillField(ManagePage::$searchId,$name);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-        $I->see($url);
-        $I->waitForElement(ManagePage::$btnLogout,60);
-        $I->click(ManagePage::$btnEditFrirst);
-        $I->waitForElement(NewTourPage::$fieldName, 30);
-        $I->seeInField(NewTourPage::$fieldName, $name);
+		$I->waitForElement(ManagePage::$btnLogout, 60);
+		$I->click(ManagePage::$btnEditFrirst);
+		$I->waitForElement(NewTourPage::$fieldName, 30);
+		$I->seeInField(NewTourPage::$fieldName, $name);
+		$I->seeInField(NewTourPage::$fieldFriendlyURL, $url);
     }
 
 	public function createWithoutAnyScreen($name)
@@ -194,7 +194,7 @@ class NewTourSteps extends ManageSteps
 		$I->fillField(ManagePage::$searchId, $nameEdit);
 		$I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
 		$I->waitForElement(ManagePage::$nameField, 30);
-		$I->waitForText(ManagePage::$nameField, 30, $nameEdit);
+		$I->see($nameEdit);
 		$I->waitForElement(ManagePage::$btnLogout, 60);
 		$I->click(ManagePage::$btnEditFrirst);
 		$I->waitForElement(NewTourPage::$fieldName, 30);
