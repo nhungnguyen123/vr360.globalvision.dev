@@ -26,8 +26,8 @@
 	<link rel="stylesheet" href="./assets/vendor/fontawesome-5.0.0/web-fonts-with-css/css/fontawesome-all.min.css">
 	<!-- Validator -->
 	<script
-			type="text/javascript"
-			src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js">
+		type="text/javascript"
+		src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js">
 	</script>
 
 	<!-- Globalvision -->
@@ -52,8 +52,8 @@
 			<div class="row">
 				<div class="col-md-2 col-md-offset-3">
 					<button
-							class="btn btn-primary btn-block btn-log-close ajax-close"
-							onclick=""><i class="fa fa-close"></i> Close
+						class="btn btn-primary btn-block btn-log-close ajax-close"
+						onclick=""><i class="fa fa-close"></i> Close
 					</button>
 				</div>
 			</div>
@@ -70,28 +70,28 @@
 				<div class="col-md-6">
 					<div class="text-center center-block">
 						<a
-								class="social-facebook"
-								href="<?php echo Vr360Configuration::getConfig('socials')['facebook']; ?>"
-								target="_blank"
+							class="social-facebook"
+							href="<?php echo Vr360Configuration::getConfig('socials')['facebook']; ?>"
+							target="_blank"
 						>
 							<i class="fab fa-facebook-square fa-3x"></i></i>
 						</a>
 						<a
-								class="social-twitter"
-								href="<?php echo Vr360Configuration::getConfig('socials')['twitter']; ?>"
-								target="_blank"
+							class="social-twitter"
+							href="<?php echo Vr360Configuration::getConfig('socials')['twitter']; ?>"
+							target="_blank"
 						>
 							<i class="fab fa-twitter-square fa-3x"></i>
 						</a>
 						<a
-								class="social-googleplus"
-								href="<?php echo Vr360Configuration::getConfig('socials')['google+']; ?>"
-								target="_blank"
+							class="social-googleplus"
+							href="<?php echo Vr360Configuration::getConfig('socials')['google+']; ?>"
+							target="_blank"
 						>
 							<i class="fab fa-google-plus-square fa-3x"></i></a>
 						<a
-								class="social-email"
-								href="<?php echo Vr360Configuration::getConfig('socials')['mail']; ?>"
+							class="social-email"
+							href="<?php echo Vr360Configuration::getConfig('socials')['mail']; ?>"
 						>
 							<i class="fas fa-envelope-square fa-3x"></i>
 						</a>
