@@ -25,9 +25,9 @@ class NewTourCest
 		 * @TODO    Create name over than 255 character
 		 * @TODO    Create name with UTF-8 characters
 		 */
-		$this->nameTour        = $this->faker->bothify('nametour?ThisisName ?##???');
+		$this->nameTour        = $this->faker->bothify('nametour?ThisisName?##???');
 		$this->nameTourAlreday = $this->faker->bothify('nametourThisIsNameAlready?##???');
-		$this->url             = $this->faker->bothify('URLFaceOfTour ?#######??');
+		$this->url             = $this->faker->bothify('URLFaceOfTour?#######??');
 		$this->title           = $this->faker->bothify('TitleTesting?##?');
 		$this->description     = $this->faker->bothify('Description?##?');
 

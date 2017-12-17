@@ -24,6 +24,8 @@ class ManagePage
 
 	public static $messageSaveSuccess = 'Tour is created';
 
+	public static $nameField = ['xpath' => '//span[contains(concat(\' \', @class, \' \'), \'tour-name\')]'];
+	
 	public static $btnEmbedfirst = ['xpath' => '//button[contains(concat(\' \', @class, \' \'), \'tour-embed \')]'];
 
 	public static $btnEditFrirst = ['xpath' => '//button[contains(concat(\' \', @class, \' \'), \'tour-edit \')]'];
