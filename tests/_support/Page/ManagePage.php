@@ -20,6 +20,8 @@ class ManagePage
 
 	public static $closeButtonSuccess = ['xpath' => '//button[contains(concat(\' \', @class, \' \'), \' ajax-close \')]'];
 
+	public static $alterSaveSuccess = ['xpath' => '//div[contains(concat(\' \', @class, \' \'), \'alert-success\')]'];
+
 	public static $messageSaveSuccess = 'Tour is created';
 
 	public static $btnEmbedfirst = ['xpath' => '//button[contains(concat(\' \', @class, \' \'), \'tour-embed \')]'];

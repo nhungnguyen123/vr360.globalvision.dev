@@ -37,8 +37,7 @@ class NewTourSteps extends ManageSteps
         $I->comment('I click Create button');
 		$I->waitForElement(NewTourPage::$btnCreate, 30);
         $I->click(NewTourPage::$btnCreate);
-        $I->waitForElement(ManagePage::$createSuccessXpath, 300);
-        $I->waitForElement(ManagePage::$closeButtonSuccess, 30);
+        $I->waitForElement(ManagePage::$alterSaveSuccess, 300);
         $I->waitForElement(ManagePage::$searchId,30);
         $I->fillField(ManagePage::$searchId,$name);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
@@ -182,8 +181,7 @@ class NewTourSteps extends ManageSteps
 		$I->waitForElement(NewTourPage::$fieldName, 30);
 		$I->fillField(NewTourPage::$fieldName, $nameEdit);
 		$I->click(NewTourPage::$btnCreate);
-		$I->waitForElement(ManagePage::$createSuccessXpath, 150);
-		$I->waitForElement(ManagePage::$closeButtonSuccess, 30);
+		$I->waitForElement(ManagePage::$alterSaveSuccess, 150);
 		$I->waitForElement(ManagePage::$searchId,30);
 		$I->fillField(ManagePage::$searchId, $nameEdit);
 		$I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
