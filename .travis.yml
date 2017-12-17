@@ -1,6 +1,6 @@
 language: php
 sudo: required
-dist: trusty
+dist: precise
 install:
   - . $HOME/.nvm/nvm.sh
    - nvm install stable
@@ -19,7 +19,7 @@ install:
   - nvm use stable
 
 addons:
-   chrome: stable
+  chrome: stable
 
 cache:
   apt: true
