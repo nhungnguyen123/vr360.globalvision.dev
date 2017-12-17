@@ -197,7 +197,6 @@ class NewTourSteps extends ManageSteps
 		$I->click(ManagePage::$btnEditFrirst);
 		$I->waitForElement(NewTourPage::$fieldName, 30);
 		$I->seeInField(NewTourPage::$fieldName, $nameEdit);
-		$I->seeInField(NewTourPage::$fieldFriendlyURL, $url);;
 	}
 
 	public function delete($name)
