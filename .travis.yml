@@ -1,6 +1,6 @@
 language: php
 sudo: required
-dist: trust
+dist: trusty
 install:
   - . $HOME/.nvm/nvm.sh
    - nvm install stable
@@ -43,13 +43,19 @@ before_script:
 - sudo sed -e "s?%PHPVERSION%?${TRAVIS_PHP_VERSION:0:1}?g" --in-place /etc/apache2/sites-available/default
 - git submodule update --init --recursive
 - sudo service apache2 restart
-# Get ChromeDriver for headless mode
+
+
+- "sh -e /etc/init.d/xvfb start"
+- sleep 3 # give xvfb some time to start
+- sudo apt-get install fluxbox -y --force-yes
+- fluxbox &
+- sleep 3 # give fluxbox some time to start
 - wget "https://chromedriver.storage.googleapis.com/2.33/chromedriver_linux64.zip"
 - unzip "chromedriver_linux64.zip"
 - mkdir -p /usr/local/bin
 - sudo cp -a chromedriver /usr/local/bin
-- sudo chmod +x /usr/local/bin/chromedriver
-
+- sudo chmod +x /usr/local/bin/chromedrive
+- sleep 3 # give fluxbox some time to start
 - npm install
 
 script:
