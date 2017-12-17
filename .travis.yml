@@ -1,6 +1,6 @@
 language: php
 sudo: required
-dist: trusty
+dist: precise
 install:
   - . $HOME/.nvm/nvm.sh
    - nvm install stable
@@ -19,7 +19,7 @@ install:
   - nvm use stable
 
 addons:
-  chrome: stable
+  firefox: "47.0.1"
 
 cache:
   apt: true
@@ -43,18 +43,11 @@ before_script:
 - sudo sed -e "s?%PHPVERSION%?${TRAVIS_PHP_VERSION:0:1}?g" --in-place /etc/apache2/sites-available/default
 - git submodule update --init --recursive
 - sudo service apache2 restart
-
-
+- "export DISPLAY=:99.0"
 - "sh -e /etc/init.d/xvfb start"
 - sleep 3 # give xvfb some time to start
 - sudo apt-get install fluxbox -y --force-yes
 - fluxbox &
-- sleep 3 # give fluxbox some time to start
-- wget "https://chromedriver.storage.googleapis.com/2.33/chromedriver_linux64.zip"
-- unzip "chromedriver_linux64.zip"
-- mkdir -p /usr/local/bin
-- sudo cp -a chromedriver /usr/local/bin
-- sudo chmod +x /usr/local/bin/chromedrive
 - sleep 3 # give fluxbox some time to start
 - npm install
 
