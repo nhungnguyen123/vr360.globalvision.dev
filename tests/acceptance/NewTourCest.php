@@ -50,14 +50,14 @@ class NewTourCest
 //        $I->createWithoutAnyScreen($this->nameTour);
 //    }
 
-	/**
-	 * @param NewTourSteps $I
-	 * Check missing for all cases
-	 */
-	public function checkMissing(NewTourSteps $I)
-	{
-		$I->checkMissing($this->nameTour, $this->url, $this->title, $this->description);
-	}
+//	/**
+//	 * @param NewTourSteps $I
+//	 * Check missing for all cases
+//	 */
+//	public function checkMissing(NewTourSteps $I)
+//	{
+//		$I->checkMissing($this->nameTour, $this->url, $this->title, $this->description);
+//	}
 
 	/**
 	 * @param NewTourSteps $I
