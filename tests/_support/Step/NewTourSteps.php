@@ -185,7 +185,7 @@ class NewTourSteps extends ManageSteps
 		$I->waitForElement(ManagePage::$searchId,30);
 		$I->fillField(ManagePage::$searchId, $nameEdit);
 		$I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-		$I->see($url);
+		$I->see($nameEdit);
 		$I->waitForElement(ManagePage::$btnLogout, 60);
 		$I->click(ManagePage::$btnEditFrirst);
 		$I->waitForElement(NewTourPage::$fieldName, 30);
