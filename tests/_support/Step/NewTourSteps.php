@@ -183,7 +183,6 @@ class NewTourSteps extends ManageSteps
 		$I->waitForElement(ManagePage::$searchId, 30);
 		$I->fillField(ManagePage::$searchId, $name);
 		$I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
-		$I->see($url);
 		$I->click(ManagePage::$btnEditFrirst);
 		$I->wait(5);
 		
