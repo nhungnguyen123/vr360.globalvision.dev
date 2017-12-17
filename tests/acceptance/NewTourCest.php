@@ -25,10 +25,10 @@ class NewTourCest
 		 * @TODO    Create name over than 255 character
 		 * @TODO    Create name with UTF-8 characters
 		 */
-		$this->nameTour        = $this->faker->bothify('nametour?##???');
-		$this->nameTourAlreday = $this->faker->bothify('nametour?##???');
-		$this->url             = $this->faker->bothify('URLFace?#######??');
-		$this->title           = $this->faker->bothify('Title?##?');
+		$this->nameTour        = $this->faker->bothify('nametour?ThisisName ?##???');
+		$this->nameTourAlreday = $this->faker->bothify('nametourThisIsNameAlready?##???');
+		$this->url             = $this->faker->bothify('URLFaceOfTour ?#######??');
+		$this->title           = $this->faker->bothify('TitleTesting?##?');
 		$this->description     = $this->faker->bothify('Description?##?');
 
 		//edit name tour
@@ -50,14 +50,14 @@ class NewTourCest
 //        $I->createWithoutAnyScreen($this->nameTour);
 //    }
 
-//	/**
-//	 * @param NewTourSteps $I
-//	 * Check missing for all cases
-//	 */
-//	public function checkMissing(NewTourSteps $I)
-//	{
-//		$I->checkMissing($this->nameTour, $this->url, $this->title, $this->description);
-//	}
+	/**
+	 * @param NewTourSteps $I
+	 * Check missing for all cases
+	 */
+	public function checkMissing(NewTourSteps $I)
+	{
+		$I->checkMissing($this->nameTour, $this->url, $this->title, $this->description);
+	}
 
 	/**
 	 * @param NewTourSteps $I
