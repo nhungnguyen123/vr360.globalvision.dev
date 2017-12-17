@@ -37,7 +37,7 @@ class NewTourSteps extends ManageSteps
         $I->comment('I click Create button');
 		$I->waitForElement(NewTourPage::$btnCreate, 30);
         $I->click(NewTourPage::$btnCreate);
-        $I->waitForElement(ManagePage::$alterSaveSuccess, 300);
+        $I->waitForElement(ManagePage::$alterSaveSuccess, 500);
         $I->waitForElement(ManagePage::$searchId,30);
         $I->fillField(ManagePage::$searchId,$name);
         $I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
@@ -116,28 +116,36 @@ class NewTourSteps extends ManageSteps
 		$I->fillField($usePage->descriptionField(2), $description);
 
 		$I->waitForElement(NewTourPage::$btnCreate, 30);
+		$I->wait(1);
 		$I->click(NewTourPage::$btnCreate);
+		$I->wait(1);
 		$I->waitForElement(NewTourPage::$missingField, 30);
 		$I->see(NewTourPage::$messageMissingField);
 
 		$I->comment('Check missing name');
 		$I->fillField(NewTourPage::$fieldName, '');
 		$I->attachFile($usePage->imageInput(2), NewTourPage::$imageFirst);
+		$I->wait(1);
 		$I->click(NewTourPage::$btnCreate);
+		$I->wait(1);
 		$I->waitForElement(NewTourPage::$missingField, 30);
 		$I->see(NewTourPage::$messageMissingField);
 
 		$I->comment('Check missing url');
 		$I->fillField(NewTourPage::$fieldName, $name);
 		$I->fillField(NewTourPage::$fieldFriendlyURL, '');
+		$I->wait(1);
 		$I->click(NewTourPage::$btnCreate);
+		$I->wait(1);
 		$I->waitForElement(NewTourPage::$missingField, 30);
 		$I->see(NewTourPage::$messageMissingField);
 
 		$I->comment('Creat with missing title for pano');
 		$I->fillField(NewTourPage::$fieldFriendlyURL, $url);
 		$I->fillField($usePage->nameField(2), '');
+		$I->wait(1);
 		$I->click(NewTourPage::$btnCreate);
+		$I->wait(1);
 		$I->waitForElement(NewTourPage::$missingField, 30);
 		$I->see(NewTourPage::$messageMissingField);
 	}
@@ -181,7 +189,7 @@ class NewTourSteps extends ManageSteps
 		$I->waitForElement(NewTourPage::$fieldName, 30);
 		$I->fillField(NewTourPage::$fieldName, $nameEdit);
 		$I->click(NewTourPage::$btnCreate);
-		$I->waitForElement(ManagePage::$alterSaveSuccess, 150);
+		$I->waitForElement(ManagePage::$alterSaveSuccess, 400);
 		$I->waitForElement(ManagePage::$searchId,30);
 		$I->fillField(ManagePage::$searchId, $nameEdit);
 		$I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
