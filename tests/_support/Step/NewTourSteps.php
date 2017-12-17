@@ -194,11 +194,10 @@ class NewTourSteps extends ManageSteps
 		$I->fillField(ManagePage::$searchId, $nameEdit);
 		$I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
 		$I->waitForElement(ManagePage::$nameField, 30);
-		$I->see($nameEdit);
-		$I->waitForElement(ManagePage::$btnLogout, 60);
 		$I->click(ManagePage::$btnEditFrirst);
 		$I->waitForElement(NewTourPage::$fieldName, 30);
 		$I->seeInField(NewTourPage::$fieldName, $nameEdit);
+		$I->seeInField(NewTourPage::$fieldFriendlyURL, $url);;
 	}
 
 	public function delete($name)
@@ -207,6 +206,7 @@ class NewTourSteps extends ManageSteps
 		$I->waitForElement(ManagePage::$searchId, 30);
 		$I->fillField(ManagePage::$searchId, $name);
 		$I->pressKey(ManagePage::$searchId, \Facebook\WebDriver\WebDriverKeys::ENTER);
+		$I->waitForElement(ManagePage::$btnRemove, 30);
 		$I->click(ManagePage::$btnRemove);
 		$I->acceptPopup();
 		$I->wait(3);
