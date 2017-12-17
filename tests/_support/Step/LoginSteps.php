@@ -25,22 +25,16 @@ class LoginSteps extends ManageSteps
 				$I->comment('Fill Password Text Field');
 				$I->fillField(LoginPage::$passField, $pass);
 				$I->click(LoginPage::$btnLogin);
-				$I->waitForElement(LoginPage::$warningUsername, 30);
-				$I->waitForText(LoginPage::$warningUsernameMessage, 30, LoginPage::$warningUsername);
 				break;
 			case 'pass':
 				$I->comment(' Missing inpt pass');
 				$I->comment('Fill Password Text Field');
 				$I->fillField(LoginPage::$usernameField, $username);
 				$I->click(LoginPage::$btnLogin);
-				$I->waitForElement(LoginPage::$warningUsername, 30);
-				$I->waitForText(LoginPage::$warningInvalidPassMessage, 30, LoginPage::$warningUsername);
 				break;
 			case 'both':
 				$I->comment(' Missing input username and pass');
 				$I->click(LoginPage::$btnLogin);
-				$I->waitForElement(LoginPage::$warningUsername, 30);
-				$I->waitForText(LoginPage::$warningUsernameMessage, 30, LoginPage::$warningUsername);
 				break;
 			case 'wrong':
 				$I->comment('Wrong Pass ');
@@ -49,13 +43,11 @@ class LoginSteps extends ManageSteps
 				$I->comment('Fill Password Text Field');
 				$I->fillField(LoginPage::$passField, $pass);
 				$I->click(LoginPage::$btnLogin);
-				$I->waitForElement(LoginPage::$warningUserNameOrPassXpath, 30);
-				$I->waitForText(LoginPage::$warningUserNameOrPassXpathMessage, 30, LoginPage::$warningUserNameOrPassXpath);
 				break;
 			default:
 				break;
 		}
-
+		$I->waitForElement(LoginPage::$warningUsername, 30);
 	}
 
 	/**

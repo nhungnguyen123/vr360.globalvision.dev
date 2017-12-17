@@ -37,7 +37,7 @@ class LoginPage
     /**
      * @var array
      */
-	public static $warningUsername = ['xpath' => '//div[@class=\'label label-default\']'];
+	public static $warningUsername = ['xpath' => '//div[contains(concat(\' \', @class, \' \'), \'alert-warning \')]'];
 
     /**
      * @var string
