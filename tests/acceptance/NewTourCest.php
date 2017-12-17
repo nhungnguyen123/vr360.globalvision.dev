@@ -18,8 +18,8 @@ class NewTourCest
 		/**
 		 * @TODO Move these value to defines
 		 */
-		$this->userName = 'develop';
-		$this->pass     = 'develop';
+		$this->userName = 'designteam';
+		$this->pass     = '123';
 
 		/**
 		 * @TODO    Create name over than 255 character
