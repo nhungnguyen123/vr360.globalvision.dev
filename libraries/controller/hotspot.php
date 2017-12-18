@@ -25,7 +25,7 @@ class Vr360ControllerHotspot extends Vr360Controller
 		// Tour not found
 		if (!$tour)
 		{
-			$ajax->addDanger('Tour is not available')->fail()->respond();
+			$ajax->addDanger(\Joomla\Language\Text::_('HOTSPOT_NOTICE_TOUR_IS_NOT_AVAILABLE'))->fail()->respond();
 		}
 
 		// Hotspots
@@ -36,7 +36,7 @@ class Vr360ControllerHotspot extends Vr360Controller
 
 		if ($hotspotsList === null || $defaultViewsList === null)
 		{
-			$ajax->addWarning('Invalid data')->fail()->respond();
+			$ajax->addWarning(\Joomla\Language\Text::_('HOTSPOT_NOTICE_TOUR_IS_NOT_AVAILABLE'))->fail()->respond();
 		}
 
 		// Get all scenes of current tour
@@ -48,6 +48,6 @@ class Vr360ControllerHotspot extends Vr360Controller
 
 		Vr360ModelTour::getInstance()->modifyXML($tour);
 
-		$ajax->addInfo('Data saved success')->success()->respond();
+		$ajax->addSuccess(\Joomla\Language\Text::_('GENERAL_NOTICE_SAVED_SUCCESS'))->success()->respond();
 	}
 }

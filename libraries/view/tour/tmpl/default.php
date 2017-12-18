@@ -35,7 +35,7 @@
 </head>
 <body>
 <?php if (!$this->tour->isValid() || !$this->tour->isValidForRender()): ?>
-	<span class="label label-danger">Invalid tour or data broken</span>
+	<span class="label label-danger"><?php echo \Joomla\Language\Text::_('GENERAL_LABEL_INVALID_TOUR'); ?>Invalid tour or data broken</span>
 <?php else: ?>
 	<div id="pano" style="">
 		<noscript>
