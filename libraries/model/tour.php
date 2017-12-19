@@ -79,7 +79,7 @@ class Vr360ModelTour extends Vr360Model
 	 */
 	public function ajaxSave()
 	{
-		$ajax = Vr360AjaxResponse::getInstance();
+		$ajax  = Vr360AjaxResponse::getInstance();
 		$input = Vr360Factory::getInput();
 
 		/**
@@ -190,6 +190,12 @@ class Vr360ModelTour extends Vr360Model
 		if (!$scenes)
 		{
 			$ajax->addWarning('No scenes provided');
+		}
+
+		if ($ajax->isSuccess())
+		{
+			Vr360Session::getInstance()->addMessage('Tour created success. ID: ' . $tour->get('id'), 'success');
+			Vr360Session::getInstance()->addMessage('Number of scenes: ' . count($scenes), 'info');
 		}
 
 		$ajax->respond();
@@ -409,9 +415,9 @@ class Vr360ModelTour extends Vr360Model
 		$xmlData = Vr360Layout::getInstance()->fetch('tour.tour', array('tour' => $tour, 'scenes' => $scenes));
 		$xmlData = simplexml_load_string($xmlData);
 
-		$dom = new DOMDocument('1.0');
+		$dom                     = new DOMDocument('1.0');
 		$dom->preserveWhiteSpace = false;
-		$dom->formatOutput = true;
+		$dom->formatOutput       = true;
 		$dom->loadXML($xmlData->asXML());
 		$xml = new SimpleXMLElement($dom->saveXML());
 
@@ -427,7 +433,7 @@ class Vr360ModelTour extends Vr360Model
 		$alias = $input->getString('alias');
 		$id    = $input->getInt('id');
 
-		$db = Vr360Factory::getDbo();
+		$db    = Vr360Factory::getDbo();
 		$query = $db->getQuery(true)
 			->select($db->quoteName('id'))
 			->from($db->quoteName('tours'))
@@ -438,7 +444,7 @@ class Vr360ModelTour extends Vr360Model
 	}
 
 	/**
-	 * @param   integer  $tourId  Tour ID
+	 * @param   integer $tourId Tour ID
 	 *
 	 * @return  boolean
 	 */

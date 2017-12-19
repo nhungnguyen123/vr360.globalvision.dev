@@ -12,14 +12,14 @@ defined('_VR360_EXEC') or die;
 	<div class="col-md-6 form-horizontal">
 		<!-- Name -->
 		<div class="form-group">
-			<label for="name" class="col-sm-2 control-label">Name *</label>
+			<label for="name" class="col-sm-2 control-label"><?php echo \Joomla\Language\Text::_('TOUR_LABEL_NAME');?></label>
 			<div class="col-sm-10">
 				<input
 						type="text"
 						class="form-control input-sm"
 						id="name"
 						name="name"
-						placeholder="Name of this tour"
+						placeholder="<?php echo \Joomla\Language\Text::_('TOUR_LABEL_NAME_DESCRIPTION');?>"
 						value="<?php echo $tour->get('name'); ?>"
 						title="Name of tour. Will use as site title"
 						data-validation="required"/>
@@ -27,14 +27,14 @@ defined('_VR360_EXEC') or die;
 		</div>
 		<!-- Alias -->
 		<div class="form-group">
-			<label for="alias" class="col-sm-2 control-label">Alias *</label>
+			<label for="alias" class="col-sm-2 control-label"><?php echo \Joomla\Language\Text::_('TOUR_LABEL_ALIAS');?></label>
 			<div class="col-sm-10">
 				<input
 						type="text"
 						class="form-control input-sm"
 						id="alias"
 						name="alias"
-						placeholder="URL friendly of this tour"
+						placeholder="<?php echo \Joomla\Language\Text::_('TOUR_LABEL_ALIAS_DESCRIPTION');?>"
 						value="<?php echo $tour->get('alias'); ?>"
 						title="Friendly URL of tour"
 						data-validation="required"
@@ -43,7 +43,7 @@ defined('_VR360_EXEC') or die;
 		</div>
 		<!-- Description -->
 		<div class="form-group">
-			<label for="description" class="col-sm-2 control-label">Description</label>
+			<label for="description" class="col-sm-2 control-label"><?php echo \Joomla\Language\Text::_('TOUR_LABEL_DESCRIPTION');?></label>
 			<div class="col-sm-10">
 				<input
 						type="text"
@@ -51,14 +51,14 @@ defined('_VR360_EXEC') or die;
 						id="description"
 						name="description"
 						placeholder=""
-						title="Tour description. Will use as site description for SEO"
+						title="<?php echo \Joomla\Language\Text::_('TOUR_LABEL_DESCRIPTION_DESCRIPTION');?>"
 						value="<?php echo $tour->get('description'); ?>"
 				/>
 			</div>
 		</div>
 		<!-- Keyword -->
 		<div class="form-group">
-			<label for="description" class="col-sm-2 control-label">Keyword</label>
+			<label for="description" class="col-sm-2 control-label"><?php echo \Joomla\Language\Text::_('TOUR_LABEL_KEYWORD');?></label>
 			<div class="col-sm-10">
 				<input
 						type="text"
@@ -66,7 +66,7 @@ defined('_VR360_EXEC') or die;
 						id="keyword"
 						name="keyword"
 						placeholder=""
-						title="Tour keyword. Will use as keyword for SEO"
+						title="<?php echo \Joomla\Language\Text::_('TOUR_LABEL_KEYWORD_DESCRIPTION');?>"
 						value="<?php echo $tour->get('keyword'); ?>"
 				/>
 			</div>
@@ -74,13 +74,6 @@ defined('_VR360_EXEC') or die;
 		<hr/>
 		<!-- Options -->
 		<?php require_once __DIR__ . '/tour_options.php'; ?>
-		<hr/>
-		<!-- Controls -->
-		<div class="form-group">
-			<button type="submit" id="tour-save" class="btn btn-primary btn-sm">
-				<i class="fa fa-window-restore" aria-hidden="true"></i> Save
-			</button>
-		</div>
 	</div>
 	<div class="col-md-6">
 		<?php require_once __DIR__ . '/tour_scenes.php'; ?>

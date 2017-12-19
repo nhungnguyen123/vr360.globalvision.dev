@@ -68,7 +68,7 @@
 									<span class="tour-name"><?php echo $tour->getName(); ?></span>
 									<!-- Split button -->
 									<div class="btn-group pull-right tour-links">
-										<button type="button" class="btn btn-info"><?php echo \Joomla\Language\Text::_('TOURS_LABEL_LINKS'); ?></button>
+										<button type="button" class="btn btn-info"><i class="fas fa-link"></i> <?php echo \Joomla\Language\Text::_('TOURS_LABEL_LINKS'); ?></button>
 										<button
 												type="button"
 												class="btn btn-info dropdown-toggle"

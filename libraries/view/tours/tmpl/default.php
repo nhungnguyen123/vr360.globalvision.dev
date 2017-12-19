@@ -13,7 +13,7 @@
 		data-backdrop="static"
 		data-keyboard="false"
 >
-	<div class="modal-dialog" role="document" style="width: 90%;">
+	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<!-- Header -->
 			<div class="modal-header">
@@ -28,7 +28,15 @@
 			</div>
 			<!-- Footer -->
 			<div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-dismiss="modal" id="modal-close"><i class="fas fa-window-close"></i> <?php echo \Joomla\Language\Text::_('GENERAL_LABEL_CLOSE'); ?></button>
+				<button
+						type="button"
+						class="btn btn-danger"
+						data-dismiss="modal"
+						id="modal-close"
+						onclick="vrAdmin.reload()"
+				>
+					<i class="fas fa-window-close"></i> <?php echo \Joomla\Language\Text::_('GENERAL_LABEL_CLOSE'); ?>
+				</button>
 			</div>
 		</div>
 	</div>

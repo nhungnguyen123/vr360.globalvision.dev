@@ -51,6 +51,20 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 					</label>
 				</div>
 			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input
+								type="checkbox"
+								id="tour-param-use-logo"
+								class="tour-params"
+								name="params[uselogo]"
+								value="1"
+							<?php echo ($tour->params->get('uselogo', false)) ? 'checked="checked"' : '' ?>
+								size="80"/>Use logo
+					</label>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

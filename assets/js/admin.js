@@ -1,6 +1,11 @@
 (function (w, $) {
 	var vrAdmin = {
 
+		reload: function()
+		{
+			window.location = window.location.href;
+		},
+
 		/**
 		 * Load form to add new tour
 		 */
@@ -13,22 +18,26 @@
 					task: "ajaxGetTourHtml"
 				},
 				dataType: 'json',
+				/**
+				 * Show waiting layer
+				 */
 				beforeSend: function () {
 					vrAdmin.Waiting.waiting();
 				}
 			})
 				.done(function (data, textStatus, jqXHR) {
+					vrAdmin.Log.appendArray(data.messages);
+					// Success
 					if (data.status) {
 						vrAdmin.Modal.showModal('<i class="fas fa-plus"></i> New tour', data.data.html);
 						vrAdmin.Waiting.success();
 					}
 					else {
-						vrAdmin.Log.appendArray(data.messages);
 						vrAdmin.Waiting.stay();
 					}
 				})
 				.fail(function (jqXHR, textStatus, errorThrown) {
-					alert('Ajax failed');
+					alert('Ajax failed. Please contact webmaster for detail');
 					vrAdmin.Waiting.stay();
 				})
 				.always(function () {
@@ -40,33 +49,35 @@
 		 * Load form to edit a tour
 		 */
 		editTour: function (el) {
-			var tourId = $(el).attr("data-tour-id");
-
 			$.ajax({
 				url: "index.php",
 				type: "POST",
 				data: {
-					id: tourId,
+					id: $(el).attr("data-tour-id"),
 					view: "tour",
 					task: "ajaxGetTourHtml"
 				},
 				dataType: 'json',
+				/**
+				 * Show waiting layer
+				 */
 				beforeSend: function () {
 					vrAdmin.Waiting.waiting();
 				}
 			})
 				.done(function (data, textStatus, jqXHR) {
+					vrAdmin.Log.appendArray(data.messages);
+					// Success
 					if (data.status) {
 						vrAdmin.Modal.showModal('<i class="fas fa-edit"></i> Edit tour', data.data.html);
 						vrAdmin.Waiting.success();
 					}
 					else {
-						vrAdmin.Log.appendArray(data.messages);
 						vrAdmin.Waiting.stay();
 					}
 				})
 				.fail(function (jqXHR, textStatus, errorThrown) {
-					alert('Ajax failed');
+					alert('Ajax failed. Please contact webmaster for detail');
 					vrAdmin.Waiting.stay();
 				})
 				.always(function (jqXHR, textStatus, jqXHR) {
@@ -79,36 +90,38 @@
 		 * @param el
 		 */
 		editTourHotspot: function (el) {
-			var tourId = $(el).attr("data-tour-id");
-
 			$.ajax({
 				url: "index.php",
 				type: "POST",
 				data: {
-					id: tourId,
+					id: $(el).attr("data-tour-id"),
 					view: "tour",
 					task: "ajaxGetHotspotEditorHtml"
 				},
-				async: true,
-				cache: false,
+				dataType: 'json',
+				/**
+				 * Show waiting layer
+				 */
 				beforeSend: function () {
 					vrAdmin.Waiting.waiting();
 				}
 			})
 				.done(function (data, textStatus, jqXHR) {
+					vrAdmin.Log.appendArray(data.messages);
+					// Success
 					if (data.status) {
 						vrAdmin.Modal.showModal('<i class="fas fa-edit"></i> Hotspots management', data.data.html);
 						vrAdmin.Waiting.success();
 					}
 					else {
-						vrAdmin.Log.appendArray(data.messages);
 						vrAdmin.Waiting.stay();
 					}
 				})
-				.fail(function () {
+				.fail(function (jqXHR, textStatus, errorThrown) {
+					alert('Ajax failed. Please contact webmaster for detail');
 					vrAdmin.Waiting.stay();
 				})
-				.always(function () {
+				.always(function (jqXHR, textStatus, jqXHR) {
 					vrAdmin.Waiting.stay();
 				});
 		},
@@ -125,26 +138,30 @@
 					view: "user",
 					task: "ajaxGetUserHtml"
 				},
-				async: true,
-				cache: false,
+				dataType: 'json',
+				/**
+				 * Show waiting layer
+				 */
 				beforeSend: function () {
 					vrAdmin.Waiting.waiting();
 				}
 			})
 				.done(function (data, textStatus, jqXHR) {
+					vrAdmin.Log.appendArray(data.messages);
+					// Success
 					if (data.status) {
 						vrAdmin.Modal.showModal('<i class="fa fa-user-circle" aria-hidden="true"></i> Edit profile', data.data.html);
 						vrAdmin.Waiting.success();
 					}
 					else {
-						vrAdmin.Log.appendArray(data.messages);
 						vrAdmin.Waiting.stay();
 					}
 				})
-				.fail(function () {
+				.fail(function (jqXHR, textStatus, errorThrown) {
+					alert('Ajax failed. Please contact webmaster for detail');
 					vrAdmin.Waiting.stay();
 				})
-				.always(function () {
+				.always(function (jqXHR, textStatus, jqXHR) {
 					vrAdmin.Waiting.stay();
 				});
 		},
@@ -154,37 +171,35 @@
 		 * @param el
 		 */
 		embedTour: function (el) {
-			var tourId = $(el).attr("data-tour-id");
-
 			$.ajax({
 				url: "index.php",
 				type: "POST",
 				data: {
-					id: tourId,
+					id: $(el).attr("data-tour-id"),
 					view: "tour",
 					task: "ajaxGetTourEmbedHtml"
 				},
-				async: true,
-				cache: false,
+				dataType: 'json',
 				beforeSend: function () {
 					vrAdmin.Waiting.waiting();
 				}
 			})
 				.done(function (data, textStatus, jqXHR) {
+					vrAdmin.Log.appendArray(data.messages);
+
 					if (data.status) {
 						vrAdmin.Modal.showModalWithText('<i class="fa fa-code" aria-hidden="true"></i> Embed code', data.data.html);
 						vrAdmin.Waiting.success();
 					}
 					else {
-						vrAdmin.Log.appendArray(data.messages);
 						vrAdmin.Waiting.stay();
 					}
 				})
 				.fail(function (jqXHR, textStatus, errorThrown) {
-					alert('Ajax failed');
+					alert('Ajax failed. Please contact webmaster for detail');
 					vrAdmin.Waiting.stay();
 				})
-				.always(function () {
+				.always(function (jqXHR, textStatus, jqXHR) {
 					vrAdmin.Waiting.stay();
 				});
 		},
@@ -193,33 +208,35 @@
 		 * Delete tour
 		 */
 		deleteTour: function (el) {
-			var tourId = $(el).attr("data-tour-id");
-
 			$.ajax({
 				url: "index.php",
 				type: "POST",
 				data: {
-					id: tourId,
+					id: $(el).attr("data-tour-id"),
 					view: "tour",
 					task: "ajaxDeleteTour"
 				},
-				async: true,
-				cache: false,
+				dataType: 'json',
 				beforeSend: function () {
 					vrAdmin.Waiting.waiting();
 				}
 			})
 				.done(function (data, textStatus, jqXHR) {
-					if (data.status == true) {
+					vrAdmin.Log.appendArray(data.messages);
+
+					if (data.status) {
 						$("table#vTours tr#vtour-" + tourId).remove();
 						vrAdmin.Waiting.success();
 					}
+					else {
+						vrAdmin.Waiting.stay();
+					}
 				})
 				.fail(function (jqXHR, textStatus, errorThrown) {
-					alert('Ajax failed');
+					alert('Ajax failed. Please contact webmaster for detail');
 					vrAdmin.Waiting.stay();
 				})
-				.always(function () {
+				.always(function (jqXHR, textStatus, jqXHR) {
 					vrAdmin.Waiting.stay();
 				});
 		},
@@ -235,14 +252,17 @@
 				$('form[name="search-form"]').submit();
 			})
 
+			// Add new tour
 			$("body").on("click", "#tour-add", function () {
 				vrAdmin.addTour();
 			});
 
+			// Edit a tour
 			$("body").on("click", ".tour-edit", function () {
 				vrAdmin.editTour(this);
 			});
 
+			// Hotspots management
 			$("body").on("click", ".tour-edit-hotspots", function () {
 				vrAdmin.editTourHotspot(this);
 			});
@@ -261,8 +281,7 @@
 					url: "index.php",
 					type: "POST",
 					data: formData,
-					async: true,
-					cache: false,
+					dataType: 'json',
 					processData: false,
 					contentType: false,
 					/**
@@ -277,10 +296,10 @@
 						vrAdmin.Waiting.stay();
 					})
 					.fail(function (jqXHR, textStatus, errorThrown) {
-						alert('Ajax failed');
+						alert('Ajax failed. Please contact webmaster for detail');
 						vrAdmin.Waiting.stay();
 					})
-					.always(function () {
+					.always(function (jqXHR, textStatus, jqXHR) {
 						vrAdmin.Waiting.stay();
 					});
 			});
@@ -325,11 +344,8 @@
 		/**
 		 * Generate alias with input name
 		 */
-		generateAlias: function () {
-			// Prepare
-			var alias = $("#tour-form input#name").val();
-
-			alias = alias.toLowerCase().replace(/\s+/g, "-")           // Replace spaces with -
+		generateAlias: function (input) {
+			alias = input.toLowerCase().replace(/\s+/g, "-")           // Replace spaces with -
 				.replace(/[^\w\-]+/g, "")       // Remove all non-word chars
 				.replace(/\-\-+/g, "-")         // Replace multiple - with single -
 				.replace(/^-+/, "")             // Trim - from start of text
@@ -337,8 +353,12 @@
 			$("#tour-form input#alias").val(alias);
 		},
 
-		validateAlias: function(tourId, alias)
-		{
+		/**
+		 * Ajax to validate alias
+		 * @param tourId
+		 * @param alias
+		 */
+		validateAlias: function (tourId, alias) {
 			$.ajax({
 				url: "index.php",
 				type: "POST",
@@ -357,16 +377,17 @@
 				}
 			})
 				.done(function (data, textStatus, jqXHR) {
-					if (data.status == true) {
+					vrAdmin.Log.appendArray(data.messages);
+
+					if (data.status) {
 						vrAdmin.Waiting.success();
 					}
 					else {
-						vrAdmin.Log.appendArray(data.messages);
 						vrAdmin.Waiting.stay();
 					}
 				})
 				.fail(function (jqXHR, textStatus, errorThrown) {
-					alert('Ajax failed');
+					alert('Ajax failed. Please contact webmaster for detail');
 					vrAdmin.Waiting.stay();
 				})
 				.always(function (jqXHR, textStatus, jqXHR) {
@@ -379,7 +400,7 @@
 		 */
 		hooks: function () {
 			$("body").on("blur", "#tour-form input#name", function () {
-				vrTour.generateAlias();
+				vrTour.generateAlias($(this).val());
 			});
 
 			$('body').on('blur', '#tour-form input#alias', function () {
@@ -393,6 +414,7 @@
 					tourId = 0;
 				}
 
+				vrTour.generateAlias($(this).val());
 				vrTour.validateAlias(tourId, alias);
 			})
 
@@ -420,11 +442,18 @@
 					}
 				})
 					.done(function (data, textStatus, jqXHR) {
-						vrAdmin.Log.appendArray(data.messages);
-						vrAdmin.Waiting.stay();
+						if (data.status)
+						{
+							vrAdmin.reload();
+						}
+						else
+						{
+							vrAdmin.Log.appendArray(data.messages);
+							vrAdmin.Waiting.stay();
+						}
 					})
 					.fail(function (jqXHR, textStatus, errorThrown) {
-						alert('Ajax failed');
+						alert('Ajax failed. Please contact webmaster for detail');
 						vrAdmin.Waiting.stay();
 					})
 					.always(function (jqXHR, textStatus, jqXHR) {
@@ -510,8 +539,7 @@
 					hotspotList: JSON.stringify(ifHotspotObj.superHotspot.getData().hotspotList),
 					defaultViewList: JSON.stringify(ifHotspotObj.defaultViewList)
 				},
-				async: true,
-				cache: false,
+				dataType: 'json',
 				beforeSend: function () {
 					vrAdmin.Waiting.waiting();
 				}
@@ -522,7 +550,7 @@
 					vrAdmin.Waiting.stay();
 				})
 				.fail(function (jqXHR, textStatus, errorThrown) {
-					alert('Ajax failed');
+					alert('Ajax failed. Please contact webmaster for detail');
 					vrAdmin.Waiting.stay();
 				})
 				.always(function (jqXHR, textStatus, jqXHR) {

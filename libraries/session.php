@@ -73,6 +73,10 @@ class Vr360Session extends Vr360Object
 		return $instance;
 	}
 
+	/**
+	 * @param        $message
+	 * @param string $type
+	 */
 	public function addMessage($message, $type = 'default')
 	{
 		$messages          = $this->get('messages', array());
