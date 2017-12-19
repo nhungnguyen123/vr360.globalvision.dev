@@ -1,10 +1,7 @@
 <?php
-
 defined('_VR360_EXEC') or die;
-
 // Skins
 $skins = Vr360HelperKrpano::getListOfSkins();
-
 ?>
 <div class="tour-options">
 	<div class="form-group">
@@ -48,6 +45,85 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 								value="1"
 							<?php echo ($tour->params->get('socials', false)) ? 'checked="checked"' : '' ?>
 								size="80"/>Check for show media social button.
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input
+								type="checkbox"
+								id="tour-param-logo"
+								class="tour-params"
+								name="params[logo]"
+								value="1"
+							<?php echo ($tour->params->get('logo', false)) ? 'checked="checked"' : '' ?>
+								size="80"/>Check for Logo
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input
+								type="checkbox"
+								id="tour-param-vr"
+								class="tour-params"
+								name="params[vr_mode]"
+								value="1"
+							<?php echo ($tour->params->get('vr_mode', false)) ? 'checked="checked"' : '' ?>
+								size="80"/>Vr mode
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				Select Hotspots type
+				<div class="checkbox">
+					<label>
+						<input
+								type="radio"
+								id="tour-param-vr"
+								class="tour-params"
+								name="params[hot_type]"
+								value="blinking"
+								<?php echo ($tour->params->get('vr_mode', false)) ? 'checked="checked"' : '' ?>
+								size="80"/>Blinking
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input
+								type="radio"
+								id="tour-param-vr"
+								class="tour-params"
+								name="params[hot_type]"
+								value="still"
+								<?php echo ($tour->params->get('vr_mode', false)) ? 'checked="checked"' : '' ?>
+								size="80"/>Still
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input
+								type="radio"
+								id="tour-param-vr"
+								class="tour-params"
+								name="params[hot_type]"
+								value="custom"
+								<?php echo ($tour->params->get('vr_mode', false)) ? 'checked="checked"' : '' ?>
+								size="80"/>Custom icon
+					</label>
+				</div>
+				<div class="checkbox">
+					<label>
+						<input
+								type="radio"
+								id="tour-param-vr"
+								class="tour-params"
+								name="params[hot_type]"
+								value="graphic"
+								<?php echo ($tour->params->get('vr_mode', false)) ? 'checked="checked"' : '' ?>
+								size="80"/>Graphic
 					</label>
 				</div>
 			</div>
