@@ -17,9 +17,11 @@
 		<div class="modal-content">
 			<!-- Header -->
 			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fas fa-window-close"></i></span>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
+								class="fas fa-window-close"></i></span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel"><i class="fa fa-plus-square" aria-hidden="true"></i> <?php echo \Joomla\Language\Text::_('TOURS_LABEL_NEW_TOUR'); ?>
+				<h4 class="modal-title" id="myModalLabel">
+					<i class="fa fa-plus-square" aria-hidden="true"></i> <?php echo \Joomla\Language\Text::_('TOURS_LABEL_NEW_TOUR'); ?>
 				</h4>
 			</div>
 			<!-- Body -->

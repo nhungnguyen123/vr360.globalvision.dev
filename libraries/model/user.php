@@ -11,34 +11,6 @@ class Vr360ModelUser extends Vr360Model
 {
 	/**
 	 * @param   string $userName
-	 *
-	 * @return  boolean|Vr360TableUser
-	 */
-	public function getItem($userName)
-	{
-		$db    = Vr360Factory::getDbo();
-		$query = $db->getQuery(true)
-			->select('*')
-			->from($db->quoteName('users'))
-			->where($db->quoteName('username') . ' = ' . $db->quote($userName), 'OR')
-			->where($db->quoteName('email') . ' = ' . $db->quote($userName));
-
-		$row = $db->setQuery($query)->loadObject();
-
-		if (!$row)
-		{
-			return false;
-		}
-
-		$row->params = !(empty($row->params)) ? new Vr360Object(json_decode($row->params)) : new Vr360Object;
-		$user        = new Vr360TableUser;
-		$user->bind($row);
-
-		return $user;
-	}
-
-	/**
-	 * @param   string $userName
 	 * @param   string $password
 	 *
 	 * @return  boolean
@@ -65,6 +37,34 @@ class Vr360ModelUser extends Vr360Model
 
 			return true;
 		}
+	}
+
+	/**
+	 * @param   string $userName
+	 *
+	 * @return  boolean|Vr360TableUser
+	 */
+	public function getItem($userName)
+	{
+		$db    = Vr360Factory::getDbo();
+		$query = $db->getQuery(true)
+			->select('*')
+			->from($db->quoteName('users'))
+			->where($db->quoteName('username') . ' = ' . $db->quote($userName), 'OR')
+			->where($db->quoteName('email') . ' = ' . $db->quote($userName));
+
+		$row = $db->setQuery($query)->loadObject();
+
+		if (!$row)
+		{
+			return false;
+		}
+
+		$row->params = !(empty($row->params)) ? new Vr360Object(json_decode($row->params)) : new Vr360Object;
+		$user        = new Vr360TableUser;
+		$user->bind($row);
+
+		return $user;
 	}
 
 	/**

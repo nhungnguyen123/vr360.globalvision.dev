@@ -30,7 +30,7 @@ class Vr360Session extends Vr360Object
 	/**
 	 * Vr360Session constructor.
 	 *
-	 * @param   array  $properties  Properties
+	 * @param   array $properties Properties
 	 */
 	public function __construct($properties = null)
 	{

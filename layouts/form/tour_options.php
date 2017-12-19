@@ -33,7 +33,7 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 								class="tour-params"
 								name="params[rotation]"
 							<?php echo ($tour->params->get('rotation', false)) ? 'checked="checked"' : '' ?>
-								value="1" size="80"/> Check for auto rotation.
+								value="1" size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_AUTO_ROTATION'); ?>
 					</label>
 				</div>
 			</div>
@@ -47,7 +47,7 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 								name="params[socials]"
 								value="1"
 							<?php echo ($tour->params->get('socials', false)) ? 'checked="checked"' : '' ?>
-								size="80"/>Check for show media social button.
+								size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_AUTO_ROTATION'); ?>
 					</label>
 				</div>
 			</div>
@@ -61,7 +61,7 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 								name="params[uselogo]"
 								value="1"
 							<?php echo ($tour->params->get('uselogo', false)) ? 'checked="checked"' : '' ?>
-								size="80"/>Use logo
+								size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_USE_LOGO'); ?>
 					</label>
 				</div>
 			</div>

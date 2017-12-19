@@ -103,7 +103,7 @@ class Vr360TableTour extends Vr360Table
 			$this->status = VR360_TOUR_STATUS_PUBLISHED_READY;
 		}
 
-		if ($this->hits=== null)
+		if ($this->hits === null)
 		{
 			$this->hits = 0;
 		}

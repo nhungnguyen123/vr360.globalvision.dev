@@ -48,7 +48,7 @@ class Vr360ControllerUser extends Vr360Controller
 	 */
 	public function ajaxGetUserHtml()
 	{
-		$ajax  = Vr360AjaxResponse::getInstance();
+		$ajax = Vr360AjaxResponse::getInstance();
 
 		// Permission verify
 		if (!Vr360HelperAuthorize::isAuthorized())
@@ -66,7 +66,7 @@ class Vr360ControllerUser extends Vr360Controller
 	 */
 	public function ajaxSaveProfile()
 	{
-		$ajax  = Vr360AjaxResponse::getInstance();
+		$ajax = Vr360AjaxResponse::getInstance();
 
 		// Permission verify
 		if (!Vr360HelperAuthorize::isAuthorized())

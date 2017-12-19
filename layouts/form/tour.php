@@ -21,7 +21,6 @@ defined('_VR360_EXEC') or die;
 						name="name"
 						placeholder="<?php echo \Joomla\Language\Text::_('TOUR_LABEL_NAME_DESCRIPTION');?>"
 						value="<?php echo $tour->get('name'); ?>"
-						title="Name of tour. Will use as site title"
 						data-validation="required"/>
 			</div>
 		</div>
@@ -36,7 +35,6 @@ defined('_VR360_EXEC') or die;
 						name="alias"
 						placeholder="<?php echo \Joomla\Language\Text::_('TOUR_LABEL_ALIAS_DESCRIPTION');?>"
 						value="<?php echo $tour->get('alias'); ?>"
-						title="Friendly URL of tour"
 						data-validation="required"
 				/>
 			</div>
@@ -50,8 +48,7 @@ defined('_VR360_EXEC') or die;
 						class="form-control input-sm"
 						id="description"
 						name="description"
-						placeholder=""
-						title="<?php echo \Joomla\Language\Text::_('TOUR_LABEL_DESCRIPTION_DESCRIPTION');?>"
+						placeholder="<?php echo \Joomla\Language\Text::_('TOUR_LABEL_DESCRIPTION_DESCRIPTION');?>"
 						value="<?php echo $tour->get('description'); ?>"
 				/>
 			</div>
@@ -65,8 +62,7 @@ defined('_VR360_EXEC') or die;
 						class="form-control input-sm"
 						id="keyword"
 						name="keyword"
-						placeholder=""
-						title="<?php echo \Joomla\Language\Text::_('TOUR_LABEL_KEYWORD_DESCRIPTION');?>"
+						placeholder="<?php echo \Joomla\Language\Text::_('TOUR_LABEL_KEYWORD_DESCRIPTION');?>"
 						value="<?php echo $tour->get('keyword'); ?>"
 				/>
 			</div>

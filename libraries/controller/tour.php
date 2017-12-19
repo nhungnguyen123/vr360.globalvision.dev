@@ -102,7 +102,8 @@ class Vr360ControllerTour extends Vr360Controller
 			$ajax->addDanger(\Joomla\Language\Text::sprintf('GENERAL_NOTICE_DELETED_FAIL', $input->getInt('id')))->fail()->respond();
 		}
 
-		$ajax->addSuccess(\Joomla\Language\Text::sprintf('GENERAL_NOTICE_DELETED_SUCCESS', $input->getInt('id')))->success()->respond();
+		Vr360Session::getInstance()->addMessage(\Joomla\Language\Text::sprintf('GENERAL_NOTICE_DELETED_SUCCESS', $input->getInt('id')),'success');
+		$ajax->success()->respond();
 	}
 
 	/**
@@ -110,7 +111,7 @@ class Vr360ControllerTour extends Vr360Controller
 	 */
 	public function ajaxGetHotspotEditorHtml()
 	{
-		$ajax  = Vr360AjaxResponse::getInstance();
+		$ajax = Vr360AjaxResponse::getInstance();
 
 		// Permission verify
 		if (!Vr360HelperAuthorize::isAuthorized())

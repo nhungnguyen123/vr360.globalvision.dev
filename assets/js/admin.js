@@ -225,8 +225,7 @@
 					vrAdmin.Log.appendArray(data.messages);
 
 					if (data.status) {
-						$("table#vTours tr#vtour-" + tourId).remove();
-						vrAdmin.Waiting.success();
+						vrAdmin.reload();
 					}
 					else {
 						vrAdmin.Waiting.stay();

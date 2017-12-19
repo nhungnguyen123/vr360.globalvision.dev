@@ -29,7 +29,7 @@ class Vr360ControllerHotspot extends Vr360Controller
 		}
 
 		// Hotspots
-		$hotspotsList     = json_decode($input->getString('hotspotList'), true);
+		$hotspotsList = json_decode($input->getString('hotspotList'), true);
 
 		// Default view
 		$defaultViewsList = json_decode($input->getString('defaultViewList'), true);

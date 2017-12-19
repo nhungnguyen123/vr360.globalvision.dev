@@ -31,7 +31,7 @@ $scenes = $tour->getScenes();
 						<div class="col-md-6">
 							<button type="button" id="removeScene"
 							        class="btn btn-danger btn-sm pull-right tour-scene-remove">
-								<i class="far fa-minus-square"></i> Remove
+								<i class="far fa-minus-square"></i> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_DELETE');?>
 							</button>
 						</div>
 					</div>
@@ -41,7 +41,7 @@ $scenes = $tour->getScenes();
 						<div class="col-md-12">
 							<div class="sceneWrap form-horizontal">
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Scene file *</label>
+									<label class="col-sm-3 control-label"><?php echo \Joomla\Language\Text::_('TOUR_LABEL_SCENE_FILE');?></label>
 									<div class="col-sm-9">
 										<input
 												type="text"
@@ -64,7 +64,7 @@ $scenes = $tour->getScenes();
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="col-sm-3 control-label">Description</label>
+									<label class="col-sm-3 control-label"><?php echo \Joomla\Language\Text::_('TOUR_LABEL_NAME');?></label>
 									<div class="col-sm-9">
 										<input
 												name="sceneDescription[<?php echo $scene->id ?>]"
@@ -177,14 +177,14 @@ $scenes = $tour->getScenes();
 			<div class="panel-heading">
 				<div class="container-fluid">
 					<div class="col-md-6">
-						<div class="panel-title">New Scene</div>
+						<div class="panel-title"><?php echo \Joomla\Language\Text::_('TOUR_LABEL_NEW_SCENE');?></div>
 					</div>
 					<div class="col-md-6">
 						<button
 								type="button"
 								class="btn btn-danger btn-sm pull-right tour-scene-remove"
 						>
-							<i class="fas fa-minus"></i> Remove
+							<i class="fas fa-minus"></i> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_DELETE');?>
 						</button>
 					</div>
 				</div>
@@ -194,7 +194,7 @@ $scenes = $tour->getScenes();
 					<div class="col-md-12">
 						<div class="sceneWrap form-horizontal">
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Scene file *</label>
+								<label class="col-sm-3 control-label"><?php echo \Joomla\Language\Text::_('TOUR_LABEL_SCENE_FILE');?></label>
 								<div class="col-sm-9">
 									<input
 											type="file"
@@ -207,7 +207,7 @@ $scenes = $tour->getScenes();
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Name *</label>
+								<label class="col-sm-3 control-label"><?php echo \Joomla\Language\Text::_('TOUR_LABEL_NAME');?></label>
 								<div class="col-sm-9">
 									<input
 											name="newSceneName[]"
@@ -219,7 +219,7 @@ $scenes = $tour->getScenes();
 								</div>
 							</div>
 							<div class="form-group">
-								<label class="col-sm-3 control-label">Description</label>
+								<label class="col-sm-3 control-label"><?php echo \Joomla\Language\Text::_('TOUR_LABEL_DESCRIPTION');?></label>
 								<div class="col-sm-9">
 									<input
 											name="newSceneDescription[]"

@@ -48,8 +48,7 @@
 			</table>
 		</noscript>
 		<script type="text/javascript">
-			window.onload = function()
-			{
+			window.onload = function () {
 				<?php echo $tour->getKrpanoEmbedPano(); ?>
 			}
 		</script>
