@@ -3,6 +3,11 @@ defined('_VR360_EXEC') or die;
 // Skins
 $skins = Vr360HelperKrpano::getListOfSkins();
 ?>
+<style type="text/css">
+	.custom-button{
+		width:161px;
+	}
+</style>
 <div class="tour-options">
 	<div class="form-group">
 		<span class="col-sm-2 control-label label label-primary">
@@ -63,6 +68,71 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 				</div>
 			</div>
 			<div class="form-group">
+				Color
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input
+								type="radio"
+								class="tour-params"
+								name="colorType"
+								value="1"
+								size="80"/> First Color
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input
+								type="radio"
+								class="tour-params"
+								name="colorType"
+								value="1"
+								size="80"/> Secondary color
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input
+								type="radio"
+								class="tour-params"
+								name="colorType"
+								value="1"
+								size="80"/> Thrid Color
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input
+								type="checkbox"
+								id="tour-param-map"
+								class="tour-params"
+								name=""
+								value="1"
+								size="80"/>Map Display
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="checkbox">
+					<label>
+						<input
+								type="checkbox"
+								id="tour-param-vr"
+								class="tour-params"
+								name=""
+								value="1"
+								size="80"/>Level Display
+					</label>
+				</div>
+			</div>
+			<div class="form-group">
 				<div class="checkbox">
 					<label>
 						<input
@@ -71,60 +141,33 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 								class="tour-params"
 								name="params[vr_mode]"
 								value="1"
-							<?php echo ($tour->params->get('vr_mode', false)) ? 'checked="checked"' : '' ?>
 								size="80"/>Vr mode
 					</label>
 				</div>
 			</div>
 			<div class="form-group">
-				Select Hotspots type
-				<div class="checkbox">
-					<label>
-						<input
-								type="radio"
-								id="tour-param-vr"
-								class="tour-params"
-								name="params[hot_type]"
-								value="blinking"
-								<?php echo ($tour->params->get('vr_mode', false)) ? 'checked="checked"' : '' ?>
-								size="80"/>Blinking
-					</label>
+				<div class="checkbox" >
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle custom-button" type="button" data-toggle="dropdown">Hotspots Colour
+						<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><a href="#">Red</a></li>
+							<li><a href="#">Green</a></li>
+							<li><a href="#">Blue</a></li>
+						</ul>
+					</div>
 				</div>
-				<div class="checkbox">
-					<label>
-						<input
-								type="radio"
-								id="tour-param-vr"
-								class="tour-params"
-								name="params[hot_type]"
-								value="still"
-								<?php echo ($tour->params->get('vr_mode', false)) ? 'checked="checked"' : '' ?>
-								size="80"/>Still
-					</label>
-				</div>
-				<div class="checkbox">
-					<label>
-						<input
-								type="radio"
-								id="tour-param-vr"
-								class="tour-params"
-								name="params[hot_type]"
-								value="custom"
-								<?php echo ($tour->params->get('vr_mode', false)) ? 'checked="checked"' : '' ?>
-								size="80"/>Custom icon
-					</label>
-				</div>
-				<div class="checkbox">
-					<label>
-						<input
-								type="radio"
-								id="tour-param-vr"
-								class="tour-params"
-								name="params[hot_type]"
-								value="graphic"
-								<?php echo ($tour->params->get('vr_mode', false)) ? 'checked="checked"' : '' ?>
-								size="80"/>Graphic
-					</label>
+				<div class="checkbox" >
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle custom-button" type="button" data-toggle="dropdown">Hotspots Type
+						<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><a href="#">Blinking</a></li>
+							<li><a href="#">Still</a></li>
+							<li><a href="#">Custom Icon</a></li>
+							<li><a href="#">Graphic</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
