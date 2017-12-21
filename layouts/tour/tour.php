@@ -47,7 +47,7 @@ $includes     = Vr360HelperKrpano::getIncludes();
 	               maps_google_api_key=""
 	               maps_zoombuttons="false"
 	               gyro="true"
-	               webvr="<?=$tour->params->get('vr_mode', false) ?>"
+	               webvr="<?php echo $tour->params->get('vr_mode', false) ?>"
 	               webvr_gyro_keeplookingdirection="false"
 	               webvr_prev_next_hotspots="true"
 	               littleplanetintro="false"
@@ -91,9 +91,6 @@ $includes     = Vr360HelperKrpano::getIncludes();
 	               design_text_css="color:#FFFFFF; font-family:Arial;"
 	               design_text_shadow="1"
 	/>
-	<?php
-		file_put_contents("test.txt",print_r("<?='_/user/'.$tour->created_by.'/logo.png '?>" ,true))
-	?>
 	<!-- Use for override everything -->
 	<include url="<?php echo $assetsPath; ?>/vendor/krpano/skins/<?php echo $skin; ?>"/>
 	<?php if ($tour->params->get('logo', false) == 1): ?>

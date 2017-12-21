@@ -215,19 +215,6 @@ class Vr360Tour extends Vr360TableTour
 		return 'embedpano(' . json_encode($embed) . ');';
 	}
 
-	public function getKrpanoEmbedPanoScinAbc()
-	{
-		$embed                      = new stdClass;
-		$embed->swf                 = $this->getKrpanoSwfUrl();
-		$embed->xml                 = '_/' . $this->id . '/vtour/tour.xml';
-		$embed->target              = 'pano';
-		$embed->html5               = Vr360Configuration::getConfig('krPanoEmbedHtml5', 'auto');
-		$embed->mobilescale         = '1.0';
-		$embed->passQueryParameters = 'true';
-
-		return 'embedpano(' . json_encode($embed) . ');';
-	}
-
 	/**
 	 * @return boolean
 	 */

@@ -55,8 +55,8 @@ $defaultView = new Vr360Object($defaultView);
 			         style="<?php echo $hotspot->style; ?>"
 			         hotspot_type="<?php echo $hotspot->type; ?>"
 			         ath="<?php echo $hotspot->ath ?>"
-			         atv="<?php echo $hotspot->atv ?>" <?php echo implode(' ', $data) ?> 
-			         onclick="<?php echo 'showPopup(\'' . $hotspot->code . '\')'; ?>" />
+			         atv="<?php echo $hotspot->atv ?>" <?php echo implode(' ', $data) ?>
+			         />
 		<?php endforeach; ?>
 	<?php endif; ?>
 </scene>

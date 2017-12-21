@@ -234,8 +234,8 @@ if(isset($_POST["editoptions"] )){
 	<div class="popup" data-popup="popup-1">
 	    <div class="popup-inner" id="popup">
 			<form >
-				<input type="hidden" id="user_id" value="<?=$tour->created_by?>">
-				<input type="hidden" id="tour_id" value="<?=$tour->id?>">
+				<input type="hidden" id="user_id" value="<?php echo $tour->created_by?>">
+				<input type="hidden" id="tour_id" value="<?php echo $tour->id?>">
 					<button type="button" id="add_hotpost" class="btn btn-primary btn-sm button-custom" onclick="addHotspot();">
 						Add hotspot here
 					</button>
@@ -268,23 +268,8 @@ if(isset($_POST["editoptions"] )){
 							Add  Link a scene
 						</button>
 					</div>
-					<button
-							type="button"
-							id="savehotspots"
-							class="btn btn-default "
-							onclick="SaveHot()">Save
-					</button>
 					<!-- TeXt-->
 					<div id="text_div" class="form-group" style="display: none;">
-						<div class="form-group">
-							<input
-								id='text_title'
-								type="text"
-								size="30"
-								placeholder="Input Text Title"
-								class="form-control"
-							/>
-						</div>
 						<div class="form-group">
 							<textarea
 								class="form-control"
@@ -302,9 +287,10 @@ if(isset($_POST["editoptions"] )){
 							></textarea>
 						</div>
 						<button
-							type="button"
-							class="btn btn-default "
-							onclick="onclickCancel()">Ok
+								type="button"
+								id="savehotspots"
+								class="btn btn-default "
+								onclick="SaveHot()">Save
 						</button>
 						<button
 							type="button"
@@ -341,9 +327,10 @@ if(isset($_POST["editoptions"] )){
 						</div>
 						<br>
 						<button
-							type="button"
-							class="btn btn-default "
-							onclick="onclickCancel()">OK
+								type="button"
+								id="savehotspots"
+								class="btn btn-default "
+								onclick="SaveHot()">Save
 						</button>
 						<button
 							type="button"
@@ -380,9 +367,10 @@ if(isset($_POST["editoptions"] )){
 						</div>
 						<br>
 						<button
-							type="button"
-							class="btn btn-default "
-							onclick="onclickCancel()">OK
+								type="button"
+								id="savehotspots"
+								class="btn btn-default "
+								onclick="SaveHot()">Save
 						</button>
 						<button
 							type="button"
@@ -403,9 +391,10 @@ if(isset($_POST["editoptions"] )){
 							/>
 						</div>
 						<button
-							type="button"
-							class="btn btn-default "
-							onclick="onclickCancel()">OK
+								type="button"
+								id="savehotspots"
+								class="btn btn-default "
+								onclick="SaveHot()">Save
 						</button>
 						<button
 							type="button"
@@ -426,9 +415,10 @@ if(isset($_POST["editoptions"] )){
 							/>
 						</div>
 						<button
-							type="button"
-							class="btn btn-default "
-							onclick="onclickCancel()">OK
+								type="button"
+								id="savehotspots"
+								class="btn btn-default "
+								onclick="SaveHot()">Save
 						</button>
 						<button
 							type="button"
@@ -443,13 +433,14 @@ if(isset($_POST["editoptions"] )){
 							data-width="261px"
 						>
 						<?php foreach ($tours->getList() as $tour): ?>
-							<option title="<?=$tour->name?>"" value="<?=$tour->alias?>"><?=$tour->name?></option>
+							<option title="<?php echo $tour->name?>"" value="<?php echo $tour->alias?>"><?php echo $tour->name?></option>
 						<?php endforeach ?>
 						</select>
 						<button
-							type="button"
-							class="btn btn-default button-custom-save-cancel"
-							onclick="onclickCancel()">OK
+								type="button"
+								id="savehotspots"
+								class="btn btn-default "
+								onclick="SaveHot()">Save
 						</button>
 						<button
 							type="button"
@@ -489,9 +480,9 @@ if(isset($_POST["editoptions"] )){
 			Edit Link a Scene
 			</button>
 		</div>
-		<button type="button" id="saveEdit" class="btn btn-default" onclick="saveEdit()" style="display: none;">
+		<!-- <button type="button" id="saveEdit" class="btn btn-default" onclick="saveEdit()" style="display: none;">
 		Save Edit
-		</button>
+		</button> -->
 		<button type="button" id="edit_hotpost" class="btn btn-primary btn-sm button-custom-th" onclick="editHotspot();">
 		Edit
 		</button>
@@ -532,7 +523,7 @@ if(isset($_POST["editoptions"] )){
 			<button
 			type="button"
 			class="btn btn-default"
-			onclick="OkEdit()">Ok
+			onclick="saveEdit()">Save
 			</button>
 		</div>
 
@@ -562,10 +553,7 @@ if(isset($_POST["editoptions"] )){
 				"
 				></textarea>
 			</div>
-			<button
-			type="button"
-			class="btn btn-default"
-			onclick="OkEdit()">Ok
+			<button type="button" class="btn btn-default" onclick="saveEdit()">Save
 			</button>
 		</div>
 		<div id="modal_div_edit" class="form-group" style="display: none;">
@@ -594,29 +582,22 @@ if(isset($_POST["editoptions"] )){
 				"
 				></textarea>
 			</div>
-			<button
-			type="button"
-			class="btn btn-default"
-			onclick="OkEdit()">Ok
+			<button type="button" class="btn btn-default" onclick="saveEdit()">Save
 			</button>
 		</div>
 		<div id="image_div_edit" class="form-group" style="display:none">
 			<div class="form-group">
 				<input id="image_input_edit" type="text" size="30" placeholder="Image Url" class="form-control" style="margin-bottom: 2px ">
-				<button
-					type="button"
-					class="btn btn-default"
-					onclick="OkEdit()">Ok
-				</button>
+			<button type="button" class="btn btn-default" onclick="saveEdit()">
+				Save
+			</button>
 			</div>
 		</div>
 		<div id="video_div_edit" class="form-group" style="display:none">
 			<div class="form-group">
 				<input id="video_input_edit" type="text" size="30" placeholder="Image Url" class="form-control" style="margin-bottom: 2px ">
-				<button
-					type="button"
-					class="btn btn-default"
-					onclick="OkEdit()">Ok
+				<button type="button" class="btn btn-default" onclick="saveEdit()">
+					Save
 				</button>
 			</div>
 		</div>
@@ -628,14 +609,12 @@ if(isset($_POST["editoptions"] )){
 					data-width="261px"
 					>
 					<?php foreach ($tours->getList() as $tour): ?>
-					<option title="<?=$tour->name?>"" value="<?=$tour->alias?>"><?=$tour->name?></option>
+					<option title="<?php echo $tour->name?>"" value="<?php echo $tour->alias?>"><?php echo $tour->name?></option>
 					<?php endforeach ?>
 				</select>
 			</div>
-			<button
-				type="button"
-				class="btn btn-default"
-				onclick="OkEdit()">Ok
+			<button type="button" class="btn btn-default" onclick="saveEdit()">
+				Save
 			</button>
 		</div>
 
@@ -779,7 +758,9 @@ if(isset($_POST["editoptions"] )){
 		}
 
 		function addText(){
-		disableButton(['#add_Tooltip', '#add_Modal', '#add_image', '#add_video' ,'#add_link' ,'#savehotspots' ]);
+		// alert(1);
+		// alert(uniqname);
+		disableButton(['#add_Tooltip', '#add_Modal', '#add_image', '#add_video' ,'#add_link' ]);
 			$("#text_div").show();
 
 		}
@@ -800,6 +781,7 @@ if(isset($_POST["editoptions"] )){
 		}
 
 		function addVideo(){
+			krpano.call("set(hotspot[" + uniqname + "].hotspot_type, video);");
 			disableButton([ '#add_text' , '#add_Modal', '#add_Tooltip', '#add_image' ,'#add_link' ,'#savehotspots' ]);
 			$("#video_div").show();
 		}
@@ -890,17 +872,7 @@ if(isset($_POST["editoptions"] )){
 				success: function(data) {
 				}
 			})
-		}
-
-		function OkEdit(){
-			$("#text_div_edit").hide();
-			$("#tooltip_div_edit").hide();
-			$("#modal_div_edit").hide();
-			$("#image_div_edit").hide();
-			$("#video_div_edit").hide();
-			$("#scene_div_edit").hide();
-			$("#text_div_edit").hide();
-			enableButton(['#edit_text','#edit_Tooltip', '#edit_modal', '#edit_image', '#edit_video' ,'#edit_link',"#saveEdit"]);
+			$( "[data-popup-close]" ).trigger( "click" );
 		}
 
 		function SaveHot(){
@@ -909,7 +881,7 @@ if(isset($_POST["editoptions"] )){
 
 			krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
 			var scene_num = krpano.get('scene.count');
-			current_scene = krpano.get('xml.scene');
+			var current_scene = krpano.get('xml.scene');
 			var user_id = $('#user_id').val();
 			var tour_id = $('#tour_id').val();
 			var title_t = $('#text_title').val();
@@ -926,6 +898,7 @@ if(isset($_POST["editoptions"] )){
 			var scene = $('.selectpicker').val();
 			var posX = krpano.get('m_ath');
 			var posY = krpano.get('m_atv');
+
 			$.ajax({
 				url: "",
 				type: "POST",
@@ -949,7 +922,6 @@ if(isset($_POST["editoptions"] )){
 
 					hotspots[uniqname] = r; //JSON.parse(r);
 					krpano.call("addhotspot(" + uniqname + ");");
-
 					if (typeof currentHotspotData == 'undefined'){
 						currentHotspotData = {};
 						currentHotspotData.ath = krpano.get('view.hlookat');
@@ -970,26 +942,25 @@ if(isset($_POST["editoptions"] )){
 					krpano.call("set(hotspot[" + uniqname + "].ath, " + posX + ");");
 					krpano.call("set(hotspot[" + uniqname + "].sceneName, " + current_scene + ");");
 					krpano.call("set(hotspot[" + uniqname + "].atv, " + posY + ");");
-					krpano.call("set(hotspot[" + uniqname + "].hotspot_type, " + currentHotspotData.hotspot_type + ");");
+					krpano.call("set(hotspot[" + uniqname + "].hotspot_type, normal);");
+					krpano.call("set(hotspot[" + uniqname + "].hotspot_text,"+ title_d +" ");
 					krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
 				}
+			}).then(function(){
+				var user_id = $('#user_id').val('');
+				var tour_id = $('#tour_id').val('');
+				var title_t = $('#text_title').val('');
+				var title_d = $('#text_text').val('');
+				var tooltip_t = $('#tooltip_t').val('');
+				var tooltip_d = $('#tooltip_d').val('');
+				var modal_t = $('#modal_t').val('');
+				var modal_d = $('#modal_d').val('');
+				$( "[data-popup-close]" ).trigger( "click" );
 			})
-
-			var user_id = $('#user_id').val('');
-			var tour_id = $('#tour_id').val('');
-			var title_t = $('#text_title').val('');
-			var title_d = $('#text_text').val('');
-			var tooltip_t = $('#tooltip_t').val('');
-			var tooltip_d = $('#tooltip_d').val('');
-
-			var modal_t = $('#modal_t').val('');
-			var modal_d = $('#modal_d').val('');
-			$( "[data-popup-close]" ).trigger( "click" );
-
 		}
 
 		function editHotspot(){
-			enableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
+			// enableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
 			disableButton(['#move_hotspot', '#delete_hotpost','#edit_hotpost']);
 			var hotspod_id =hotspots[uniqname];
 			console.log(hotspod_id);
@@ -1002,22 +973,106 @@ if(isset($_POST["editoptions"] )){
 				},
 				dataType: 'json',
 				success:function(data) {
-					$('#text_t_edit').val(data.text_t);
-					$('#text_d_edit').text(data.text_d);
+					if(!(!data.text_t && !data.text_d)){
+						if(data.text_t.length > 0 || data.text_.length > 0){
+							$('#text_t_edit').val(data.text_t);
+							$('#text_d_edit').text(data.text_d);
+							disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
+							$('#text_div_edit').show();
+							$('#tooltip_div_edit ').hide();
+							$('#modal_div_edit ').hide();
+							$('#video_div_edit').hide();
+							$('#image_div_edit').hide();
+							$('#scene_div_edit').hide();
+							// console.log(data.text_t.length)
+						}
+					}
 
-					$('#tooltip_t_edit').val(data.tooltip_t);
-					$('#tooltip_d_edit').text(data.tooltip_d);
+					if(!(!data.tooltip_t && !data.tooltip_d)){
+						if(data.tooltip_t.length > 0 || data.tooltip_d.length > 0){
+							$('#tooltip_t_edit').val(data.tooltip_t);
+							$('#tooltip_d_edit').text(data.tooltip_d);
+							disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
+							$('#text_div_edit').hide();
+							$('#tooltip_div_edit ').show();
+							$('#modal_div_edit ').hide();
+							$('#video_div_edit').hide();
+							$('#image_div_edit').hide();
+							$('#scene_div_edit').hide();
+							// console.log(data.text_t.length)
+						}
+					}
 
-					$('#modal_t_edit').val(data.modal_t);
-					$('#modal_d_edit').text(data.modal_d);
+					if(!(!data.modal_d && !data.modal_t)){
+						if(data.modal_t.length > 0 || data.tooltip_d.length > 0){
+							$('#modal_t_edit').val(data.modal_t);
+							$('#modal_d_edit').text(data.modal_d);
+							disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
+							$('#text_div_edit').hide();
+							$('#tooltip_div_edit ').hide();
+							$('#modal_div_edit ').show();
+							$('#video_div_edit').hide();
+							$('#image_div_edit').hide();
+							$('#scene_div_edit').hide();
+							// console.log(data.text_t.length)
+						}
+					}
 
-					$('#video_input_edit').val(data.video_url);
-					$('#image_input_edit').val(data.image_url);
-					$('#sce').text(data.link_scene);
-					$('scene_select_edit').val(data.link_scene);
+					// if(!data.video_url){
+					// 	if(data.video_url.length  > 0 ){
+					// 		$('#video_input_edit').val(data.video_url);
+					// 		disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
+					// 		$('#video_div_edit').show();
+					// 		// console.log(data.text_t.length)
+					// 	}
+					// }
 
-					console.log(data)
-					console.log(data.hotspot_id)
+					if(!data.video_url){
+						if(data.video_url.length  > 0 ){
+							$('#video_input_edit').val(data.video_url);
+							disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
+							// $('#video_div_edit').show();
+							$('#text_div_edit').hide();
+							$('#tooltip_div_edit ').hide();
+							$('#modal_div_edit ').hide();
+							$('#video_div_edit').show();
+							$('#image_div_edit').hide();
+							$('#scene_div_edit').hide();
+							// console.log(data.text_t.length)
+						}
+					}
+
+					if(!(data.image_url)  !== "undefined"){
+						if(data.image_url.length  > 0 ){
+							$('#image_input_edit').val(data.image_url);
+							disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
+							$('#text_div_edit').hide();
+							$('#text_div_edit').hide();
+							$('#tooltip_div_edit ').hide();
+							$('#modal_div_edit ').hide();
+							$('#video_div_edit').hide();
+							$('#image_div_edit').show();
+							$('#scene_div_edit').hide();
+							// console.log(data.text_t.length)
+						}
+					}
+
+					if(!data.link_scene){
+						if(data.link_scene.length  > 0 ){
+							$('scene_d_edit').val(data.link_scene);
+							disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
+
+							$('#text_div_edit').hide();
+							$('#text_div_edit').hide();
+							$('#tooltip_div_edit ').hide();
+							$('#modal_div_edit ').hide();
+							$('#video_div_edit').hide();
+							$('#image_div_edit').hide();
+							$('#scene_div_edit').show();
+							// console.log(data.text_t.length)
+						}
+					}
+
 				}
 			})
 			// $( "#add_hotpost" ).trigger( "click" );
@@ -1182,6 +1237,13 @@ if(isset($_POST["editoptions"] )){
 			uniqname = uniqn;
 			enableButton(['add_hotpost', '#remove_hotpost', '#set_defaultView'])
 			$("#edit-remove-move").show();
+			$('#text_div_edit').hide();
+			$('#tooltip_div_edit ').hide();
+			$('#modal_div_edit ').hide();
+			$('#video_div_edit').hide();
+			$('#image_div_edit').hide();
+			$('#scene_div_edit').hide();
+
 			// $('#edit-remove-move').css('position', 'fixed');
 			// var hotspot_count = getHotspotsCount();
 			// for (var i = 0; i < hotspot_count; i++) {
@@ -1224,6 +1286,7 @@ if(isset($_POST["editoptions"] )){
 				// if ( thisAlias.firstTimesSave == 0 ){thisAlias.firstTimesSave = 1;}
 
 				sceneName = this.kr.get('xml.scene');
+				console.log(sceneName);
 				// console.info('saveCurrentHotspotFromCurrentScene: ' + sceneName);
 				thisAlias.hotspotList[sceneName] = {};
 				var hotspot_count = thisAlias.kr.get('hotspot.count');
@@ -1256,6 +1319,9 @@ if(isset($_POST["editoptions"] )){
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'text') {
 							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].hotspot_text = thisAlias.kr.get('hotspot[' + i + '].hotspot_text');
+						}
+						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'video') {
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].hotspot_text = thisAlias.kr.get('hotspot[' + i + '].video');
 						}
 						current_vTour_hotspot_counter++;
 					}
