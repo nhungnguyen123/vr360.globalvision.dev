@@ -17,123 +17,6 @@ $tour->load(
 
 $tours = new Vr360ModelTours;
 $scenes = !$tour->id ? array() : $tour->getScenes();
-
-if(isset($_POST['insertoptions']) && !empty($_POST['insertoptions']) ){
-
-	$user_id = $_POST["user_id"];
-	$tour_id = $_POST["tour_id"];
-
-	$text_t = $_POST["title_t"];
-	$title_d = $_POST["title_d"];
-
-	$tooltip_t = $_POST["tooltip_t"];
-	$tooltip_d = $_POST["tooltip_d"];
-
-	$modal_t =  $_POST["modal_t"];
-	$modal_d =  $_POST["modal_d"];
-	//image
-	$image_url = $_POST["image_url"];
-	//video
-	$video_url = $_POST["video_url"];
-	// scene
-	$scene = $_POST['scene'];
-
-
-	$posX = $_POST['posX'];
-	$posY = $_POST['posY'];
-
-
-
-	$option = $tours->SaveHotspot(
-			array(
-				'sceneId',
-				'code',
-				'ath',
-				'atv',
-				'style',
-				'type',
-				'params'
-			),
-			array(
-				(int)$user_id,
-				null,
-				$posX,
-				$posY,
-				null,
-				null,
-				'params'
-			)
-		);
-
-	$tours->SaveOption(
-		array(
-			'user_id',
-			'hotspot_id',
-			'text_t',
-			'text_d',
-			'tooltip_t',
-			'tooltip_d',
-			'modal_t',
-			'modal_d',
-			'image_url',
-			'video_url',
-			'link_scene',
-		),
-		array(
-			(int)$user_id,
-			$option,
-			$text_t,
-			$title_d,
-			$tooltip_t,
-			$tooltip_d,
-			$modal_t,
-			$modal_d,
-			$image_url,
-			$video_url,
-			$scene
-		)
-	);
-
-	echo $option;
-	die();
-
-}
-
-if(isset($_POST["getoptions"] ) ){
-	if(isset($_POST['hotspod_id']) && !empty($_POST['hotspod_id'])){
-		$hotspod_id = $_POST['hotspod_id'];
-		$res = $tours->GetOption($hotspod_id);
-		echo json_encode($res[0]);
-	}
-	die();
-}
-
-if(isset($_POST["editoptions"] )){
-	$text_t_edit = $_POST['text_t_edit'];
-	$text_d_edit = $_POST['text_d_edit'];
-	$tooltip_t_edit = $_POST['tooltip_t_edit'];
-	$tooltip_d_edit = $_POST['tooltip_d_edit'];
-	$modal_t_edit = $_POST['modal_t_edit'];
-	$modal_d_edit = $_POST['modal_d_edit'];
-	$image_input_edit = $_POST['image_input_edit'];
-	$video_input_edit = $_POST['video_input_edit'];
-	$scene_d_edit = $_POST['scene_d_edit'];
-	$hotspod_id =$_POST["hotspod_id"];
-	$res = $tours->GetOption($hotspod_id);
-	$tours->Uptadeoption($hotspod_id,'text_t',$text_t_edit);
-	$tours->Uptadeoption($hotspod_id,'text_d',$text_d_edit);
-	$tours->Uptadeoption($hotspod_id,'tooltip_t',$tooltip_t_edit);
-	$tours->Uptadeoption($hotspod_id,'tooltip_d',$tooltip_d_edit);
-	$tours->Uptadeoption($hotspod_id,'modal_t',$modal_t_edit);
-	$tours->Uptadeoption($hotspod_id,'modal_d',$modal_d_edit);
-	$tours->Uptadeoption($hotspod_id,'image_url',$image_input_edit);
-	$tours->Uptadeoption($hotspod_id,'video_url',$video_input_edit);
-	$tours->Uptadeoption($hotspod_id,'link_scene',$scene_d_edit);
-	die();
-}
-
-
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -156,11 +39,10 @@ if(isset($_POST["editoptions"] )){
 	<link rel="stylesheet" type="text/css" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
 	<style >
 	/* Outer */
-
 #edit-remove-move{
-	    left: 990px !important;
-    top: 180px !important;
-    position: fixed !important;
+    position: relative !important;
+	/*left: 990px !important;*/
+    /*top: 180px !important;*/
 }
 .popup {
     width:100%;
@@ -173,12 +55,11 @@ if(isset($_POST["editoptions"] )){
 
 /* Inner */
 .popup-inner {
-    max-width:276px;
-    width:90%;
+    max-width:285px;
     padding:10px;
     position:absolute;
-    -webkit-transform:translate(-50%, -50%);
-    transform:translate(-50%, -50%);
+    /*-webkit-transform:translate(-50%, -50%);
+    transform:translate(-50%, -50%);*/
     box-shadow:0px 2px 6px rgba(0,0,0,1);
     border-radius:3px;
     background:#fff;
@@ -192,7 +73,7 @@ if(isset($_POST["editoptions"] )){
     display:inline-block;
     position:absolute;
     top:0px;
-    right:276px;
+    right:274px;
     transition:ease 0.25s all;
     -webkit-transform:translate(50%, -50%);
     transform:translate(50%, -50%);
@@ -231,6 +112,49 @@ if(isset($_POST["editoptions"] )){
 <body>
 <div id="button-container">
 
+<div class="popup-inner" id="edit-remove-move" style="display:none;">
+		<button type="button" id="edit_hotpost" class="btn btn-primary btn-sm button-custom-th" onclick="editHotspot();">
+			Edit
+		</button>
+		<button type="button" id="move_hotspot" class="btn btn-primary btn-sm button-custom-th" onclick="moveHotspot()" ;">
+			Move
+		</button>
+		<button type="button" id="delete_hotpost" class="btn btn-primary btn-sm button-custom-th" onclick="deleteHotspot();">
+			Delete
+		</button>
+		<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
+		<div id="text_div_edit" class="form-group" style="display: none;">
+			<div class="form-group">
+				<input
+				type="text"
+				size="29"
+				maxlength="255"
+				placeholder="Edit"
+				class="form-control"
+				/>
+			</div>
+			<div class="form-group">
+				<textarea
+				class="form-control"
+				placeholder="Edit Description"
+				maxlength="255"
+				style="
+				resize: none;
+				width:259px;
+				overflow:hidden;
+				margin-top:2px;
+				margin-bottom:2px;
+				height: 155px;
+				"
+				></textarea>
+			</div>
+			<button
+				type="button"
+				class="btn btn-default"
+				onclick="saveEdit()">Save
+			</button>
+		</div>
+	</div>
 	<div class="popup" data-popup="popup-1">
 	    <div class="popup-inner" id="popup">
 			<form >
@@ -271,6 +195,16 @@ if(isset($_POST["editoptions"] )){
 					<!-- TeXt-->
 					<div id="text_div" class="form-group" style="display: none;">
 						<div class="form-group">
+							<div class="form-group">
+								<input
+								id='text_t'
+								maxlength="255"
+								type="text"
+								size="29"
+								placeholder="Input Text Title"
+								class="form-control"
+								/>
+							</div>
 							<textarea
 								class="form-control"
 								placeholder="Input Description"
@@ -278,7 +212,7 @@ if(isset($_POST["editoptions"] )){
 								maxlength="255"
 								style="
 								resize: none;
-								width:257px;
+								width:259px;
 								overflow:hidden;
 								margin-top:2px;
 								margin-bottom:2px;
@@ -304,7 +238,8 @@ if(isset($_POST["editoptions"] )){
 							<input
 								id='tooltip_t'
 								type="text"
-								size="30"
+								maxlength="255"
+								size="29"
 								placeholder="Input Tooltip Title"
 								class="form-control"
 							/>
@@ -317,7 +252,7 @@ if(isset($_POST["editoptions"] )){
 								maxlength="255"
 								style="
 								resize: none;
-								width:257px;
+								width:259px;
 								overflow:hidden;
 								margin-top:2px;
 								margin-bottom:2px;
@@ -343,8 +278,9 @@ if(isset($_POST["editoptions"] )){
 						<div class="form-group">
 							<input
 								id='modal_t'
+
 								type="text"
-								size="30"
+								size="29"
 								placeholder="Input Modal Title"
 								class="form-control"
 							/>
@@ -357,7 +293,7 @@ if(isset($_POST["editoptions"] )){
 								maxlength="255"
 								style="
 								resize: none;
-								width:257px;
+								width:259px;
 								overflow:hidden;
 								margin-top:2px;
 								margin-bottom:2px;
@@ -383,8 +319,9 @@ if(isset($_POST["editoptions"] )){
 						<div class="form-group">
 							<input
 								id='image_url'
+								maxlength="255"
 								type="text"
-								size="30"
+								size="29"
 								placeholder="Image Url"
 								class="form-control"
 								style="margin-bottom: 2px "
@@ -407,8 +344,9 @@ if(isset($_POST["editoptions"] )){
 						<div class="form-group">
 							<input
 								id='video_url'
+								maxlength="255"
 								type="text"
-								size="30"
+								size="29"
 								placeholder="Video Url"
 								class="form-control"
 								style="margin-bottom: 5px; margin-top: 5px;"
@@ -451,177 +389,8 @@ if(isset($_POST["editoptions"] )){
 				</div>
 			</div>
 	        <a class="popup-close" data-popup-close="popup-1" href="#">x</a>
-	    </div>
-	</form>
+		</form>
 	</div>
-
-	<div class="popup-inner" id="edit-remove-move" style="display:none;">
-		<div class="button-group" role="group">
-			<button type="button" id="edit_text" class="btn btn-primary btn-sm button-custom" onclick="editText();" style="display: none;">
-			Edit Text
-			</button>
-			<button type="button" id="edit_Tooltip" class="btn btn-primary btn-sm button-custom" onclick="editTooltip();" style="display: none;">
-			Edit Tooltip
-			</button>
-		</div>
-		<div class="button-group" role="group">
-			<button type="button" id="edit_modal" class="btn btn-primary btn-sm button-custom" onclick="editModal();" style="display: none;">
-			edit Modal
-			</button>
-			<button type="button" id="edit_image" class="btn btn-primary btn-sm button-custom" onclick="editImage();" style="display: none;">
-			Edit Image
-			</button>
-		</div>
-		<div class="button-group" role="group">
-			<button type="button" id="edit_video" class="btn btn-primary btn-sm button-custom" onclick="editVideo();" style="display: none;">
-			Edit Video
-			</button>
-			<button type="button" id="edit_link" class="btn btn-primary btn-sm button-custom" onclick="editScene();" style="display: none;">
-			Edit Link a Scene
-			</button>
-		</div>
-		<!-- <button type="button" id="saveEdit" class="btn btn-default" onclick="saveEdit()" style="display: none;">
-		Save Edit
-		</button> -->
-		<button type="button" id="edit_hotpost" class="btn btn-primary btn-sm button-custom-th" onclick="editHotspot();">
-		Edit
-		</button>
-		<button type="button" id="move_hotspot" class="btn btn-primary btn-sm button-custom-th" onclick="moveHotspot()" ;">
-		Move
-		</button>
-		<button type="button" id="delete_hotpost" class="btn btn-primary btn-sm button-custom-th" onclick="deleteHotspot();">
-		Delete
-		</button>
-		<a class="popup-close" data-popup-close="popup-1" href="#">x</a>
-
-		<div id="text_div_edit" class="form-group" style="display: none;">
-			<div class="form-group">
-				<input
-				id='text_t_edit'
-				type="text"
-				size="30"
-				placeholder="Edit  Title"
-				class="form-control"
-				/>
-			</div>
-			<div class="form-group">
-				<textarea
-				class="form-control"
-				placeholder="Edit Description"
-				id="text_d_edit"
-				maxlength="255"
-				style="
-				resize: none;
-				width:257px;
-				overflow:hidden;
-				margin-top:2px;
-				margin-bottom:2px;
-				height: 155px;
-				"
-				></textarea>
-			</div>
-			<button
-			type="button"
-			class="btn btn-default"
-			onclick="saveEdit()">Save
-			</button>
-		</div>
-
-		<div id="tooltip_div_edit" class="form-group" style="display: none;">
-			<div class="form-group">
-				<input
-				id='tooltip_t_edit'
-				type="text"
-				size="30"
-				placeholder="Edit Title"
-				class="form-control"
-				/>
-			</div>
-			<div class="form-group">
-				<textarea
-				class="form-control"
-				placeholder="Edit Tooltip"
-				id="tooltip_d_edit"
-				maxlength="255"
-				style="
-				resize: none;
-				width:257px;
-				overflow:hidden;
-				margin-top:2px;
-				margin-bottom:2px;
-				height: 155px;
-				"
-				></textarea>
-			</div>
-			<button type="button" class="btn btn-default" onclick="saveEdit()">Save
-			</button>
-		</div>
-		<div id="modal_div_edit" class="form-group" style="display: none;">
-			<div class="form-group">
-				<input
-				id='modal_t_edit'
-				type="text"
-				size="30"
-				placeholder="Edit  Title"
-				class="form-control"
-				/>
-			</div>
-			<div class="form-group">
-				<textarea
-				class="form-control"
-				placeholder="Edit Description"
-				id="modal_d_edit"
-				maxlength="255"
-				style="
-				resize: none;
-				width:257px;
-				overflow:hidden;
-				margin-top:2px;
-				margin-bottom:2px;
-				height: 155px;
-				"
-				></textarea>
-			</div>
-			<button type="button" class="btn btn-default" onclick="saveEdit()">Save
-			</button>
-		</div>
-		<div id="image_div_edit" class="form-group" style="display:none">
-			<div class="form-group">
-				<input id="image_input_edit" type="text" size="30" placeholder="Image Url" class="form-control" style="margin-bottom: 2px ">
-			<button type="button" class="btn btn-default" onclick="saveEdit()">
-				Save
-			</button>
-			</div>
-		</div>
-		<div id="video_div_edit" class="form-group" style="display:none">
-			<div class="form-group">
-				<input id="video_input_edit" type="text" size="30" placeholder="Image Url" class="form-control" style="margin-bottom: 2px ">
-				<button type="button" class="btn btn-default" onclick="saveEdit()">
-					Save
-				</button>
-			</div>
-		</div>
-		<div id="scene_div_edit" class="form-group" style="display:none">
-			<div class="form-group">
-				<select
-					id="scene_d_edit"
-					class="selectpicker"
-					data-width="261px"
-					>
-					<?php foreach ($tours->getList() as $tour): ?>
-					<option title="<?php echo $tour->name?>"" value="<?php echo $tour->alias?>"><?php echo $tour->name?></option>
-					<?php endforeach ?>
-				</select>
-			</div>
-			<button type="button" class="btn btn-default" onclick="saveEdit()">
-				Save
-			</button>
-		</div>
-
-	</div>
-	<div class="container-fluid">
-			<div class="button-group" role="group">
-			</div>
 	</div>
 </div>
 <div id="show_link">
@@ -651,9 +420,9 @@ if(isset($_POST["editoptions"] )){
 			timeout = setInterval(function(){
 				var targeted_popup_class = jQuery(this).attr('data-popup-open');
 				$('[data-popup=popup-1]').fadeIn(350);
-				let x = e.pageX + 138;
-				let y = e.pageY + 59;
-				$(".popup-inner").css({left: x, top: y});
+				var x = e.pageX ;
+				var y = e.pageY;
+				$(".popup-inner#popup").css({left: x, top: y});
 				e.preventDefault();
 			}, 500);
 
@@ -836,246 +605,55 @@ if(isset($_POST["editoptions"] )){
 			enableButton(['#add_text','#add_Tooltip', '#add_Modal', '#add_image', '#add_video' ,'#add_link','#savehotspots']);
 		}
 		function saveEdit(){
-			var text_t_edit = $('#text_t_edit').val();
-			var text_d_edit = $('#text_d_edit').val();
-
-			var tooltip_t_edit = $('#tooltip_t_edit').val();
-			var tooltip_d_edit = $('#tooltip_d_edit').val();
-
-			var modal_t_edit = $('#modal_t_edit').val();
-			var modal_d_edit = $('#modal_d_edit').val();
-
-			var image_input_edit = $('#image_input_edit').val();
-
-			var video_input_edit = $('#video_input_edit').val();
-
-			var scene_d_edit = $('#scene_d_edit').val();
-
-
-			var hotspod_id =hotspots[uniqname];
-			$.ajax({
-				url: "",
-				type: "POST",
-				data: {
-					editoptions: true,
-					text_t_edit: text_t_edit,
-					text_d_edit: text_d_edit,
-					tooltip_t_edit: tooltip_t_edit,
-					tooltip_d_edit: tooltip_d_edit,
-					modal_t_edit: modal_t_edit,
-					modal_d_edit: modal_d_edit,
-					image_input_edit: image_input_edit,
-					video_input_edit: video_input_edit,
-					scene_d_edit: scene_d_edit,
-					hotspod_id: hotspod_id
-				},
-				success: function(data) {
-				}
-			})
 			$( "[data-popup-close]" ).trigger( "click" );
 		}
 
 		function SaveHot(){
 			i += 1;
 			uniqname = "spot_new_" + i;
-
 			krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
 			var scene_num = krpano.get('scene.count');
 			var current_scene = krpano.get('xml.scene');
-			var user_id = $('#user_id').val();
-			var tour_id = $('#tour_id').val();
-			var title_t = $('#text_title').val();
-			var title_d = $('#text_text').val();
-			var tooltip_t = $('#tooltip_t').val();
-			var tooltip_d = $('#tooltip_d').val();
-			var modal_t = $('#modal_t').val();
-			var modal_d = $('#modal_d').val();
-			//image
-			var image_url  = $('#image_url').val();
-			//Video
-			var video_url = $('#video_url').val();
-			// SCENE
-			var scene = $('.selectpicker').val();
 			var posX = krpano.get('m_ath');
 			var posY = krpano.get('m_atv');
+			// hotspots[uniqname] = r; //JSON.parse(r);
+			krpano.call("addhotspot(" + uniqname + ");");
+			if (typeof currentHotspotData == 'undefined'){
+				currentHotspotData = {};
+				currentHotspotData.ath = krpano.get('view.hlookat');
+				currentHotspotData.atv = krpano.get('view.vlookat');
 
-			$.ajax({
-				url: "",
-				type: "POST",
-				data: {
-					insertoptions: true,
-					user_id: user_id,
-					tour_id: tour_id,
-					title_t: title_t,
-					title_d: title_d,
-					tooltip_t: tooltip_t,
-					tooltip_d: tooltip_d,
-					modal_t: modal_t,
-					modal_d: modal_d,
-					image_url: image_url,
-					video_url: video_url,
-					scene: scene,
-					posX:posX,
-					posY:posY,
-				},
-				success: function(r) {
-
-					hotspots[uniqname] = r; //JSON.parse(r);
-					krpano.call("addhotspot(" + uniqname + ");");
-					if (typeof currentHotspotData == 'undefined'){
-						currentHotspotData = {};
-						currentHotspotData.ath = krpano.get('view.hlookat');
-						currentHotspotData.atv = krpano.get('view.vlookat');
-
-						hotspot_done.style.display = 'inline-block';
-					}
-					else // THIS HOTSPOT HAVE AADITIONAL DATA FROM HOTDPOT LIST
-					{
-						if (currentHotspotData.hotspot_type == 'normal') {
-							krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + currentHotspotData.linkedscene + ");");
-						}
-						if (currentHotspotData.hotspot_type == 'text') {
-							krpano.call("set(hotspot[" + uniqname + "].hotspot_text, " + currentHotspotData.hotspot_text + ");");
-						}
-					}
-					krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup(" + uniqname + ")););");
-					krpano.call("set(hotspot[" + uniqname + "].ath, " + posX + ");");
-					krpano.call("set(hotspot[" + uniqname + "].sceneName, " + current_scene + ");");
-					krpano.call("set(hotspot[" + uniqname + "].atv, " + posY + ");");
-					krpano.call("set(hotspot[" + uniqname + "].hotspot_type, normal);");
-					krpano.call("set(hotspot[" + uniqname + "].hotspot_text,"+ title_d +" ");
-					krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
+				hotspot_done.style.display = 'inline-block';
+			}
+			else // THIS HOTSPOT HAVE AADITIONAL DATA FROM HOTDPOT LIST
+			{
+				if (currentHotspotData.hotspot_type == 'normal') {
+					krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + currentHotspotData.linkedscene + ");");
 				}
-			}).then(function(){
-				var user_id = $('#user_id').val('');
-				var tour_id = $('#tour_id').val('');
-				var title_t = $('#text_title').val('');
-				var title_d = $('#text_text').val('');
-				var tooltip_t = $('#tooltip_t').val('');
-				var tooltip_d = $('#tooltip_d').val('');
-				var modal_t = $('#modal_t').val('');
-				var modal_d = $('#modal_d').val('');
-				$( "[data-popup-close]" ).trigger( "click" );
-			})
+				if (currentHotspotData.hotspot_type == 'text') {
+					krpano.call("set(hotspot[" + uniqname + "].hotspot_text, " + currentHotspotData.hotspot_text + ");");
+				}
+			}
+
+			krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup(" + uniqname + ")););");
+			krpano.call("set(hotspot[" + uniqname + "].ath, " + posX + ");");
+			krpano.call("set(hotspot[" + uniqname + "].sceneName, " + current_scene + ");");
+			krpano.call("set(hotspot[" + uniqname + "].atv, " + posY + ");");
+			krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);");
+			krpano.call("set(hotspot[" + uniqname + "].hotspot_text, text ");
+			krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
+			$("[data-popup-close]").trigger("click");
 		}
 
 		function editHotspot(){
 			// enableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
 			disableButton(['#move_hotspot', '#delete_hotpost','#edit_hotpost']);
-			var hotspod_id =hotspots[uniqname];
-			console.log(hotspod_id);
-			$.ajax({
-				url: "",
-				type: "POST",
-				data: {
-					getoptions:true,
-					hotspod_id:hotspod_id
-				},
-				dataType: 'json',
-				success:function(data) {
-					if(!(!data.text_t && !data.text_d)){
-						if(data.text_t.length > 0 || data.text_.length > 0){
-							$('#text_t_edit').val(data.text_t);
-							$('#text_d_edit').text(data.text_d);
-							disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
 							$('#text_div_edit').show();
 							$('#tooltip_div_edit ').hide();
 							$('#modal_div_edit ').hide();
 							$('#video_div_edit').hide();
 							$('#image_div_edit').hide();
-							$('#scene_div_edit').hide();
-							// console.log(data.text_t.length)
-						}
-					}
-
-					if(!(!data.tooltip_t && !data.tooltip_d)){
-						if(data.tooltip_t.length > 0 || data.tooltip_d.length > 0){
-							$('#tooltip_t_edit').val(data.tooltip_t);
-							$('#tooltip_d_edit').text(data.tooltip_d);
-							disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
-							$('#text_div_edit').hide();
-							$('#tooltip_div_edit ').show();
-							$('#modal_div_edit ').hide();
-							$('#video_div_edit').hide();
-							$('#image_div_edit').hide();
-							$('#scene_div_edit').hide();
-							// console.log(data.text_t.length)
-						}
-					}
-
-					if(!(!data.modal_d && !data.modal_t)){
-						if(data.modal_t.length > 0 || data.tooltip_d.length > 0){
-							$('#modal_t_edit').val(data.modal_t);
-							$('#modal_d_edit').text(data.modal_d);
-							disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
-							$('#text_div_edit').hide();
-							$('#tooltip_div_edit ').hide();
-							$('#modal_div_edit ').show();
-							$('#video_div_edit').hide();
-							$('#image_div_edit').hide();
-							$('#scene_div_edit').hide();
-							// console.log(data.text_t.length)
-						}
-					}
-
-					// if(!data.video_url){
-					// 	if(data.video_url.length  > 0 ){
-					// 		$('#video_input_edit').val(data.video_url);
-					// 		disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
-					// 		$('#video_div_edit').show();
-					// 		// console.log(data.text_t.length)
-					// 	}
-					// }
-
-					if(!data.video_url){
-						if(data.video_url.length  > 0 ){
-							$('#video_input_edit').val(data.video_url);
-							disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
-							// $('#video_div_edit').show();
-							$('#text_div_edit').hide();
-							$('#tooltip_div_edit ').hide();
-							$('#modal_div_edit ').hide();
-							$('#video_div_edit').show();
-							$('#image_div_edit').hide();
-							$('#scene_div_edit').hide();
-							// console.log(data.text_t.length)
-						}
-					}
-
-					if(!(data.image_url)  !== "undefined"){
-						if(data.image_url.length  > 0 ){
-							$('#image_input_edit').val(data.image_url);
-							disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
-							$('#text_div_edit').hide();
-							$('#text_div_edit').hide();
-							$('#tooltip_div_edit ').hide();
-							$('#modal_div_edit ').hide();
-							$('#video_div_edit').hide();
-							$('#image_div_edit').show();
-							$('#scene_div_edit').hide();
-							// console.log(data.text_t.length)
-						}
-					}
-
-					if(!data.link_scene){
-						if(data.link_scene.length  > 0 ){
-							$('scene_d_edit').val(data.link_scene);
-							disableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
-
-							$('#text_div_edit').hide();
-							$('#text_div_edit').hide();
-							$('#tooltip_div_edit ').hide();
-							$('#modal_div_edit ').hide();
-							$('#video_div_edit').hide();
-							$('#image_div_edit').hide();
-							$('#scene_div_edit').show();
-							// console.log(data.text_t.length)
-						}
-					}
-
-				}
-			})
-			// $( "#add_hotpost" ).trigger( "click" );
+					
 
 		}
 
@@ -1220,10 +798,6 @@ if(isset($_POST["editoptions"] )){
 		}
 
 		function editHotspots() {
-			// disableButton(['#add_hotpost', '#remove_hotpost', '#set_defaultView'])
-
-			//create
-			// i += 1;
 			krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
 			krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup()););");
 		}
@@ -1376,9 +950,6 @@ if(isset($_POST["editoptions"] )){
 <script type="text/javascript">
 	$(document).ready(function() {
 	$('.selectpicker').selectpicker();
-	// $('.selectpicker').selectpicker();
-	// $(".selectpicker").css("marginTop") = "2px";
-	// $(".selectpicker").css("marginBottom") = "2px";
 	});
 </script>
 </body>
