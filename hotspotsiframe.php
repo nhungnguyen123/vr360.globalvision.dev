@@ -422,6 +422,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				$('[data-popup=popup-1]').fadeIn(350);
 				var x = e.pageX ;
 				var y = e.pageY;
+				krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
 				$(".popup-inner#popup").css({left: x, top: y});
 				e.preventDefault();
 			}, 500);
@@ -611,7 +612,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		function SaveHot(){
 			i += 1;
 			uniqname = "spot_new_" + i;
-			krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
+			// krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
 			var scene_num = krpano.get('scene.count');
 			var current_scene = krpano.get('xml.scene');
 			var posX = krpano.get('m_ath');
