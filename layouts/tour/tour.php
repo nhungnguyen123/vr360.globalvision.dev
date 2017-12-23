@@ -91,12 +91,12 @@ $includes     = Vr360HelperKrpano::getIncludes();
 	               design_text_css="color:#FFFFFF; font-family:Arial;"
 	               design_text_shadow="1"
 	/>
-	<!-- Use for override everything -->
 	<include url="<?php echo $assetsPath; ?>/vendor/krpano/skins/<?php echo $skin; ?>"/>
 	<?php if ($tour->params->get('logo', false) == 1): ?>
 	<layer name="logo_m" type="container" keep="true"  x="16" y="60">
 		<layer name="logo"  type="image" url="<?php echo "../../user/".$tour->created_by."/logo.png"?>"  keep="true" lefttop="center" width="50" height="50"  />
 	</layer>
+	<!-- Use for override everything -->
 	<?php endif; ?>
 	<action name="startup" autorun="onstart">
 		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[<?php echo $defaultScene ?>].name); );

@@ -96,12 +96,11 @@ class Vr360ModelHotspot extends Vr360Model
 				$hotspotObj->ath     = $hotspot['ath'];
 				$hotspotObj->atv     = $hotspot['atv'];
 				$hotspotObj->type    = $hotspot['hotspot_type'];
-
 				if ($hotspotObj->type == '')
 				{
 					continue;
 				}
-
+						// print_r($hotspot);die();
 				switch ($hotspotObj->type)
 				{
 					case 'normal':
@@ -109,8 +108,33 @@ class Vr360ModelHotspot extends Vr360Model
 						$hotspotObj->params = array('linkedscene' => $hotspot['linkedscene']);
 						break;
 					case 'text':
-						$hotspotObj->style  = $hotspotPrefix . 'textpopup';
-						$hotspotObj->params = array('hotspot_text' => $hotspot['hotspot_text']);
+						$hotspotObj->style  = 'textpopup';
+						$hotspotObj->params = array(
+							'hotspot_text' => $hotspot['hotspot_text'],
+							'hotspot_desc' => $hotspot['hotspot_desc']
+						);
+
+						if (empty($hotspot['hotspot_text']))
+						{
+							$ajax->addWarning('Can not save hotspot . ' . $hotspotObj->code . ' because empty content');
+
+							continue;
+						}
+						break;
+					case 'video':
+						$hotspotObj->style  =  'video';
+						$hotspotObj->params = array('video_url' => $hotspot['hotspot_text']);
+
+						if (empty($hotspot['hotspot_text']))
+						{
+							$ajax->addWarning('Can not save hotspot . ' . $hotspotObj->code . ' because empty content');
+
+							continue;
+						}
+						break;
+					case 'image':
+						$hotspotObj->style  =  'image';
+						$hotspotObj->params = array('image_url' => $hotspot['hotspot_text']);
 
 						if (empty($hotspot['hotspot_text']))
 						{
