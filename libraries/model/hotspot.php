@@ -95,7 +95,7 @@ class Vr360ModelHotspot extends Vr360Model
 				$hotspotObj->sceneId = $scene->id;
 				$hotspotObj->ath     = $hotspot['ath'];
 				$hotspotObj->atv     = $hotspot['atv'];
-				$hotspotObj->type    = $hotspot['hotspot_type'];
+				$hotspotObj->type    = trim($hotspot['hotspot_type']);
 				if ($hotspotObj->type == '')
 				{
 					continue;
