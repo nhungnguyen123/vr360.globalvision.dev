@@ -356,4 +356,12 @@ class Vr360Tour extends Vr360TableTour
 
 		return true;
 	}
+
+	public function getUser()
+	{
+		$user = new Vr360User;
+		$user->load(array('id' => $this->get('created_by')));
+
+		return $user;
+	}
 }
