@@ -157,11 +157,8 @@
 <style name="hotspot_style_modal" onclick="modal_action" url="../viewer/skin/images/modal.png" scale="0.8" onover.mouse="" onout.mouse=""/>
 <action name="modal_action">
     set(modal, get(modal_text));
-    if(webvr.isenabled,
-      set(layer[overlay].visible, false);
-    ,
-    if(modal != '',
-      set(layer[overlay].visible, true);
+    if(webvr.isenabled, set(layer[overlay].visible, false); ,
+    if(modal != '', set(layer[overlay].visible, true);
       txtadd(layer[text_popup].html,
       '[h4]',get(modal_title),'[/h4][br][h3]',
         get(modal_content),'[/h3]');
