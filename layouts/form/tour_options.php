@@ -4,8 +4,8 @@ defined('_VR360_EXEC') or die;
 $skins = Vr360HelperKrpano::getListOfSkins();
 ?>
 <style type="text/css">
-	.custom-button{
-		width:161px;
+	.custom-button {
+		width: 161px;
 	}
 </style>
 <div class="tour-options">
@@ -35,7 +35,8 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 								class="tour-params"
 								name="params[rotation]"
 							<?php echo ($tour->params->get('rotation', false)) ? 'checked="checked"' : '' ?>
-								value="1" size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_AUTO_ROTATION'); ?>
+								value="1"
+								size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_AUTO_ROTATION'); ?>
 					</label>
 				</div>
 			</div>
@@ -62,22 +63,8 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 								class="tour-params"
 								name="params[uselogo]"
 								value="1"
-							<?php echo ($tour->params->get('uselogo', false)) ? 'checked="checked"' : '' ?>
+							<?php echo ($tour->params->get('userlogo', false)) ? 'checked="checked"' : '' ?>
 								size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_USE_LOGO'); ?>
-					</label>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="checkbox">
-					<label>
-						<input
-								type="checkbox"
-								id="tour-param-logo"
-								class="tour-params"
-								name="params[logo]"
-								value="1"
-							<?php echo ($tour->params->get('logo', false)) ? 'checked="checked"' : '' ?>
-								size="80"/>Check for Logo
 					</label>
 				</div>
 			</div>
@@ -160,10 +147,11 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="checkbox" >
+				<div class="checkbox">
 					<div class="dropdown">
-						<button class="btn btn-default dropdown-toggle custom-button" type="button" data-toggle="dropdown">Hotspots Colour
-						<span class="caret"></span></button>
+						<button class="btn btn-default dropdown-toggle custom-button" type="button"
+						        data-toggle="dropdown">Hotspots Colour
+							<span class="caret"></span></button>
 						<ul class="dropdown-menu">
 							<li><a href="#">Red</a></li>
 							<li><a href="#">Green</a></li>
@@ -171,10 +159,11 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 						</ul>
 					</div>
 				</div>
-				<div class="checkbox" >
+				<div class="checkbox">
 					<div class="dropdown">
-						<button class="btn btn-default dropdown-toggle custom-button" type="button" data-toggle="dropdown">Hotspots Type
-						<span class="caret"></span></button>
+						<button class="btn btn-default dropdown-toggle custom-button" type="button"
+						        data-toggle="dropdown">Hotspots Type
+							<span class="caret"></span></button>
 						<ul class="dropdown-menu">
 							<li><a href="#">Blinking</a></li>
 							<li><a href="#">Still</a></li>

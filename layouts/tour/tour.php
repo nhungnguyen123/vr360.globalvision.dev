@@ -91,13 +91,18 @@ $includes     = Vr360HelperKrpano::getIncludes();
 	               design_text_css="color:#FFFFFF; font-family:Arial;"
 	               design_text_shadow="1"
 	/>
-	<include url="<?php echo $assetsPath; ?>/vendor/krpano/skins/<?php echo $skin; ?>"/>
-	<?php if ($tour->params->get('logo', false) == 1): ?>
-	<layer name="logo_m" type="container" keep="true"  x="16" y="60">
-		<layer name="logo"  type="image" url="<?php echo "../../user/".$tour->created_by."/logo.png"?>"  keep="true" lefttop="center" width="50" height="50"  />
-	</layer>
+
 	<!-- Use for override everything -->
+	<include url="<?php echo $assetsPath; ?>/vendor/krpano/skins/<?php echo $skin; ?>"/>
+
+	<?php if ($tour->params->get('userlogo', false) && Vr360HelperFile::exists(realpath('../../user/' . $tour->created_by . '/logo.png'))): ?>
+		<layer name="user_logo" type="container" keep="true" x="16" y="60">
+			<layer name="logo" type="image" url="<?php echo "../../user/" . $tour->created_by . "/logo.png" ?>"
+			       keep="true" lefttop="center" width="50" height="50"/>
+		</layer>
+
 	<?php endif; ?>
+
 	<action name="startup" autorun="onstart">
 		if(startscene === null OR !scene[get(startscene)], copy(startscene,scene[<?php echo $defaultScene ?>].name); );
 		loadscene(get(startscene), null, MERGE);
@@ -107,7 +112,6 @@ $includes     = Vr360HelperKrpano::getIncludes();
 	<?php if ($tour->params->get('socials', false) == 1): ?>
 		<include url="<?php echo $assetsPath; ?>/vendor/krpano/viewer/skin/social-skin.xml"/>
 	<?php endif; ?>
-
 
 	<!-- Scenes -->
 	<?php if (!empty($scenes)): ?>
