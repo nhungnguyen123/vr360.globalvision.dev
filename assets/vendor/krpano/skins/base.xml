@@ -1,73 +1,72 @@
 <krpano>
-    <style
-            name="hotspot_style_linkedscene"
-            crop="0|0|64|64" frame="0" lastframe="19" framewidth="64" frameheight="64"
-            url="../viewer/skin/vtourskin_hotspot.png" scale="0.5" edge="top" distorted="true"
-            onclick="skin_hotspotstyle_click();"
-            onloaded="hotspot_animate()"
-            onover.mouse="copy(layer[tooltip_title_scene].html, scene[get(linkedscene)].title);
-                 copy(layer[tooltip_image_scene].url, scene[get(linkedscene)].thumburl);
-                      set(layer[scene_parent].visible, true);
-                      tween(layer[tooltip_title_scene].alpha, 1.0, 0.1);
-                      asyncloop(hovering, copy(layer[scene_parent].x,mouse.stagex); copy(layer[scene_parent].y,mouse.stagey); );"
-            onout.mouse="tween(layer[tooltip_title_scene].alpha, 0.0, 0.1, default, set(layer[scene_parent].visible,false), copy(layer[scene_parent].x,mouse.stagex); copy(layer[scene_parent].y,mouse.stagey); );"
-    />
-
-    <action name="hotspot_animate">
-        inc(frame,1,get(lastframe),0);
-        mul(ypos,frame,frameheight);
-        txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
-        delayedcall(0.1, if(loaded, hotspot_animate() ) );
-    </action>
-    <action name="skin_hotspotstyle_click" scope="local">
-        if(caller.linkedscene,
-        copy(hs_linkedscene, caller.linkedscene);
-        if(caller.linkedscene_lookat, txtsplit(caller.linkedscene_lookat, ',', hs_lookat_h, hs_lookat_v, hs_lookat_fov);
-        );
-        set(caller.enabled, false);
-        skin_hidetooltips();
-        tween(caller.depth|caller.alpha|caller.oy|caller.rx, 4000|0.0|-50|-60, 0.5, default,
-        skin_loadscene(get(hs_linkedscene), get(skin_settings.loadscene_blend));
-        if(hs_lookat_h !== null, skin_lookat(get(hs_lookat_h), get(hs_lookat_v), get(hs_lookat_fov)); );
-        skin_updatescroll();
-        );
-        );
-    </action>
-    <layer name="scene_parent" type="container" keep="true" align="lefttop" edge="bottom" x="0" y="0" oy="-5"
-           width="140" height="120" bgcolor="0x000000" bgalpha="0.7" bgroundedge="5" visible="false">
-        <layer name="tooltip_image_scene" type="image" url="" keep="false" align="lefttop" x="10" y="10" width="240"
-               heigt="160" crop="0|40|240|160" scale="0.5"/>
-        <layer name="tooltip_title_scene" keep="false"
-               url="%SWFPATH%/plugins/textfield.swf"
-               visible="true" alpha="0" enabled="false"
-               align="lefttop" x="10" y="90" width="120" autoheight="true"
-               background="false" backgroundcolor="0xFFFFFF" backgroundalpha="1.0"
-               border="false" bordercolor="0x000000" borderalpha="1.0" borderwidth="1.0" roundedge="0"
-               shadow="0.0" shadowrange="4.0" shadowangle="45" shadowcolor="0x000000" shadowalpha="1.0"
-               textshadow="get:skin_settings.design_text_shadow" textshadowrange="6.0" textshadowangle="90"
-               textshadowcolor="0x000000" textshadowalpha="1.0"
-               css="color:#ffffff; font-family:Arial; text-align:left; font-size:12px;"
-               html=""
-        />
-    </layer>
-    <action name="skin_loadscene" scope="local" args="newscenenameorindex, blendmode">
-        if(webvr.isenabled AND scene.count GT 1,
-        set(hotspot[skin_webvr_prev_scene].visible, false);
-        set(hotspot[skin_webvr_next_scene].visible, false);
-        );
-
-        calc(layer[skin_thumbborder].parent, 'skin_thumb_' + scene[get(newscenenameorindex)].index);
-        layer[skin_thumbs].scrolltocenter(get(scene[get(newscenenameorindex)].thumbx),
-        get(scene[get(newscenenameorindex)].thumby));
-        loadscene(get(scene[get(newscenenameorindex)].name), null, get(skin_settings.loadscene_flags), get(blendmode));
-    </action>
-    <action name="hotspot_animate">
-        inc(frame,1,get(lastframe),0);
-        mul(ypos,frame,frameheight);
-        txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
-        delayedcall(0.1, if(loaded, hotspot_animate() ) );
-
+<style
+        name="hotspot_style_linkedscene"
+        crop="0|0|64|64" frame="0" lastframe="19" framewidth="64" frameheight="64"
+        url="../viewer/skin/vtourskin_hotspot.png" scale="0.5" edge="top" distorted="true"
+        onclick="skin_hotspotstyle_click();"
+        onloaded="hotspot_animate()"
+        onover.mouse="copy(layer[tooltip_title_scene].html, scene[get(linkedscene)].title);
+             copy(layer[tooltip_image_scene].url, scene[get(linkedscene)].thumburl);
+                  set(layer[scene_parent].visible, true);
+                  tween(layer[tooltip_title_scene].alpha, 1.0, 0.1);
+                  asyncloop(hovering, copy(layer[scene_parent].x,mouse.stagex); copy(layer[scene_parent].y,mouse.stagey); );"
+        onout.mouse="tween(layer[tooltip_title_scene].alpha, 0.0, 0.1, default, set(layer[scene_parent].visible,false), copy(layer[scene_parent].x,mouse.stagex); copy(layer[scene_parent].y,mouse.stagey); );"
+/>
+<action name="hotspot_animate">
+    inc(frame,1,get(lastframe),0);
+    mul(ypos,frame,frameheight);
+    txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
+    delayedcall(0.1, if(loaded, hotspot_animate() ) );
 </action>
+<action name="skin_hotspotstyle_click" scope="local">
+    if(caller.linkedscene,
+    copy(hs_linkedscene, caller.linkedscene);
+    if(caller.linkedscene_lookat, txtsplit(caller.linkedscene_lookat, ',', hs_lookat_h, hs_lookat_v, hs_lookat_fov);
+    );
+    set(caller.enabled, false);
+    skin_hidetooltips();
+    tween(caller.depth|caller.alpha|caller.oy|caller.rx, 4000|0.0|-50|-60, 0.5, default,
+    skin_loadscene(get(hs_linkedscene), get(skin_settings.loadscene_blend));
+    if(hs_lookat_h !== null, skin_lookat(get(hs_lookat_h), get(hs_lookat_v), get(hs_lookat_fov)); );
+    skin_updatescroll();
+    );
+    );
+</action>
+<layer name="scene_parent" type="container" keep="true" align="lefttop" edge="bottom" x="0" y="0" oy="-5"
+       width="140" height="120" bgcolor="0x000000" bgalpha="0.7" bgroundedge="5" visible="false">
+    <layer name="tooltip_image_scene" type="image" url="" keep="false" align="lefttop" x="10" y="10" width="240"
+           heigt="160" crop="0|40|240|160" scale="0.5"/>
+    <layer name="tooltip_title_scene" keep="false"
+           url="%SWFPATH%/plugins/textfield.swf"
+           visible="true" alpha="0" enabled="false"
+           align="lefttop" x="10" y="90" width="120" autoheight="true"
+           background="false" backgroundcolor="0xFFFFFF" backgroundalpha="1.0"
+           border="false" bordercolor="0x000000" borderalpha="1.0" borderwidth="1.0" roundedge="0"
+           shadow="0.0" shadowrange="4.0" shadowangle="45" shadowcolor="0x000000" shadowalpha="1.0"
+           textshadow="get:skin_settings.design_text_shadow" textshadowrange="6.0" textshadowangle="90"
+           textshadowcolor="0x000000" textshadowalpha="1.0"
+           css="color:#ffffff; font-family:Arial; text-align:left; font-size:12px;"
+           html=""
+    />
+</layer>
+<action name="skin_loadscene" scope="local" args="newscenenameorindex, blendmode">
+    if(webvr.isenabled AND scene.count GT 1,
+    set(hotspot[skin_webvr_prev_scene].visible, false);
+    set(hotspot[skin_webvr_next_scene].visible, false);
+    );
+
+    calc(layer[skin_thumbborder].parent, 'skin_thumb_' + scene[get(newscenenameorindex)].index);
+    layer[skin_thumbs].scrolltocenter(get(scene[get(newscenenameorindex)].thumbx),
+    get(scene[get(newscenenameorindex)].thumby));
+    loadscene(get(scene[get(newscenenameorindex)].name), null, get(skin_settings.loadscene_flags), get(blendmode));
+</action>
+<action name="hotspot_animate">
+    inc(frame,1,get(lastframe),0);
+    mul(ypos,frame,frameheight);
+    txtadd(crop,'0|',get(ypos),'|',get(framewidth),'|',get(frameheight));
+    delayedcall(0.1, if(loaded, hotspot_animate() ) );
+</action>
+
 <!-- text -->
 <style
   name="hotspot_style_text"
@@ -90,6 +89,7 @@
   mipmapping="false"
   onautosized=""
 />
+
 <!-- Tooltip -->
 <style 
   name="hotspot_style_tooltip"
@@ -106,13 +106,12 @@
                        tween(layer[tooltip_title_scene].alpha, 1.0, 0.1);
                        asyncloop(hovering, copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey); );"
             onout.mouse="tween(layer[tooltip_title_scene].alpha, 0.0, 0.1, default, set(layer[tooltip_parent].visible,false), copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey); );"
-    />
-
+/>
 
 <layer name="tooltip_parent" type="container" keep="true" align="lefttop" edge="bottom" x="0" y="0" oy="-5"
        width="140" height="120" bgcolor="0x000000" bgalpha="0.7" bgroundedge="5" visible="false">
     <layer name="tooltip_image_scene" type="image" url="" keep="false" align="lefttop" x="10" y="10" width="240"
-           heigt="160" crop="0|40|240|160" scale="0.5"/>
+           heigt="160" crop="0|40|240|160" scale="0.5" />
     <layer name="tooltip_title_scene" keep="false"
            url="%SWFPATH%/plugins/textfield.swf"
            visible="true" alpha="0" enabled="false"
@@ -123,10 +122,8 @@
            textshadow="get:skin_settings.design_text_shadow" textshadowrange="6.0" textshadowangle="90"
            textshadowcolor="0x000000" textshadowalpha="1.0"
            css="color:#ffffff; font-family:Arial; text-align:left; font-size:5px;"
-           html=""
-    />
-
-        <layer name="mytext"
+           html="" />
+    <layer name="mytext"
                type="text"
                align="lefttop"
                html="[b] Tooltip text here[/b]"
@@ -146,15 +143,11 @@
                onautosized=""
                width="140"
                height="120"
-               oy="-5"
-        />
-
-
+               oy="-5"  />
     </layer>
 
-
 <!-- Modal -->
-<style name="hotspot_style_modal" onclick="modal_action" url="../viewer/skin/images/modal.png" scale="0.8" onover.mouse="" onout.mouse=""/>
+<style name="hotspot_style_modal" onclick="modal_action" url="../viewer/skin/images/modal.png" scale="0.8" onover.mouse="" onout.mouse="" />
 <action name="modal_action">
     set(modal, get(modal_text));
     if(webvr.isenabled, set(layer[overlay].visible, false); ,
@@ -168,6 +161,7 @@
       );
     );
 </action>
+
 <!-- video -->
 <style
   name="hotspot_style_video"
@@ -176,8 +170,8 @@
   url="../viewer/skin/images/video.png"
   scale="0.8"
   onover.mouse=""
-  onout.mouse=""
-  />
+  onout.mouse="" />
+
 <layer name="video_layer"
        url.html5="graphics/videoplayer.js"
        videourl="v.mp4"
@@ -190,60 +184,46 @@
        onvideopaused=""
        onvideocomplete=""
        onerror=""
-       onclick="video_action"
-       />
+       onclick="video_action" />
+
 <action name="video_action">
   set(layer[video_layer].visible, true);
 </action>
+
 <!-- Image -->
 <style
-  name="hotspot_style_image"
-  onclick="video_action"
-  crop="0|0|36|36"
-  url="../viewer/skin/images/image.png"
-  scale="0.8"
-  onover.mouse=""
-  onout.mouse=""
-  />
+  name="hotspot_style_image "
+  width="50"
+  url="https://www.instagram.com/static/images/ico/apple-touch-icon-180x180-precomposed.png/94fd767f257b.png"
+  align="lefttop" edge="bottom" x="0" y="0"
+  height="50"
+  onclick="image_action"
+/>
 
-<layer name="image_parent" type="container" keep="true" align="lefttop" edge="bottom" x="0" y="0" oy="-5"
-       width="200" height="200" bgcolor="0x000000" bgalpha="0.7" bgroundedge="5" visible="false">
-    <layer name="one"
-       type="image"
-       keep="false"
-       parent=""
-       visible="true"
-       enabled="true"
-       handcursor="true"
-       maskchildren="false"
-       scalechildren="false"
-       zorder=""
-       style=""
-       align=""
-       edge=""
-       x=""
-       y=""
-       rotate="0.0"
-       width="100%"
-       height="100%"
-       scale="1.0"
-       alpha="1.0"
-       crop=""
-       onovercrop=""
-       ondowncrop=""
-       bgcolor="0x000000"
-       bgalpha="0.0"
-       bgborder="0"
-       bgroundedge="0"
-       bgshadow=""
-       bgcapture="false"
-       onover=""
-       onhover=""
-       onout=""
-       onclick=""
-       ondown=""
-       onup=""
-       onloaded=""
-       />
+<action name="image_action">
+  set(layer[overlay_image].visible, true);
+  set(layer[img_popup].url, get(image_url));
+</action>
+
+<action name="image_layer_hide">
+  set(layer[overlay_image].visible, false);
+</action>
+
+<layer name="overlay_image" type="container" keep="true" align="lefttop" width="100%" height="100%" x="0" y="0"
+           bgcolor="0x000000" bgalpha="0.5" zorder="10" bgcapture="true" visible="false" onclick="image_layer_hide();">
+    <layer name="parent_image_layer" type="container" keep="true" align="center" width="500" height="250" x="0" y="0"
+           bgcolor="0xFFFFFF" bgalpha="1.0" zorder="11">
+        <layer name="close_image_layer" url="../viewer/skin/fancybox_sprite.png" keep="true" align="righttop" x="-13" y="-13"
+               onclick="image_layer_hide();" crop="0|0|36|36" zorder="15"/>
+        <layer name="img_popup" keep="true"  align="center"
+          x="0"
+          y="10"
+          visible="true"
+          autoheight="true"
+          background="false"
+          border="false"
+          enabled="false"
+        />
+    </layer>
 </layer>
 </krpano>
