@@ -93,14 +93,14 @@ $includes     = Vr360HelperKrpano::getIncludes();
 	/>
 
 	<!-- Use for override everything -->
+	<!-- Skin override only -->
 	<include url="<?php echo $assetsPath; ?>/vendor/krpano/skins/<?php echo $skin; ?>"/>
 
-	<?php if ($tour->params->get('userlogo', false) && Vr360HelperFile::exists(realpath('../../user/' . $tour->created_by . '/logo.png'))): ?>
+	<?php if ($tour->params->get('userlogo') && $tour->getUser()->haveLogo()): ?>
 		<layer name="user_logo" type="container" keep="true" x="16" y="60">
-			<layer name="logo" type="image" url="<?php echo "../../user/" . $tour->created_by . "/logo.png" ?>"
+			<layer name="logo" type="image" url="<?php echo $tour->getUser()->getLogoUrl(); ?>"
 			       keep="true" lefttop="center" width="50" height="50"/>
 		</layer>
-
 	<?php endif; ?>
 
 	<action name="startup" autorun="onstart">

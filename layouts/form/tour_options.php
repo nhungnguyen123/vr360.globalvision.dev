@@ -19,7 +19,9 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 		<div class="col-sm-10">
 			<select class="form-control input-sm tour-skins" title="skin" name="params[skin]">
 				<?php foreach ($skins as $skin): ?>
-					<option value="<?php echo $skin; ?>"><?php echo $skin; ?></option>
+					<?php if ($skin != 'base.xml'): ?>
+						<option value="<?php echo $skin; ?>"><?php echo $skin; ?></option>
+					<?php endif; ?>
 				<?php endforeach; ?>
 			</select>
 		</div>
@@ -50,7 +52,7 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 								name="params[socials]"
 								value="1"
 							<?php echo ($tour->params->get('socials', false)) ? 'checked="checked"' : '' ?>
-								size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_AUTO_ROTATION'); ?>
+								size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_SHOW_MEDIA_SOCIAL_BUTTONS'); ?>
 					</label>
 				</div>
 			</div>
@@ -61,7 +63,7 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 								type="checkbox"
 								id="tour-param-use-logo"
 								class="tour-params"
-								name="params[uselogo]"
+								name="params[userlogo]"
 								value="1"
 							<?php echo ($tour->params->get('userlogo', false)) ? 'checked="checked"' : '' ?>
 								size="80"/> <?php echo \Joomla\Language\Text::_('TOUR_LABEL_OPTION_USE_LOGO'); ?>
