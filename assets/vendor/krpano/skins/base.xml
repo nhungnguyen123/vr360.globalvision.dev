@@ -153,11 +153,13 @@
 <action name="modal_action">
     set(modal, get(modal_text));
     if(webvr.isenabled,
-    set(layer[overlay].visible, false);
+      set(layer[overlay].visible, false);
     ,
     if(modal != '',
       set(layer[overlay].visible, true);
-      set(layer[text_popup].html, get(modal_text));
+      txtadd(layer[text_popup].html,
+      '[h4]',get(modal_title),'[/h4][br][h3]',
+        get(modal_content),'[/h3]');
     );
       if(modal == null,
         set(layer[overlay].visible, true);
