@@ -111,7 +111,7 @@ class Vr360ModelUser extends Vr360Model
 
 			if ($file && !empty($file) && !empty($file['name']))
 			{
-				$userDataDir = VR360_PATH_DATA . '/user/' . $user->id;
+				$userDataDir = VR360_PATH_DATA . '/users/' . $user->id;
 
 				if (!Vr360HelperFolder::exists($userDataDir))
 				{
