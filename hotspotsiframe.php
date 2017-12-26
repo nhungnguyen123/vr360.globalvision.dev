@@ -274,7 +274,6 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 						<div class="form-group">
 							<input
 								id='modal_t'
-
 								type="text"
 								size="29"
 								placeholder="Input Modal Title"
@@ -365,10 +364,13 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 						<select
 							class="selectpicker"
 							data-width="261px"
+							id="selectbox"
 						>
-						<?php foreach ($tours->getList() as $tour): ?>
-							<option title="<?php echo $tour->name?>"" value="<?php echo $tour->alias?>"><?php echo $tour->name?></option>
+						<?php if (!empty($scenes)): ?>
+						<?php foreach ($scenes as $scene): ?>
+							<option value="scene_<?php echo explode('.', $scene->file)[0] ?>"><?php echo $scene->name ?></option>
 						<?php endforeach ?>
+						<?php endif; ?>
 						</select>
 						<button
 								type="button"
@@ -390,7 +392,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	</div>
 </div>
 <div id="show_link">
-	Linked scene: <select id="selectbox">
+	Linked scene: <select >
 		<?php if (!empty($scenes)): ?>
 			<?php foreach ($scenes as $scene): ?>
 				<option value="scene_<?php echo explode('.', $scene->file)[0] ?>"><?php echo $scene->name ?></option>
@@ -634,22 +636,22 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				var text_t = $("#text_t").val();
 				var text_text = $("#text_text").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);");
-				krpano.call("set(hotspot[" + uniqname + "].text, "+text_t+" ");
-				krpano.call("set(hotspot[" + uniqname + "].desc, "+text_text+" ");
+				krpano.call("set(hotspot[" + uniqname + "].title, "+text_t+" ");
+				krpano.call("set(hotspot[" + uniqname + "].content, "+text_text+" ");
 			}
 			if(type == 'modal'){
 				var modal_t = $("#modal_t").val();
 				var modal_d = $("#modal_d").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, modal);");
-				krpano.call("set(hotspot[" + uniqname + "].text, "+modal_t+" ");
-				krpano.call("set(hotspot[" + uniqname + "].desc, "+modal_d+" ");
+				krpano.call("set(hotspot[" + uniqname + "].title, "+modal_t+" ");
+				krpano.call("set(hotspot[" + uniqname + "].content, "+modal_d+" ");
 			}
 			if(type == 'tooltip'){
 				var tooltip_t = $("#tooltip_t").val();
 				var tooltip_d = $("#tooltip_d").val();
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);");
-				krpano.call("set(hotspot[" + uniqname + "].text, "+tooltip_t+" ");
-				krpano.call("set(hotspot[" + uniqname + "].desc, "+tooltip_d+" ");
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, tooltip);");
+				krpano.call("set(hotspot[" + uniqname + "].title, "+tooltip_t+" ");
+				krpano.call("set(hotspot[" + uniqname + "].content, "+tooltip_d+" ");
 			}
 			if(type == 'video'){
 				var videourl = $("#video_url").val();
@@ -660,13 +662,13 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			if(type == 'image'){
 				var imageurl = $("#image_url").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, image);");
-				krpano.call("set(hotspot[" + uniqname + "].image, "+videourl+" ");
+				krpano.call("set(hotspot[" + uniqname + "].image_url, "+imageurl+" ");
 			}
 
 			if(type == 'linkscene'){
-				var imageurl = $("#link_div").val();
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, normal);");
-				krpano.call("set(hotspot[" + uniqname + "].image, "+videourl+" ");
+				var scene = $("#selectbox").val();
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, link);");
+				krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + scene + ");");
 			}
 			krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup(" + uniqname + ")););");
 			krpano.call("set(hotspot[" + uniqname + "].ath, " + posX + ");");
@@ -710,7 +712,13 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		function deleteHotspot() {
 		if (confirm("Are you  Sure? ") == true) {
 				//krpano.call("set(hotspot[" + i + "].onclick, 'removehotspot(get(name));');");
-				krpano.call("removehotspot("+uniqname+");");
+				// krpano.call("removehotspot("+uniqname+"); js(hmv(get(hotspot[" + i + "]), get(xml.scene), " + i + ") );')");
+				var current_scene = krpano.get('xml.scene');
+			var hotspot_count = getHotspotsCount();
+			console.log(hotspot_count);
+			for (var i = 0; i < hotspot_count; i++) {
+				krpano.call("set(hotspot[" + i + "].ondown, 'draghotspot(); js(hmv(get(hotspot[" + i + "]), get(xml.scene), " + i + ") );')");
+			}
 				$("[data-popup-close]").trigger("click");
 		}else{
 				return false;
@@ -834,12 +842,20 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		}
 
 		function moveHotspot() {
-			krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
-				krpano.call("set(hotspot[" + uniqname + "].ondown, draghotspot(););");
+			var current_scene = krpano.get('xml.scene');
+			var hotspot_count = getHotspotsCount();
+			console.log(hotspot_count);
+			for (var i = 0; i < hotspot_count; i++) {
+				krpano.call("set(hotspot[" + i + "].ondown, 'draghotspot(); js(hmv(get(hotspot[" + i + "]), get(xml.scene), " + i + ") );')");
+			}
+
+			// krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
+			// krpano.call("set(hotspot[" + uniqname + "].ondown, draghotspot(););");
+			disableButton(['#add_hotpost', '#remove_hotpost', '#set_defaultView'])
 		}
 
 		function showPopup( uniqn ) {
-			uniqname = uniqn;
+			// uniqname = uniqn;
 			enableButton(['add_hotpost', '#remove_hotpost', '#set_defaultView'])
 			$("#edit-remove-move").show();
 			$('#text_div_edit').hide();
@@ -919,26 +935,26 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 								thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].reRender = 'false';
 						}
 
-						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'normal') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].linkedscene = thisAlias.kr.get('hotspot[' + i + '].linkedscene');
-						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'text') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].hotspot_text = thisAlias.kr.get('hotspot[' + i + '].text');
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].hotspot_desc = thisAlias.kr.get('hotspot[' + i + '].desc');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].title');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].content');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'modal') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].hotspot_text = thisAlias.kr.get('hotspot[' + i + '].text');
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].hotspot_desc = thisAlias.kr.get('hotspot[' + i + '].desc');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].title');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].content');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'tooltip') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].hotspot_text = thisAlias.kr.get('hotspot[' + i + '].text');
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].hotspot_desc = thisAlias.kr.get('hotspot[' + i + '].desc');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].title');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].content');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'video') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].hotspot_text = thisAlias.kr.get('hotspot[' + i + '].video_url');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].video_url = thisAlias.kr.get('hotspot[' + i + '].video_url');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'image') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].hotspot_text = thisAlias.kr.get('hotspot[' + i + '].image_url');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].image_url = thisAlias.kr.get('hotspot[' + i + '].image_url');
+						}
+						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'link') {
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].linkedscene = thisAlias.kr.get('hotspot[' + i + '].linkedscene');
 						}
 						current_vTour_hotspot_counter++;
 					}
