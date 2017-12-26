@@ -87,7 +87,7 @@
   mipmapping="false"
   onautosized=""
 />
-
+<!-- Tooltip -->
 <style 
   name="hotspot_style_tooltip"
   url="../viewer/skin/images/tooltip.png" 
@@ -104,28 +104,6 @@
                        asyncloop(hovering, copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey); );"
   onout.mouse="tween(layer[tooltip_title_scene].alpha, 0.0, 0.1, default, set(layer[tooltip_parent].visible,false), copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey); );"
 />
-
-<style name="hotspot_style_modal" onclick="modal_action" url="../viewer/skin/images/modal.png" scale="0.8" onover.mouse="" onout.mouse=""/>
-
-<style
-  name="hotspot_style_video"
-  onclick="video_action"
-  crop="0|0|50|50"
-  url="../viewer/skin/images/video.png"
-  scale="0.8"
-  onover.mouse=""
-  onout.mouse=""
-  />
-<style
-  name="hotspot_style_image"
-  onclick="video_action"
-  crop="0|0|36|36"
-  url="../viewer/skin/images/image.png"
-  scale="0.8"
-  onover.mouse=""
-  onout.mouse=""
-  />
-
 
 <layer name="tooltip_parent" type="container" keep="true" align="lefttop" edge="bottom" x="0" y="0" oy="-5"
        width="140" height="120" bgcolor="0x000000" bgalpha="0.7" bgroundedge="5" visible="false">
@@ -170,11 +148,64 @@
 
 </layer>
 
+<!-- Modal -->
+<style name="hotspot_style_modal" onclick="modal_action" url="../viewer/skin/images/modal.png" scale="0.8" onover.mouse="" onout.mouse=""/>
+<action name="modal_action">
+    set(modal, get(modal_text));
+    if(webvr.isenabled,
+    set(layer[overlay].visible, false);
+    ,
+    if(modal != '',
+      set(layer[overlay].visible, true);
+      set(layer[text_popup].html, get(modal_text));
+    );
+      if(modal == null,
+        set(layer[overlay].visible, true);
+      );
+    );
+</action>
+<!-- video -->
+<style
+  name="hotspot_style_video"
+  onclick="video_action"
+  crop="0|0|50|50"
+  url="../viewer/skin/images/video.png"
+  scale="0.8"
+  onover.mouse=""
+  onout.mouse=""
+  />
+<layer name="video_layer"
+       url.html5="graphics/videoplayer.js"
+       videourl="v.mp4"
+       align="center" x="0" y="0"
+       pausedonstart="false"
+       loop="false"
+       volume="1.0"
+       onvideoready=""
+       onvideoplay=""
+       onvideopaused=""
+       onvideocomplete=""
+       onerror=""
+       onclick="video_action"
+       />
+<action name="video_action">
+  set(layer[video_layer].visible, true);
+</action>
+<!-- Image -->
+<style
+  name="hotspot_style_image"
+  onclick="video_action"
+  crop="0|0|36|36"
+  url="../viewer/skin/images/image.png"
+  scale="0.8"
+  onover.mouse=""
+  onout.mouse=""
+  />
+
 <layer name="image_parent" type="container" keep="true" align="lefttop" edge="bottom" x="0" y="0" oy="-5"
        width="200" height="200" bgcolor="0x000000" bgalpha="0.7" bgroundedge="5" visible="false">
     <layer name="one"
        type="image"
-       url="i.png"
        keep="false"
        parent=""
        visible="true"
@@ -210,116 +241,5 @@
        onup=""
        onloaded=""
        />
-
-
 </layer>
-<!-- <action name="video_parent" type="Javascript" devices="html5"><![CDATA[
-   alert('41')
-  ]]>
-    
-  </action> -->
-      <!--
-<layer action="video_parent" type="container" keep="true" align="lefttop" edge="bottom" x="0" y="0" oy="-5"
-       width="200" height="200" bgcolor="0x000000" bgalpha="0.7" bgroundedge="5" visible="false">
-      
-      <layer name="video"
-       url.html5="graphics/videoplayer.js"
-       videourl="v.mp4"
-       posterurl="videoposter.jpg"
-       align="center" x="0" y="0"
-       pausedonstart="false"
-       loop="false"
-       volume="1.0"
-       onvideoready=""
-       onvideoplay=""
-       onvideopaused=""
-       onvideocomplete=""
-       onerror=""
-       />
-
-</layer>
- -->
-
-<action name="check_hotspot_type">
-        set(text, get(hotspot_text));
-
-        if(webvr.isenabled,
-        set(layer[overlay].visible, false);
-        ,
-        if(text != '',
-          set(layer[overlay].visible, true);
-          set(layer[text_popup].html, get(hotspot_text));
-        );
-          if(text == null,
-            set(layer[overlay].visible, true);
-          );
-        );
-
-
-    </action>
-<!-- <action name="video_action">
-        set(video, get(video_url));
-        if(webvr.isenabled,
-        set(layer[overlay].visible, false);
-        ,
-        if(video != '',
-          set(layer[overlay].visible, true);
-          set(layer[text_popup].html, get(video_url));
-        );
-          if(video == null,
-            set(layer[overlay].visible, true);
-          );
-        );
-    </action> -->
-  <!-- <action name="video_action" type="Javascript" devices="html5"><![CDATA[
-    alert(2);
-    function addElement () { 
-      var newDiv = document.createElement("div"); 
-      newDiv.setAttribute("id", "video-div");
-      var newContent = document.createTextNode("Hi there and greetings!"); 
-      newDiv.appendChild(newContent);  
-      var currentDiv = document.getElementById("video-div"); 
-      document.body.insertBefore(newDiv, currentDiv); 
-    }
-    addElement ();
-      document.getElementById("video-div").style.width = "50px";
-      document.getElementById("video-div").style.height = "50px";
-      document.getElementById("video-div").style.zIndex = 5;
-  ]]>
-    
-  </action> -->
-<layer name="video_layer"
-       url.html5="graphics/videoplayer.js"
-       videourl="v.mp4"
-       align="center" x="0" y="0"
-       pausedonstart="false"
-       loop="false"
-       volume="1.0"
-       onvideoready=""
-       onvideoplay=""
-       onvideopaused=""
-       onvideocomplete=""
-       onerror=""
-       onclick="video_action"
-       />
-
-  <action name="video_action">
-        set(layer[video_layer].visible, true);
-          <!-- set(layer[overlay].bgcolor, "#000"); -->
-      
-  </action>
-<action name="modal_action">
-        set(modal, get(modal_text));
-        if(webvr.isenabled,
-        set(layer[overlay].visible, false);
-        ,
-        if(modal != '',
-          set(layer[overlay].visible, true);
-          set(layer[text_popup].html, get(modal_text));
-        );
-          if(modal == null,
-            set(layer[overlay].visible, true);
-          );
-        );
-    </action>
 </krpano>
