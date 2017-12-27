@@ -557,14 +557,12 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				currentHotspotData = {};
 				currentHotspotData.ath = krpano.get('view.hlookat');
 				currentHotspotData.atv = krpano.get('view.vlookat');
-
-				hotspot_done.style.display = 'inline-block';
 			}
 			else // THIS HOTSPOT HAVE AADITIONAL DATA FROM HOTDPOT LIST
 			{
-				if (currentHotspotData.hotspot_type == 'normal') {
-					krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + currentHotspotData.linkedscene + ");");
-				}
+				// if (currentHotspotData.hotspot_type == 'normal') {
+				// 	krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + currentHotspotData.linkedscene + ");");
+				// }
 				// if (currentHotspotData.hotspot_type == 'text') {
 				// 	krpano.call("set(hotspot[" + uniqname + "].hotspot_text, " + currentHotspotData.hotspot_text + ");");
 				// }
@@ -573,22 +571,22 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				var text_t = $("#text_t").val();
 				var text_text = $("#text_text").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);");
-				krpano.call("set(hotspot[" + uniqname + "].title, "+text_t+" ");
-				krpano.call("set(hotspot[" + uniqname + "].content, "+text_text+" ");
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_title, "+text_t+" ");
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_content, "+text_text+" ");
 			}
 			if(type == 'modal'){
 				var modal_t = $("#modal_t").val();
 				var modal_d = $("#modal_d").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, modal);");
-				krpano.call("set(hotspot[" + uniqname + "].title, "+modal_t+" ");
-				krpano.call("set(hotspot[" + uniqname + "].content, "+modal_d+" ");
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_title, "+modal_t+" ");
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_content, "+modal_d+" ");
 			}
 			if(type == 'tooltip'){
 				var tooltip_t = $("#tooltip_t").val();
 				var tooltip_d = $("#tooltip_d").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, tooltip);");
-				krpano.call("set(hotspot[" + uniqname + "].title, "+tooltip_t+" ");
-				krpano.call("set(hotspot[" + uniqname + "].content, "+tooltip_d+" ");
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_title, "+tooltip_t+" ");
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_content, "+tooltip_d+" ");
 			}
 			if(type == 'video'){
 				var videourl = $("#video_url").val();
@@ -616,15 +614,12 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		}
 
 		function editHotspot(){
-			// enableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
-			disableButton(['#move_hotspot', '#delete_hotpost','#edit_hotpost']);
-							$('#text_div_edit').show();
-							$('#tooltip_div_edit ').hide();
-							$('#modal_div_edit ').hide();
-							$('#video_div_edit').hide();
-							$('#image_div_edit').hide();
-					
-
+		disableButton(['#move_hotspot', '#delete_hotpost','#edit_hotpost']);
+			$('#text_div_edit').show();
+			$('#tooltip_div_edit ').hide();
+			$('#modal_div_edit ').hide();
+			$('#video_div_edit').hide();
+			$('#image_div_edit').hide();
 		}
 
 		function list_scene() {
@@ -841,9 +836,9 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				// if ( thisAlias.firstTimesSave == 0 ){thisAlias.firstTimesSave = 1;}
 
 				sceneName = this.kr.get('xml.scene');
-				// console.info('saveCurrentHotspotFromCurrentScene: ' + sceneName);
 				thisAlias.hotspotList[sceneName] = {};
 				var hotspot_count = thisAlias.kr.get('hotspot.count');
+
 				for (var i = 0; i < hotspot_count; i++) {
 					// if (/hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url'))) {
 						thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()] = {
@@ -853,26 +848,28 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 							'hotspot_type': thisAlias.kr.get('hotspot[' + i + '].hotspot_type'),
 							'reRender': 'true'
 						}
-						if (/vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url'))) {
+						// if (/vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url'))) {
 							//hotspot which is aready in xml shouldnt re-render by js anymore, if not, doulicate hotspot will apperent.
 							if (thisAlias.kr.get('hotspot[' + i + '].xreRender') == 'true') {
 								thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].reRender == 'true'
 							}
-							else
+							else{
 								thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].reRender = 'false';
-						}
+							}
+						// }
 
+				console.log( thisAlias.kr.get('hotspot[' + i + ']') );
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'text') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].title');
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].content');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].hotspot_title');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].hotspot_content');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'modal') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].title');
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].content');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].hotspot_title');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].hotspot_content');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'tooltip') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].title');
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].content');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].hotspot_title');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].hotspot_content');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'video') {
 							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].video_url = thisAlias.kr.get('hotspot[' + i + '].video_url');
