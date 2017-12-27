@@ -102,11 +102,10 @@
 <style 
   name="hotspot_style_tooltip"
   url="../viewer/skin/images/tooltip.png" 
-  crop="0|0|40|40" 
-  frame="0" 
-  lastframe="19" 
-  framewidth="64" 
-  frameheight="64" 
+  frame="0"
+  lastframe="19"
+  framewidth="64"
+  frameheight="64"
   distorted="true"
   onover.mouse="copy(layer[tooltip_title_scene].html, scene[get(linkedscene)].title);
                  copy(layer[tooltip_image_scene].url, scene[get(linkedscene)].thumburl);
@@ -184,37 +183,46 @@
 <style
   name="hotspot_style_video"
   onclick="video_action"
-  crop="0|0|50|50"
   url="../viewer/skin/images/video.png"
-  scale="0.8"
-  onover.mouse=""
-  onout.mouse="" />
-
-<layer name="video_layer"
-       url.html5="graphics/videoplayer.js"
-       videourl="v.mp4"
-       align="center" x="0" y="0"
-       pausedonstart="false"
-       loop="false"
-       volume="1.0"
-       onvideoready=""
-       onvideoplay=""
-       onvideopaused=""
-       onvideocomplete=""
-       onerror=""
-       onclick="video_action" />
+/>
 
 <action name="video_action">
-  set(layer[video_layer].visible, true);
+  set(layer[overlay_video].visible, true);
 </action>
+<action name="video_action_hide">
+  set(layer[overlay_video].visible, false);
+</action>
+<layer name="overlay_video" type="container" keep="true" align="lefttop" width="100%" height="100%" x="0" y="0"
+           bgcolor="0x000000" bgalpha="0.5" zorder="10" bgcapture="true" visible="false" onclick="video_layer_hide();">
+    <layer name="parent_video_popup" type="container" keep="true" align="center" width="500" height="250" x="0" y="0"
+           bgcolor="0xFFFFFF" bgalpha="1.0" zorder="11">
+        <layer name="close_video_layer" url="../viewer/skin/fancybox_sprite.png" keep="true" align="righttop" x="-13" y="-13"
+               onclick="video_action_hide();" crop="0|0|36|36" zorder="15"/>
+         <layer name="video"
+         url.flash="videoplayer.swf"
+         url.html5="videoplayer.js"
+         videourl=""
+         align="center" x="0" y="0"
+         pausedonstart="false"
+         loop="false"
+         volume="1.0"
+         onvideoready=""
+         onvideoplay=""
+         onvideopaused=""
+         onvideocomplete=""
+         onerror=""
+         />
+    </layer>
+</layer>
+
 
 <!-- Image -->
 <style
   name="hotspot_style_image "
   width="50"
-  url="https://www.instagram.com/static/images/ico/apple-touch-icon-180x180-precomposed.png/94fd767f257b.png"
-  align="lefttop" edge="bottom" x="0" y="0"
   height="50"
+  url="../viewer/skin/images/image.png"
+  align="lefttop" edge="bottom" x="0" y="0"
   onclick="image_action"
 />
 
