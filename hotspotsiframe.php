@@ -28,8 +28,9 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 	<meta http-equiv="x-ua-compatible" content="IE=edge"/>
 	<!-- Globalvision -->
-	<link rel="stylesheet" type="text/css" href="./assets/css/tour.min.css">
 	<link rel="stylesheet" type="text/css" href="./assets/css/hotspots.min.css">
+	<link rel="stylesheet" type="text/css" href="./assets/css/tour.min.css">
+	<!-- <link rel="stylesheet" type="text/css" href="./assets/css/hotspots.min.css"> -->
 	<script type="text/javascript" src="./assets/vendor/jquery-2.2.4.min.js"></script>
 	<script src='<?php echo $tourUrl . '/tour.js'; ?>'></script>
 	<!-- Bootstrap -->
@@ -37,77 +38,13 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	<link rel="stylesheet" href="./assets/vendor/bootstrap/css/bootstrap.css">
 	<link rel="stylesheet" href="./assets/vendor/font-awesome/css/font-awesome.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
-	<style >
-	/* Outer */
-#edit-remove-move{
-    position: relative !important;
-}
-.popup {
-    width:100%;
-    height:100%;
-    display:none;
-    position:fixed;
-    top:0px;
-    left:0px;
-}
-
-/* Inner */
-.popup-inner {
-    max-width:285px;
-    padding:10px;
-    position:absolute;
-    box-shadow:0px 2px 6px rgba(0,0,0,1);
-    border-radius:3px;
-    background:#fff;
-}
-
-/* Close Button */
-.popup-close {
-    width:30px;
-    height:30px;
-    padding-top:4px;
-    display:inline-block;
-    position:absolute;
-    top:0px;
-    right:274px;
-    transition:ease 0.25s all;
-    -webkit-transform:translate(50%, -50%);
-    transform:translate(50%, -50%);
-    border-radius:1000px;
-    background:rgba(0,0,0,0.8);
-    font-family:Arial, Sans-Serif;
-    font-size:20px;
-    text-align:center;
-    line-height:100%;
-    color:#fff;
-}
-
-.popup-close:hover {
-    -webkit-transform:translate(50%, -50%) rotate(180deg);
-    transform:translate(50%, -50%) rotate(180deg);
-    background:rgba(0,0,0,1);
-    text-decoration:none;
-}
-.button-custom {
-    width:126px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-.button-custom-save-cancel{
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-.button-custom-th{
-	width:82px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-</style>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
 </head>
 <body>
 <div id="button-container">
-
+<div class="alert alert-info show-message-for-click" >
+	<strong>Hold click </strong>for adding hotspot
+</div>
 <div class="popup-inner" id="edit-remove-move" style="display:none;">
 		<button type="button" id="edit_hotpost" class="btn btn-primary btn-sm button-custom-th" onclick="editHotspot();">
 			Edit
@@ -159,7 +96,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 					<button type="button" id="add_hotpost" class="btn btn-primary btn-sm button-custom" onclick="addHotspot();">
 						Add hotspot here
 					</button>
-					<button type="button" id="set_defaultView" class="btn btn-primary btn-sm" onclick="setDefaultView();">
+					<button type="button" id="set_defaultView" class="btn btn-primary btn-sm button-custom" onclick="setDefaultView();">
 						Set default view
 					</button>
 			<div id="open-add-hot" class="form-inline" style="display: none;">
@@ -422,6 +359,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				var y = e.pageY;
 				krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
 				$(".popup-inner#popup").css({left: x, top: y});
+				$(".show-message-for-click").hide();
 				e.preventDefault();
 			}, 500);
 
@@ -449,8 +387,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				$('#image_div').hide();
 				$('#link_div').hide();
 				$('#open-add-hot').hide();
-
-
+				$(".show-message-for-click").show();
 				$('#edit-remove-move').hide();
 				$('#text_div_edit').hide();
 			enableButton(['#edit_hotpost', '#move_hotspot', '#delete_hotpost'])
@@ -992,7 +929,6 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		var superHotspot = new superHotspotObj(krpano);
 	</script>
 </div>
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
 <script type="text/javascript">
 	$(document).ready(function() {
 	$('.selectpicker').selectpicker();
