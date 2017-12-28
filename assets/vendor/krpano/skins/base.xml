@@ -86,7 +86,6 @@
   oversampling="1.0"
   mipmapping="false"
   onautosized=""
-  onclick="hotspot_style_text_action"
   width="100"
   height="100"
   bgalpha="0.7"
@@ -113,6 +112,7 @@
                        tween(layer[tooltip_title_scene].alpha, 1.0, 0.1);
                        asyncloop(hovering, copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey); );"
             onout.mouse="tween(layer[tooltip_title_scene].alpha, 0.0, 0.1, default, set(layer[tooltip_parent].visible,false), copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey); );"
+  onloaded="text_load_action"
 />
 
 <layer name="tooltip_parent" type="container" keep="true" align="lefttop" edge="bottom" x="0" y="0" oy="-5"
@@ -130,10 +130,9 @@
            textshadowcolor="0x000000" textshadowalpha="1.0"
            css="color:#ffffff; font-family:Arial; text-align:left; font-size:5px;"
            html="" />
-    <layer name="mytext"
+    <layer name="tooltip_text"
                type="text"
                align="lefttop"
-               html="[b] Tooltip text here[/b]"
                css="font-family:Arial; font-size:16px; color:white;"
                vcenter="false"
                padding="2"
@@ -152,33 +151,39 @@
                height="120"
                oy="-5"  />
     </layer>
+<action name="text_load_action">
+  txtadd(layer[tooltip_text].html,get(tooltip_title),'[br]',get(tooltip_content));
+</action>
 
 <!-- Modal -->
-<style name="hotspot_style_modal" onclick="modal_action" url="../viewer/skin/images/modal.png" scale="0.8" onover.mouse="" onout.mouse="" />
+<style name="hotspot_style_modal" onclick="modal_action" url="../viewer/skin/images/modal.png" scale="0.8" />
 <action name="modal_action">
     set(layer[overlay_modal].visible, true);
-    layer[modal_popup].html,'[h4]',get(modal_title),'[/h4][br][h3]',get(modal_content),'[/h3]';
+    txtadd(layer[modal_popup].html,'[h4]',get(modal_title),'[/h4][br][h3]',get(modal_content),'[/h3]');
+    <!-- layer[modal_popup].html,'[h4]',get(modal_title),'[br]',get(modal_content),''; -->
 </action>
-<action name="modal_action_hide">
+<action name="modal_layer_hide">
     set(layer[overlay_modal].visible, false);
+    <!-- layer[modal_popup].html,'[h4]',get(modal_title),'[br]',get(modal_content),''; -->
 </action>
 <layer name="overlay_modal" type="container" keep="true" align="lefttop" width="100%" height="100%" x="0" y="0"
-           bgcolor="0x000000" bgalpha="0.5" zorder="10" bgcapture="true" visible="false" onclick="modal_action_hide">
+           bgcolor="0x000000" bgalpha="0.5" zorder="10" bgcapture="true" visible="false" onclick="modal_layer_hide();">
     <layer name="parent_modal_layer" type="container" keep="true" align="center" width="500" height="250" x="0" y="0"
            bgcolor="0xFFFFFF" bgalpha="1.0" zorder="11">
         <layer name="close_modal_layer" url="../viewer/skin/fancybox_sprite.png" keep="true" align="righttop" x="-13" y="-13"
-               onclick="modal_action_hide" crop="0|0|36|36" zorder="15"/>
-        <layer name="modal_popup" keep="true"  align="center"
-          x="0"
-          y="10"
+               onclick="modal_layer_hide();" crop="0|0|36|36" zorder="15"/>
+        <layer
+          name="modal_popup"
+          type="text"
+          keep="true"
+          align="topleft"
+          x="5"
+          y="0"
           visible="true"
-          autoheight="true"
-          background="false"
-          border="false"
-          enabled="false"
         />
     </layer>
 </layer>
+
 <!-- video -->
 <style
   name="hotspot_style_video"
@@ -199,8 +204,6 @@
         <layer name="close_video_layer" url="../viewer/skin/fancybox_sprite.png" keep="true" align="righttop" x="-13" y="-13"
                onclick="video_action_hide();" crop="0|0|36|36" zorder="15"/>
          <layer name="video"
-         url.flash="videoplayer.swf"
-         url.html5="videoplayer.js"
          videourl=""
          align="center" x="0" y="0"
          pausedonstart="false"

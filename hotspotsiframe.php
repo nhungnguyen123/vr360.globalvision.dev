@@ -344,7 +344,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	<script type="text/javascript">
 		$(function() {
 			var krpano = document.getElementById('krpanoSWFObject');
-			krpano.onhover="showtext(you are hovering me);"
+			// krpano.set('view.hlookat', defaultViewList[scene].hlookat);
+			// krpano.onhover="showtext(you are hovering me);"
 			var timeout, clicker = $("#pano");
 			var oldX, oldY;
 			//----- OPEN
@@ -412,6 +413,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		});
 
 		var krpano = document.getElementById('krpanoSWFObject');
+		krpano.call("autorotate.stop()")
 
 		var add_hotpost = document.getElementById('add_hotpost');
 		var hotspot_done = document.getElementById('add_text');
@@ -578,15 +580,15 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				var modal_t = $("#modal_t").val();
 				var modal_d = $("#modal_d").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, modal);");
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_title, "+modal_t+" ");
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_content, "+modal_d+" ");
+				krpano.call("set(hotspot[" + uniqname + "].modal_title, "+modal_t+" ");
+				krpano.call("set(hotspot[" + uniqname + "].modal_content, "+modal_d+" ");
 			}
 			if(type == 'tooltip'){
 				var tooltip_t = $("#tooltip_t").val();
 				var tooltip_d = $("#tooltip_d").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, tooltip);");
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_title, "+tooltip_t+" ");
-				krpano.call("set(hotspot[" + uniqname + "].hotspot_content, "+tooltip_d+" ");
+				krpano.call("set(hotspot[" + uniqname + "].tooltip_title, "+tooltip_t+" ");
+				krpano.call("set(hotspot[" + uniqname + "].tooltip_content, "+tooltip_d+" ");
 			}
 			if(type == 'video'){
 				var videourl = $("#video_url").val();
@@ -864,12 +866,12 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].hotspot_content');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'modal') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].hotspot_title');
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].hotspot_content');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].modal_title');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].modal_content');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'tooltip') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].hotspot_title');
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].hotspot_content');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].tooltip_title');
+							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].tooltip_content');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'video') {
 							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].video_url = thisAlias.kr.get('hotspot[' + i + '].video_url');
