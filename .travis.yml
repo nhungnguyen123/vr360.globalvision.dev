@@ -1,6 +1,6 @@
 language: php
 sudo: required
-dist: precise
+dist: trusty
 install:
   - . $HOME/.nvm/nvm.sh
    - nvm install stable
