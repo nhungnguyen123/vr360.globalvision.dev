@@ -56,6 +56,7 @@ $defaultView = new Vr360Object($defaultView);
 			         hotspot_type="<?php echo $hotspot->type; ?>"
 			         ath="<?php echo $hotspot->ath ?>"
 			         atv="<?php echo $hotspot->atv ?>" <?php echo implode(' ', $data) ?>
+			         onover="jscall(if (typeof isAllowAddHotspot !== 'undefined') isAllowAddHotspot(false))" onout="jscall(if (typeof isAllowAddHotspot !== 'undefined') isAllowAddHotspot(true))"
 			         />
 		<?php endforeach; ?>
 	<?php endif; ?>
