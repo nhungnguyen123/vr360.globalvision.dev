@@ -328,7 +328,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	</div>
 	</div>
 </div>
-<div id="show_link">
+<!-- <div id="show_link">
 	Linked scene: <select >
 		<?php if (!empty($scenes)): ?>
 			<?php foreach ($scenes as $scene): ?>
@@ -337,7 +337,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		<?php endif; ?>
 	</select>
 	<button id="done_link" onclick="get_link()">Done</button>
-</div>
+</div> -->
 
 
 <div id="pano" >
@@ -494,6 +494,9 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 
 		function addLink(){
 			disableButton([ '#add_text' , '#add_Modal', '#add_Tooltip', '#add_image' ,'#add_video' ,'#savehotspots' ]);
+			$("#selectbox option[value="+krpano.get("xml.scene")+"]").attr('disabled',true);
+			$('#selectbox').selectpicker('render');
+			$("#selectbox option[value="+krpano.get("xml.scene")+"]").attr('disabled',false);
 			$("#link_div").show();
 		}
 
