@@ -328,79 +328,70 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	</div>
 	</div>
 </div>
-<!-- <div id="show_link">
-	Linked scene: <select >
-		<?php if (!empty($scenes)): ?>
-			<?php foreach ($scenes as $scene): ?>
-				<option value="scene_<?php echo explode('.', $scene->file)[0] ?>"><?php echo $scene->name ?></option>
-			<?php endforeach; ?>
-		<?php endif; ?>
-	</select>
-	<button id="done_link" onclick="get_link()">Done</button>
-</div> -->
-
-
 <div id="pano" >
 	<script type="text/javascript">
+		var allow = true;
+		function isAllowAddHotspot(isAllowAddHotspot){
+			if (isAllowAddHotspot == 'false') isAllowAddHotspot = false;
+			allow = isAllowAddHotspot;
+		}
 		$(function() {
 			var krpano = document.getElementById('krpanoSWFObject');
-			// krpano.set('view.hlookat', defaultViewList[scene].hlookat);
-			// krpano.onhover="showtext(you are hovering me);"
 			var timeout, clicker = $("#pano");
 			var oldX, oldY;
 			//----- OPEN
 			clicker.mousedown(function(e){
 				oldX = e.pageX;
 				oldY = e.pageY;
+				if (allow) {
+					timeout = setInterval(function(){
+						var targeted_popup_class = jQuery(this).attr('data-popup-open');
+						$('[data-popup=popup-1]').fadeIn(350);
+						var x = e.pageX ;
+						var y = e.pageY;
+						krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
+						$(".popup-inner#popup").css({left: x, top: y});
+						$(".show-message-for-click").hide();
+						e.preventDefault();
+					}, 500);
 
-			timeout = setInterval(function(){
-				var targeted_popup_class = jQuery(this).attr('data-popup-open');
-				$('[data-popup=popup-1]').fadeIn(350);
-				var x = e.pageX ;
-				var y = e.pageY;
-				krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
-				$(".popup-inner#popup").css({left: x, top: y});
-				$(".show-message-for-click").hide();
-				e.preventDefault();
-			}, 500);
-
-			clicker.mousemove(function(event){
-				if (event.pageX != oldX || event.pageY != oldY) {
-				clearInterval(timeout);
+					clicker.mousemove(function(event){
+						if (event.pageX != oldX || event.pageY != oldY) {
+						clearInterval(timeout);
+						}
+					});
 				}
-			});
-
-			return false;
+				return false;
 			});
 
 			$(document).mouseup(function(){
-				clearInterval(timeout);
+				if (allow) {
+					clearInterval(timeout);
+				}
 				return false;
 			});
 
 		    //----- CLOSE
 			$('[data-popup-close]').on('click', function(e)  {
 
-				$('#text_div').hide();
-				$('#Tooltip_div').hide();
-				$('#modal_div').hide();
-				$('#video_div').hide();
-				$('#image_div').hide();
-				$('#link_div').hide();
-				$('#open-add-hot').hide();
-				$(".show-message-for-click").show();
-				$('#edit-remove-move').hide();
-				$('#text_div_edit').hide();
+			$('#text_div').hide();
+			$('#Tooltip_div').hide();
+			$('#modal_div').hide();
+			$('#video_div').hide();
+			$('#image_div').hide();
+			$('#link_div').hide();
+			$('#open-add-hot').hide();
+			$(".show-message-for-click").show();
+			$('#edit-remove-move').hide();
+			$('#text_div_edit').hide();
 			enableButton(['#edit_hotpost', '#move_hotspot', '#delete_hotpost'])
 			disableButton(['#edit_text','#edit_Tooltip','#edit_modal','#edit_image','#edit_video','#edit_link'])
-
-
 			enableButton(['#set_defaultView', '#add_hotpost'])
 			enableButton(['#add_text','#add_Tooltip', '#add_Modal', '#add_image', '#add_video' ,'#add_link']);
 
-				var targeted_popup_class = jQuery(this).attr('data-popup-close');
-				$('[data-popup="' + targeted_popup_class + '"]').fadeOut(0);
-				e.preventDefault();
+			var targeted_popup_class = jQuery(this).attr('data-popup-close');
+			$('[data-popup="' + targeted_popup_class + '"]').fadeOut(0);
+			e.preventDefault();
 			});
 		});
 
@@ -578,6 +569,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);");
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_title, "+text_t+" ");
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_content, "+text_text+" ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/image.png);");
 			}
 			if(type == 'modal'){
 				var modal_t = $("#modal_t").val();
@@ -585,6 +577,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, modal);");
 				krpano.call("set(hotspot[" + uniqname + "].modal_title, "+modal_t+" ");
 				krpano.call("set(hotspot[" + uniqname + "].modal_content, "+modal_d+" ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/modal.png);");
 			}
 			if(type == 'tooltip'){
 				var tooltip_t = $("#tooltip_t").val();
@@ -592,29 +585,34 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, tooltip);");
 				krpano.call("set(hotspot[" + uniqname + "].tooltip_title, "+tooltip_t+" ");
 				krpano.call("set(hotspot[" + uniqname + "].tooltip_content, "+tooltip_d+" ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/tooltip.png);");
 			}
 			if(type == 'video'){
 				var videourl = $("#video_url").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, video);");
 				krpano.call("set(hotspot[" + uniqname + "].video_url, "+videourl+" ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/video.png);");
 			}
 
 			if(type == 'image'){
 				var imageurl = $("#image_url").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, image);");
 				krpano.call("set(hotspot[" + uniqname + "].image_url, "+imageurl+" ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/image.png);");
 			}
 
 			if(type == 'linkscene'){
 				var scene = $("#selectbox").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, link);");
 				krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + scene + ");");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
 			}
 			krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup(" + uniqname + ")););");
+			krpano.call("set(hotspot[" + uniqname + "].onover,  js(isAllowAddHotspot(false)););");
+			krpano.call("set(hotspot[" + uniqname + "].onout,  js(isAllowAddHotspot(true)););");
 			krpano.call("set(hotspot[" + uniqname + "].ath, " + posX + ");");
 			krpano.call("set(hotspot[" + uniqname + "].sceneName, " + current_scene + ");");
 			krpano.call("set(hotspot[" + uniqname + "].atv, " + posY + ");");
-			krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
 			$("[data-popup-close]").trigger("click");
 		}
 
@@ -863,7 +861,6 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 							}
 						// }
 
-				console.log( thisAlias.kr.get('hotspot[' + i + ']') );
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'text') {
 							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].hotspot_title');
 							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].hotspot_content');
