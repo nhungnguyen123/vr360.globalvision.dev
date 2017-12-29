@@ -179,13 +179,15 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 
 		<div id="video_div_edit" class="form-group" style="display: none;">
 			<div class="form-group">
+				<label for="video_input_edit">Add YouTube video URL</label>
 				<input
+					id="video_input_edit"
 					maxlength="255"
 					type="text"
 					size="29"
 					placeholder="Edit Url"
 					class="form-control"
-					style="margin-bottom: 2px "
+					style="margin-bottom: 2px"
 					name="video_url"
 				/>
 			</div>
@@ -402,6 +404,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 					<!-- Video-->
 					<div id="video_div" class="form-group" style="display: none;">
 						<div class="form-group">
+							<label for="video_url">Add YouTube video URL</label>
 							<input
 								id='video_url'
 								maxlength="255"
@@ -622,6 +625,9 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			var current_scene = krpano.get("xml.scene");
 			var selectbox_data = $("input[name='selectbox_data']").val();
 			selectbox_data = JSON.parse(selectbox_data);
+			if (selectbox_data.length == 1) {
+				$("#add_link").remove();
+			}
 			$("#selectbox option").remove();
 			$("#edit_selectbox option").remove();
 
@@ -640,8 +646,9 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		setTimeout(function() {
 			removeCurrentSceneFromSelect();
 		}, 500);
-		////edit
 
+
+		////edit
 		function editText(){
 			disableButton(['#edit_Tooltip', '#edit_modal', '#edit_image', '#edit_video' ,'#edit_link' ,'#saveEdit' ]);
 			$("#text_div_edit").show();
@@ -689,7 +696,18 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			let _type = _hotspot.hotspot_type;
 
 			$('#'+_type+'_div_edit').find('textarea, input, select').each(function() {
-				krpano.call("set(hotspot[" + uniqname + "]."+$(this).attr('name')+", "+$(this).val()+" ");
+				let param_name = $(this).attr('name');
+				let param_val = $(this).val();
+				if (param_name == 'video_url') {
+					if (param_val.indexOf('https://www.youtube.com/') !== 0
+						&& param_val.indexOf('https://youtube.com/') !== 0) {
+						alert('Invalid video URL');
+						return false;
+					}
+				}
+
+				krpano.call("set(hotspot[" + uniqname + "]."+param_name+", "+param_val+" ");
+				$(this).val('');
 			});
 
 			if (superHotspot) {
@@ -729,6 +747,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_title, "+text_t+" ");
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_content, "+text_text+" ");
 				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
+				$("#text_t").val('');
+				$("#text_text").val('');
 			}
 			if(type == 'modal'){
 				var modal_t = $("#modal_t").val();
@@ -737,6 +757,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				krpano.call("set(hotspot[" + uniqname + "].modal_title, "+modal_t+" ");
 				krpano.call("set(hotspot[" + uniqname + "].modal_content, "+modal_d+" ");
 				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/modal.png);");
+				$("#modal_t").val('');
+				$("#modal_d").val('');
 			}
 			if(type == 'tooltip'){
 				var tooltip_t = $("#tooltip_t").val();
@@ -745,12 +767,20 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				krpano.call("set(hotspot[" + uniqname + "].tooltip_title, "+tooltip_t+" ");
 				krpano.call("set(hotspot[" + uniqname + "].tooltip_content, "+tooltip_d+" ");
 				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/tooltip.png);");
+				$("#tooltip_t").val('');
+				$("#tooltip_d").val('');
 			}
 			if(type == 'video'){
 				var videourl = $("#video_url").val();
+				if (videourl.indexOf('https://www.youtube.com/') !== 0
+					&& videourl.indexOf('https://youtube.com/') !== 0) {
+					alert('Invalid video URL');
+					return false;
+				}
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, video);");
 				krpano.call("set(hotspot[" + uniqname + "].video_url, "+videourl+" ");
 				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/video.png);");
+				$("#video_url").val('');
 			}
 
 			if(type == 'image'){
@@ -758,6 +788,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, image);");
 				krpano.call("set(hotspot[" + uniqname + "].image_url, "+imageurl+" ");
 				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/image.png);");
+				$("#image_url").val('');
 			}
 
 			if(type == 'linkscene'){
@@ -765,6 +796,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, link);");
 				krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + scene + ");");
 				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
+				$("#selectbox").selectpicker('reset');
 			}
 			krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup(" + uniqname + ")););");
 			krpano.call("set(hotspot[" + uniqname + "].onover,  js(isAllowAddHotspot(false)););");
@@ -1071,10 +1103,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 
 				for (var k = 0; k < hotspot_count; k++) {
 					thisAlias.kr.call("set(hotspot[" + k + "].onclick,  js(showPopup(" + k + ")););");
-
-					if (krpano.get('hotspot[' + k + ']').hotspot_type == 'tooltip') {
-						thisAlias.kr.call("set(hotspot[" + k + "].onover, ););");
-					}
+					thisAlias.kr.call("set(hotspot[" + k + "].onover,  jscall(if (typeof isAllowAddHotspot !== 'undefined') isAllowAddHotspot(false)););");
+					thisAlias.kr.call("set(hotspot[" + k + "].onout,  jscall(if (typeof isAllowAddHotspot !== 'undefined') isAllowAddHotspot(true)););");
 				}
 				i = k;
 			}
