@@ -70,46 +70,7 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 					</label>
 				</div>
 			</div>
-			<div class="form-group">
-				Color
-			</div>
-			<div class="form-group">
-				<div class="checkbox">
-					<label>
-						<input
-								type="radio"
-								class="tour-params"
-								name="colorType"
-								value="1"
-								size="80"/> First Color
-					</label>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="checkbox">
-					<label>
-						<input
-								type="radio"
-								class="tour-params"
-								name="colorType"
-								value="1"
-								size="80"/> Secondary color
-					</label>
-				</div>
-			</div>
-			<div class="form-group">
-				<div class="checkbox">
-					<label>
-						<input
-								type="radio"
-								class="tour-params"
-								name="colorType"
-								value="1"
-								size="80"/> Thrid Color
-					</label>
-				</div>
-			</div>
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<div class="checkbox">
 					<label>
 						<input
@@ -134,7 +95,7 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 								size="80"/>Level Display
 					</label>
 				</div>
-			</div>
+			</div> -->
 			<div class="form-group">
 				<div class="checkbox">
 					<label>
@@ -144,11 +105,11 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 								class="tour-params"
 								name="params[vr_mode]"
 								value="1"
-								size="80"/>Vr mode
+								size="80"/>**Vr mode**
 					</label>
 				</div>
 			</div>
-			<div class="form-group">
+			<!-- <div class="form-group">
 				<div class="checkbox">
 					<div class="dropdown">
 						<button class="btn btn-default dropdown-toggle custom-button" type="button"
@@ -174,7 +135,7 @@ $skins = Vr360HelperKrpano::getListOfSkins();
 						</ul>
 					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 </div>

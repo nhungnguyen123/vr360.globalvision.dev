@@ -110,8 +110,9 @@
                  copy(layer[tooltip_image_scene].url, scene[get(linkedscene)].thumburl);
                        set(layer[tooltip_parent].visible, true);
                        tween(layer[tooltip_title_scene].alpha, 1.0, 0.1);
-                       asyncloop(hovering, copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey); );"
-            onout.mouse="tween(layer[tooltip_title_scene].alpha, 0.0, 0.1, default, set(layer[tooltip_parent].visible,false), copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey); );"
+                       asyncloop(hovering, copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey); );
+                       jscall(if (typeof isAllowAddHotspot !== 'undefined') isAllowAddHotspot(false));"
+            onout.mouse="tween(layer[tooltip_title_scene].alpha, 0.0, 0.1, default, set(layer[tooltip_parent].visible,false), copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey); ); jscall(if (typeof isAllowAddHotspot !== 'undefined') isAllowAddHotspot(true));"
   onloaded="text_load_action"
 />
 
