@@ -39,6 +39,13 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	<link rel="stylesheet" href="./assets/vendor/font-awesome/css/font-awesome.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+	<!-- Sceditor -->
+	<link rel="stylesheet" href="assets/redactor/minified/themes/default.min.css" id="theme-style" />
+	<script src="assets/redactor/minified/jquery.sceditor.min.js"></script>
+	<script src="assets/redactor/minified/jquery.sceditor.bbcode.min.js"></script>
+	<script src="assets/redactor/minified/sceditor.min.js"></script>
+	<script src="assets/redactor/minified/icons/monocons.js"></script>
+	<script src="assets/redactor/minified/formats/bbcode.js"></script>
 </head>
 <body>
 <div id="button-container">
@@ -275,7 +282,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 								maxlength="255"
 								style="
 								resize: none;
-								width:259px;
+								width:265px;
 								overflow:hidden;
 								margin-top:2px;
 								margin-bottom:2px;
@@ -749,7 +756,11 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			}
 			if(type == 'text'){
 				var text_t = $("#text_t").val();
-				var text_text = $("#text_text").val();
+				// var text_text =  text_textarea.val();
+				var text_text = $(text_textarea.getBody()).html();
+				text_text = htmlToBBCode(text_text);
+				console.log(text_text);
+
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);");
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_title, "+text_t+" ");
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_content, "+text_text+" ");
@@ -1137,8 +1148,83 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
-	$('.selectpicker').selectpicker();
+		$('.selectpicker').selectpicker();
 	});
+
+	var text_textarea = $('#text_text').sceditor({
+		resizeEnabled: false,
+		format: 'bbcode',
+		icons: 'monocons',
+		resizeMaxWidth:'265px',
+		emoticonsRoot: '/assets/redactor/',
+		style: 'assets/redactor/minified/themes/content/default.min.css'
+	}).sceditor('instance');
+
+	// console.log($(text_textarea.getBody()).html());
+
+
+var htmlToBBCode = function(html) {
+
+  html = html.replace(/<pre(.*?)>(.*?)<\/pre>/gmi, "[code]$2[/code]");
+
+	html = html.replace(/<h[1-7](.*?)>(.*?)<\/h[1-7]>/, "\n[h]$2[/h]\n");
+
+	//paragraph handling:
+	//- if a paragraph opens on the same line as another one closes, insert an extra blank line
+	//- opening tag becomes two line breaks
+	//- closing tags are just removed
+	// html += html.replace(/<\/p><p/<\/p>\n<p/gi;
+	// html += html.replace(/<p[^>]*>/\n\n/gi;
+	// html += html.replace(/<\/p>//gi;
+
+	html = html.replace(/<br(.*?)>/gi, "\n");
+	html = html.replace(/<textarea(.*?)>(.*?)<\/textarea>/gmi, "\[code]$2\[\/code]");
+	html = html.replace(/<b>/gi, "[b]");
+	html = html.replace(/<i>/gi, "[i]");
+	html = html.replace(/<u>/gi, "[u]");
+	html = html.replace(/<\/b>/gi, "[/b]");
+	html = html.replace(/<\/i>/gi, "[/i]");
+	html = html.replace(/<\/u>/gi, "[/u]");
+	html = html.replace(/<em>/gi, "[b]");
+	html = html.replace(/<\/em>/gi, "[/b]");
+	html = html.replace(/<strong>/gi, "[b]");
+	html = html.replace(/<\/strong>/gi, "[/b]");
+	html = html.replace(/<cite>/gi, "[i]");
+	html = html.replace(/<\/cite>/gi, "[/i]");
+	html = html.replace(/<font color="(.*?)">(.*?)<\/font>/gmi, "[color=$1]$2[/color]");
+	html = html.replace(/<font color=(.*?)>(.*?)<\/font>/gmi, "[color=$1]$2[/color]");
+	html = html.replace(/<link(.*?)>/gi, "");
+	html = html.replace(/<li(.*?)>(.*?)<\/li>/gi, "[*]$2");
+	html = html.replace(/<ul(.*?)>/gi, "[list]");
+	html = html.replace(/<\/ul>/gi, "[/list]");
+	html = html.replace(/<div>/gi, "\n");
+	html = html.replace(/<\/div>/gi, "\n");
+	html = html.replace(/<td(.*?)>/gi, " ");
+	html = html.replace(/<tr(.*?)>/gi, "\n");
+
+	html = html.replace(/<img(.*?)src="(.*?)"(.*?)>/gi, "[img]$2[/img]");
+	html = html.replace(/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/gi, "[url=$2]$4[/url]");
+
+	html = html.replace(/<head>(.*?)<\/head>/gmi, "");
+	html = html.replace(/<object>(.*?)<\/object>/gmi, "");
+	html = html.replace(/<script(.*?)>(.*?)<\/script>/gmi, "");
+	html = html.replace(/<style(.*?)>(.*?)<\/style>/gmi, "");
+	html = html.replace(/<title>(.*?)<\/title>/gmi, "");
+	html = html.replace(/<!--(.*?)-->/gmi, "\n");
+
+	html = html.replace(/\/\//gi, "/");
+	html = html.replace(/http:\//gi, "http://");
+
+	html = html.replace(/<(?:[^>'"]*|(['"]).*?\1)*>/gmi, "");
+	html = html.replace(/\r\r/gi, "");
+	html = html.replace(/\[img]\//gi, "[img]");
+	html = html.replace(/\[url=\//gi, "[url=");
+
+	html = html.replace(/(\S)\n/gi, "$1 ");
+
+	return html;
+}
+
 </script>
 </body>
 </html>
