@@ -705,6 +705,13 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 						return false;
 					}
 				}
+				if (param_name == 'image_url') {
+					if (param_val.length > 500 || (param_val.indexOf('https://') !== 0
+						&& param_val.indexOf('http://') !== 0)) {
+						alert('Invalid image URL');
+						return false;
+					}
+				}
 
 				krpano.call("set(hotspot[" + uniqname + "]."+param_name+", "+param_val+" ");
 				$(this).val('');
@@ -772,8 +779,8 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			}
 			if(type == 'video'){
 				var videourl = $("#video_url").val();
-				if (videourl.indexOf('https://www.youtube.com/') !== 0
-					&& videourl.indexOf('https://youtube.com/') !== 0) {
+				if (videourl.length > 500 || (videourl.indexOf('https://www.youtube.com/') !== 0
+					&& videourl.indexOf('https://youtube.com/') !== 0)) {
 					alert('Invalid video URL');
 					return false;
 				}
@@ -785,6 +792,11 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 
 			if(type == 'image'){
 				var imageurl = $("#image_url").val();
+				if (image_url.length > 500 || (imageurl.indexOf('https://') !== 0
+					&& imageurl.indexOf('http://') !== 0)) {
+					alert('Invalid image URL');
+					return false;
+				}
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, image);");
 				krpano.call("set(hotspot[" + uniqname + "].image_url, "+imageurl+" ");
 				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/image.png);");
