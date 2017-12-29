@@ -1,5 +1,4 @@
 <krpano>
-<include url="../viewer/skin/redactor.xml"/>
 <style
         name="hotspot_style_linkedscene"
         crop="0|0|64|64" frame="0" lastframe="19" framewidth="64" frameheight="64"
