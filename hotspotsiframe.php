@@ -39,6 +39,13 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	<link rel="stylesheet" href="./assets/vendor/font-awesome/css/font-awesome.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+	<!-- Sceditor -->
+	<link rel="stylesheet" href="assets/redactor/minified/themes/default.min.css" id="theme-style" />
+	<script src="assets/redactor/minified/jquery.sceditor.min.js"></script>
+	<script src="assets/redactor/minified/jquery.sceditor.bbcode.min.js"></script>
+	<script src="assets/redactor/minified/sceditor.min.js"></script>
+	<script src="assets/redactor/minified/icons/monocons.js"></script>
+	<script src="assets/redactor/minified/formats/bbcode.js"></script>
 </head>
 <body>
 <div id="button-container">
@@ -62,8 +69,9 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				type="text"
 				size="29"
 				maxlength="255"
-				placeholder="Edit"
+				placeholder="Edit title"
 				class="form-control"
+				name="hotspot_title"
 				/>
 			</div>
 			<div class="form-group">
@@ -79,8 +87,137 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				margin-bottom:2px;
 				height: 155px;
 				"
+				name="hotspot_content"
 				></textarea>
 			</div>
+			<button
+				type="button"
+				class="btn btn-default"
+				onclick="saveEdit()">Save
+			</button>
+		</div>
+
+		<div id="modal_div_edit" class="form-group" style="display: none;">
+			<div class="form-group">
+				<input
+				type="text"
+				size="29"
+				maxlength="255"
+				placeholder="Edit title"
+				class="form-control"
+				name="modal_title"
+				/>
+			</div>
+			<div class="form-group">
+				<textarea
+				class="form-control"
+				placeholder="Edit Description"
+				maxlength="255"
+				style="
+				resize: none;
+				width:259px;
+				overflow:hidden;
+				margin-top:2px;
+				margin-bottom:2px;
+				height: 155px;
+				"
+				name="modal_content"
+				></textarea>
+			</div>
+			<button
+				type="button"
+				class="btn btn-default"
+				onclick="saveEdit()">Save
+			</button>
+		</div>
+
+		<div id="tooltip_div_edit" class="form-group" style="display: none;">
+			<div class="form-group">
+				<input
+				type="text"
+				size="29"
+				maxlength="255"
+				placeholder="Edit title"
+				class="form-control"
+				name="tooltip_title"
+				/>
+			</div>
+			<div class="form-group">
+				<textarea
+				class="form-control"
+				placeholder="Edit Description"
+				maxlength="255"
+				style="
+				resize: none;
+				width:259px;
+				overflow:hidden;
+				margin-top:2px;
+				margin-bottom:2px;
+				height: 155px;
+				"
+				name="tooltip_content"
+				></textarea>
+			</div>
+			<button
+				type="button"
+				class="btn btn-default"
+				onclick="saveEdit()">Save
+			</button>
+		</div>
+
+		<div id="image_div_edit" class="form-group" style="display: none;">
+			<div class="form-group">
+				<input
+					maxlength="255"
+					type="text"
+					size="29"
+					placeholder="Edit Url"
+					class="form-control"
+					style="margin-bottom: 2px "
+					name="image_url"
+				/>
+			</div>
+			<button
+				type="button"
+				class="btn btn-default"
+				onclick="saveEdit()">Save
+			</button>
+		</div>
+
+		<div id="video_div_edit" class="form-group" style="display: none;">
+			<div class="form-group">
+				<label for="video_input_edit">Add YouTube video URL</label>
+				<input
+					id="video_input_edit"
+					maxlength="255"
+					type="text"
+					size="29"
+					placeholder="Edit Url"
+					class="form-control"
+					style="margin-bottom: 2px"
+					name="video_url"
+				/>
+			</div>
+			<button
+				type="button"
+				class="btn btn-default"
+				onclick="saveEdit()">Save
+			</button>
+		</div>
+
+		<div id="link_div_edit" class="form-group" style="display: none;">
+			<select
+				class="selectpicker"
+				data-width="261px"
+				id="edit_selectbox"
+				name="linkedscene"
+			>
+			<?php if (!empty($scenes)): ?>
+			<?php foreach ($scenes as $scene): ?>
+				<option value="scene_<?php echo explode('.', $scene->file)[0] ?>"><?php echo $scene->name ?></option>
+			<?php endforeach ?>
+			<?php endif; ?>
+			</select>
 			<button
 				type="button"
 				class="btn btn-default"
@@ -145,7 +282,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 								maxlength="255"
 								style="
 								resize: none;
-								width:259px;
+								width:265px;
 								overflow:hidden;
 								margin-top:2px;
 								margin-bottom:2px;
@@ -274,6 +411,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 					<!-- Video-->
 					<div id="video_div" class="form-group" style="display: none;">
 						<div class="form-group">
+							<label for="video_url">Add YouTube video URL</label>
 							<input
 								id='video_url'
 								maxlength="255"
@@ -309,6 +447,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 						<?php endforeach ?>
 						<?php endif; ?>
 						</select>
+						<input type="hidden" name="selectbox_data" value="<?php echo htmlspecialchars(json_encode($scenes)); ?>">
 						<button
 								type="button"
 								id="savehotspots"
@@ -328,78 +467,70 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 	</div>
 	</div>
 </div>
-<div id="show_link">
-	Linked scene: <select >
-		<?php if (!empty($scenes)): ?>
-			<?php foreach ($scenes as $scene): ?>
-				<option value="scene_<?php echo explode('.', $scene->file)[0] ?>"><?php echo $scene->name ?></option>
-			<?php endforeach; ?>
-		<?php endif; ?>
-	</select>
-	<button id="done_link" onclick="get_link()">Done</button>
-</div>
-
-
 <div id="pano" >
 	<script type="text/javascript">
+		var allow = true;
+		function isAllowAddHotspot(isAllowAddHotspot){
+			if (isAllowAddHotspot == 'false') isAllowAddHotspot = false;
+			allow = isAllowAddHotspot;
+		}
 		$(function() {
 			var krpano = document.getElementById('krpanoSWFObject');
-			krpano.onhover="showtext(you are hovering me);"
 			var timeout, clicker = $("#pano");
 			var oldX, oldY;
 			//----- OPEN
 			clicker.mousedown(function(e){
 				oldX = e.pageX;
 				oldY = e.pageY;
+				if (allow) {
+					timeout = setInterval(function(){
+						var targeted_popup_class = jQuery(this).attr('data-popup-open');
+						$('[data-popup=popup-1]').fadeIn(350);
+						var x = e.pageX ;
+						var y = e.pageY;
+						krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
+						$(".popup-inner#popup").css({left: x, top: y});
+						$(".show-message-for-click").hide();
+						e.preventDefault();
+					}, 500);
 
-			timeout = setInterval(function(){
-				var targeted_popup_class = jQuery(this).attr('data-popup-open');
-				$('[data-popup=popup-1]').fadeIn(350);
-				var x = e.pageX ;
-				var y = e.pageY;
-				krpano.call("screentosphere(mouse.x,mouse.y,m_ath,m_atv);");
-				$(".popup-inner#popup").css({left: x, top: y});
-				$(".show-message-for-click").hide();
-				e.preventDefault();
-			}, 500);
-
-			clicker.mousemove(function(event){
-				if (event.pageX != oldX || event.pageY != oldY) {
-				clearInterval(timeout);
+					clicker.mousemove(function(event){
+						if (event.pageX != oldX || event.pageY != oldY) {
+						clearInterval(timeout);
+						}
+					});
 				}
-			});
-
-			return false;
+				return false;
 			});
 
 			$(document).mouseup(function(){
-				clearInterval(timeout);
+				if (allow) {
+					clearInterval(timeout);
+				}
 				return false;
 			});
 
 		    //----- CLOSE
 			$('[data-popup-close]').on('click', function(e)  {
 
-				$('#text_div').hide();
-				$('#Tooltip_div').hide();
-				$('#modal_div').hide();
-				$('#video_div').hide();
-				$('#image_div').hide();
-				$('#link_div').hide();
-				$('#open-add-hot').hide();
-				$(".show-message-for-click").show();
-				$('#edit-remove-move').hide();
-				$('#text_div_edit').hide();
+			$('#text_div').hide();
+			$('#Tooltip_div').hide();
+			$('#modal_div').hide();
+			$('#video_div').hide();
+			$('#image_div').hide();
+			$('#link_div').hide();
+			$('#open-add-hot').hide();
+			$(".show-message-for-click").show();
+			$('#edit-remove-move').hide();
+			$('#text_div_edit').hide();
 			enableButton(['#edit_hotpost', '#move_hotspot', '#delete_hotpost'])
 			disableButton(['#edit_text','#edit_Tooltip','#edit_modal','#edit_image','#edit_video','#edit_link'])
-
-
 			enableButton(['#set_defaultView', '#add_hotpost'])
 			enableButton(['#add_text','#add_Tooltip', '#add_Modal', '#add_image', '#add_video' ,'#add_link']);
 
-				var targeted_popup_class = jQuery(this).attr('data-popup-close');
-				$('[data-popup="' + targeted_popup_class + '"]').fadeOut(0);
-				e.preventDefault();
+			var targeted_popup_class = jQuery(this).attr('data-popup-close');
+			$('[data-popup="' + targeted_popup_class + '"]').fadeOut(0);
+			e.preventDefault();
 			});
 		});
 
@@ -412,6 +543,7 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		});
 
 		var krpano = document.getElementById('krpanoSWFObject');
+		krpano.call("autorotate.stop()")
 
 		var add_hotpost = document.getElementById('add_hotpost');
 		var hotspot_done = document.getElementById('add_text');
@@ -492,11 +624,38 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 
 		function addLink(){
 			disableButton([ '#add_text' , '#add_Modal', '#add_Tooltip', '#add_image' ,'#add_video' ,'#savehotspots' ]);
+			removeCurrentSceneFromSelect();
 			$("#link_div").show();
 		}
 
-		////edit
+		function removeCurrentSceneFromSelect(){
+			var current_scene = krpano.get("xml.scene");
+			var selectbox_data = $("input[name='selectbox_data']").val();
+			selectbox_data = JSON.parse(selectbox_data);
+			if (selectbox_data.length == 1) {
+				$("#add_link").remove();
+			}
+			$("#selectbox option").remove();
+			$("#edit_selectbox option").remove();
 
+			selectbox_data.forEach(function(elm, i){
+				option_scene = 'scene_' + elm.file.split('.')[0];
+				if (option_scene != current_scene) {
+					let option = `<option value="${option_scene}">${elm.name}</option>`;
+					$("#selectbox").append(option);
+					$("#edit_selectbox").append(option);
+				}
+			});
+
+			$('#selectbox').selectpicker('refresh');
+			$('#edit_selectbox').selectpicker('refresh');
+		}
+		setTimeout(function() {
+			removeCurrentSceneFromSelect();
+		}, 500);
+
+
+		////edit
 		function editText(){
 			disableButton(['#edit_Tooltip', '#edit_modal', '#edit_image', '#edit_video' ,'#edit_link' ,'#saveEdit' ]);
 			$("#text_div_edit").show();
@@ -540,6 +699,34 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			enableButton(['#add_text','#add_Tooltip', '#add_Modal', '#add_image', '#add_video' ,'#add_link','#savehotspots']);
 		}
 		function saveEdit(){
+			let _hotspot = krpano.get('hotspot[' + uniqname + ']');
+			let _type = _hotspot.hotspot_type;
+
+			$('#'+_type+'_div_edit').find('textarea, input, select').each(function() {
+				let param_name = $(this).attr('name');
+				let param_val = $(this).val();
+				if (param_name == 'video_url') {
+					if (param_val.indexOf('https://www.youtube.com/') !== 0
+						&& param_val.indexOf('https://youtube.com/') !== 0) {
+						alert('Invalid video URL');
+						return false;
+					}
+				}
+				if (param_name == 'image_url') {
+					if (param_val.length > 500 || (param_val.indexOf('https://') !== 0
+						&& param_val.indexOf('http://') !== 0)) {
+						alert('Invalid image URL');
+						return false;
+					}
+				}
+
+				krpano.call("set(hotspot[" + uniqname + "]."+param_name+", "+param_val+" ");
+				$(this).val('');
+			});
+
+			if (superHotspot) {
+				superHotspot = new superHotspotObj(krpano);
+			}
 			$( "[data-popup-close]" ).trigger( "click" );
 		}
 
@@ -557,74 +744,95 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 				currentHotspotData = {};
 				currentHotspotData.ath = krpano.get('view.hlookat');
 				currentHotspotData.atv = krpano.get('view.vlookat');
-
-				hotspot_done.style.display = 'inline-block';
 			}
 			else // THIS HOTSPOT HAVE AADITIONAL DATA FROM HOTDPOT LIST
 			{
-				if (currentHotspotData.hotspot_type == 'normal') {
-					krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + currentHotspotData.linkedscene + ");");
-				}
+				// if (currentHotspotData.hotspot_type == 'normal') {
+				// 	krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + currentHotspotData.linkedscene + ");");
+				// }
 				// if (currentHotspotData.hotspot_type == 'text') {
 				// 	krpano.call("set(hotspot[" + uniqname + "].hotspot_text, " + currentHotspotData.hotspot_text + ");");
 				// }
 			}
 			if(type == 'text'){
 				var text_t = $("#text_t").val();
-				var text_text = $("#text_text").val();
+				// var text_text =  text_textarea.val();
+				var text_text = $(text_textarea.getBody()).html();
+				text_text = htmlToBBCode(text_text);
+				console.log(text_text);
+
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, text);");
-				krpano.call("set(hotspot[" + uniqname + "].title, "+text_t+" ");
-				krpano.call("set(hotspot[" + uniqname + "].content, "+text_text+" ");
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_title, "+text_t+" ");
+				krpano.call("set(hotspot[" + uniqname + "].hotspot_content, "+text_text+" ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
+				$("#text_t").val('');
+				$("#text_text").val('');
 			}
 			if(type == 'modal'){
 				var modal_t = $("#modal_t").val();
 				var modal_d = $("#modal_d").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, modal);");
-				krpano.call("set(hotspot[" + uniqname + "].title, "+modal_t+" ");
-				krpano.call("set(hotspot[" + uniqname + "].content, "+modal_d+" ");
+				krpano.call("set(hotspot[" + uniqname + "].modal_title, "+modal_t+" ");
+				krpano.call("set(hotspot[" + uniqname + "].modal_content, "+modal_d+" ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/modal.png);");
+				$("#modal_t").val('');
+				$("#modal_d").val('');
 			}
 			if(type == 'tooltip'){
 				var tooltip_t = $("#tooltip_t").val();
 				var tooltip_d = $("#tooltip_d").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, tooltip);");
-				krpano.call("set(hotspot[" + uniqname + "].title, "+tooltip_t+" ");
-				krpano.call("set(hotspot[" + uniqname + "].content, "+tooltip_d+" ");
+				krpano.call("set(hotspot[" + uniqname + "].tooltip_title, "+tooltip_t+" ");
+				krpano.call("set(hotspot[" + uniqname + "].tooltip_content, "+tooltip_d+" ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/tooltip.png);");
+				$("#tooltip_t").val('');
+				$("#tooltip_d").val('');
 			}
 			if(type == 'video'){
 				var videourl = $("#video_url").val();
+				if (videourl.length > 500 || (videourl.indexOf('https://www.youtube.com/') !== 0
+					&& videourl.indexOf('https://youtube.com/') !== 0)) {
+					alert('Invalid video URL');
+					return false;
+				}
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, video);");
 				krpano.call("set(hotspot[" + uniqname + "].video_url, "+videourl+" ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/video.png);");
+				$("#video_url").val('');
 			}
 
 			if(type == 'image'){
 				var imageurl = $("#image_url").val();
+				if (image_url.length > 500 || (imageurl.indexOf('https://') !== 0
+					&& imageurl.indexOf('http://') !== 0)) {
+					alert('Invalid image URL');
+					return false;
+				}
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, image);");
 				krpano.call("set(hotspot[" + uniqname + "].image_url, "+imageurl+" ");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/image.png);");
+				$("#image_url").val('');
 			}
 
 			if(type == 'linkscene'){
 				var scene = $("#selectbox").val();
 				krpano.call("set(hotspot[" + uniqname + "].hotspot_type, link);");
 				krpano.call("set(hotspot[" + uniqname + "].linkedscene, " + scene + ");");
+				krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
+				$("#selectbox").selectpicker('reset');
 			}
 			krpano.call("set(hotspot[" + uniqname + "].onclick,  js(showPopup(" + uniqname + ")););");
+			krpano.call("set(hotspot[" + uniqname + "].onover,  js(isAllowAddHotspot(false)););");
+			krpano.call("set(hotspot[" + uniqname + "].onout,  js(isAllowAddHotspot(true)););");
 			krpano.call("set(hotspot[" + uniqname + "].ath, " + posX + ");");
 			krpano.call("set(hotspot[" + uniqname + "].sceneName, " + current_scene + ");");
 			krpano.call("set(hotspot[" + uniqname + "].atv, " + posY + ");");
-			krpano.call("set(hotspot[" + uniqname + "].url, assets/images/hotspot.png);");
 			$("[data-popup-close]").trigger("click");
 		}
 
 		function editHotspot(){
-			// enableButton(['#edit_text', '#edit_Tooltip', '#edit_modal', '#edit_image' ,'#edit_video' ,'#edit_link' ]);
 			disableButton(['#move_hotspot', '#delete_hotpost','#edit_hotpost']);
-							$('#text_div_edit').show();
-							$('#tooltip_div_edit ').hide();
-							$('#modal_div_edit ').hide();
-							$('#video_div_edit').hide();
-							$('#image_div_edit').hide();
-					
-
+			$('[id*="_div_edit"][data-edit="true"]').show();
 		}
 
 		function list_scene() {
@@ -648,29 +856,16 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 
 		function deleteHotspot() {
 		if (confirm("Are you  Sure? ") == true) {
-				//krpano.call("set(hotspot[" + i + "].onclick, 'removehotspot(get(name));');");
-				// krpano.call("removehotspot("+uniqname+"); js(hmv(get(hotspot[" + i + "]), get(xml.scene), " + i + ") );')");
-				var current_scene = krpano.get('xml.scene');
-			var hotspot_count = getHotspotsCount();
-			for (var i = 0; i < hotspot_count; i++) {
-				krpano.call("set(hotspot[" + i + "].ondown, 'draghotspot(); js(hmv(get(hotspot[" + i + "]), get(xml.scene), " + i + ") );')");
-			}
-				$("[data-popup-close]").trigger("click");
-		}else{
+			$("[data-popup-close]").trigger("click");
+			done_remove();
+		} else {
 				return false;
 			}
 		}
 
 		function done_remove() {
-
 			enableButton(['add_hotpost', '#remove_hotpost', '#moveHotspot', '#set_defaultView'])
-			document.getElementById('done_remove').style.display = 'none';
-
-			add_hotpost.disabled = false;
-			var hotspot_count = getHotspotsCount();
-			for (i = 0; i < hotspot_count; i++) {
-				krpano.call("set(hotspot[" + i + "].onclick, '');");
-			}
+			krpano.call("removehotspot("+uniqname+");");
 		}
 
 		function choose_hotSpot_type() {
@@ -790,20 +985,20 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 		}
 
 		function showPopup( uniqn ) {
-			// uniqname = uniqn;
-			enableButton(['add_hotpost', '#remove_hotpost', '#set_defaultView'])
-			$("#edit-remove-move").show();
-			$('#text_div_edit').hide();
-			$('#tooltip_div_edit ').hide();
-			$('#modal_div_edit ').hide();
-			$('#video_div_edit').hide();
-			$('#image_div_edit').hide();
-			$('#scene_div_edit').hide();
+			uniqname = uniqn;
+			let _hotspot = krpano.get('hotspot[' + uniqname + ']');
+			let _type = _hotspot.hotspot_type;
 
-			// $('#edit-remove-move').css('position', 'fixed');
-			// var hotspot_count = getHotspotsCount();
-			// for (var i = 0; i < hotspot_count; i++) {
-			// 	krpano.call("set(hotspot[" + i + "].ondown, '');");
+			enableButton(['#add_hotpost', '#remove_hotpost', '#set_defaultView'])
+			$("#edit-remove-move").show();
+
+			$('[id*="_div_edit"]').attr('data-edit', false).hide();
+			$('#'+_type+'_div_edit').attr('data-edit', true);
+
+			$('#'+_type+'_div_edit').find('textarea, input, select').each(function() {
+				let param_name = $(this).attr('name');
+				$(this).val(_hotspot[param_name]);
+			});
 		}
 
 		// function moveHotspotDone() {
@@ -833,55 +1028,55 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			var thisAlias = this;
 
 			this.sceneCount = krpano_Obj.get('scene.count');
+			this.sceneName = krpano_Obj.get('xml.scene');
 			this.hotspotList = {};
 			this.kr = krpano_Obj;
 			this.firstTimesSave = 0;
 
 			this.saveCurrentHotspotFromCurrentScene = function () {
 				// if ( thisAlias.firstTimesSave == 0 ){thisAlias.firstTimesSave = 1;}
-
-				sceneName = this.kr.get('xml.scene');
-				// console.info('saveCurrentHotspotFromCurrentScene: ' + sceneName);
-				thisAlias.hotspotList[sceneName] = {};
+				thisAlias.hotspotList[this.sceneName] = {};
 				var hotspot_count = thisAlias.kr.get('hotspot.count');
+
 				for (var i = 0; i < hotspot_count; i++) {
 					// if (/hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url'))) {
-						thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()] = {
+						thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()] = {
 							'ath': thisAlias.kr.get('hotspot[' + i + '].ath'),
 							'atv': thisAlias.kr.get('hotspot[' + i + '].atv'),
 							'sceneName': thisAlias.kr.get('hotspot[' + i + '].sceneName'),
 							'hotspot_type': thisAlias.kr.get('hotspot[' + i + '].hotspot_type'),
 							'reRender': 'true'
 						}
-						if (/vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url'))) {
+						// if (/vtourskin_hotspot\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url')) || /information\.png/.test(thisAlias.kr.get('hotspot[' + i + '].url'))) {
 							//hotspot which is aready in xml shouldnt re-render by js anymore, if not, doulicate hotspot will apperent.
 							if (thisAlias.kr.get('hotspot[' + i + '].xreRender') == 'true') {
-								thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].reRender == 'true'
+								thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].reRender == 'true'
 							}
-							else
-								thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].reRender = 'false';
-						}
+							else{
+								thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].reRender = 'false';
+							}
+						// }
 
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'text') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].title');
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].content');
+							thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].hotspot_title');
+							thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].hotspot_content');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'modal') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].title');
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].content');
+							thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].modal_title');
+							thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].modal_content');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'tooltip') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].title');
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].content');
+							thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].title = thisAlias.kr.get('hotspot[' + i + '].tooltip_title');
+							thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].content = thisAlias.kr.get('hotspot[' + i + '].tooltip_content');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'video') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].video_url = thisAlias.kr.get('hotspot[' + i + '].video_url');
+							thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].video_url = thisAlias.kr.get('hotspot[' + i + '].video_url');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'image') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].image_url = thisAlias.kr.get('hotspot[' + i + '].image_url');
+							thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].image_url = thisAlias.kr.get('hotspot[' + i + '].image_url');
 						}
 						if (thisAlias.kr.get('hotspot[' + i + '].hotspot_type') == 'link') {
-							thisAlias.hotspotList[sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].linkedscene = thisAlias.kr.get('hotspot[' + i + '].linkedscene');
+							thisAlias.hotspotList[this.sceneName][current_randome_val + current_vTour_hotspot_counter.toString()].linkedscene = thisAlias.kr.get('hotspot[' + i + '].linkedscene');
 						}
 						current_vTour_hotspot_counter++;
 				}
@@ -924,15 +1119,112 @@ $scenes = !$tour->id ? array() : $tour->getScenes();
 			this.setData = function (data) {
 				thisAlias = data;
 			}
+
+			this.initCurrentHotspots = function () {
+				thisAlias.hotspotList[this.sceneName] = {};
+				var hotspot_count = thisAlias.kr.get('hotspot.count');
+
+				for (var k = 0; k < hotspot_count; k++) {
+					thisAlias.kr.call("set(hotspot[" + k + "].onclick,  js(showPopup(" + k + ")););");
+					thisAlias.kr.call("set(hotspot[" + k + "].onover,  jscall(if (typeof isAllowAddHotspot !== 'undefined') isAllowAddHotspot(false)););");
+					thisAlias.kr.call("set(hotspot[" + k + "].onout,  jscall(if (typeof isAllowAddHotspot !== 'undefined') isAllowAddHotspot(true)););");
+				}
+				i = k;
+			}
+
+			this.init = function() {
+				setTimeout(function() {
+					thisAlias.initCurrentHotspots();
+				}, 500);
+			}
+			this.init();
 		}
 
-		var superHotspot = new superHotspotObj(krpano);
+		var superHotspot;
+		setTimeout(function() {
+			superHotspot = new superHotspotObj(krpano);
+		}, 500);
 	</script>
 </div>
 <script type="text/javascript">
 	$(document).ready(function() {
-	$('.selectpicker').selectpicker();
+		$('.selectpicker').selectpicker();
 	});
+
+	var text_textarea = $('#text_text').sceditor({
+		resizeEnabled: false,
+		format: 'bbcode',
+		icons: 'monocons',
+		resizeMaxWidth:'265px',
+		emoticonsRoot: '/assets/redactor/',
+		style: 'assets/redactor/minified/themes/content/default.min.css'
+	}).sceditor('instance');
+
+	// console.log($(text_textarea.getBody()).html());
+
+
+var htmlToBBCode = function(html) {
+
+  html = html.replace(/<pre(.*?)>(.*?)<\/pre>/gmi, "[code]$2[/code]");
+
+	html = html.replace(/<h[1-7](.*?)>(.*?)<\/h[1-7]>/, "\n[h]$2[/h]\n");
+
+	//paragraph handling:
+	//- if a paragraph opens on the same line as another one closes, insert an extra blank line
+	//- opening tag becomes two line breaks
+	//- closing tags are just removed
+	// html += html.replace(/<\/p><p/<\/p>\n<p/gi;
+	// html += html.replace(/<p[^>]*>/\n\n/gi;
+	// html += html.replace(/<\/p>//gi;
+
+	html = html.replace(/<br(.*?)>/gi, "\n");
+	html = html.replace(/<textarea(.*?)>(.*?)<\/textarea>/gmi, "\[code]$2\[\/code]");
+	html = html.replace(/<b>/gi, "[b]");
+	html = html.replace(/<i>/gi, "[i]");
+	html = html.replace(/<u>/gi, "[u]");
+	html = html.replace(/<\/b>/gi, "[/b]");
+	html = html.replace(/<\/i>/gi, "[/i]");
+	html = html.replace(/<\/u>/gi, "[/u]");
+	html = html.replace(/<em>/gi, "[b]");
+	html = html.replace(/<\/em>/gi, "[/b]");
+	html = html.replace(/<strong>/gi, "[b]");
+	html = html.replace(/<\/strong>/gi, "[/b]");
+	html = html.replace(/<cite>/gi, "[i]");
+	html = html.replace(/<\/cite>/gi, "[/i]");
+	html = html.replace(/<font color="(.*?)">(.*?)<\/font>/gmi, "[color=$1]$2[/color]");
+	html = html.replace(/<font color=(.*?)>(.*?)<\/font>/gmi, "[color=$1]$2[/color]");
+	html = html.replace(/<link(.*?)>/gi, "");
+	html = html.replace(/<li(.*?)>(.*?)<\/li>/gi, "[*]$2");
+	html = html.replace(/<ul(.*?)>/gi, "[list]");
+	html = html.replace(/<\/ul>/gi, "[/list]");
+	html = html.replace(/<div>/gi, "\n");
+	html = html.replace(/<\/div>/gi, "\n");
+	html = html.replace(/<td(.*?)>/gi, " ");
+	html = html.replace(/<tr(.*?)>/gi, "\n");
+
+	html = html.replace(/<img(.*?)src="(.*?)"(.*?)>/gi, "[img]$2[/img]");
+	html = html.replace(/<a(.*?)href="(.*?)"(.*?)>(.*?)<\/a>/gi, "[url=$2]$4[/url]");
+
+	html = html.replace(/<head>(.*?)<\/head>/gmi, "");
+	html = html.replace(/<object>(.*?)<\/object>/gmi, "");
+	html = html.replace(/<script(.*?)>(.*?)<\/script>/gmi, "");
+	html = html.replace(/<style(.*?)>(.*?)<\/style>/gmi, "");
+	html = html.replace(/<title>(.*?)<\/title>/gmi, "");
+	html = html.replace(/<!--(.*?)-->/gmi, "\n");
+
+	html = html.replace(/\/\//gi, "/");
+	html = html.replace(/http:\//gi, "http://");
+
+	html = html.replace(/<(?:[^>'"]*|(['"]).*?\1)*>/gmi, "");
+	html = html.replace(/\r\r/gi, "");
+	html = html.replace(/\[img]\//gi, "[img]");
+	html = html.replace(/\[url=\//gi, "[url=");
+
+	html = html.replace(/(\S)\n/gi, "$1 ");
+
+	return html;
+}
+
 </script>
 </body>
 </html>

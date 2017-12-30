@@ -16,7 +16,7 @@ $defaultView = new Vr360Object($defaultView);
 		name="scene_<?php echo $fileName ?>"
 		title="<?php echo $scene->name ?>"
 		subtitle="<?php echo $scene->description ?>"
-		onstart=""
+		onstart="jscall(setTimeout(function() { if(typeof superHotspot !== 'undefined') { superHotspot = new superHotspotObj(krpano); } }, 500);)"
 		thumburl="panos/<?php echo $fileName ?>.tiles/thumb.jpg"
 		lat=""
 		lng=""
