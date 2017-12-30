@@ -58,4 +58,6 @@ script:
 - composer update
 - cd tests
 - mv acceptance.suite.dist.yml acceptance.suite.yml
-- php vendor/bin/robo run:test
+- cd ..
+- vendor/bin/codecept bootstrap
+- vendor/bin/robo run:test
