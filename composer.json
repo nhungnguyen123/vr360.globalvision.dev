@@ -15,7 +15,7 @@
         "consolidation/robo": "~1",
         "joomla-projects/joomla-testing-robo": "dev-container-test",
         "joomla-projects/joomla-testing": "dev-container-test",
-        "joomla-projects/selenium-server-standalone": "v3.7.0",
+        "joomla-projects/selenium-server-standalone": "v2.53.1",
         "fzaninotto/faker": "~1"
     }
 }
