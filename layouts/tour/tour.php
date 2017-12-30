@@ -70,7 +70,7 @@ $includes     = Vr360HelperKrpano::getIncludes();
 	               loadscene_blend="OPENBLEND(0.5, 0.0, 0.75, 0.05, linear)"
 	               loadscene_blend_prev="SLIDEBLEND(0.5, 180, 0.75, linear)"
 	               loadscene_blend_next="SLIDEBLEND(0.5,   0, 0.75, linear)"
-	               loadingtext="loading..."
+	               loadingtext="[img src='../../../assets/images/ajax-loader.gif'/]"
 	               layout_width="100%"
 	               layout_maxwidth="814"
 	               controlbar_width="-24"

@@ -92,8 +92,6 @@
   onloaded="hotspot_style_text_action()"
 />
 <action name="hotspot_style_text_action">
-<!--   set(style[hotspot_style_text].visible, false);
-  set(style[hotspot_style_text].html,asd); -->
   txtadd(html,'[b]',get(hotspot_title),'[/b][br]',get(hotspot_content));
 </action>
 
@@ -108,11 +106,10 @@
   distorted="true"
   onover.mouse="copy(layer[tooltip_title_scene].html, scene[get(linkedscene)].title);
                  copy(layer[tooltip_image_scene].url, scene[get(linkedscene)].thumburl);
-                       set(layer[tooltip_parent].visible, true);
-                       tween(layer[tooltip_title_scene].alpha, 1.0, 0.1);
-                       asyncloop(hovering, copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey); );
-                       jscall(if (typeof isAllowAddHotspot !== 'undefined') isAllowAddHotspot(false));"
-            onout.mouse="tween(layer[tooltip_title_scene].alpha, 0.0, 0.1, default, set(layer[tooltip_parent].visible,false), copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey); ); jscall(if (typeof isAllowAddHotspot !== 'undefined') isAllowAddHotspot(true));"
+                 set(layer[tooltip_parent].visible, true);
+                 tween(layer[tooltip_title_scene].alpha, 1.0, 0.1);
+                 asyncloop(hovering, copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey););"
+  onout.mouse="tween(layer[tooltip_title_scene].alpha, 0.0, 0.1, default, set(layer[tooltip_parent].visible,false), copy(layer[tooltip_parent].x,mouse.stagex); copy(layer[tooltip_parent].y,mouse.stagey); );"
   onloaded="text_load_action"
 />
 
@@ -194,28 +191,33 @@
 
 <action name="video_action">
   set(layer[overlay_video].visible, true);
-</action>
+  txtadd(layer[video_iframe].html,"[iframe width='560' height='315' src=",get(video_url), ' ',frameborder='0' gesture='media' allow='encrypted-media' allowfullscreen][/iframe]")
+</action> 
 <action name="video_action_hide">
   set(layer[overlay_video].visible, false);
 </action>
 <layer name="overlay_video" type="container" keep="true" align="lefttop" width="100%" height="100%" x="0" y="0"
            bgcolor="0x000000" bgalpha="0.5" zorder="10" bgcapture="true" visible="false" onclick="video_layer_hide();">
-    <layer name="parent_video_popup" type="container" keep="true" align="center" width="500" height="250" x="0" y="0"
-           bgcolor="0xFFFFFF" bgalpha="1.0" zorder="11">
+    <layer name="parent_video_popup" type="container" keep="true" align="center" width="560" height="315" x="0" y="0"
+           bgcolor="" bgalpha="1.0" zorder="11" bgborder="0">
         <layer name="close_video_layer" url="../viewer/skin/fancybox_sprite.png" keep="true" align="righttop" x="-13" y="-13"
                onclick="video_action_hide();" crop="0|0|36|36" zorder="15"/>
-         <layer name="video"
-         videourl=""
-         align="center" x="0" y="0"
-         pausedonstart="false"
-         loop="false"
-         volume="1.0"
-         onvideoready=""
-         onvideoplay=""
-         onvideopaused=""
-         onvideocomplete=""
-         onerror=""
-         />
+        <layer name="video_iframe"
+           type="text"
+           align="lefttop" x="0" y="0"
+           vcenter="false"
+           wordwrap="true"
+           bg="true"
+           bgalpha="1.0"
+           bgborder="0"
+           bgroundedge="0"
+           bgshadow=""
+           txtshadow=""
+           mergedalpha="true"
+           interactivecontent="false"
+           onautosized=""
+          > 
+        </layer>
     </layer>
 </layer>
 
@@ -233,6 +235,7 @@
 <action name="image_action">
   set(layer[overlay_image].visible, true);
   set(layer[img_popup].url, get(image_url));
+  txtadd(layer[img_popup].html,"[img width='560' height='315' src=", get(image_url), "/]")
 </action>
 
 <action name="image_layer_hide">
@@ -240,20 +243,19 @@
 </action>
 
 <layer name="overlay_image" type="container" keep="true" align="lefttop" width="100%" height="100%" x="0" y="0"
-           bgcolor="0x000000" bgalpha="0.5" zorder="10" bgcapture="true" visible="false" onclick="image_layer_hide();">
-    <layer name="parent_image_layer" type="container" keep="true" align="center" width="500" height="250" x="0" y="0"
-           bgcolor="0xFFFFFF" bgalpha="1.0" zorder="11">
-        <layer name="close_image_layer" url="../viewer/skin/fancybox_sprite.png" keep="true" align="righttop" x="-13" y="-13"
-               onclick="image_layer_hide();" crop="0|0|36|36" zorder="15"/>
-        <layer name="img_popup" keep="true"  align="center"
-          x="0"
-          y="10"
-          visible="true"
-          autoheight="true"
-          background="false"
-          border="false"
-          enabled="false"
-        />
+       bgcolor="0x000000" bgalpha="0.5" zorder="10" bgcapture="true" visible="false" onclick="image_layer_hide();">
+    <layer type="text" name="img_popup" keep="true"  align="center"
+      x="0"
+      y="10"
+      css="width: 500px; height: 500px; max-width: 500px; max-height: 500px; background-size: 100%; background-repeat: no-repeat;"
+      visible="true"
+      autoheight="true"
+      background="false"
+      border="false"
+      enabled="false"
+    >
+    <layer name="close_image_layer" url="../viewer/skin/fancybox_sprite.png" keep="true" align="righttop" x="-13" y="-13"
+           onclick="image_layer_hide();" crop="0|0|36|36" zorder="15"/>
     </layer>
 </layer>
 </krpano>
